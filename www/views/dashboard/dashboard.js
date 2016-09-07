@@ -62,24 +62,31 @@ angular.module('starter')
     };
     /*** bind car modal ***/
 
-    /*** bind life modal ***/
-    $ionicModal.fromTemplateUrl('views/modal/coverage_modal.html',{
+    /*** bind coverage_tab_modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/coverage_tab_modle.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      $scope.coverage_modal = modal;
+      $scope.coverage_tab_modal = modal;
     });
 
     //待定
     $scope.open_lifeModal= function(){
-        $scope.coverage_modal.show();
+        $scope.coverage_tab_modal.show();
     };
 
 
     $scope.close_lifeModal= function() {
-      $scope.coverage_modal.hide();
+      $scope.coverage_tab_modal.hide();
     };
-    /*** bind life modal ***/
+    /*** bind coverage_tab_modal ***/
+
+
+
+
+
+
+
 
 
 
@@ -407,6 +414,12 @@ angular.module('starter')
     $scope.makePhone=function () {
 
     }
+
+    //寿险的投保意向
+    $scope.life_insurance={
+      tabs:['insurancer','insuranced']
+    };
+    $scope.life_insurance.tab='insurancer';
 
 
 
