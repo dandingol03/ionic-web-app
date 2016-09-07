@@ -63,7 +63,7 @@ angular.module('starter')
     /*** bind car modal ***/
 
     /*** bind coverage_tab_modal ***/
-    $ionicModal.fromTemplateUrl('views/modal/coverage_tab_modle.html',{
+    $ionicModal.fromTemplateUrl('views/modal/coverage_tab_modal.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
