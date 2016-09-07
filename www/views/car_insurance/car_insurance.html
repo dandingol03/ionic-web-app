@@ -1,0 +1,132 @@
+
+<ion-view >
+
+
+  <ion-nav-bar class="bar-dark" align-title="center" >
+
+
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+      <div>
+        <div
+          ng-click="tab_change(0)"
+          class="{{tabIndex==0?('selected '+'car_insurance tab'):'car_insurance tab'}}">
+          <span>车险险种</span>
+          <div class="highLight"
+               ng-if="tabIndex==0">
+          </div>
+        </div>
+        <div
+          ng-click="tab_change(1)"
+          class="{{tabIndex==1?('selected '+'car_insurance tab'):'car_insurance tab'}}">
+          <span>车险方案</span>
+          <div class="highLight"
+               ng-if="tabIndex==1">
+          </div>
+        </div>
+      </div>
+    </ion-nav-title>
+
+
+    <ion-nav-buttons side="right">
+
+      <button class="button button-icon button-clear" ng-click="goto('/#/car_info')">
+        <i class="ion-plus"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content class="padding">
+
+    <!-- 车险险种 -->
+    <div ng-if="tabIndex==0">
+
+      <div class="row"
+           ng-repeat="item in tabs[tabIndex].insurances"
+           style="border-bottom:1px solid #eee;padding:0px;margin-bottom:6px">
+        <div class="col-80">
+          <label class="item"
+                 style="border:0px;display: inline-block;width: 50%">
+            {{item.name}}
+          </label>
+          <label class="item" style="border:0px;display: inline-block"
+                 ng-click="price_select(item,item.prices)">
+            保额:
+            <span ng-if="item.price!=undefined&&item.price!=null">
+              {{item.price}}
+            </span>
+            <i class="ion-ios-arrow-down" ng-if="item.prices!==undefined&&item.prices!==null"></i>
+          </label>
+        </div>
+
+        <div class="col-20" style="position: relative">
+          <li class="item item-checkbox" style="border: 0px;position: absolute;top:25%">
+            <label class="checkbox specials">
+              <input type="checkbox" ng-model="item.checked">
+            </label>
+          </li>
+        </div>
+      </div>
+      <div class="bar bar-footer bar-balanced" style="position: static" ng-click="apply()" >
+        <div class="title">选定险种</div>
+      </div>
+    </div>
+
+    <!-- 车险方案 -->
+    <div ng-if="tabIndex==1">
+      <div class="list">
+        <div class="item" style="border:0px;padding-left:26px;padding-right:26px;"  ng-repeat="plan in car_ins_plans">
+
+          <div class="card" style="margin-top:8%;">
+            <div class="row">
+              <img ng-src="{{item.main.img!=undefined&&item.main.img!=null?('img/'+item.main.img):'img/card.jpg'}}"/>
+            </div>
+            <div>
+              <h2 style="padding:3%;margin-top:2%;margin-left:3%;font-size:larger;width:100%;">
+                {{plan.companyName}}
+              </h2>
+              <div>
+                <div style="display:inline-block;padding:3%;padding-top:0;">
+                  <lable>保额:</lable>
+                  <lable>{{plan.sum}}</lable>
+                </div>
+                <div style="display:inline-block;padding:3%;padding-top:0;">
+                  <lable>保费:</lable>
+                  <lable>{{plan.fee}}</lable>
+                </div>
+                <div style="display:inline-block;padding:3%;padding-top:0;">
+                  <lable>保费:</lable>
+                  <lable>{{plan.fee}}</lable>
+                </div>
+              </div>
+
+            </div>
+            <div style="padding:10px;">
+              <button class="button button-stable" style="padding-left:10%;padding-right:10%;width:45%; margin-right:10%;">
+                投保
+              </button>
+              <button class="button button-stable" style="padding-left:10%;padding-right:10%;width:45%;" ng-click="openModal()">
+                详情
+              </button>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+  </ion-content>
+
+</ion-view>

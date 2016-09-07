@@ -95,9 +95,8 @@ angular.module('starter')
       }
     };
 
-    $scope.bind_car=function(){
-      $rootScope.car=$scope.car;
-      $scope.closeCarModal();
+    $scope.select_type=function(){
+      $state.go('car_insurance');
     }
 
     $scope.addPicture = function(type) {

@@ -101,9 +101,13 @@ angular.module('starter', ['ionic', 'ngCordova','ionic-datepicker'])
       url:'/login',
       controller: 'loginController',
       templateUrl:'views/login/login.html'
+    })
+
+     .state('car_insurance',{
+       url:'/car_insurance',
+       controller:'carInsuranceController',
+       templateUrl:'views/car_insurance/car_insurance.html'
     });
-
-
 
 
   // if none of the above states are matched, use this as the fallback
