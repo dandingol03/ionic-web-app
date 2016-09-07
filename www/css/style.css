@@ -834,3 +834,36 @@ table.table1{
   top: 10%;
   background: #fff;
 }
+
+.ul-tabs{
+  height:50px;
+  border-bottom: 1px solid #eee;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.ul-tabs li{
+  float:left;
+  display: block;
+  height:100%;
+  text-align: center;
+  position: relative;
+}
+
+.ul-tabs li .cell{
+  position:absolute;
+  left:0%;
+  top:2%;
+  display:  inline-block;
+  height: 100%;
+  width: 100%;
+  background:#fff;
+  border-bottom: 1px solid #eee;
+}
+
+.ul-tabs li .cell.selected{
+  border-top:1px solid #eee;
+  border-left:1px solid #eee;
+  border-right: 1px solid #eee;
+  border-bottom:transparent;
+}

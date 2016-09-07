@@ -219,67 +219,65 @@
     <!-- 车驾管 -->
     <div ng-if="tabIndex==3" class='home-tab'>
 
-      <div class="list">
-        <div class="item " style="position: relative;height:64px;border-top:0px;text-align: center;padding-bottom: 0px;">
-
-          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;margin-left:8%;height: 100%;"
-               ng-class="{true: 'selected', false: ''}[service=='代办车辆年审']"
-               ng-click="service='代办车辆年审'">
-               <span style="font-size: 1.8em;">
+      <div class="list" style="margin-bottom: 0px;">
+        <ul class="ul-tabs">
+          <!-- 代办车辆年审 -->
+          <li style="width:20%;">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[service=='代办车辆年审']"
+                 ng-click="service='代办车辆年审'">
+               <span style="font-size: 1.8em;position: absolute;left: 40%;top: 30%;">
                  <i class="ion-ios-paper"></i>
                </span>
-               <span ng-if="service=='代办车辆年审'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
-                 <i class="ion-minus-round"></i>
-               </span>
-          </div>
+            </div>
+          </li>
 
-          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
-               ng-class="{true: 'selected', false: ''}[service=='代办行驶证年审']"
-               ng-click="service='代办行驶证年审'">
-               <span style="font-size: 1.8em;">
+          <!-- 代办行驶证年审 -->
+          <li style="width:20%">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[service=='代办行驶证年审']"
+                 ng-click="service='代办行驶证年审'">
+               <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
                  <i class="ion-android-bus"></i>
                </span>
-               <span ng-if="service=='代办行驶证年审'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
-                 <i class="ion-minus-round"></i>
-               </span>
-          </div>
+            </div>
+          </li>
 
-          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
-               ng-class="{true: 'selected', false: ''}[service=='接送机']"
-               ng-click="service='接送机'">
-               <span style="font-size: 1.8em;">
+          <!-- 接送机 -->
+          <li style="width:20%;">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[service=='接送机']"
+                 ng-click="service='接送机'">
+               <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
                  <i class="ion-ribbon-b"></i>
                </span>
-               <span ng-if="service=='接送机'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
-                 <i class="ion-minus-round"></i>
-               </span>
-          </div>
 
-          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
-               ng-class="{true: 'selected', false: ''}[service=='取送车']"
-               ng-click="service='取送车'">
-               <span style="font-size: 1.8em;">
+            </div>
+          </li>
+
+          <!-- 取送车 -->
+          <li style="width:20%;">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[service=='取送车']"
+                 ng-click="service='取送车'">
+               <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
                  <i class="ion-closed-captioning"></i>
                </span>
-               <span ng-if="service=='取送车'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
-                 <i class="ion-minus-round"></i>
-               </span>
-          </div>
+            </div>
+          </li>
 
-          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
-               ng-class="{true: 'selected', false: ''}[service=='违章查询']"
-               ng-click="service='违章查询'">
-               <span style="font-size: 1.8em;">
+          <!-- 违章查询 -->
+          <li style="width:20%;">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[service=='违章查询']"
+                 ng-click="service='违章查询'">
+              <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
                  <i class="ion-easel"></i>
                </span>
-               <span ng-if="service=='违章查询'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
-                 <i class="ion-minus-round"></i>
-               </span>
-          </div>
+            </div>
+          </li>
+        </ul>
 
-
-
-        </div>
       </div>
 
       <div class="list list-inset padding" style="margin-bottom:40px;" ng-if="service=='代办车辆年审'">
