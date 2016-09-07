@@ -417,6 +417,47 @@ angular.module('starter')
     };
     $scope.life_insurance.tab='insurancer';
 
+    $scope.gurantees=['重疾','健康','理财'];
+    $scope.guarantee=$scope.gurantees[0];
+    $scope.gurantees_select=function()
+    {
+
+        var buttons=[];
+        $scope.gurantees.map(function(person,i) {
+          buttons.push({text: person});
+        });
+
+        $ionicActionSheet.show({
+          buttons:buttons,
+          titleText: '选择你需要的保障',
+          cancelText: 'Cancel',
+          buttonClicked: function(index) {
+            $scope.gurantee = $scope.gurantees[index];
+            return true;
+          },
+          cssClass:'motor_insurance_actionsheet'
+        });
+    }
+
+    $scope.relations=['自己','老人','子女','配偶'];
+    $scope.relation=$scope.relations[0];
+    $scope.relation_select=function(){
+      var buttons=[];
+      $scope.relations.map(function(relation,i) {
+        buttons.push({text: relation});
+      });
+
+      $ionicActionSheet.show({
+        buttons:buttons,
+        titleText: '选择被投保人关系',
+        cancelText: 'Cancel',
+        buttonClicked: function(index) {
+          $scope.relation = $scope.relations[index];
+          return true;
+        },
+        cssClass:'motor_insurance_actionsheet'
+      });
+    }
 
 
   });
