@@ -84,13 +84,6 @@ angular.module('starter')
 
 
 
-
-
-
-
-
-
-
     $scope.check_carInfo=function(){
       if($rootScope.car!==undefined&&$rootScope.car!==null)
       {
@@ -290,6 +283,9 @@ angular.module('starter')
       $rootScope.carInfo=$scope.carInfo;
       $state.go('car_insurance');
     }
+
+
+
 
     $scope.service='代办车辆年审';
     $scope.services=[
