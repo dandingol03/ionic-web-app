@@ -22,7 +22,9 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     "cordova-plugin-file-transfer",
-    "cordova-plugin-camera"
+    "cordova-plugin-camera",
+    "cordova-plugin-app-preferences",
+    "cordova-plugin-keyboard"
   ],
   "cordovaPlatforms": [
     "ios",

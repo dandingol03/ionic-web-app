@@ -298,7 +298,7 @@ angular.module('starter')
 
     //选择车驾管服务项目
     $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
-    $scope.service="车辆年审";
+    $scope.service="代办车辆年审";
 
     $scope.service_select=function(services) {
       if (services !== undefined && services !== null &&services.length > 0)

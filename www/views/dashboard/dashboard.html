@@ -220,14 +220,65 @@
     <div ng-if="tabIndex==3" class='home-tab'>
 
       <div class="list">
-        <div class="item item-divider" style="position: relative;height:44px;">
+        <div class="item " style="position: relative;height:64px;border-top:0px;text-align: center;padding-bottom: 0px;">
 
-          <div style="display: inline-block;position: absolute;right: 8%;height: 100%;">
-            <select ng-change="" ng-model="service" ng-options="service for service in services">
-
-            </select>
-            <i class="ion-ios-arrow-down" ></i>
+          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;margin-left:8%;height: 100%;"
+               ng-class="{true: 'selected', false: ''}[service=='代办车辆年审']"
+               ng-click="service='代办车辆年审'">
+               <span style="font-size: 1.8em;">
+                 <i class="ion-ios-paper"></i>
+               </span>
+               <span ng-if="service=='代办车辆年审'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
+                 <i class="ion-minus-round"></i>
+               </span>
           </div>
+
+          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
+               ng-class="{true: 'selected', false: ''}[service=='代办行驶证年审']"
+               ng-click="service='代办行驶证年审'">
+               <span style="font-size: 1.8em;">
+                 <i class="ion-android-bus"></i>
+               </span>
+               <span ng-if="service=='代办行驶证年审'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
+                 <i class="ion-minus-round"></i>
+               </span>
+          </div>
+
+          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
+               ng-class="{true: 'selected', false: ''}[service=='接送机']"
+               ng-click="service='接送机'">
+               <span style="font-size: 1.8em;">
+                 <i class="ion-ribbon-b"></i>
+               </span>
+               <span ng-if="service=='接送机'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
+                 <i class="ion-minus-round"></i>
+               </span>
+          </div>
+
+          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
+               ng-class="{true: 'selected', false: ''}[service=='取送车']"
+               ng-click="service='取送车'">
+               <span style="font-size: 1.8em;">
+                 <i class="ion-closed-captioning"></i>
+               </span>
+               <span ng-if="service=='取送车'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
+                 <i class="ion-minus-round"></i>
+               </span>
+          </div>
+
+          <div class="cel" style="position:relative;display:  inline-block;margin-right: 8%;height: 100%;"
+               ng-class="{true: 'selected', false: ''}[service=='违章查询']"
+               ng-click="service='违章查询'">
+               <span style="font-size: 1.8em;">
+                 <i class="ion-easel"></i>
+               </span>
+               <span ng-if="service=='违章查询'" style="position: absolute;left:0%;bottom: 0%;font-size: 2em;">
+                 <i class="ion-minus-round"></i>
+               </span>
+          </div>
+
+
+
         </div>
       </div>
 
