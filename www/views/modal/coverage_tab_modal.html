@@ -124,33 +124,40 @@
             </span>
       </div>
 
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <span class="input-label" style="display: inline-block;">
+              有无社保:
+        </span>
 
-
-
-
-
-
-
-      <div class="item item-input-inset">
-        <label class=" item-input" style="width: 100%">
-          <span class="input-label">有无社保</span>
-          <ion-checkbox style="border:0px;margin-left: 30%" ng-model="life_insurance.insuredPerson.social"></ion-checkbox>
-        </label>
-
+          <label class="toggle" style="position: absolute;right: 20%;">
+            <input type="checkbox" ng-model="life_insurance.insuredPerson.social">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
       </div>
 
-      <div class="item item-input-inset">
-        <label class=" item-input" style="width: 100%">
-          <span class="input-label" style="display: block">有无商业保险</span>
-          <ion-checkbox style="border:0px;margin-left: 30%;" ng-model="life_insurance.insuredPerson.commercial"></ion-checkbox>
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <span class="input-label" style="display: inline-block;">
+              有无商业保险:
+        </span>
+
+        <label class="toggle" style="position: absolute;right: 20%;">
+          <input type="checkbox" ng-model="life_insurance.insuredPerson.commercial">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
         </label>
       </div>
 
-      <div class="item item-input-inset">
-        <label class=" item-input" style="width: 100%">
-          <span class="input-label" style="display: block;max-width: 20%">计划保费:</span>
-          <input type="text" ng-model="life_insurance.applicant.budget">
-        </label>
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <span class="input-label" style="display: inline-block;">
+          计划保费:
+        </span>
+        <input type="text"
+               ng-model="life_insurance.insuredPerson.budget"
+               placeholder="请输入计划保费"
+               style="display: inline-block"/>
       </div>
 
       <button class="button button-full button-positive" style="margin-top: 30px"  ng-click="apply()">
@@ -158,14 +165,6 @@
       </button>
 
     </div>
-
-
-
-
-
-
-
-
 
 
 
