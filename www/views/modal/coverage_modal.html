@@ -1,0 +1,128 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="close_lifeModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" style="width: 95%;padding:10px">
+
+
+    <div class="scroll list" style="overflow: scroll">
+      <div class="item item-divider" style="height: 40px">
+        <lable>投保人</lable>
+
+      </div>
+
+      <div class="item item-input-inset" >
+
+        <label class=" item-input" style="width: 45%">
+          <span class="input-label">姓名:</span>
+          <input type="text" ng-model="life_insurance.applicant.name">
+        </label>
+        <label class=" item-input" style="width: 30%">
+          <span class="input-label">年龄:</span>
+          <input type="text" ng-model="life_insurance.applicant.age">
+        </label>
+
+        <label class=" item-input" style="width: 25%">
+          <span class="input-label">性别:</span>
+        </label>
+
+        <div class="list" style="border: 2px;">
+          <select style="border: 2px;" ng-model="life_insurance.applicant.sex">
+            <option selected>男</option>
+            <option>女</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="item item-divider" style="height: 40px">
+        <lable>被保险人</lable>
+      </div>
+
+      <div class="item item-input-inset" >
+
+        <label class=" item-input" style="width: 45%">
+          <span class="input-label">姓名:</span>
+          <input type="text" ng-model="life_insurance.insuredPerson.name">
+        </label>
+        <label class=" item-input" style="width: 30%">
+          <span class="input-label">年龄:</span>
+          <input type="text" ng-model="life_insurance.insuredPerson.age">
+        </label>
+
+        <label class=" item-input" style="width: 25%">
+          <span class="input-label">性别:</span>
+        </label>
+
+        <div class="list" style="border: 2px;">
+          <select style="border: 2px;" ng-model="life_insurance.insuredPerson.sex">
+            <option selected >男</option>
+            <option>女</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="item item-input-inset">
+        <div class="item item-input"  style="width:100%; border:0px;">
+          <div class="input-label"  style="width:15%;">
+            需要的保障:
+          </div >
+          <div style="padding-left: 10%;width:85%;display:inherit;" >
+            <ion-radio  name="guarantee" ng-value="0" name="gender" ng-model="insuredPerson.guarantee" style="border:0px;width:33%">重疾</ion-radio>
+            <ion-radio  name="guarantee" ng-value="1" name="gender" ng-model="insuredPerson.guarantee" style="border:0px;width:33%">健康</ion-radio>
+            <ion-radio  name="guarantee" ng-value="2" name="gender" ng-model="insuredPerson.guarantee" style="border:0px;width:33%">理财</ion-radio>
+          </div>
+        </div>
+      </div>
+
+      <div class="item item-input-inset">
+        <div class="item item-input"  style="width:100%; border:0px;">
+          <div class="input-label"  style="width:20%;">
+            被投保人:
+          </div >
+          <div style="width:80%;display:inherit;" >
+            <ion-radio  name="guarantee" ng-value="0" name="gender" ng-model="life_insurance.relation" style="border:0px;width:25%;padding-left:10px">自己</ion-radio>
+            <ion-radio  name="guarantee" ng-value="1" name="gender" ng-model="life_insurance.relation" style="border:0px;width:25%;padding-left:10px">老人</ion-radio>
+            <ion-radio  name="guarantee" ng-value="2" name="gender" ng-model="life_insurance.relation" style="border:0px;width:25%;padding-left:10px">子女</ion-radio>
+            <ion-radio  name="guarantee" ng-value="3" name="gender" ng-model="life_insurance.relation" style="border:0px;width:25%;padding-left:10px">配偶</ion-radio>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="item item-input-inset">
+        <label class=" item-input" style="width: 100%">
+          <span class="input-label">有无社保</span>
+          <ion-checkbox style="border:0px;margin-left: 30%" ng-model="life_insurance.insuredPerson.social"></ion-checkbox>
+        </label>
+
+      </div>
+
+      <div class="item item-input-inset">
+        <label class=" item-input" style="width: 100%">
+          <span class="input-label" style="display: block">有无商业保险</span>
+          <ion-checkbox style="border:0px;margin-left: 30%;" ng-model="life_insurance.insuredPerson.commercial"></ion-checkbox>
+        </label>
+      </div>
+
+      <div class="item item-input-inset">
+        <label class=" item-input" style="width: 100%">
+          <span class="input-label" style="display: block;max-width: 20%">计划保费:</span>
+          <input type="text" ng-model="life_insurance.applicant.budget">
+        </label>
+      </div>
+
+      <button class="button button-full button-positive" style="margin-top: 30px"  ng-click="apply()">
+        提交
+      </button>
+    </div>
+
+
+
+
+
+
+  </ion-content>
+
+</ion-modal-view>

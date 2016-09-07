@@ -1,0 +1,78 @@
+<ion-modal-view  class="detail_modal animated slideInDown>">
+  <div class="close_detmodal" ng-click="closeCarModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="det_content" style="padding:14px">
+    <div class="item scroll-content ">
+      <ul class="list">
+        <li class="item item-thumbnail-right item-button">
+          <img  id="my" src="{{}}">
+          <h2>请上传身份证照片!</h2>
+          <a class="item-button button  icon ion-plus-circled" ng-click="addPicture('personIdCard')"></a>
+        </li>
+        <li class="item item-thumbnail-right item-button">
+          <img id="myImage2">
+          <h2>请上传驾驶证照片!</h2>
+          <a class="item-button button  icon ion-plus-circled" ng-click="addPicture('driverCard')"></a>
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="item item-input-inset">
+      <label class=" item-input" style="width: 80%">
+        <span class="input-label">车主姓名</span>
+        <input type="text" ng-model="car.perName" >
+      </label>
+    </div>
+    <div class="item item-input-inset">
+      <label class=" item-input" style="width: 80%">
+        <span class="input-label">身份证号码</span>
+        <input type="text" ng-model="car.perIdCard">
+      </label>
+    </div>
+
+
+    <div class="item item-input-inset">
+      <label class=" item-input" style="width: 50%">
+        <span class="input-label">厂牌型号</span>
+        <input type="text" ng-model="car.model">
+      </label>
+      <label class=" item-input" style="width: 50%">
+        <span class="input-label">车牌号</span>
+        <input type="text" ng-model="car.plateNum">
+      </label>
+    </div>
+
+    <div class="item item-input-inset">
+      <label class=" item-input" style="width: 50%">
+        <span class="input-label">发动机号</span>
+        <input type="text" ng-model="car.engineNum">
+      </label>
+      <label class=" item-input" style="width: 50%">
+        <span class="input-label">车架号</span>
+        <input type="text"  ng-model="car.VIN">
+      </label>
+    </div>
+    <div class="item item-input-inset">
+      <label class=" item-input">
+        <span class="input-label">发证日期</span>
+        <input id="date" ng-click= "datepick()"  ng-model="car.issueDate" type="text" style="width: 400px" placeholder="点击设置日期！" >
+
+      </label>
+    </div>
+
+    <div class="item item-input-inset">
+      <label class=" item-input">
+        <span class="input-label">初次登记日期</span>
+        <input type="text"  class="time_picker_box_text"  ng-model="car.registerDate" >
+      </label>
+    </div>
+
+
+    <button class="button button-block button-calm" ng-click="bind_car()">
+      保存车主信息
+    </button>
+
+  </ion-content>
+</ion-modal-view >

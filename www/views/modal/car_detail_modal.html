@@ -1,0 +1,42 @@
+<ion-modal-view class="wel_modal animated slideInDown ">
+  <ion-content scroll="false">
+    <div class="welcome_msg">
+      <span class="close_msg" ng-click="closeModal()">
+       <img src="img/close.png"/>
+      </span>
+        <div class="row">
+          <div style="text-align:center;width:33%">保险项目</div>
+          <div style="text-align:center;width:33%">保额</div>
+          <div style="text-align:center;width:33%">保费</div>
+        </div>
+
+        <div  ng-if="item!=null">
+          <div ng-repeat="type in item.types">
+            <div class="row">
+              <div class="col col-33">
+                <label class="item" style="border-width: 0px;">
+                  {{type.name}}
+                </label>
+              </div>
+              <div class="col col-33">
+                <label class="item" style="border-width: 0px;">
+                  {{type.price}}
+                </label>
+              </div>
+              <div class="col col-33" style="position: relative">
+                <label class="item" style="border-width: 0px;">
+                  {{type.fee}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="box-sizing:border-box;padding:3%;height:8%;text-align:left;font-size:larger;background-color: #f8f8f8;">
+          <lable>合计:</lable>
+          {{item.sum}}
+        </div>
+
+    </div>
+  </ion-content>
+</ion-modal-view>

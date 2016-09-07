@@ -1,0 +1,20 @@
+<ion-modal-view class="edit_insurance motor_insurance animated slideInDown ">
+  <ion-content scroll="false">
+    <div class="welcome_msg">
+      <span class="close_msg" ng-click="modalClose()">
+       <img src="img/close.png"/>
+      </span>
+      <h3>选择你要更改的车险细项</h3>
+      <label class="item  item-select">
+        <select style="padding-left:0px;right:auto;min-width: 200px" ng-model="motor.step" ng-options="step for step in motor_steps">
+        </select>
+      </label>
+      <a ng-click="confirm()" style="min-height: 30px" class="button button-block button-positive comm_btn">
+        确定
+      </a>
+      <a ng-click="modalClose()" style="min-height: 30px" class="button button-block button-positive comm_btn">
+        取消
+      </a>
+    </div>
+  </ion-content>
+</ion-modal-view>

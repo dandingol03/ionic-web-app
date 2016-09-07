@@ -1,0 +1,63 @@
+<ion-modal-view class="detail_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="closedetail_modal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="det_content">
+    <div class="padding">
+
+      <div class="item scroll-content" style="border:0px">
+        <ul class="list">
+          <li class="item item-divider">
+            投保人证件信息
+          </li>
+          <li class="item item-thumbnail-right item-button">
+            <img src="">
+            <h2>请上传身份证照片!</h2>
+            <a class="item-button button  icon ion-plus-circled" ng-click="addAttachment('applicant','perIdCard')"></a>
+          </li>
+          <li class="item item-thumbnail-right item-button">
+            <img src="">
+            <h2>请上传银行卡照片!</h2>
+            <a class="item-button button  icon ion-plus-circled" ng-click="addAttachment()"></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="item scroll-content" style="border:0px">
+        <ul class="list">
+          <li class="item item-divider">
+            被保险人证件信息
+          </li>
+          <li class="item item-thumbnail-right item-button">
+            <img src="">
+            <h2>请上传身份证照片!</h2>
+            <a class="item-button button  icon ion-plus-circled" ng-click="addAttachment()"></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="item scroll-content" style="border:0px">
+        <ul class="list">
+          <li class="item item-divider">
+            受益人证件信息
+          </li>
+          <li class="item item-thumbnail-right item-button">
+            <img src="">
+            <h2>请上传身份证照片!</h2>
+            <a class="item-button button  icon ion-plus-circled" ng-click="addAttachment()"></a>
+          </li>
+          <li class="item item-thumbnail-right item-button">
+            <img src="">
+            <h2>请上传银行卡照片!</h2>
+            <a class="item-button button  icon ion-plus-circled" ng-click="addAttachment()"></a>
+          </li>
+        </ul>
+      </div>
+
+      <a ui-sref="tabs.dashboard" ng-click="closedetail_modal()" class="button button-block button-positive add_btn">
+        生成订单
+      </a>
+    </div>
+
+  </ion-content>
+</ion-modal-view>

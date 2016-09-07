@@ -1,0 +1,32 @@
+<ion-nav-bar class="bar-stable" align-title="center" >
+  <ion-nav-back-button class="button button-icon button-clear bak_arr" ng-click="myGoBack()">
+    <i class="ion-chevron-left"></i>
+  </ion-nav-back-button>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+      <i class="ion-ios-search-strong"></i>
+    </button>
+  </ion-nav-buttons>
+
+</ion-nav-bar>
+
+
+
+<ion-tabs class="tabs-icon-top tabs-color-positive ">
+
+
+  <ion-tab title="产品" icon-off="ion-ios-chatbubble-outline" icon-on="ion-ios-chatbubble" ui-sref="tabs.dashboard">
+    <ion-nav-view name="dashboard-tab"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="我的订单" icon-off="ion-ios-chatbubble-outline" icon-on="ion-ios-chatbubble" ui-sref="orderCluster">
+    <ion-nav-view name="price-tab"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="我" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" ui-sref="tabs.my">
+    <ion-nav-view name="my-tab"></ion-nav-view>
+  </ion-tab>
+
+</ion-tabs>
+
