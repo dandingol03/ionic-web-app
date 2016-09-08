@@ -77,9 +77,9 @@
 
               <img ng-src="{{item.main.img!=undefined&&item.main.img!=null?('img/'+item.main.img):'img/1.jpg'}}"/>
               <div style="text-decoration: none">
-                <h2 class="product-title">{{item.main.name}}</h2>
+                <h2 class="product-title">{{item.main['名称']}}</h2>
                 <p class="list-price">
-                  {{item.main.description}}
+                  {{item.main['描述']}}
                 </p>
                 <p class="list-price">合计: <i class="compare_at_price">{{item.price}}</i></p>
 
@@ -215,7 +215,7 @@
       <!--</div>-->
       <!--</div>-->
 
-      <!-- 车驾管 -->
+
     <!-- 车驾管 -->
     <div ng-if="tabIndex==3" class='home-tab'>
 
