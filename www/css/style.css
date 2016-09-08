@@ -846,6 +846,7 @@ table.table1{
   padding-right: 10%;
 }
 
+
 .ul-tabs li{
   float:left;
   display: block;
@@ -854,10 +855,11 @@ table.table1{
   position: relative;
 }
 
+
 .ul-tabs li .cell{
   position:absolute;
   left:0%;
-  top:2%;
+  top:4%;
   display:  inline-block;
   height: 100%;
   width: 100%;
@@ -865,9 +867,19 @@ table.table1{
   border-bottom: 1px solid #eee;
 }
 
+.ul-tabs.dark-theme li .cell{
+  background: transparent;
+  color:#fff;
+  font-size: 1.2em;
+}
+
 .ul-tabs li .cell.selected{
   border-top:1px solid #eee;
   border-left:1px solid #eee;
   border-right: 1px solid #eee;
   border-bottom:transparent;
+  background: #fff;
+  color:#444444;
+  font-size: 1.2em;
 }
+

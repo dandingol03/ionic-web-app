@@ -17,7 +17,7 @@
 
   <ion-content scroll="true" lazy-scroll>
     <ion-list>
-      <ion-item ng-repeat="item in infos" class="item item-icon-right" href="{{item.href}}">
+      <ion-item ng-repeat="item in infos" class="item item-icon-right" ng-click="go_to(item.href)">
         <span>{{item.title}}</span>
         <i class="icon ion-chevron-right"></i>
       </ion-item>

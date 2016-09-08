@@ -8,6 +8,10 @@ angular.module('starter')
       window.history.back();
     };
 
+    $scope.go_to=function(state){
+      $state.go(state);
+    };
+
     $scope.infos=[];
 
     $http.get("http://202.194.14.106:9030/insurance/my_pageinfo")

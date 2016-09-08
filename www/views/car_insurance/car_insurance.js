@@ -22,9 +22,9 @@ angular.module('starter')
 
 
 
-    //获得车险险种列表
+    //获得险种的基础套餐列表
 
-    $http.get("http://202.194.14.106:9030/insurance/project_provide")
+    $http.get("http://202.194.14.106:9030/motor_insurance/basic_meal")
     .then(function(response){
       var data=response.data;
       if(data.projects!=null&&data.projects!=undefined)
@@ -33,19 +33,17 @@ angular.module('starter')
         if(Object.prototype.toString.call(projects)!='[object Array]')
           projects=JSON.parse(projects);
 
-        $scope.specials=projects;//从测试服务器取到险种列表,付给coverages数组。
+        $scope.basic_meal=projects;//从测试服务器取到险种列表,付给coverages数组。
         return true;
       }else{
         return false;
       }
 
-
-
-
     }).then(function(re){
       $scope.tabs=[
-        {type:'车险险种',insurances:$scope.specials},
-        {type:'车险计划书',insurances:[]}
+        {type:'基础套餐',insurances:$scope.basic_meal},
+        {type:'建议套餐',insurances:[]},
+        {type:'自定义套餐',insurances:[]}
       ];
     });
 
@@ -149,5 +147,52 @@ angular.module('starter')
     $scope.closeModal = function() {
       $scope.car_detail_modal.hide();
     };
+    /**************方案详情模态框*************************/
+
+
+    $scope.apply=function(){
+      switch($scope.tabIndex)
+      {
+        case 0: //基础套餐
+        case 1: //建议套餐
+          var flag=true;
+          var meals = $scope.tabs[$scope.tabIndex];
+          var selected=meals.map(function(meal,i) {
+              if(meal.price!==undefined&&meal.price!==null)
+                return meal;
+              else
+              {
+                flag=false;
+                  return null;
+              }
+          });
+
+          if(flag!=true){
+            alert('请填写完成您的套餐选择');
+          }else{
+              //TODO:pass the meals to next step
+          }
+
+          break;
+        case 2: //自定义套餐
+          var meals=$scope.basic_meal.map(function(meal,i) {
+            if(meal.checked==true)
+              return meal;
+          });
+
+          if(flag!=true){
+            alert('请填写完成您的基础套餐');
+          }else{
+            //TODO:pass the meals to next step
+          }
+
+          break;
+        default:
+          break;
+      }
+    }
+
+
+
   });
-/**************方案详情模态框*************************/
+
