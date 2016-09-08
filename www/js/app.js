@@ -97,6 +97,16 @@ angular.module('starter', ['ionic', 'ngCordova','ionic-datepicker'])
       }
     })
 
+    .state('tabs.my',{
+      url:'/my',
+      views:{
+        'my-tab':{
+          controller:'myController',
+          templateUrl:'views/my/my.html'
+        }
+      }
+    })
+
     .state('login',{
       url:'/login',
       controller: 'loginController',
@@ -107,6 +117,22 @@ angular.module('starter', ['ionic', 'ngCordova','ionic-datepicker'])
        url:'/car_insurance',
        controller:'carInsuranceController',
        templateUrl:'views/car_insurance/car_insurance.html'
+    })
+
+
+    .state('orderCluster',{
+      url:'/orderCluster',
+      controller:'orderClusterController',
+      templateUrl:'views/orderCluster/orderCluster.html'
+    })
+
+    /**
+     * 寿险列表详情
+     */
+    .state('life_insurance_detail',{
+      url:'/life_insurance_detail/:insurance',
+      controller:'lifeDetailController',
+      templateUrl:'views/life_insurance_detail/life_insurance_detail.html'
     });
 
 

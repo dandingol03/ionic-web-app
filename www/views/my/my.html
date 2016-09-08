@@ -1,0 +1,30 @@
+<ion-view view-title="我的信息">
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content scroll="true" lazy-scroll>
+    <ion-list>
+      <ion-item ng-repeat="item in infos" class="item item-icon-right" href="{{item.href}}">
+        <span>{{item.title}}</span>
+        <i class="icon ion-chevron-right"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+
+
+
+</ion-view>

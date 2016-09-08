@@ -1,0 +1,132 @@
+<ion-view view-title="我的订单">
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+  <ion-content>
+    <div class="list" style="padding:10px">
+      <div style="min-height: 40px;text-align: center">
+        <div style="display: inline-block;min-width:20%;padding:10px 10px 8px 10px;background: #fff;text-align: center;border:1px solid #eee"
+            ng-class="{true: 'active', false: 'inactive'}[tab.activated]"
+            ng-click="tab_change($index)"
+            ng-repeat="tab in tabs">
+          {{tab.name}}
+        </div>
+      </div>
+    </div>
+
+    <!-- make this automatic -->
+    <div class="list padding" style="margin-bottom: 48px;">
+
+      <div class="item item-divider">
+        {{tabs[tabIndex].name}}
+      </div>
+
+
+        <div class="item ">
+          <div class="row order-item" ng-repeat="order in tabs[tabIndex].orders" >
+            <div class="col col-13" style="position: relative;border: 1px solid #eee;">
+              <div style="position: absolute;top:30%">
+                <ion-checkbox style="margin-top: 30px;border: 0;padding-right:0px" ></ion-checkbox>
+              </div>
+            </div>
+            <div class="col col-18" style="text-align: center;position: relative;    border: 1px solid #eee;">
+              <div style="position: absolute;top:45%;left:30%">
+                {{order.type}}
+              </div>
+            </div>
+            <div class="col col-50" style="    border: 1px solid #eee;">
+              <div class="item item-text-wrap " style="border: 0;">
+                <div ng-repeat="scheme in order.schemes" ng-if="order.type=='车险'" style="width:100%">
+                  <h2 class="product-title" style="width:33%;display: inline-block">
+                    {{scheme.name}}
+                  </h2>
+                  <p class="list-price" style="width:33%;display: inline-block">
+                    <i class="compare_at_price">{{scheme.coverage}}</i>
+                  </p>
+
+                </div>
+
+                <div ng-if="order.type=='寿险'">
+                  <h2>主险:</h2>
+                  <h4 class="product-title" style="width:33%;display: inline-block">
+                    {{order.main.name}}
+                  </h4>
+                  <p class="list-price" style="width:33%;display: inline-block">
+                    <i class="compare_at_price">{{order.main.coverage}}</i>
+                  </p>
+
+                  <h2 style="margin-top: 20px">附加险:</h2>
+                  <div ng-repeat="addition in order.additions">
+                    <h2 class="product-title" style="width:33%;display: inline-block">
+                      {{addition.name}}
+                    </h2>
+                    <p class="list-price" style="width:33%;display: inline-block">
+                      <i class="compare_at_price">{{addition.fee}}</i>
+                    </p>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col col-15" style="position: relative;border:1px solid #eee;">
+              <div style="box-sizing: border-box;padding: 10px;padding-top: 20px;position:absolute;top:30%">
+
+
+
+
+                <div ng-click="detail_ref(order.type,order,$index)" style="text-decoration: none">
+
+                  <lable>编辑</lable>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item" style="border:0px;">
+            <button class="button button-calm" style="width: 100%;" ng-click="buy()">
+              购买
+            </button>
+          </div>
+
+        </div>
+
+
+
+    </div>
+
+  </ion-content>
+
+  <ion-tabs class="tabs-icon-top tabs-color-positive ">
+
+    <ion-tab title="产品" icon-off="ion-ios-chatbubble-outline" icon-on="ion-ios-chatbubble" ui-sref="tabs.dashboard">
+      <ion-nav-view name="dashboard-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="我的订单" icon-off="ion-ios-chatbubble-outline" icon-on="ion-ios-chatbubble" ui-sref="orderCluster">
+      <ion-nav-view name="price-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="我" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" ui-sref="tabs.my">
+      <ion-nav-view name="my-tab"></ion-nav-view>
+    </ion-tab>
+
+  </ion-tabs>
+
+</ion-view>
+
