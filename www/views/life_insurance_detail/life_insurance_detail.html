@@ -14,6 +14,36 @@
   </ion-nav-bar>
   <ion-content class="padding cart_detail">
 
+    <div class="list" style="margin-bottom: 0px;">
+      <ul class="ul-tabs">
+        <!-- 产品简介 -->
+        <li style="width:50%;">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tab=='产品简介']"
+               ng-click="tab_change(0)">
+               <span style="position: absolute;left: 30%;top: 30%;font-size: 1.0em;">
+                  产品简介
+               </span>
+          </div>
+        </li>
+
+        <!-- 保费测算 -->
+        <li style="width:50%">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tab=='保费测算']"
+               ng-click="tab_change(1)">
+               <span style="position: absolute;left: 30%;top:30%;font-size:1.0em;">
+                 保费测算
+               </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+
+
+
     <ion-slide-box does-continue="false" show-pager="true" >
       <ion-slide>
         <div class="item_desc">
@@ -126,6 +156,7 @@
 
         </div>
       </ion-slide>
+
     </ion-slide-box>
 
 

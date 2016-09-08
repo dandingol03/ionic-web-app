@@ -870,7 +870,6 @@ table.table1{
 .ul-tabs.dark-theme li .cell{
   background: transparent;
   color:#fff;
-  font-size: 1.2em;
 }
 
 .ul-tabs li .cell.selected{
@@ -880,6 +879,6 @@ table.table1{
   border-bottom:transparent;
   background: #fff;
   color:#444444;
-  font-size: 1.2em;
+
 }
 
