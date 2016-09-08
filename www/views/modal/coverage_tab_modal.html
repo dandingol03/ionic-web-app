@@ -33,7 +33,7 @@
 
 
     <!-- 投保人 -->
-    <div class="scroll list" style="overflow: scroll" ng-if="life_insurance.tab=='insurancer'">
+    <div ng-if="life_insurance.tab=='insurancer'">
 
 
       <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
@@ -70,7 +70,8 @@
     </div>
 
 
-    <div class="scroll list" style="overflow: scroll" ng-if="life_insurance.tab=='insuranced'">
+    <!-- 被投保人 -->
+    <div class="list"  ng-if="life_insurance.tab=='insuranced'">
 
 
       <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
@@ -160,12 +161,14 @@
                style="display: inline-block"/>
       </div>
 
-      <button class="button button-full button-positive" style="margin-top: 30px"  ng-click="apply()">
-        提交
-      </button>
+
 
     </div>
 
+
+    <button class="button button-full button-positive" style="margin-top: 30px"  ng-click="apply()">
+      提交
+    </button>
 
 
 

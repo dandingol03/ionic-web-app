@@ -835,6 +835,10 @@ table.table1{
   background: #fff;
 }
 
+.carInfo_modal.modal .carInfo_content .scroll{
+  overflow: scroll;
+}
+
 .ul-tabs{
   height:50px;
   border-bottom: 1px solid #eee;
