@@ -296,6 +296,18 @@ angular.module('starter')
     ];
 
 
+      //维修救援
+      $scope.maintain={
+        tabs:['日常保养','故障维修','事故维修'],
+        tab:'日常保养',
+        items:{}
+      };
+
+      $scope.accident={
+
+      };
+
+
     //车驾管服务
 
     //选择车驾管服务项目
