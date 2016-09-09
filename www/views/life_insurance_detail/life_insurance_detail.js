@@ -2,8 +2,8 @@
  * Created by apple-2 on 16/9/1.
  */
 angular.module('starter')
-  .controller('lifeDetailController',function($scope,$rootScope,$state,$http, $location,$ionicModal,$ionicActionSheet,
-                                              $cordovaCamera,$cordovaImagePicker,$stateParams,$ionicSlideBoxDelegate){
+    .controller('lifeDetailController',function($scope,$rootScope,$state,$http, $location,$ionicModal,$ionicActionSheet,
+                                                $cordovaCamera,$cordovaImagePicker,$stateParams,$ionicSlideBoxDelegate){
 
       $scope.item=$stateParams.insurance;
 
@@ -15,7 +15,7 @@ angular.module('starter')
       $scope.tabs=['产品简介','保费测算'];
       $scope.tab=$scope.tabs[0];
       $scope.tab_change=function(i){
-          $scope.tab=$scope.tabs[i];
+        $scope.tab=$scope.tabs[i];
       }
 
 
@@ -52,15 +52,15 @@ angular.module('starter')
        * this is where we handle 附加险操作
        */
       $scope.increment=function(index){
-          $scope.item.additions[index].count++;
-          $scope.item.additions[index].gurantee_fee+=$scope.item.additions[index].singleton;
-          $scope.total+=$scope.item.additions[index].singleton;
+        $scope.item.additions[index].count++;
+        $scope.item.additions[index].gurantee_fee+=$scope.item.additions[index].singleton;
+        $scope.total+=$scope.item.additions[index].singleton;
       };
 
       $scope.decrement=function(index) {
-          $scope.item.additions[index].count--;
-          $scope.item.additions[index].gurantee_fee-=$scope.item.additions[index].singleton;
-          $scope.total-=$scope.item.additions[index].singleton;
+        $scope.item.additions[index].count--;
+        $scope.item.additions[index].gurantee_fee-=$scope.item.additions[index].singleton;
+        $scope.total-=$scope.item.additions[index].singleton;
       };
 
       $scope.total_compute=function(){
@@ -89,13 +89,13 @@ angular.module('starter')
         };
 
         $cordovaImagePicker.getPictures(options)
-          .then(function (results) {
-            $scope[applicant_type][img_type]=results[0];
-            alert('img url=' + results[0]);
-          }, function (error) {
-            alert("error="+error);
-            // error getting photos
-          });
+            .then(function (results) {
+              $scope[applicant_type][img_type]=results[0];
+              alert('img url=' + results[0]);
+            }, function (error) {
+              alert("error="+error);
+              // error getting photos
+            });
       };
 
       $scope.takePhoto=function(applicant_type,img_type){
@@ -181,4 +181,4 @@ angular.module('starter')
       });
       watchSlide();
 
-  });
+    });

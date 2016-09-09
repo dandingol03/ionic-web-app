@@ -5,9 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova','ionic-datepicker'])
+angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker'])
 
-.run(function($ionicPlatform,$rootScope) {
+    .config(function(baiduMapApiProvider) {
+      baiduMapApiProvider.version('2.0').accessKey('2me89doy9NE2HgG7FmTXa0XZsedThXDD');
+    })
+
+
+    .run(function($ionicPlatform,$rootScope) {
 
     $rootScope.myGoBack = function() {
       //$rootScope.$ionicGoBack();
@@ -139,4 +144,24 @@ angular.module('starter', ['ionic', 'ngCordova','ionic-datepicker'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tabs/dashboard');
 
-});
+})
+    .factory('BaiduMapService', function($q, baiduMapApi) {
+      return {
+        getLocalCity: function() {
+          return baiduMapApi.then(function(BMap) {
+            var localcity = new BMap.LocalCity();
+            return $q(function(resolve, reject) {
+              localcity.get(function(r) {
+                resolve(r);
+              });
+            });
+          });
+        }
+        ,
+        getBMap:function(callback){
+          baiduMapApi.then(function(BMap) {
+            callback(BMap);
+          });
+        }
+      };
+    })

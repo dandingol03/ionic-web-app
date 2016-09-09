@@ -354,95 +354,262 @@
             </div>
           </li>
 
-          <!-- 接送机 -->
-          <li style="width:20%;">
-            <div class="cell"
-                 ng-class="{true: 'selected', false: ''}[service=='接送机']"
-                 ng-click="service='接送机'">
-               <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
-                 <i class="ion-ribbon-b"></i>
-               </span>
+      <!-- 维修救援 -->
+      <div ng-if="tabIndex==2" class="home-tab">
+          <div class="list" style="margin-bottom: 0px;">
+              <ul class="ul-tabs">
+                  <!-- 日常保养 -->
+                  <li style="width:33%;">
+                      <div class="cell"
+                           ng-class="{true: 'selected', false: ''}[maintain.tab=='日常保养']"
+                           ng-click="maintain.tab='日常保养'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top: 30%;">
+                     <i class="ion-ios-paper"></i>
+                   </span>
+                      </div>
+                  </li>
 
-            </div>
-          </li>
+                  <!-- 故障维修 -->
+                  <li style="width:33%">
+                      <div class="cell"
+                           ng-class="{true: 'selected', false: ''}[maintain.tab=='故障维修']"
+                           ng-click="maintain.tab='故障维修'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
+                     <i class="ion-android-bus"></i>
+                   </span>
+                      </div>
+                  </li>
 
-          <!-- 取送车 -->
-          <li style="width:20%;">
-            <div class="cell"
-                 ng-class="{true: 'selected', false: ''}[service=='取送车']"
-                 ng-click="service='取送车'">
-               <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
-                 <i class="ion-closed-captioning"></i>
-               </span>
-            </div>
-          </li>
+                  <!-- 事故维修 -->
+                  <li style="width:33%;">
+                      <div class="cell"
+                           ng-class="{true: 'selected', false: ''}[maintain.tab=='事故维修']"
+                           ng-click="maintain.tab='事故维修'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
+                     <i class="ion-ribbon-b"></i>
+                   </span>
 
-          <!-- 违章查询 -->
-          <li style="width:20%;">
-            <div class="cell"
-                 ng-class="{true: 'selected', false: ''}[service=='违章查询']"
-                 ng-click="service='违章查询'">
-              <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
-                 <i class="ion-easel"></i>
-               </span>
-            </div>
-          </li>
-        </ul>
+                      </div>
+                  </li>
 
-      </div>
 
-      <div class="list list-inset padding" style="margin-bottom:40px;" ng-if="service=='代办车辆年审'">
-
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
-              选择地点:
-            </span>
-            <span ng-click="addresses_select(addresses)">
-              {{address}}
-              <i class="ion-ios-arrow-down" ></i>
-            </span>
-        </div>
-
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
-              服务人员:
-            </span>
-
-            <span ng-click="service_person_select(service_persons)">
-              {{service_person}}
-              <i class="ion-ios-arrow-down" ></i>
-            </span>
-
-        </div>
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
-              服务费:
-            </span>
-          <span>$40000</span>
-        </div>
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-              <span class="input-label" style="display: inline-block">
-                预约时间:
-              </span>
-          <div style="display: inline-block" ng-click= "datepick()">
-                <span>
-                  <i class="ion-calendar" style="font-size: 1.5em;"></i>
-                </span>
-            <input id="date"
-                   ng-model="carInfo.issueDate" type="text" style="display: inline-block"
-                   placeholder="点击设置日期！">
+              </ul>
           </div>
-        </div>
+
+          <!-- 日常保养 -->
+          <div class="list list-inset padding" style="margin-bottom:40px;padding:3px;" ng-if="maintain.tab=='日常保养'">
+
+              <div class="item item-checkbox"
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                  <label class="checkbox">
+                      <input type="checkbox" ng-model="maintain.items['机油/机滤']" checked="" style="font-size: 0.8em;">
+                  </label>
+                  <label style="margin-left: 40%;font-size: 1.2em;">
+                      机油/机滤:
+                  </label>
+              </div>
+
+              <div class="item item-checkbox"
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                  <label class="checkbox">
+                      <input type="checkbox" ng-model="maintain.items['机油/三滤']" checked="">
+                  </label>
+                  <label style="margin-left: 40%;font-size: 1.2em;">
+                      机油/三滤:
+                  </label>
+              </div>
+
+              <div class="item item-checkbox"
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                  <label class="checkbox">
+                      <input type="checkbox" ng-model="maintain.items['更换刹车片']" checked="">
+                  </label>
+                  <label style="margin-left: 40%;font-size: 1.2em;">
+                      更换刹车片:
+                  </label>
+              </div>
+
+              <div class="item item-checkbox"
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                  <label class="checkbox">
+                      <input type="checkbox" ng-model="maintain.items['雨刷片更换']" checked="">
+                  </label>
+                  <label style="margin-left: 40%;font-size: 1.2em;">
+                      雨刷片更换:
+                  </label>
+              </div>
+
+              <div class="item item-checkbox"
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                  <label class="checkbox">
+                      <input type="checkbox" ng-model="maintain.items['轮胎更换']" checked="">
+                  </label>
+                  <label style="margin-left: 40%;font-size: 1.2em;">
+                      轮胎更换:
+                  </label>
+              </div>
 
 
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
-          <h1 class="title">确认</h1>
-        </div>
+
+              <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
+                  <h1 class="title">确认</h1>
+              </div>
+          </div>
+
+          <!-- 故障维修 -->
+          <div class="list list-inset padding" style="margin-bottom:40px;padding:3px;" ng-if="maintain.tab=='故障维修'">
+
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+                  <span class="input-label" style="display: inline-block;">
+                      故障概述:
+                  </span>
+                  <input type="text" placeholder="简要说明故障" style="display: inline-block" ng-model="accident.description"/>
+              </div>
+
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+                  <span class="input-label" style="display: inline-block;">
+                      已采取措施:
+                  </span>
+                  <input type="text" placeholder="已采取措施" style="display: inline-block" ng-model="accident.taken"/>
+              </div>
+
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+                  <span class="input-label" style="display: inline-block;">
+                      未采取措施:
+                  </span>
+                  <input type="text" placeholder="未采取措施" style="display: inline-block" ng-model="accident.to_be_taken"/>
+              </div>
+
+
+              <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
+                  <h1 class="title">确认</h1>
+              </div>
+          </div>
+
+
+
+
       </div>
 
 
+      <!-- 车驾管 -->
+      <div ng-if="tabIndex==3" class='home-tab'>
 
-    </div>
+          <div class="list" style="margin-bottom: 0px;">
+            <ul class="ul-tabs">
+              <!-- 代办车辆年审 -->
+              <li style="width:20%;">
+                <div class="cell"
+                     ng-class="{true: 'selected', false: ''}[service=='代办车辆年审']"
+                     ng-click="service='代办车辆年审'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top: 30%;">
+                     <i class="ion-ios-paper"></i>
+                   </span>
+                </div>
+              </li>
+
+              <!-- 代办行驶证年审 -->
+              <li style="width:20%">
+                <div class="cell"
+                     ng-class="{true: 'selected', false: ''}[service=='代办行驶证年审']"
+                     ng-click="service='代办行驶证年审'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
+                     <i class="ion-android-bus"></i>
+                   </span>
+                </div>
+              </li>
+
+              <!-- 接送机 -->
+              <li style="width:20%;">
+                <div class="cell"
+                     ng-class="{true: 'selected', false: ''}[service=='接送机']"
+                     ng-click="service='接送机'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
+                     <i class="ion-ribbon-b"></i>
+                   </span>
+
+                </div>
+              </li>
+
+              <!-- 取送车 -->
+              <li style="width:20%;">
+                <div class="cell"
+                     ng-class="{true: 'selected', false: ''}[service=='取送车']"
+                     ng-click="service='取送车'">
+                   <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
+                     <i class="ion-closed-captioning"></i>
+                   </span>
+                </div>
+              </li>
+
+              <!-- 违章查询 -->
+              <li style="width:20%;">
+                <div class="cell"
+                     ng-class="{true: 'selected', false: ''}[service=='违章查询']"
+                     ng-click="service='违章查询'">
+                  <span style="font-size: 1.8em;position: absolute;left: 40%;top:30%;">
+                     <i class="ion-easel"></i>
+                   </span>
+                </div>
+              </li>
+            </ul>
+
+          </div>
+
+
+          <div class="list list-inset padding" style="margin-bottom:40px;" ng-if="service=='代办车辆年审'">
+
+            <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                 <span class="input-label" style="display: inline-block;">
+                  选择地点:
+                </span>
+                <span ng-click="addresses_select(addresses)">
+                  {{address}}
+                  <i class="ion-ios-arrow-down" ></i>
+                </span>
+            </div>
+
+            <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                 <span class="input-label" style="display: inline-block;">
+                  服务人员:
+                </span>
+
+                <span ng-click="service_person_select(service_persons)">
+                  {{service_person}}
+                  <i class="ion-ios-arrow-down" ></i>
+                </span>
+
+            </div>
+            <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                 <span class="input-label" style="display: inline-block;">
+                  服务费:
+                </span>
+              <span>$40000</span>
+            </div>
+            <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                  <span class="input-label" style="display: inline-block">
+                    预约时间:
+                  </span>
+              <div style="display: inline-block" ng-click= "datepick()">
+                    <span>
+                      <i class="ion-calendar" style="font-size: 1.5em;"></i>
+                    </span>
+                <input id="date"
+                       ng-model="carInfo.issueDate" type="text" style="display: inline-block"
+                       placeholder="点击设置日期！">
+              </div>
+            </div>
+
+
+            <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
+              <h1 class="title">确认</h1>
+            </div>
+          </div>
+
+
+        </div>
+</ul></div></div>
+
   </ion-content>
 
 </ion-view>

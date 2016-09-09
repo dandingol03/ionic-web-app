@@ -3,7 +3,7 @@ angular.module('starter')
   .controller('dashboardController',function($scope,$state,$http, $location,
                                              $rootScope,$ionicModal,$timeout,
                                              $cordovaCamera,ionicDatePicker,
-                                             $ionicActionSheet){
+                                             $ionicActionSheet,BaiduMapService){
 
 
     $scope.goto=function(url){
@@ -331,6 +331,18 @@ angular.module('starter')
 
 
 
+      //维修救援
+      $scope.maintain={
+        tabs:['日常保养','故障维修','事故维修'],
+        tab:'日常保养',
+        items:{}
+      };
+
+      $scope.accident={
+
+      };
+
+
     //车驾管服务
 
     //选择车驾管服务项目
@@ -493,5 +505,25 @@ angular.module('starter')
       });
     }
 
+      //intial BMap service
+      BaiduMapService.getBMap(function(BMap){
+
+        /**
+         * 自身定位
+         */
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            //var mk = new BMap.Marker(r.point);
+            //map.addOverlay(mk);
+            //map.panTo(r.point);
+            alert('您的位置：'+r.point.lng+','+r.point.lat);
+          }
+          else {
+            alert('failed'+this.getStatus());
+          }
+        },{enableHighAccuracy: true});
+
+      });
 
   });
