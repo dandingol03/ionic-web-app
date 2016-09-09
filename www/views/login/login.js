@@ -18,6 +18,31 @@ angular.module('starter')
 
     $scope.user={};
 
+
+
+
+
+    $scope.securityCode_generate=function(){
+
+      $http.get('/securityCode?cellphone='+$scope.user.username,{
+        headers:{
+          'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(function(res) {
+        console.log('scurity code generated');
+      }).catch(function (err) {
+        var error='';
+        for(var field in err) {
+          error+=field+':'+err[field]+'\r\n';
+        }
+        alert('error=' + error);
+      });
+
+    };
+
+
+    //登录
     $scope.login = function(){
 
       $http({
@@ -30,30 +55,29 @@ angular.module('starter')
         }
 
       }).success(function(response){
-        //console.log('login');
-        //$state.go('tabs.coverage');
-
+        console.log('login success');
       }).error(function(err){
         console.log('error');
       });
 
 
-
-      var url='http://192.168.1.110:9030/get/photo/home.jpg';
-      var targetPath=cordova.file.externalRootDirectory+'home.jpg';
-      $cordovaFileTransfer.download(url, targetPath, {}, true)
-        .then(function(result) {
-          alert('home图片');
-          // Success!
-        }, function(err) {
-          var str='';
-          for(var field in err)
-            str+=err[field]+'\n';
-          alert('error='+str);
-          // Error
-        }, function (progress) {
-        });
-
+      if(window.cordova!==undefined&&window.cordova!==null)
+      {
+        var url='http://192.168.1.110:9030/get/photo/home.jpg';
+        var targetPath=cordova.file.externalRootDirectory+'home.jpg';
+        $cordovaFileTransfer.download(url, targetPath, {}, true)
+          .then(function(result) {
+            alert('home图片');
+            // Success!
+          }, function(err) {
+            var str='';
+            for(var field in err)
+              str+=err[field]+'\n';
+            alert('error='+str);
+            // Error
+          }, function (progress) {
+          });
+      }
 
 
     }
@@ -174,6 +198,11 @@ angular.module('starter')
           alert('err=' + err);
         });
 
+    }
+
+    $scope.uploadCarAndOwnerInfo=function()
+    {
+        $http.get('')
     }
 
 
