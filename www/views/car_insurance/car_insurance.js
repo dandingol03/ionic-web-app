@@ -157,7 +157,7 @@ angular.module('starter')
         case 1: //建议套餐
           var flag=true;
           var meals = $scope.tabs[$scope.tabIndex];
-          var selected=meals.map(function(meal,i) {
+          var selected=meals.insurances.map(function(meal,i) {
               if(meal.price!==undefined&&meal.price!==null)
                 return meal;
               else

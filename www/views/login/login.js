@@ -63,7 +63,7 @@ angular.module('starter')
 
       if(window.cordova!==undefined&&window.cordova!==null)
       {
-        var url='http://192.168.1.110:9030/get/photo/home.jpg';
+        var url='http://211.87.225.197:3000/get/photo/home.jpg';
         var targetPath=cordova.file.externalRootDirectory+'home.jpg';
         $cordovaFileTransfer.download(url, targetPath, {}, true)
           .then(function(result) {
