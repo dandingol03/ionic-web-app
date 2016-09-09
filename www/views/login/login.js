@@ -4,7 +4,8 @@
 angular.module('starter')
 
   .controller('loginController',function($scope,$state,$ionicLoading,$http
-    ,$ionicPopup,$timeout,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera){
+    ,$ionicPopup,$timeout
+    ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera){
 
 
 
@@ -45,40 +46,92 @@ angular.module('starter')
     //登录
     $scope.login = function(){
 
+      var access_token=null;
+
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-        url:"/login",
+        url:"http://192.168.1.102:3000/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
         }
 
       }).success(function(response){
-        console.log('login success');
+
+        var access_token=response.access_token;
+        if(access_token!==undefined&&access_token!==null)
+        {
+
+          var targetPath=cordova.file.externalRootDirectory+'ionic.jpg';
+
+
+          var carInfo = {
+            carNum : "5",
+            engineNum : "2",
+            frameNum : "3",
+            factoryNum : "4",
+            firstRegisterTime : "2016-01-01",
+            ownerName : "6",
+            ownerIdCard : "7",
+            ownerAddress : "8",
+            carPhoto: null,
+            ownerIdPhoto: null
+          };
+
+
+          $scope.photo='';
+
+
+
+          $cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
+            .then(function (success) {
+              alert('content of image=' + success);
+              carInfo.carPhoto=success;
+              carInfo.ownerIdPhoto=success;
+              $http({
+                method: "POST",
+                url: "http://192.168.1.102:3000/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + access_token,
+                },
+                data:
+                {
+                  request:'uploadCarAndOwnerInfo',
+                  info:carInfo
+                }
+              }).
+                success(function (response) {
+                  console.log('success');
+                }).
+                error(function (err) {
+                  var str='';
+                  for(var field in err)
+                    str+=field+':'+err[field];
+                  console.log('error='+str);
+                });
+            }, function (error) {
+              // error
+              var err='';
+              for(var field in error)
+              err+=field+':'+error[field];
+              alert('error=' + err);
+            });
+
+
+
+
+        }
+
+
       }).error(function(err){
-        console.log('error');
+        var error='';
+        for(var field in err)
+        {
+          error+=err[field]+'\r\n';
+        }
+        alert('error=' + error);
       });
-
-
-      if(window.cordova!==undefined&&window.cordova!==null)
-      {
-        var url='http://192.168.1.110:9030/get/photo/home.jpg';
-        var targetPath=cordova.file.externalRootDirectory+'home.jpg';
-        $cordovaFileTransfer.download(url, targetPath, {}, true)
-          .then(function(result) {
-            alert('home图片');
-            // Success!
-          }, function(err) {
-            var str='';
-            for(var field in err)
-              str+=err[field]+'\n';
-            alert('error='+str);
-            // Error
-          }, function (progress) {
-          });
-      }
-
 
     }
     //文件下载
@@ -139,8 +192,27 @@ angular.module('starter')
         });
     }
 
-    //添加照片
 
+
+    $scope.test=function() {
+      $http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
+        then(function(res) {
+          if(res.data!==undefined&&res.data!==null)
+          {
+            var life_insurances=res.data.life_insurances;
+            if(Object.prototype.toString.call(life_insurances)!='[object Array]')
+              life_insurances=JSON.parse(life_insurances);
+            life_insurances.map(function(insurance,i) {
+              alert(insurance);
+            });
+          }
+        }).catch(function(err) {
+          alert('err=' + err);
+        });
+
+    }
+
+    //拍照
     $scope.addPicture = function(type) {
 
       $ionicActionSheet.show({
@@ -182,8 +254,20 @@ angular.module('starter')
       });
     }
 
-    $scope.test=function() {
-      $http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
+    $scope.uploadCarAndOwnerInfo=function()
+    {
+      $http.get("http://localhost:9030/insurance/get_lifeinsurance_list",
+        {
+          data:
+          {
+            request:'uploadCarAndOwnerInfo',
+            info:
+            {
+              carPhoto:$scope.photo,
+              ownerIdPhoto:$scope.photo
+            }
+          }
+        }).
         then(function(res) {
           if(res.data!==undefined&&res.data!==null)
           {
@@ -197,12 +281,6 @@ angular.module('starter')
         }).catch(function(err) {
           alert('err=' + err);
         });
-
-    }
-
-    $scope.uploadCarAndOwnerInfo=function()
-    {
-        $http.get('')
     }
 
 
