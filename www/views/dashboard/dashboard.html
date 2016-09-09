@@ -31,7 +31,7 @@
           <span>寿险</span>
         </div>
       </div>
-      <div class="col tabs_col maintain">
+      <div class="col tabs_col maintain" ng-click="tab_change(2)">
         <div style="text-align: center">
           <img src="img/003.png" class="animated zoomIn"/>
         </div>
@@ -175,7 +175,120 @@
         </div>
       </div>
 
-      <!--<div ng-if="tabIndex==0">-->
+
+    <!-- 维修 -->
+    <div class="list " ng-if="tabIndex==2" scroll="true">
+
+      <div class="list" style="margin-bottom: 0px;">
+        <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
+          <li style="width:33.3%;">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[subTabIndex==0]"
+                 ng-click="subTab_change(0)">
+            <span style="position:absolute;left: 20%;top:40%;">
+              日常保养
+            </span>
+            </div>
+          </li>
+
+          <li style="width:33.3%">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[subTabIndex==1]"
+                 ng-click="subTab_change(1)">
+            <span style="position:absolute;left: 20%;top:40%;">
+              故障维修
+            </span>
+
+            </div>
+          </li>
+
+          <li style="width:33.3%">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[subTabIndex==2]"
+                 ng-click="subTab_change(2)">
+            <span style="position:absolute;left: 25%;top:40%;">
+              事故维修
+            </span>
+
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+
+      <ion-scroll style="height: 100%;margin-top:2px;">
+        <!-- 日常保养 -->
+        <div ng-if="subTabIndex==0">
+          <div class="item item-divider">
+            服务项目列表
+          </div>
+
+          <div class="list">
+            <div class="item" ng-repeat="item in dailys">
+
+              <div class="row">
+                <div class="col-50">
+                  <span>{{item.name}}</span>
+                </div>
+                <div class="col-20" style="position: relative">
+                  <input type="checkbox" ng-model="item.checked">
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div>
+
+            <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;padding-left: 3%;max-width: 150px;">
+              里程:
+            </span>
+              <input type="text" placeholder="请输入您的里程"
+                     style="display: inline-block"
+                     ng-model=""/>
+              <button class="button button-stable" style="display: inline-block;">
+                查看保养计划
+              </button>
+            </div>
+            <button class="button button-block button-positive" ng-click="commit_daily()">
+              提交服务项目
+            </button>
+
+
+          </div>
+
+          <!-- 故障维修 -->
+          <div ng-if="subTabIndex==1">
+
+
+          </div>
+
+          <!-- 事故维修 -->
+          <div ng-if="subTabIndex==2">
+
+
+          </div>
+
+       </div>
+      </ion-scroll>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<div ng-if="tabIndex==0">-->
       <!--<div class="row"-->
       <!--ng-repeat="item in tabs[tabIndex].insurances"-->
       <!--style="border:1px solid #eee;padding:5px;margin-bottom:4px">-->
