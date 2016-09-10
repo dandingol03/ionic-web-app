@@ -113,7 +113,7 @@
             </span>
             <input type="text" placeholder="输入车主身份证号"
                    style="display: inline-block"
-                   ng-model="carInfo.perIdCard"/>
+                   ng-model="carInfo.ownerIdPhoto"/>
             <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
               <i class="ion-android-camera"></i>
             </span>
@@ -124,7 +124,7 @@
             </span>
             <input type="text" placeholder="输入车主驾驶证号"
                    style="display: inline-block"
-                   ng-model="carInfo.driveCard"/>
+                   ng-model="carInfo.carPhoto"/>
             <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
               <i class="ion-android-camera"></i>
             </span>
@@ -167,7 +167,7 @@
             </div>
           </div>
 
-          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type()">
+          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type();post()">
             <h1 class="title">保存车辆信息</h1>
           </div>
 

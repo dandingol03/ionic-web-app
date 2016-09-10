@@ -5,11 +5,11 @@ angular.module('starter')
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,BaiduMapService){
 
+    $scope.carInfo={};
 
     $scope.goto=function(url){
       $location.path(url);
     };
-
 
 
     //use factory to improve
@@ -95,7 +95,28 @@ angular.module('starter')
       }
     };
 
+
+
+
+    $scope.post=function(){
+      $http({
+        method: "POST",
+        url: "/pm/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'uploadCarAndOwnerInfo',
+          info:$scope.carInfo
+        }
+      }).
+        success(function (response) {
+          console.log('success');
+        })
+    }
     $scope.select_type=function(){
+      var carInfo=$scope.carInfo;
       $state.go('car_insurance');
     }
 
