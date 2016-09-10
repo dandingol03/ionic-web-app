@@ -14,6 +14,11 @@ angular.module('starter')
 
     $scope.infos=[];
 
+    $scope.user={
+      phone:17865135730
+    };
+
+
     $http.get("http://202.194.14.106:9030/insurance/my_pageinfo")
       .then(function(response) {
         var data=response.data;

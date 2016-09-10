@@ -166,6 +166,10 @@ angular.module('starter')
         $rootScope.life_insurance.state= $scope.life_insurance.state;
       }
 
+    $scope.slide_cb=function(i){
+      $scope.tab=$scope.tabs[i];
+    }
+
       $scope.go_back=function(){
         window.history.back();
       }
@@ -174,11 +178,5 @@ angular.module('starter')
         $scope.detail_modal.remove();
       });
 
-
-      var watchSlide = $scope.$watch($ionicSlideBoxDelegate, function(){
-        var slideIndex=$ionicSlideBoxDelegate.currentIndex();
-        console.log('index='+slideIndex);
-      });
-      watchSlide();
 
     });

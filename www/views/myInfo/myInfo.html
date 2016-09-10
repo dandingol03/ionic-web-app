@@ -1,0 +1,70 @@
+<ion-view view-title="个人信息">
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content scroll="true" class="padding" lazy-scroll>
+
+    <ion-list>
+      <ion-item  class="item item-icon-right" ng-click="go_to('passwordModify')">
+        <span>
+          <i class="ion-key"  style="font-size: 2.2em;"></i>
+          修改密码
+        </span>
+        <i class="icon ion-chevron-right" style="font-size: 1.2em;"></i>
+      </ion-item>
+
+      <ion-item  class="item item-icon-right" ng-click="go_to(item.href)">
+        <span>
+          <i class="ion-log-out"  style="font-size: 1.2em;"></i>
+          退出登录
+        </span>
+        <i class="icon ion-chevron-right" style="font-size: 1.2em;"></i>
+      </ion-item>
+
+      <ion-item  class="item item-icon-right" ng-click="setDetail()">
+        <span>
+          <i class="ion-sad"  style="font-size: 1.2em;"></i>
+          click,and look for detail
+        </span>
+        <i ng-if="detail==false" class="icon ion-chevron-down" style="font-size: 1.2em;"></i>
+        <i ng-if="detail==true" class="icon ion-chevron-up" style="font-size: 1.2em;"></i>
+      </ion-item>
+
+      <ion-item ng-if="detail==true" class="item-detail">
+          <span>
+            it is just some introduction
+          </span>
+        <i class="icon ion-ios-information-outline"></i>
+      </ion-item>
+
+      <ion-item  class="item item-icon-right">
+        <span>
+          <i class="ion-sad"  style="font-size: 1.2em;"></i>
+          i am a bottom...
+        </span>
+        <i class="icon ion-chevron-down" style="font-size: 1.2em;"></i>
+      </ion-item>
+
+    </ion-list>
+
+
+
+  </ion-content>
+
+
+
+
+</ion-view>
