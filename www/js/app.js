@@ -142,7 +142,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/tabs/dashboard');
 
 })
     .factory('BaiduMapService', function($q, baiduMapApi) {

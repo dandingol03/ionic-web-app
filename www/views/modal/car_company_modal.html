@@ -1,0 +1,32 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="closeCompanyModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" style="width: 95%;padding:10px">
+
+
+
+
+    <ion-scroll style="height: 100%;margin-top:2px;padding-top:3%;background:rgba(3,3,3,0.1);">
+      <ul style="width:100%;">
+      <li style="width:33%;padding:2%;float:left;display:inline-block" ng-repeat="company in companys">
+       <button style="border:1px;width:100%;background-color:white;text-align:center;"
+               ng-click="selectCompany(company.name)">
+         {{company.name}}
+       </button>
+
+
+
+      </li>
+      </ul>
+
+    </ion-scroll>
+
+
+
+
+
+
+  </ion-content>
+
+</ion-modal-view>
