@@ -30,6 +30,7 @@ angular.module('starter')
     $scope.company={name:"选择公司"};
     $scope.selectCompany=function(companyName){
       $scope.company.name=companyName;
+      $scope.apply();
       $scope.closeCompanyModal();
 
     }
@@ -188,7 +189,7 @@ angular.module('starter')
         case 1: //建议套餐
           var flag=true;
           var meals = $scope.tabs[$scope.tabIndex];
-          var selected=meals.map(function(meal,i) {
+          var selected=meals.insurances.map(function(meal,i) {
               if(meal.price!==undefined&&meal.price!==null)
                 return meal;
               else
@@ -202,7 +203,7 @@ angular.module('starter')
             alert('请填写完成您的套餐选择');
           }else{
               //TODO:pass the meals to next step
-           $state.go('')
+           $state.go('car_orders',{selected:JSON.stringify(selected)})
 
 
           }
