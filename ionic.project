@@ -9,6 +9,10 @@
             {
               "path":"/securityCode",
               "proxyUrl":"http://localhost:3000/securityCode"
-            }
+            },
+            {
+               "path":"/pm",
+               "proxyUrl":"http://localhost:3000"
+                        }
           ]
 }
