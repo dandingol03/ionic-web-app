@@ -153,6 +153,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       url:'/passwordModify',
       controller:'passwordModifyController',
       templateUrl:'views/passwordModify/passwordModify.html'
+    })
+
+    .state('car_orders',{
+      url:'/car_orders',
+      controller:'carOrdersController',
+      templateUrl:'views/car_orders/car_orders.html'
     });
 
 
