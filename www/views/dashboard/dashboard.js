@@ -10,6 +10,39 @@ angular.module('starter')
     $scope.goto=function(url){
       $location.path(url);
     };
+    $http({
+      method: "post",
+      url: "/pm/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token,
+      },
+      data:
+      {
+        request:'getCarAndOwnerInfo'
+      }
+    }).
+      success(function (response) {
+        var response=response;
+        $scope.carInfo=response.carInfo[0];
+        console.log('success');
+      })
+    $scope.postLifeInfo=function(){
+      $http({
+        method: "POST",
+        url: "/pm/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'getLifeInsuranceList',
+        }
+      }).
+        success(function (response) {
+          $scope.lifeInfo=response.lifeInfo[0];
+          console.log('success');
+        })
+    }
 
 
     //use factory to improve
@@ -98,7 +131,8 @@ angular.module('starter')
 
 
 
-    $scope.post=function(){
+
+    $scope.postCarInfo=function(){
       $http({
         method: "POST",
         url: "/pm/svr/request",
@@ -115,6 +149,7 @@ angular.module('starter')
           console.log('success');
         })
     }
+
     $scope.select_type=function(){
       var carInfo=$scope.carInfo;
       $state.go('car_insurance');
