@@ -17,27 +17,20 @@
 
   <ion-content scroll="true" class="padding" lazy-scroll>
 
-    <ul class="list">
-
-      <li class="item item-icon-right" ng-click="go_to('myInfo')">
-
+    <ion-list ng-repeat="order in orders">
+      <ion-item class="item item-icon-right" ng-click="go_to(item.href)">
         <span>
-            <i class="ion-person"  style="font-size: 3.2em;"></i>
-            {{user.phone}}
+          被保险人:
         </span>
-        <i class="icon ion-chevron-right" style="font-size: 1.2em;"></i>
-      </li>
-    </ul>
+        {{order.insuranced}}
 
+      </ion-item>
 
-    <ion-list>
-      <ion-item ng-repeat="item in infos" class="item item-icon-right" ng-click="go_to(item.href)">
-        <span>
-          <i class="ion-clipboard"  ng-style="item.style" ng-if="$index%2==0"></i>
-          <i class="ion-levels" ng-style="item.style" ng-if="$index%2!=0"></i>
-          {{item.title}}
+      <ion-item>
+            <span>
+          合计:
         </span>
-        <i class="icon ion-chevron-right" style="font-size: 1.2em;"></i>
+        {{order.total}}
       </ion-item>
     </ion-list>
 

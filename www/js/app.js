@@ -138,11 +138,32 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       url:'/life_insurance_detail/:insurance',
       controller:'lifeDetailController',
       templateUrl:'views/life_insurance_detail/life_insurance_detail.html'
+    })
+
+    /**
+     * 个人信息=>['修改密码','退出登录']
+     */
+    .state('myInfo',{
+      url:'/myInfo',
+      controller:'myInfoController',
+      templateUrl:'views/myInfo/myInfo.html'
+    })
+
+    .state('passwordModify',{
+      url:'/passwordModify',
+      controller:'passwordModifyController',
+      templateUrl:'views/passwordModify/passwordModify.html'
+    })
+
+    .state('car_orders',{
+      url:'/car_orders',
+      controller:'carOrdersController',
+      templateUrl:'views/car_orders/car_orders.html'
     });
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/tabs/dashboard');
 
 })
     .factory('BaiduMapService', function($q, baiduMapApi) {
