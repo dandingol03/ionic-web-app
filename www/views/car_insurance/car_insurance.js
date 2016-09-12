@@ -21,6 +21,20 @@ angular.module('starter')
     ];
 
 
+    //选择公司
+    $scope.companys=[
+      {name:"太平洋保险公司"},{name:"平安保险公司"},{name:"新华保险公司"},
+      {name:"太平洋保险公司"},{name:"太平洋保险公司"},{name:"太平洋保险公司"},
+      {name:"太平洋保险公司"},{name:"太平洋保险公司"},{name:"太平洋保险公司"}
+      ];
+    $scope.company={name:"选择公司"};
+    $scope.selectCompany=function(companyName){
+      $scope.company.name=companyName;
+      $scope.apply();
+      $scope.closeCompanyModal();
+
+    }
+
 
     //获得险种的基础套餐列表
 
@@ -49,7 +63,7 @@ angular.module('starter')
 
 
 
-    $scope.apply=function () {//选好险种提交时做的动作
+   /* $scope.apply=function () {//选好险种提交时做的动作
 
       $scope.car_insurance.state='pricing';//状态是估价中订单
 
@@ -68,7 +82,7 @@ angular.module('starter')
 
       $state.go('motor_plan',{plan:[]});//跳到车险方案列表页面,并传递选中的险种和相应保额作为参数。
 
-    }
+    }*/
 
 
 
@@ -150,6 +164,24 @@ angular.module('starter')
     /**************方案详情模态框*************************/
 
 
+    /**************选择公司模态框*************************/
+    $ionicModal.fromTemplateUrl('/views/modal/car_company_modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.car_company_modal = modal;
+    });
+    $scope.openCompanyModal = function() {
+      $scope.car_company_modal.show();
+    };
+    $scope.closeCompanyModal = function() {
+      $scope.car_company_modal.hide();
+    };
+    /**************选择公司模态框*************************/
+
+
+
+
     $scope.apply=function(){
       switch($scope.tabIndex)
       {
@@ -171,6 +203,9 @@ angular.module('starter')
             alert('请填写完成您的套餐选择');
           }else{
               //TODO:pass the meals to next step
+           $state.go('car_orders',{selected:JSON.stringify(selected)})
+
+
           }
 
           break;
