@@ -20,7 +20,37 @@ angular.module('starter')
     $scope.user={};
 
 
+//*******************测试百悟短信验证码*********************//
 
+    $scope.baiwu = function(){
+
+      $http({
+        method:'POST',
+        url:"/proxy/send",
+        headers:{
+        'Content-Type':'application/json'
+      },
+        data:{  corp_id:'hy6550',
+        corp_pwd:'mm2289',
+        corp_service:'1069003256550',
+        mobile:'18253160627',
+        msg_content:'hello,xyd',
+        corp_msg_id:'',
+        ext:'' // your data” }
+      }}).
+      success(function (response) {
+        console.log('success');
+      }).
+      error(function (err) {
+        var str='';
+        for(var field in err)
+          str+=field+':'+err[field];
+          console.log('error='+str);
+      });
+    }
+
+
+//*******************测试百悟短信验证码*********************//
 
 
     $scope.securityCode_generate=function(){
