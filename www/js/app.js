@@ -21,7 +21,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     };
 
     $rootScope.car_orders=[
-      {},
         [
         {name:"ABC",carNum:"鲁A00003",sum:200},
         {name:"ABC",carNum:"鲁A00003",sum:200},

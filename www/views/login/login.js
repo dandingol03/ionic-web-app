@@ -258,6 +258,37 @@ angular.module('starter')
       });
     }
 
+    $scope.uploadPhoto=function(){
+
+      $cordovaFileTransfer.upload(server, $scope.photo,options)
+        .then(function(result) {
+          var response=result.response;
+          var json=eval('('+response+')');
+          if(json.type!==undefined&&json.type!==null)
+          {
+            $ionicLoading.show({
+              template: json.content,
+              duration: 2000
+            });
+            //TODO:将本用户更新照片的消息通过websocket发送给其他用户
+
+          }else{
+            $ionicLoading.show({
+              template: "field type doesn't exist in response",
+              duration: 2000
+            });
+          }
+
+        }, function(err) {
+          // Error
+          alert("err:"+err);
+        }, function (progress) {
+          // constant progress updates
+        });
+
+    }
+
+
     $scope.uploadCarAndOwnerInfo=function()
     {
       $http.get("http://localhost:9030/insurance/get_lifeinsurance_list",
