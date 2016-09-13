@@ -156,7 +156,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     })
 
     .state('car_orders',{
-      url:'/car_orders',
+      url:'/car_orders/:selected',
       controller:'carOrdersController',
       templateUrl:'views/car_orders/car_orders.html'
     });

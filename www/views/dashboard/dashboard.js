@@ -315,9 +315,11 @@ angular.module('starter')
 
 
     $scope.tabIndex=0;
+
     $scope.tab_change=function(i){
       $scope.tabIndex=i;
     };
+
     $scope.life_insuranse={};
     $scope.detail_ref=function(insurance){
       switch($scope.tabIndex)
@@ -372,6 +374,39 @@ angular.module('starter')
       '接送机',
       '违章查询'
     ];
+
+    //维修救援
+
+    $scope.subTabIndex=0;
+    $scope.subTab_change=function(i) {
+      $scope.subTabIndex=i;
+    };
+    $scope.dailys=[{name:'机油,机滤'},{name:'机油,三滤'},{name:'更换刹车片'},{name:'雨刷片更换'},{name:'轮胎更换'}]
+    $scope.daily={};
+    $scope.selected_daily=[];
+
+    $scope.commit_daily=function(){
+      dailys.map(function(daily,i) {
+        if(daily.checked)
+           selected_daily.push(daily);
+      });
+      $rootScope.selected_daily= $scope.selected_daily;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       //维修救援

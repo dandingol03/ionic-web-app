@@ -1,8 +1,15 @@
 angular.module('starter')
 
-  .controller('carOrdersController',function($scope,$state,$http, $location){
+  .controller('carOrdersController',function($scope,$state,$http, $location,$stateParams){
 
     //车险订单  1.简要:carNum,被投保人
+
+    $scope.orders=[
+      {name:"ABC",carNum:"鲁A00003",sum:200},
+      {name:"ABC",carNum:"鲁A00003",sum:200},
+      {name:"ABC",carNum:"鲁A00003",sum:200}
+                   ];//车险选好公司后,生成的订单
+    $scope.selected=JSON.parse($stateParams.selected);
 
     $scope.goto=function(url){
       $location.path(url);
@@ -12,7 +19,9 @@ angular.module('starter')
       window.history.back();
     }
 
-    $scope.orders=[{carNum:'538900',insuranced:'ddw',
-      specials:[],total:'10000$',date:new Date()}];
+    $scope.setDetail=function(order){
+      order.detail=!order.detail;
+    }
+
 
   });
