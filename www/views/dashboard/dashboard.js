@@ -175,62 +175,140 @@ angular.module('starter')
 
 
 
-    $http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
-      then(function(res) {
-        if(res.data!==undefined&&res.data!==null)
-        {
-          var data=res.data;
-          var life_insurances=data.life_insurances;
-          if(Object.prototype.toString.call(life_insurances)!='[object Array]')
-            life_insurances=JSON.parse(life_insurances);
-          $scope.life_insurances=life_insurances;
-          return $http.get("http://202.194.14.106:9030/insurance/project_provide");
-        }
-      }).
-      then(function(res){
-            if(res.data!==undefined&&res.data!==null)
-            {
-              var data=res.data;
-              var projects=data.projects;
-              if(Object.prototype.toString.call(projects)!='[object Array]')
-                projects=JSON.parse(projects);
-              $scope.motor_specials=projects;
-              return true;
-            }
-            else
-              return false;
-          }).
-      then(function(re) {
-          if(re==true)
-          {
-            $scope.tabs=[
-              {type:'车险',insurances:$scope.motor_specials},
-              {type:'寿险',insurances:$scope.life_insurances},
-              {type:'维修'},
-              {type:'车驾管服务',
-                services:[
-                  {name:'代办车辆年审',href:''},
-                  {name:'代办驾驶证年审',href:''},
-                  {name:'取送车',href:''},
-                  {name:'接送机',href:''},
-                  {name:'违章查询',href:''}
-                ]
-              }
-            ];
+    //$http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
+    //  then(function(res) {
+    //    if(res.data!==undefined&&res.data!==null)
+    //    {
+    //      var data=res.data;
+    //      var life_insurances=data.life_insurances;
+    //      if(Object.prototype.toString.call(life_insurances)!='[object Array]')
+    //        life_insurances=JSON.parse(life_insurances);
+    //      $scope.life_insurances=life_insurances;
+    //      return $http.get("http://202.194.14.106:9030/insurance/project_provide");
+    //    }
+    //  }).
+    //  then(function(res){
+    //        if(res.data!==undefined&&res.data!==null)
+    //        {
+    //          var data=res.data;
+    //          var projects=data.projects;
+    //          if(Object.prototype.toString.call(projects)!='[object Array]')
+    //            projects=JSON.parse(projects);
+    //          $scope.motor_specials=projects;
+    //          return true;
+    //        }
+    //        else
+    //          return false;
+    //      }).
+    //  then(function(re) {
+    //      if(re==true)
+    //      {
+    //        $scope.tabs=[
+    //          {type:'车险',insurances:$scope.motor_specials},
+    //          {type:'寿险',insurances:$scope.life_insurances},
+    //          {type:'维修'},
+    //          {type:'车驾管服务',
+    //            services:[
+    //              {name:'代办车辆年审',href:''},
+    //              {name:'代办驾驶证年审',href:''},
+    //              {name:'取送车',href:''},
+    //              {name:'接送机',href:''},
+    //              {name:'违章查询',href:''}
+    //            ]
+    //          }
+    //        ];
+    //      }
+    //  })
+    //  .catch(function(err) {
+    //    var error='';
+    //    for(var field in err)
+    //    {
+    //      error+=field+':'+err[field]+'\r\n';
+    //    }
+    //    alert('err=' + error);
+    //  });
+
+
+    //返回寿险产品列表
+    $http({
+      method: "POST",
+      url: "/proxy/node_server/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token,
+      },
+      data:
+      {
+        request:'getLifeInsuranceProducts',
+        info:$scope.carInfo
+      }
+    }).then(function(res) {
+      var data=res.data;
+      var life_insurance_products=[];
+      if(data.re==1)
+      {
+        data.data.map(function(record,i) {
+          if(record!==undefined&&record!==null)
+            life_insurance_products.push(record);
+        });
+      }else{
+      }
+      $scope.life_insurances=life_insurance_products;
+      return  $http.get("http://202.194.14.106:9030/insurance/project_provide");
+    }).then(function (res) {
+      if(res.data!==undefined&&res.data!==null)
+      {
+        var data=res.data;
+        var projects=data.projects;
+        if(Object.prototype.toString.call(projects)!='[object Array]')
+          projects=JSON.parse(projects);
+        $scope.motor_specials=projects;
+        return true;
+      }
+      else
+        return false;
+
+    }).then(function(re) {
+      if(re==true)
+      {
+        $scope.tabs=[
+          {type:'车险',insurances:$scope.motor_specials},
+          {type:'寿险',insurances:$scope.life_insurances},
+          {type:'维修'},
+          {type:'车驾管服务',
+            services:[
+              {name:'代办车辆年审',href:''},
+              {name:'代办驾驶证年审',href:''},
+              {name:'取送车',href:''},
+              {name:'接送机',href:''},
+              {name:'违章查询',href:''}
+            ]
           }
-      })
-      .catch(function(err) {
-        var error='';
-        for(var field in err)
-        {
-          error+=field+':'+err[field]+'\r\n';
-        }
-        alert('err=' + error);
-      });
+        ];
+      }
+    }).catch(function (err) {
+      console.log('server fetch error');
+    });
 
+    //寿险详情展示
+    $scope.setDetail=function(item){
+      if(item.show_detail!=true)
+        item.show_detail=true;
+      else
+        item.show_detail=false;
+    }
 
-
-
+    //寿险产品勾选
+    $scope.toggle_lifeinsurance_product=function(item){
+      if($scope.life_insurance.product!==undefined&&$scope.life_insurance.product!==null)
+      {
+        if($scope.life_insurance.product.productId==item.productId)
+            $scope.life_insurance.product=null;
+        else
+          $scope.life_insurance.product=item;
+      }else{
+        $scope.life_insurance.product=item;
+      }
+    }
 
 
 
@@ -338,7 +416,7 @@ angular.module('starter')
 
     $scope.actionSheet_show = function() {
 
-      // Show the action sheet
+      // Show the acti2e1on sheet
       var hideSheet = $ionicActionSheet.show({
         buttons: [
           { text: '<b>Share</b> This' },

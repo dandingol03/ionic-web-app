@@ -2,7 +2,7 @@ angular.module('starter')
 
   .controller('carOrdersController',function($scope,$state,$http, $location){
 
-    //customer 用户
+    //车险订单  1.简要:carNum,被投保人
 
     $scope.goto=function(url){
       $location.path(url);

@@ -57,34 +57,68 @@
       <div class="list " ng-if="tabIndex==1" scroll="true">
 
         <div class="item item-divider">
-          已有产品列表
+          已有公司产品列表
           <span class="right" style="position: absolute;right: 10%" ng-click="open_lifeModal()">
             订制寿险方案
             <i class="ion-ios-compose-outline" style="color:#3F7B12"></i>
           </span>
         </div>
 
-        <div class="row home-tab" ng-if="tabIndex==1"
-             ng-repeat="item in tabs[tabIndex].insurances"
-             ng-model="life_insurance.flag"
-          >
-          <div class="col col-90">
-            <div class="item item-text-wrap item-thumbnail-left"
-                 ng-click="detail_ref(item)"
-                 style="border: 0;">
+        <div ng-if="tabIndex==1"
+             ng-repeat="item in tabs[tabIndex].insurances">
+          <!--  公司简介 -->
+          <div class="row home-tab"
+               ng-model="life_insurance.flag"
+               style="padding-bottom: 0px;"
+            >
+            <div class="col" style="padding-bottom: 0px;">
+              <div class="item item-text-wrap item-thumbnail-left"
+                   ng-style="item.show_detail==true?{position: 'relative',borderBottom: '0px'}:{position:'relative'}">
 
-              <img ng-src="{{item.main.img!=undefined&&item.main.img!=null?('img/'+item.main.img):'img/1.jpg'}}"/>
-              <div style="text-decoration: none">
-                <h2 class="product-title">{{item.main['名称']}}</h2>
-                <p class="list-price">
-                  {{item.main['描述']}}
-                </p>
-                <p class="list-price">合计: <i class="compare_at_price">{{item.price}}</i></p>
+                <img ng-src="{{'img/tk_life_insurance.jpg'}}"/>
+
+                <!-- 公司名称-->
+                <div style="text-decoration: none;position: absolute;bottom: 40%;">
+                  <h2 class="product-title">{{item.companyName}}</h2>
+                </div>
+
+                <span
+                  style="position: absolute;right: 10%;bottom: 10%;font-size: 1.4em;"
+                  ng-click="setDetail(item)">
+                  <i ng-if="item.show_detail!=true" class="ion-chevron-down"></i>
+                  <i ng-if="item.show_detail==true" class="ion-chevron-up"></i>
+                </span>
 
               </div>
             </div>
           </div>
+
+          <!-- 公司产品简介 -->
+          <div class="padding"
+               style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
+            <div class="item item-detail"
+                 ng-style="$index!=item.products.length-1?{margin:'1px',padding:'8px',borderBottom:'0px'}:{margin:'1px',padding:'8px'}"
+                 ng-repeat="product in item.products"
+                 ng-if="item.show_detail==true"
+                 ng-click="toggle_lifeinsurance_product(product)"
+              >
+              <span class="input-label" style="display: inline-block;width: 15%;">
+                产品:
+              </span>
+              <span>
+                {{product.productName}}
+              </span>
+              <span style="font-size: 2em;position: absolute;right: 10%;">
+                <i ng-if="product.productId!=life_insurance.product.productId" class=" ion-ios-checkmark-outline"></i>
+                <i ng-if="product.productId==life_insurance.product.productId" class=" ion-ios-checkmark"></i>
+              </span>
+            </div>
+          </div>
+
         </div>
+
+
+
       </div>
 
 

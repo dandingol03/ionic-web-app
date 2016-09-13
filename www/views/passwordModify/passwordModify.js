@@ -17,7 +17,7 @@ angular.module('starter')
     $scope.save=function(){
       $http({
         method: "POST",
-        url: "/proxy/node_server/passwordModify",
+        url: "/proxy/node_server/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
