@@ -50,9 +50,9 @@ angular.module('starter')
 
     //选择公司
     $scope.companys=[
-      {name:"太平洋保险公司"},{name:"平安保险公司"},{name:"新华保险公司"},
-      {name:"太平洋保险公司"},{name:"太平洋保险公司"},{name:"太平洋保险公司"},
-      {name:"太平洋保险公司"},{name:"太平洋保险公司"},{name:"太平洋保险公司"}
+      {name:"太平洋保险"},{name:"平安保险"},{name:"新华保险"},
+      {name:"太平洋保险"},{name:"太平洋保险"},{name:"太平洋保险"},
+      {name:"太平洋保险"},{name:"太平洋保险"},{name:"太平洋保险"}
       ];
     $scope.company={name:"选择公司"};
     $scope.selectCompany=function(companyName){

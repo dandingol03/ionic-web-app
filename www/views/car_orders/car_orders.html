@@ -1,4 +1,4 @@
-<ion-view view-title="我的">
+<ion-view view-title="车险订单">
 
   <ion-nav-bar class="bar-stable" align-title="center" >
     <ion-nav-buttons side="left">
@@ -15,13 +15,48 @@
   </ion-nav-bar>
 
 
-  <ion-content scroll="true" class="padding" lazy-scroll>
+  <ion-content scroll="true" lazy-scroll>
+
+    <div class="list" style="margin-bottom: 0px;">
+      <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
+
+
+        <li style="width:50%">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tabIndex==0]"
+               ng-click="tab_change(0)"
+               style="text-align: center">
+            <div style="height: 100%">
+               <span style="position:absolute;top:30%;left: 20%;right:20%;">
+                  已生成
+               </span>
+            </div>
+          </div>
+        </li>
+
+        <li style="width:50%">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tabIndex==1]"
+               ng-click="tab_change(1)"
+               style="text-align: center">
+            <div style="width: 100%;">
+              <span style="position:absolute;top: 30%;left:20%;right:20%;">
+                待支付
+              </span>
+            </div>
+
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
 
     <div class="list list-inset padding" style="margin-bottom:40px;" >
 
       <div class="item"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-repeat="order in orders"
+           ng-repeat="order in orders[tabIndex]"
       >
         <ion-item
           class="item item-icon-right"
@@ -45,29 +80,28 @@
               </div>
 
               <i class="ion-compose" style="position: absolute;right: 10%;bottom:20%;"></i>
-              <i class="ion-chevron-down" style="position: absolute;right: 20%;bottom:20%;"
-                 ng-click="setDetail(order)"></i>
+              <i class="ion-chevron-right" style="position: absolute;right: 20%;bottom:20%;"
+                 ng-click="goDetail(order)"></i>
             </div>
           </div>
         </ion-item>
 
-        <ion-item ng-if="order.detail==true" class="item-detail">
-          <div class="list list-inset padding" style="margin-bottom:40px;" >
+        <ion-item ng-if="order.detail==true" class="item-detail" style="padding: 0px;border:0px;">
+          <div class="list list-inset" style="margin-bottom:40px;" >
 
-            <div class="item">
+            <div class="item" style="border-top:0px;border-left:0px;border-right:0px;border-bottom: 1px solid">
               <span>生效日期:</span>
             </div>
-            <div class="item">
+            <div class="item" style="border-top:0px;border-left:0px;border-right: 0px;">
               <span>被保险人:</span>
             </div>
             <div class="item"
                  style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-                 ng-repeat="type in selected"
-            >
-            <span>险种名称:{{type.name}}</span>
+                 ng-repeat="type in selected">
+              <span>险种名称:{{type.name}}</span>
               <span>保额:{{type.fee}}</span>
-
             </div>
+          </div>
         </ion-item>
       </div>
 
