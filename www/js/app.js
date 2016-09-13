@@ -159,6 +159,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       url:'/car_orders/:selected',
       controller:'carOrdersController',
       templateUrl:'views/car_orders/car_orders.html'
+    })
+
+    .state('uploadPhotod',{
+      url:'/uploadPhotod',
+      controller:'uploadPhotodController',
+      templateUrl:'views/uploadPhotod/uploadPhotod.html'
     });
 
 

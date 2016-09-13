@@ -1,0 +1,66 @@
+<ion-view view-title="{{title}}">
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+  <ion-content class="padding cart_detail">
+    <div class="list">
+      <div class="item" style="border:0px;padding-left:26px;padding-right:26px;"  ng-repeat="items in certificates">
+
+        <div class="card" style="margin-top:5%;">
+          <div class="row">
+            <img ng-src="{{item.main.img!=undefined&&item.main.img!=null?('img/'+item.main.img):'img/card.jpg'}}"/>
+          </div>
+
+
+          <div>
+            <h2 style="padding:3%;margin-top:2%;margin-left:3%;font-size:larger;width:50%;">
+              {{items.typeName}}
+              <i class="item-button button  icon ion-camera" ng-click="addAttachment()"></i>
+            </h2>
+
+            <div>
+              <div style="display:inline-block;padding:3%;padding-top:0;">
+                <lable>姓名:</lable>
+                <lable>{{items.name}}</lable>
+              </div>
+              <div style="display:inline-block;padding:3%;padding-top:0;">
+                <lable>年龄:</lable>
+                <lable>{{items.age}}</lable>
+              </div>
+              <div style="display:inline-block;padding:3%;padding-top:0;">
+                <lable>证件号:</lable>
+                <lable>{{items.id}}</lable>
+              </div>
+            </div>
+
+          </div>
+          <div style="padding:10px;">
+            <button class="button button-stable" style="padding-left:10%;padding-right:10%;width:45%; margin-right:10%;" ng-click="uploadCertificate()">
+              上传
+            </button>
+            <button class="button button-stable" style="padding-left:10%;padding-right:10%;width:45%;" ng-click="">
+              删除
+            </button>
+
+          </div>
+
+
+        </>
+
+      </div>
+    </div>
+
+
+    </ion-content>
+  </ion-view>
+
