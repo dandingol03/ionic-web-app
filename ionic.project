@@ -13,6 +13,11 @@
             {
               "path":"/proxy/node_server",
               "proxyUrl":"http://localhost:3000"
-            }
+            },
+
+            {
+               "path":"/proxy/send",
+               "proxyUrl":"http://sms.cloud.hbsmservice.com:8080/sms_send2.do"
+                        }
           ]
 }

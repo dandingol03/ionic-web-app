@@ -81,7 +81,7 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-        url:"/proxy/node_server/login",
+        url:"http://202.194.14.106:3000/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -229,7 +229,7 @@ angular.module('starter')
 
 
     $scope.test=function() {
-      $http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
+      $http.get("http://202.194.14.106:3000/insurance/get_lifeinsurance_list").
         then(function(res) {
           if(res.data!==undefined&&res.data!==null)
           {
