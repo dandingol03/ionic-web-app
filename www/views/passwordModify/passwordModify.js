@@ -17,7 +17,9 @@ angular.module('starter')
     $scope.save=function(){
       $http({
         method: "POST",
+
         url: "/pm/svr/request",
+
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },

@@ -20,6 +20,15 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       backView.go();
     };
 
+    $rootScope.car_orders=[
+      {},
+        [
+        {name:"ABC",carNum:"鲁A00003",sum:200},
+        {name:"ABC",carNum:"鲁A00003",sum:200},
+        {name:"ABC",carNum:"鲁A00003",sum:200}
+        ],
+      {}
+    ];
 
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -161,11 +170,19 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/car_orders/car_orders.html'
     })
 
-    .state('uploadPhotod',{
-      url:'/uploadPhotod',
-      controller:'uploadPhotodController',
-      templateUrl:'views/uploadPhotod/uploadPhotod.html'
-    });
+
+    .state('uploadPhotod', {
+      url: '/uploadPhotod',
+      controller: 'uploadPhotodController',
+      templateUrl: 'views/uploadPhotod/uploadPhotod.html'
+    })
+
+    .state('car_order_detail',{
+      url:'/car_order_detail/:order',
+      controller:'carOrderDetailController',
+      templateUrl:'views/car_order_detail/car_order_detail.html'
+
+    })
 
 
   // if none of the above states are matched, use this as the fallback

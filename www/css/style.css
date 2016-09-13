@@ -884,20 +884,12 @@ table.table1{
 
 
 .item-detail.ng-enter{
-  -webkit-animation: fadeInDown .4s;
-  animation: fadeInDown .4s;
+  -webkit-animation: fadeInLeft .4s;
+  animation: fadeInLeft .4s;
 }
 
 .item-detail.ng-leave{
-  -webkit-animation: fadeOutUp .4s;
-  animation: fadeOutUp .4s;
+  -webkit-animation: fadeOutRight .4s;
+  animation: fadeOutRight .4s;
 }
 
-.item-detail.ng-enter-stagger{
-  -webkit-animation-delay:200ms;
-  animation-delay:200ms;
-
-  /* override to make sure it's not inherited from other styles */
-  -webkit-animation-duration:0;
-  animation-duration:0;
-}

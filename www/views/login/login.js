@@ -3,9 +3,9 @@
  */
 angular.module('starter')
 
-  .controller('loginController',function($scope,$state,$ionicLoading,$http
-    ,$ionicPopup,$timeout,$rootScope
+  .controller('loginController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
     ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera){
+
 
 
 
@@ -52,6 +52,7 @@ angular.module('starter')
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
         url:"/pm/login",
+
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -135,6 +136,67 @@ angular.module('starter')
           }, function (progress) {
           });
       }
+
+          //var targetPath=cordova.file.externalRootDirectory+'ionic.jpg';
+
+
+          var carInfo = {
+            carNum : "5",
+            engineNum : "2",
+            frameNum : "3",
+            factoryNum : "4",
+            firstRegisterTime : "2016-01-01",
+            ownerName : "6",
+            ownerIdCard : "7",
+            ownerAddress : "8",
+            carPhoto: null,
+            ownerIdPhoto: null
+          };
+
+          $rootScope.access_token=access_token;
+          $state.go('tabs.dashboard');
+
+
+          $scope.photo='';
+
+
+          /**
+           * $cordovaFile 读取文件
+           */
+          //$cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
+          //  .then(function (success) {
+          //    alert('content of image=' + success);
+          //    carInfo.carPhoto=success;
+          //    carInfo.ownerIdPhoto=success;
+          //    $http({
+          //      method: "POST",
+          //      url: "http://192.168.1.102:3000/svr/request",
+          //      headers: {
+          //        'Authorization': "Bearer " + access_token,
+          //      },
+          //      data:
+          //      {
+          //        request:'uploadCarAndOwnerInfo',
+          //        info:carInfo
+          //      }
+          //    }).
+          //      success(function (response) {
+          //        console.log('success');
+          //      }).
+          //      error(function (err) {
+          //        var str='';
+          //        for(var field in err)
+          //          str+=field+':'+err[field];
+          //        console.log('error='+str);
+          //      });
+          //  }, function (error) {
+          //    // error
+          //    var err='';
+          //    for(var field in error)
+          //    err+=field+':'+error[field];
+          //    alert('error=' + err);
+          //  });
+
 
 
 
