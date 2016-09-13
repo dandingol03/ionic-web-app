@@ -1,0 +1,72 @@
+<ion-view view-title="车险订单详情">
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content scroll="true" lazy-scroll>
+
+
+
+    <!-- inset one -->
+    <div class="list list-inset" style="margin-bottom:40px;margin-left:0px;margin-right:0px;" >
+      <div class="item" href="" style="padding:16px;position: relative">
+        车牌号:
+        <span style="position: absolute;right:20%;">{{order.carId}}</span>
+      </div>
+      <div class="item" href="" style="padding:16px;">
+        投保人:
+        <span style="position: absolute;right:20%;">{{order.custmomerId}}</span>
+      </div>
+      <div class="item" href="" style="padding:16px;">
+        被保险人:
+        <span style="position: absolute;right:20%;">{{order.benefiterId}}</span>
+      </div>
+    </div>
+
+    <!-- inset two -->
+    <div
+      class="list list-inset"
+      style="margin-bottom:40px;margin-left:0px;margin-right:0px;"
+      ng-if="order.items!==undefined&&order.items!==null">
+      <div class="item item-divider">
+        订单产品
+      </div>
+      <div class="item" style="padding: 16px;" ng-repeat="item in order.items">
+          <span>
+            {{item.productName}}
+          </span>
+      </div>
+    </div>
+
+    <!-- inset three -->
+    <div class="list list-inset" style="margin-bottom:40px;margin-left:0px;margin-right:0px;" >
+      <div class="item" href="" style="padding:16px;">
+        总保费:
+        <span style="position: absolute;right:20%;">{{order.insuranceFeeTotal}}</span>
+      </div>
+      <div class="item" href="" style="padding:16px;">
+        生效日期:
+        <span style="position: absolute;right:20%;">{{order.orderDate}}</span>
+      </div>
+    </div>
+
+
+
+  </ion-content>
+
+
+
+
+</ion-view>
