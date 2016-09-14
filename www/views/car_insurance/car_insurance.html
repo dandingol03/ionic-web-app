@@ -101,7 +101,22 @@
              ng-repeat="item in tabs[tabIndex].insurances"
              style="border-bottom:1px solid #eee;padding:0px;margin-bottom:6px">
 
-          <div class="col-80">
+          <div class="col-80" ng-if="item.specials!=undefined">
+            <label class="item"
+                   style="border:0px;display: inline-block;width: 50%"
+                   ng-click="openSpecialModal()">
+              {{item.name}}
+              <i class="ion-ios-arrow-down"></i>
+            </label>
+            <label class="item" style="border:0px;display: inline-block">
+              保额:
+            <span >
+              {{item.price}}
+            </span>
+            </label>
+          </div>
+
+          <div class="col-80" ng-if="item.specials == undefined">
             <label class="item"
                    style="border:0px;display: inline-block;width: 50%">
               {{item.name}}
@@ -109,7 +124,7 @@
             <label class="item" style="border:0px;display: inline-block"
                    ng-click="price_select(item,item.prices)">
               保额:
-            <span ng-if="item.price!=undefined&&item.price!=null">
+              <span ng-if="item.price!=undefined&&item.price!=null">
               {{item.price}}
             </span>
               <i class="ion-ios-arrow-down" ng-if="item.prices!==undefined&&item.prices!==null"></i>

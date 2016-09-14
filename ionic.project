@@ -17,6 +17,11 @@
             {
                "path":"/proxy/remote",
                "proxyUrl":"http://202.194.14.106:3000"
+            },
+            {
+               "path":"/proxy/send",
+               "proxyUrl":"http://sms.cloud.hbsmservice.com:8080/sms_send2.do"
             }
+
           ]
 }
