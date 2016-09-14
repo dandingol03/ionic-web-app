@@ -1,4 +1,4 @@
-<ion-view view-title="个人信息">
+<ion-view view-title="我的积分">
 
   <ion-nav-bar class="bar-stable" align-title="center" >
     <ion-nav-buttons side="left">
@@ -16,6 +16,19 @@
 
 
   <ion-content scroll="true" class="padding" lazy-scroll>
+
+    <ul class="list">
+
+      <li class="item item-icon-right" ng-click="go_to('myInfo')">
+
+        <span>
+            <i class="ion-person"  style="font-size: 3.2em;"></i>
+            {{user.phone}}
+        </span>
+        <i class="icon ion-chevron-right" style="font-size: 1.2em;"></i>
+      </li>
+    </ul>
+
 
     <ion-list>
       <ion-item  class="item item-icon-right" ng-click="go_to('passwordModify')">
