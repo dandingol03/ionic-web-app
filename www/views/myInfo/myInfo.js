@@ -2,7 +2,7 @@
  * Created by apple-2 on 16/8/23.
  */
 angular.module('starter')
-  .controller('integrationController',function($scope,$state,$http){
+  .controller('myInfoController',function($scope,$state,$http){
 
     $scope.go_back=function(){
       window.history.back();

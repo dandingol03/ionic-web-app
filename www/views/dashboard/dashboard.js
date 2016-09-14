@@ -12,7 +12,7 @@ angular.module('starter')
     };
     $http({
       method: "post",
-      url: "/pm/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -20,15 +20,16 @@ angular.module('starter')
       {
         request:'getCarAndOwnerInfo'
       }
-    }).
-      success(function (response) {
+    })
+      .success(function (response) {
         $scope.carInfo=response.carInfo[0];
         console.log('success');
       })
+
     $scope.postLifeInfo=function(){
       $http({
         method: "POST",
-        url: "/pm/svr/request",
+        url: "/proxy/node_server/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -233,11 +234,7 @@ angular.module('starter')
     //返回寿险产品列表
     $http({
       method: "POST",
-<<<<<<< HEAD
       url: "/proxy/node_server/svr/request",
-=======
-      url: "/pm/svr/request",
->>>>>>> bbba05ea1e95f1eb2468305be2a9bccd328a2e68
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
