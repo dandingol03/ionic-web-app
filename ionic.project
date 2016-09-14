@@ -13,6 +13,10 @@
             {
               "path":"/proxy/node_server",
               "proxyUrl":"http://localhost:3000"
+            },
+            {
+               "path":"/proxy/remote",
+               "proxyUrl":"http://202.194.14.106:3000"
             }
           ]
 }
