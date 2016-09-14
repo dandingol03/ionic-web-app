@@ -22,7 +22,6 @@ angular.module('starter')
       }
     }).
       success(function (response) {
-        var response=response;
         $scope.carInfo=response.carInfo[0];
         console.log('success');
       })
@@ -288,7 +287,7 @@ angular.module('starter')
     //返回寿险产品列表
     $http({
       method: "POST",
-      url: "http://202.194.14.106:3000/svr/request",
+      url: "/pm/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
