@@ -176,10 +176,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl: 'views/integration/integration.html'
     })
 
-    .state('uploadPhotod', {
-      url: '/uploadPhotod',
-      controller: 'uploadPhotodController',
-      templateUrl: 'views/uploadPhotod/uploadPhotod.html'
+    .state('uploadPhoto', {
+      url: '/uploadPhoto',
+      controller: 'uploadPhotoController',
+      templateUrl: 'views/uploadPhoto/uploadPhoto.html'
     })
 
     .state('car_order_detail',{

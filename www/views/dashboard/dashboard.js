@@ -10,6 +10,7 @@ angular.module('starter')
     $scope.goto=function(url){
       $location.path(url);
     };
+
     $http({
       method: "post",
       url: "/proxy/node_server/svr/request",
@@ -25,6 +26,7 @@ angular.module('starter')
         $scope.carInfo=response.carInfo[0];
         console.log('success');
       })
+
 
     $scope.postLifeInfo=function(){
       $http({
@@ -301,6 +303,7 @@ angular.module('starter')
 
     //寿险产品勾选
     $scope.toggle_lifeinsurance_product=function(item){
+      //如果本次行为为寿险选中,则
       if($scope.life_insurance.product!==undefined&&$scope.life_insurance.product!==null)
       {
         if($scope.life_insurance.product.productId==item.productId)
@@ -309,6 +312,7 @@ angular.module('starter')
           $scope.life_insurance.product=item;
       }else{
         $scope.life_insurance.product=item;
+        $state.go('life_insurance_detail',{insurance:JSON.stringify(item)});
       }
     }
 
@@ -411,17 +415,29 @@ angular.module('starter')
 
 
 
-      //维修救援
-      $scope.maintain={
-        tabs:['日常保养','故障维修','事故维修'],
-        tab:'日常保养',
-        items:{}
-      };
+    //维修救援
+    $scope.maintain={
+      tabs:['日常保养','故障维修','事故维修'],
+      tab:'日常保养',
+      items:{}
+    };
 
-      $scope.accident={
+    $scope.accident={
 
-      };
+    };
 
+    $scope.daily_check=function(item){
+      if(item.checked==true)
+        item.checked=false;
+      else
+        item.checked=true;
+    }
+
+    $scope.accident={};
+    $scope.accidant_check=function(type)
+    {
+      $scope.accident.type=type;
+    }
 
     //车驾管服务
 

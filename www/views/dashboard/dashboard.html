@@ -261,21 +261,24 @@
           <div class="list">
             <div class="item" ng-repeat="item in dailys">
 
-              <div class="row">
-                <div class="col-50">
+              <div class="row" ng-click="daily_check(item)">
+                <div class="col-80">
                   <span>{{item.name}}</span>
                 </div>
-                <div class="col-20" style="position: relative">
-                  <input type="checkbox" ng-model="item.checked">
+                <div class="col-20" style="position: relative;font-size: 2em;">
+                  <i ng-if="item.checked!=true" class="ion-ios-checkmark-outline"></i>
+                  <i ng-if="item.checked==true" class="ion-ios-checkmark"></i>
                 </div>
 
               </div>
             </div>
           </div>
+
           <div>
 
-            <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-              <span class="input-label" style="display: inline-block;padding-left: 3%;max-width: 150px;">
+            <div class="item"
+                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+              <span class="input-label" style="display: inline-block;width:20%;padding-left: 3%;max-width: 150px;">
                 里程:
               </span>
               <input type="text" placeholder="请输入您的里程"
@@ -291,8 +294,6 @@
           </div>
 
         </div>
-
-        <!-- 故障维修 -->
 
         <!-- 故障维修 -->
         <div class="list list-inset padding" style="margin-bottom:40px;padding:3px;" ng-if="subTabIndex==1">
@@ -322,6 +323,57 @@
           <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
             <h1 class="title">确认</h1>
           </div>
+        </div>
+
+        <!-- 事故维修 -->
+        <div ng-if="subTabIndex==2">
+          <div class="item item-divider">
+            事故状况
+          </div>
+
+          <div class="list">
+
+            <div class="item">
+              <div class="row" ng-click="accidant_check('已报案')">
+                <div class="col-80">
+                  <span>已报案</span>
+                </div>
+                <div class="col-20" style="position: relative;font-size: 2em;">
+                  <i ng-if="accident.type!='已报案'" class="ion-ios-checkmark-outline"></i>
+                  <i ng-if="accident.type=='已报案'" class="ion-ios-checkmark"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row" ng-click="accidant_check('未报案')">
+                <div class="col-80">
+                  <span>未报案</span>
+                </div>
+                <div class="col-20" style="position: relative;font-size: 2em;">
+                  <i ng-if="accident.type!='未报案'" class="ion-ios-checkmark-outline"></i>
+                  <i ng-if="accident.type=='未报案'" class="ion-ios-checkmark"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row" ng-click="accidant_check('代索赔')">
+                <div class="col-80">
+                  <span>代索赔</span>
+                </div>
+                <div class="col-20" style="position: relative;font-size: 2em;">
+                  <i ng-if="accident.type!='代索赔'" class="ion-ios-checkmark-outline"></i>
+                  <i ng-if="accident.type=='代索赔'" class="ion-ios-checkmark"></i>
+                </div>
+              </div>
+            </div>
+
+            <button class="button button-block button-assertive" ng-click="">
+              确认事故状况
+            </button>
+          </div>
+
         </div>
 
       </ion-scroll>
