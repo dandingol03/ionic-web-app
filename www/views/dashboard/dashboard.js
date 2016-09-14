@@ -175,60 +175,6 @@ angular.module('starter')
 
 
 
-    //$http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
-    //  then(function(res) {
-    //    if(res.data!==undefined&&res.data!==null)
-    //    {
-    //      var data=res.data;
-    //      var life_insurances=data.life_insurances;
-    //      if(Object.prototype.toString.call(life_insurances)!='[object Array]')
-    //        life_insurances=JSON.parse(life_insurances);
-    //      $scope.life_insurances=life_insurances;
-    //      return $http.get("http://202.194.14.106:9030/insurance/project_provide");
-    //    }
-    //  }).
-    //  then(function(res){
-    //        if(res.data!==undefined&&res.data!==null)
-    //        {
-    //          var data=res.data;
-    //          var projects=data.projects;
-    //          if(Object.prototype.toString.call(projects)!='[object Array]')
-    //            projects=JSON.parse(projects);
-    //          $scope.motor_specials=projects;
-    //          return true;
-    //        }
-    //        else
-    //          return false;
-    //      }).
-    //  then(function(re) {
-    //      if(re==true)
-    //      {
-    //        $scope.tabs=[
-    //          {type:'车险',insurances:$scope.motor_specials},
-    //          {type:'寿险',insurances:$scope.life_insurances},
-    //          {type:'维修'},
-    //          {type:'车驾管服务',
-    //            services:[
-    //              {name:'代办车辆年审',href:''},
-    //              {name:'代办驾驶证年审',href:''},
-    //              {name:'取送车',href:''},
-    //              {name:'接送机',href:''},
-    //              {name:'违章查询',href:''}
-    //            ]
-    //          }
-    //        ];
-    //      }
-    //  })
-    //  .catch(function(err) {
-    //    var error='';
-    //    for(var field in err)
-    //    {
-    //      error+=field+':'+err[field]+'\r\n';
-    //    }
-    //    alert('err=' + error);
-    //  });
-
-
     //返回寿险产品列表
     $http({
       method: "POST",
