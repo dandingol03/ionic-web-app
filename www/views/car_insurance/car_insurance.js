@@ -12,20 +12,47 @@ angular.module('starter')
       $scope.tabIndex=i;
     };
 
+    $scope. modal_tab_change=function(i) {
+      $scope.modalTabIndex=i;
+    };
 
-    $scope.car_ins_plan={};
-    $scope.car_ins_plans=[//应该从服务器取
-      {companyName:'公司A',sum:2000,fee:1000,types:[{name:'交强险',price:1000,fee:10},{name:'车辆损失险',price:500,fee:20},{name:'第三者责任险',price:500,fee:10}]},
-      {companyName:'公司B',sum:2000,fee:1000,types:[{name:'车身划痕损失险',price:1000,fee:10},{name:'车辆损失险',price:500,fee:20},{name:'第三者责任险',price:500,fee:10}]},
-      {companyName:'公司C',sum:2000,fee:1000,types:[{name:'不计免赔',price:1000,fee:10},{name:'车辆损失险',price:500,fee:20},{name:'第三者责任险',price:500,fee:10}]}
+
+
+//从服务器取得险种
+    $scope.tabs=[
+      {type:'基础套餐',insurances:$scope.basic_meal},
+
+      { type:'建议套餐',
+        insurances:[
+
+          { name:'车上人员责任险',
+            specials:[
+              {name:'驾驶员',price:1000},
+              {name:'乘客',seats:[2,5,8,10]}
+            ]
+          },
+          {name:'交强险',price:400},
+          {name:'车船税',price:800},
+          {name:'车辆损失险',price:1205},
+          {name:'第三者责任险',prices:[1104,870,999]}
+        ]
+      },
+
+      {type:'自定义套餐',insurances:[]}
     ];
+
+
+
+
+
+
 
 
     //选择公司
     $scope.companys=[
-      {name:"太平洋保险公司"},{name:"平安保险公司"},{name:"新华保险公司"},
-      {name:"太平洋保险公司"},{name:"太平洋保险公司"},{name:"太平洋保险公司"},
-      {name:"太平洋保险公司"},{name:"太平洋保险公司"},{name:"太平洋保险公司"}
+      {name:"太平洋保险"},{name:"平安保险"},{name:"新华保险"},
+      {name:"太平洋保险"},{name:"太平洋保险"},{name:"太平洋保险"},
+      {name:"太平洋保险"},{name:"太平洋保险"},{name:"太平洋保险"}
       ];
     $scope.company={name:"选择公司"};
     $scope.selectCompany=function(companyName){
@@ -56,11 +83,49 @@ angular.module('starter')
     }).then(function(re){
       $scope.tabs=[
         {type:'基础套餐',insurances:$scope.basic_meal},
-        {type:'建议套餐',insurances:[]},
+
+        { type:'建议套餐',
+          insurances:[
+
+            { name:'车上人员责任险',
+              specials:[
+                {name:'驾驶员',price:1000},
+                {name:'乘客',seats:[2,5,8,10]}
+              ]
+            },
+            {name:'交强险',price:400},
+            {name:'车船税',price:800},
+            {name:'车辆损失险',price:1205},
+            {name:'第三者责任险',prices:[1104,870,999]}
+            ]
+        },
+
         {type:'自定义套餐',insurances:[]}
       ];
     });
 
+
+
+    //选择车辆人员责任险模态框
+
+    /*** bind special_tab_modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/special_tab_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.special_tab_modal = modal;
+    });
+
+    //待定
+    $scope.openSpecialModal= function(){
+      $scope.special_tab_modal.show();
+    };
+
+
+    $scope.closeSpecialModal= function() {
+      $scope.special_tab_modal.hide();
+    };
+    /*** bind special_tab_modal ***/
 
 
    /* $scope.apply=function () {//选好险种提交时做的动作
@@ -113,6 +178,9 @@ angular.module('starter')
       else
       {}
     }
+
+
+
 
     $scope.actionSheet_show = function() {
 

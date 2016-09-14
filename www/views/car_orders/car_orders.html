@@ -19,23 +19,12 @@
 
     <div class="list" style="margin-bottom: 0px;">
       <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
-        <li style="width:33.3%;">
+
+
+        <li style="width:50%">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==0]"
                ng-click="tab_change(0)"
-               style="text-align: center">
-            <div style="height: 100%;">
-              <span style="position: absolute;top:30%;left:20%;right:20%;">
-                报价中
-              </span>
-            </div>
-          </div>
-        </li>
-
-        <li style="width:33.3%">
-          <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==1]"
-               ng-click="tab_change(1)"
                style="text-align: center">
             <div style="height: 100%">
                <span style="position:absolute;top:30%;left: 20%;right:20%;">
@@ -45,10 +34,10 @@
           </div>
         </li>
 
-        <li style="width:33.3%">
+        <li style="width:50%">
           <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==2]"
-               ng-click="tab_change(2)"
+               ng-class="{true: 'selected', false: ''}[tabIndex==1]"
+               ng-click="tab_change(1)"
                style="text-align: center">
             <div style="width: 100%;">
               <span style="position:absolute;top: 30%;left:20%;right:20%;">
@@ -108,12 +97,11 @@
             </div>
             <div class="item"
                  style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-                 ng-repeat="type in selected"
-            >
-            <span>险种名称:{{type.name}}</span>
+                 ng-repeat="type in selected">
+              <span>险种名称:{{type.name}}</span>
               <span>保额:{{type.fee}}</span>
-
             </div>
+          </div>
         </ion-item>
       </div>
 

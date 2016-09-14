@@ -7,17 +7,16 @@
 
 
 
-    <ion-scroll style="height: 100%;margin-top:2px;padding-top:3%;background:rgba(3,3,3,0.1);">
+    <ion-scroll style="height: 100%;margin-top:2px;padding-top:3%;">
       <ul style="width:100%;">
-      <li style="width:33%;padding:2%;float:left;display:inline-block" ng-repeat="company in companys">
-       <button style="border:1px;width:100%;background-color:white;text-align:center;"
-               ng-click="selectCompany(company.name)">
-         {{company.name}}
-       </button>
+        <li style="width:33%;padding:2%;float:left;display:inline-block" ng-repeat="company in companys">
+          <button
+            style="border:1px;width:100%;background-color:#444;color:#fff;padding-top:10px;padding-bottom:10px;text-align:center;"
+                  ng-click="selectCompany(company.name)">
+            {{company.name}}
+          </button>
 
-
-
-      </li>
+        </li>
       </ul>
 
     </ion-scroll>

@@ -20,7 +20,37 @@ angular.module('starter')
     $scope.user={};
 
 
+//*******************测试百悟短信验证码*********************//
 
+    $scope.baiwu = function(){
+
+      $http({
+        method:'POST',
+        url:"/proxy/send",
+        headers:{
+        'Content-Type':'application/json'
+      },
+        data:{  corp_id:'hy6550',
+        corp_pwd:'mm2289',
+        corp_service:'1069003256550',
+        mobile:'18253160627',
+        msg_content:'hello,xyd',
+        corp_msg_id:'',
+        ext:'' // your data” }
+      }}).
+      success(function (response) {
+        console.log('success');
+      }).
+      error(function (err) {
+        var str='';
+        for(var field in err)
+          str+=field+':'+err[field];
+          console.log('error='+str);
+      });
+    }
+
+
+//*******************测试百悟短信验证码*********************//
 
 
     $scope.securityCode_generate=function(){
@@ -275,7 +305,7 @@ angular.module('starter')
 
 
     $scope.test=function() {
-      $http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
+      $http.get("http://202.194.14.106:3000/insurance/get_lifeinsurance_list").
         then(function(res) {
           if(res.data!==undefined&&res.data!==null)
           {
@@ -333,6 +363,37 @@ angular.module('starter')
         }
       });
     }
+
+    $scope.uploadPhoto=function(){
+
+      $cordovaFileTransfer.upload(server, $scope.photo,options)
+        .then(function(result) {
+          var response=result.response;
+          var json=eval('('+response+')');
+          if(json.type!==undefined&&json.type!==null)
+          {
+            $ionicLoading.show({
+              template: json.content,
+              duration: 2000
+            });
+            //TODO:将本用户更新照片的消息通过websocket发送给其他用户
+
+          }else{
+            $ionicLoading.show({
+              template: "field type doesn't exist in response",
+              duration: 2000
+            });
+          }
+
+        }, function(err) {
+          // Error
+          alert("err:"+err);
+        }, function (progress) {
+          // constant progress updates
+        });
+
+    }
+
 
     $scope.uploadCarAndOwnerInfo=function()
     {

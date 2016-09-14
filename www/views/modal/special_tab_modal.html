@@ -1,0 +1,72 @@
+<ion-modal-view class="edit_insurance motor_insurance animated slideInDown ">
+  <ion-content scroll="false">
+    <div class="welcome_msg">
+
+    <span class="close_msg" ng-click="modalClose()">
+       <img src="img/close.png"/>
+    </span>
+
+
+      <div class="list" style="margin-bottom: 0px;">
+       <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
+        <li style="width:50%;">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[modalTabIndex==0]"
+               ng-click="modal_tab_change(0)">
+            <span style="position:absolute;left: 20%;top:40%;">
+             驾驶员
+            </span>
+          </div>
+        </li>
+
+
+        <li style="width:50%">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[modalTabIndex==1]"
+               ng-click="modal_tab_change(1)">
+            <span style="position:absolute;left: 20%;top:40%;">
+              乘客
+            </span>
+
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- 驾驶员 -->
+    <div ng-if="modalTabIndex==0">
+
+      <div class="row">
+
+        <lable></lable>
+
+      </div>
+
+      <button>提交</button>
+    </div>
+
+
+
+    <!-- 乘客 -->
+    <div ng-if="modalTabIndex==1">
+
+      <h3>选择你要更改的车险细项</h3>
+      <label class="item  item-select">
+        <select style="padding-left:0px;right:auto;min-width: 200px" ng-model="motor.step" ng-options="step for step in motor_steps">
+        </select>
+      </label>
+      <a ng-click="confirm()" style="min-height: 30px" class="button button-block button-positive comm_btn">
+        确定
+      </a>
+      <a ng-click="modalClose()" style="min-height: 30px" class="button button-block button-positive comm_btn">
+        取消
+      </a>
+
+    </div>
+
+
+
+    </div>
+  </ion-content>
+</ion-modal-view>
