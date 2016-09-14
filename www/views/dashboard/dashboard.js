@@ -178,7 +178,7 @@ angular.module('starter')
     //返回寿险产品列表
     $http({
       method: "POST",
-      url: "http://202.194.14.106:3000/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },

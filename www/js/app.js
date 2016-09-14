@@ -169,6 +169,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/car_orders/car_orders.html'
     })
 
+    .state('integration',{
+      url:'/integration',
+      controller:'integrationController',
+      templateUrl:'views/integration/integration.html'
+    })
+
     .state('car_order_detail',{
       url:'/car_order_detail/:order',
       controller:'carOrderDetailController',
