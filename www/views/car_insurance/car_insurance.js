@@ -217,7 +217,7 @@ angular.module('starter')
 
 
     /**************方案详情模态框*************************/
-    $ionicModal.fromTemplateUrl('/views/modal/car_detail_modal.html', {
+    $ionicModal.fromTemplateUrl('views/modal/car_detail_modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -233,7 +233,7 @@ angular.module('starter')
 
 
     /**************选择公司模态框*************************/
-    $ionicModal.fromTemplateUrl('/views/modal/car_company_modal.html', {
+    $ionicModal.fromTemplateUrl('views/modal/car_company_modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {

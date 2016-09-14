@@ -69,7 +69,6 @@ angular.module('starter')
         }
         alert('error=' + error);
       });
-
     };
 
 
@@ -82,7 +81,6 @@ angular.module('starter')
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
         url:"/pm/login",
-
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
