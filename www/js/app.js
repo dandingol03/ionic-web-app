@@ -169,21 +169,29 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/car_orders/car_orders.html'
     })
 
-    .state('integration',{
-      url:'/integration',
-      controller:'integrationController',
-      templateUrl:'views/integration/integration.html'
+
+    .state('integration', {
+      url: '/integration',
+      controller: 'integrationController',
+      templateUrl: 'views/integration/integration.html'
+    })
+
+    .state('uploadPhotod', {
+      url: '/uploadPhotod',
+      controller: 'uploadPhotodController',
+      templateUrl: 'views/uploadPhotod/uploadPhotod.html'
     })
 
     .state('car_order_detail',{
       url:'/car_order_detail/:order',
       controller:'carOrderDetailController',
       templateUrl:'views/car_order_detail/car_order_detail.html'
-    });
+
+    })
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tabs/dashboard');
+  $urlRouterProvider.otherwise('/login');
 
 })
     .factory('BaiduMapService', function($q, baiduMapApi) {

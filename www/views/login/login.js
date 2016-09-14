@@ -3,9 +3,9 @@
  */
 angular.module('starter')
 
-  .controller('loginController',function($scope,$state,$ionicLoading,$http
-    ,$ionicPopup,$timeout,$cordovaFile,$cordovaFileTransfer,
-    $ionicActionSheet,$cordovaCamera,$rootScope){
+  .controller('loginController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
+    ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera){
+
 
 
 
@@ -89,8 +89,82 @@ angular.module('starter')
       }).success(function(response){
 
         var access_token=response.access_token;
+        $state.go('tabs.dashboard');
         if(access_token!==undefined&&access_token!==null)
         {
+          $rootScope.access_token=access_token;
+          if(window.cordova!=undefined && window.cordova!=null) {
+            var targetPath = cordova.file.externalRootDirectory + 'ionic.jpg';
+
+
+            var carInfo = {
+              carNum: "5",
+              engineNum: "2",
+              frameNum: "3",
+              factoryNum: "4",
+              firstRegisterTime: "2016-01-01",
+              ownerName: "6",
+              ownerIdCard: "7",
+              ownerAddress: "8",
+              carPhoto: null,
+              ownerIdPhoto: null
+            };
+
+
+            $scope.photo = '';
+
+
+            $cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
+              .then(function (success) {
+                alert('content of image=' + success);
+                carInfo.carPhoto = success;
+                carInfo.ownerIdPhoto = success;
+                $http({
+                  method: "POST",
+                  url: "http://192.168.1.102:3000/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + access_token,
+                  },
+                  data: {
+                    request: 'uploadCarAndOwnerInfo',
+                    info: carInfo
+                  }
+                }).
+                  success(function (response) {
+                    console.log('success');
+                  }).
+                  error(function (err) {
+                    var str = '';
+                    for (var field in err)
+                      str += field + ':' + err[field];
+                    console.log('error=' + str);
+                  });
+              }, function (error) {
+                // error
+                var err = '';
+                for (var field in error)
+                  err += field + ':' + error[field];
+                alert('error=' + err);
+              });
+          }
+      if(window.cordova!==undefined&&window.cordova!==null)
+      {
+        var url='http://211.87.225.197:3000/get/photo/home.jpg';
+        var targetPath=cordova.file.externalRootDirectory+'home.jpg';
+        $cordovaFileTransfer.download(url, targetPath, {}, true)
+          .then(function(result) {
+            alert('home图片');
+            // Success!
+          }, function(err) {
+            var str='';
+            for(var field in err)
+              str+=err[field]+'\n';
+            alert('error='+str);
+            // Error
+          }, function (progress) {
+          });
+      }
+
           //var targetPath=cordova.file.externalRootDirectory+'ionic.jpg';
 
 
@@ -150,6 +224,7 @@ angular.module('starter')
           //    err+=field+':'+error[field];
           //    alert('error=' + err);
           //  });
+
 
 
 

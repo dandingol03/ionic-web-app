@@ -80,7 +80,7 @@ angular.module('starter')
 
       $scope.applicant={};
 
-      $scope.pickImage=function(applicant_type,img_type){
+      $scope.pickImage=function(img_type){
         var options = {
           maximumImagesCount: 1,
           width: 800,
@@ -90,7 +90,7 @@ angular.module('starter')
 
         $cordovaImagePicker.getPictures(options)
             .then(function (results) {
-              $scope[applicant_type][img_type]=results[0];
+              $scope[img_type]=results[0];
               alert('img url=' + results[0]);
             }, function (error) {
               alert("error="+error);
@@ -98,7 +98,7 @@ angular.module('starter')
             });
       };
 
-      $scope.takePhoto=function(applicant_type,img_type){
+      $scope.takePhoto=function(img_type){
         var options = {
           quality: 100,
           destinationType: Camera.DestinationType.FILE_URI,
@@ -113,14 +113,14 @@ angular.module('starter')
         };
 
         $cordovaCamera.getPicture(options).then(function(imageURI) {
-          $scope[applicant_type][img_type] = imageURI;
+          $scope[img_type] = imageURI;
           alert('image url=' + imageURI);
         }, function(err) {
           // error
         });
       };
 
-      $scope.addAttachment=function(applicant_type,img_type)
+      $scope.addAttachment=function(img_type)
       {
         $ionicActionSheet.show({
           buttons: [
@@ -135,10 +135,10 @@ angular.module('starter')
 
             switch (index){
               case 0:
-                $scope.pickImage(applicant_type,img_type);
+                $scope.pickImage(img_type);
                 break;
               case 1:
-                $scope.takePhoto(applicant_type,img_type);
+                $scope.takePhoto(img_type);
                 break;
               default:
                 break;

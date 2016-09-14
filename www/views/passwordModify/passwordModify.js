@@ -2,7 +2,7 @@
  * Created by apple-2 on 16/8/23.
  */
 angular.module('starter')
-  .controller('passwordModifyController',function($scope,$state,$http){
+  .controller('passwordModifyController',function($scope,$state,$http,$rootScope){
 
     $scope.carInfo={};
 
@@ -17,7 +17,9 @@ angular.module('starter')
     $scope.save=function(){
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+
+        url: "/pm/svr/request",
+
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },

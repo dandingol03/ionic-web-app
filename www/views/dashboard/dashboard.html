@@ -130,24 +130,24 @@
               车牌:
             </span>
             <input type="text" placeholder="请输入您的车牌"
-                   style="display: inline-block"
-                   ng-model="carInfo.carNumber"/>
+                   style="display: inline-block" ng-value="carInfo.carNum"
+                   ng-model="carInfo.carNum"/>
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
              <span class="input-label" style="display: inline-block;">
               姓名:
             </span>
             <input type="text" placeholder="输入车主姓名"
-                   style="display: inline-block"
-                   ng-model="carInfo.name"/>
+                   style="display: inline-block"  ng-value="carInfo.ownerName"
+                   ng-model="carInfo.ownerName"/>
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
              <span class="input-label" style="display: inline-block;">
               身份证:
             </span>
             <input type="text" placeholder="输入车主身份证号"
-                   style="display: inline-block"
-                   ng-model="carInfo.perIdCard"/>
+                   style="display: inline-block" ng-value="carInfo.ownerIdCard"
+                   ng-model="carInfo.ownerIdPhoto"/>
             <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
               <i class="ion-android-camera"></i>
             </span>
@@ -157,8 +157,8 @@
               驾驶证:
             </span>
             <input type="text" placeholder="输入车主驾驶证号"
-                   style="display: inline-block"
-                   ng-model="carInfo.driveCard"/>
+                   style="display: inline-block" value="{{}}"
+                   ng-model="carInfo.carPhoto"/>
             <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
               <i class="ion-android-camera"></i>
             </span>
@@ -168,7 +168,7 @@
               厂牌型号:
             </span>
             <input type="text" placeholder="设置厂牌型号"
-                   style="display: inline-block"
+                   style="display: inline-block" ng-value="carInfo.factoryNum"
                    ng-model="carInfo.factoryNum"/>
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
@@ -176,7 +176,7 @@
               发动机号:
             </span>
             <input type="text" placeholder="设置发动机号"
-                   style="display: inline-block"
+                   style="display: inline-block" ng-value="carInfo.engineNum"
                    ng-model="carInfo.engineNum"/>
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
@@ -184,8 +184,8 @@
               车架号:
             </span>
             <input type="text" placeholder="设置车架号"
-                   style="display: inline-block"
-                   ng-model="carInfo.vin"/>
+                   style="display: inline-block" ng-value="carInfo.frameNum"
+                   ng-model="carInfo.frameNum"/>
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
               <span class="input-label" style="display: inline-block">
@@ -201,7 +201,7 @@
             </div>
           </div>
 
-          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type()">
+          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type();postCarInfo()">
             <h1 class="title">保存车辆信息</h1>
           </div>
 

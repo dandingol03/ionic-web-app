@@ -5,11 +5,43 @@ angular.module('starter')
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,BaiduMapService){
 
+    $scope.carInfo={};
 
     $scope.goto=function(url){
       $location.path(url);
     };
-
+    $http({
+      method: "post",
+      url: "/pm/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token,
+      },
+      data:
+      {
+        request:'getCarAndOwnerInfo'
+      }
+    }).
+      success(function (response) {
+        $scope.carInfo=response.carInfo[0];
+        console.log('success');
+      })
+    $scope.postLifeInfo=function(){
+      $http({
+        method: "POST",
+        url: "/pm/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'getLifeInsuranceList',
+        }
+      }).
+        success(function (response) {
+          $scope.lifeInfo=response.lifeInfo[0];
+          console.log('success');
+        })
+    }
 
 
     //use factory to improve
@@ -95,7 +127,30 @@ angular.module('starter')
       }
     };
 
+
+
+
+
+    $scope.postCarInfo=function(){
+      $http({
+        method: "POST",
+        url: "/pm/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'uploadCarAndOwnerInfo',
+          info:$scope.carInfo
+        }
+      }).
+        success(function (response) {
+          console.log('success');
+        })
+    }
+
     $scope.select_type=function(){
+      var carInfo=$scope.carInfo;
       $state.go('car_insurance');
     }
 
@@ -178,7 +233,11 @@ angular.module('starter')
     //返回寿险产品列表
     $http({
       method: "POST",
+<<<<<<< HEAD
       url: "/proxy/node_server/svr/request",
+=======
+      url: "/pm/svr/request",
+>>>>>>> bbba05ea1e95f1eb2468305be2a9bccd328a2e68
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },

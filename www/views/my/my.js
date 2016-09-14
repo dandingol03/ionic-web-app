@@ -2,7 +2,7 @@
  * Created by apple-2 on 16/8/23.
  */
 angular.module('starter')
-  .controller('myController',function($scope,$state,$http){
+  .controller('myController',function($scope,$state,$http,$rootScope){
 
     $scope.go_back=function(){
       window.history.back();
@@ -30,7 +30,5 @@ angular.module('starter')
           $scope.infos=infos;
         }
       });
-
-
 
   });
