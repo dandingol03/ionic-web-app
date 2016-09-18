@@ -3,7 +3,8 @@ angular.module('starter')
   .controller('dashboardController',function($scope,$state,$http, $location,
                                              $rootScope,$ionicModal,$timeout,
                                              $cordovaCamera,ionicDatePicker,
-                                             $ionicActionSheet,BaiduMapService){
+                                             $ionicActionSheet,BaiduMapService,$ionicPopup,$cordovaFile,
+                                             $q,$ionicPlatform){
 
     $scope.carInfo={};
 
@@ -116,6 +117,25 @@ angular.module('starter')
     };
     /*** bind coverage_tab_modal ***/
 
+    /*** bind append_insurer_modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.append_insurer_modal = modal;
+    });
+
+    $scope.open_appendInsurerModal= function(){
+      $scope.append_insurer_modal.show();
+    };
+
+
+    $scope.close_appendInsurerModal= function() {
+      $scope.append_insurer_modal.hide();
+    };
+    /*** bind append_insurer_modal ***/
+
+
 
 
 
@@ -137,7 +157,7 @@ angular.module('starter')
     $scope.postCarInfo=function(){
       $http({
         method: "POST",
-        url: "/pm/svr/request",
+        url: "/proxy/node_server/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -157,50 +177,86 @@ angular.module('starter')
       $state.go('car_insurance');
     }
 
-    $scope.addPicture = function(type) {
 
+
+    //1.附件,通过图库
+    $scope.pickImage=function(item,field){
+      var options = {
+        maximumImagesCount: 1,
+        width: 800,
+        height: 800,
+        quality: 80
+      };
+
+      $cordovaImagePicker.getPictures(options)
+        .then(function (results) {
+          item[field]=results[0];
+          alert('img url=' + results[0]);
+        }, function (error) {
+          alert("error="+error);
+          // error getting photos
+        });
+    };
+
+    //2.附件,通过照片
+    $scope.takePhoto=function(item,field){
+      var options = {
+        quality: 100,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.PNG,
+        targetWidth: 300,
+        targetHeight: 300,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: true,
+        correctOrientation:true
+      };
+
+      $cordovaCamera.getPicture(options).then(function(imageURI) {
+        item[field] = imageURI;
+        alert('image url=' + item[field]);
+      }, function(err) {
+        // error
+      });
+    };
+
+    //添加附件
+    $scope.addAttachment=function(item,field)
+    {
       $ionicActionSheet.show({
         buttons: [
-          { text: '拍照' },
-          { text: '从相册选择' }
+          {text:'图库'},
+          {text:'拍照'}
         ],
-        titleText: '选择照片',
-        cancelText: '取消',
+        cancelText: '关闭',
         cancel: function() {
           return true;
         },
         buttonClicked: function(index) {
-          if(index == 0){
-            $scope.takePhoto=function(){
-              var options = {
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: 1,
-                saveToPhotoAlbum: true
-              };
 
-            }
-          }else if(index == 1){
-            var options = {
-              destinationType: Camera.DestinationType.FILE_URI,
-              sourceType: 0
-            };
+          switch (index){
+            case 0:
+              $scope.pickImage(item,field);
+              break;
+            case 1:
+              $scope.takePhoto(item,field);
+              break;
+            default:
+              break;
           }
-
-          $cordovaCamera.getPicture(options).then(function(imageURI) {
-            $scope.car[type].imageSrc= imageURI;
-
-          }, function(err) {
-            // error
-          });
           return true;
         }
       });
     }
 
+
     $scope.life_insurance=
     {
-      applicant:{},
-      insuredPerson:{}
+      insurer:{},
+      insuranceder:{},
+      benefiter:{},
+      intend:{}
     };
 
     $scope.car={};
@@ -326,7 +382,7 @@ angular.module('starter')
       $scope.tabIndex=i;
     };
 
-    $scope.life_insuranse={};
+
     $scope.detail_ref=function(insurance){
       switch($scope.tabIndex)
       {
@@ -339,6 +395,52 @@ angular.module('starter')
               break;
       }
     }
+
+    //寿险意向被保险人选择
+    $scope.lifeInsuranceder_gender_select=function(item,prices) {
+        var buttons=[{text:'男'},{text:'女'}];
+        $ionicActionSheet.show({
+          buttons:buttons,
+          titleText: '选择被保险人性别',
+          cancelText: '取消',
+          buttonClicked: function(index) {
+            $scope.life_insurance.insuranceder.gender = buttons[index].text;
+            return true;
+          },
+          cssClass:'motor_insurance_actionsheet'
+        });
+    }
+
+    //寿险意向保留
+    $scope.saveLifeInsuranceIntend=function()
+    {
+      $rootScope.life_insurance=$scope.life_insurance;
+      $http({
+        method: "POST",
+        url: "http://192.168.0.199:3000/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'generateLifeInsuranceOrder',
+          info:$scope.life_insurance.order
+        }
+      }).then(function(res) {
+
+        console.log('request has been back');
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str += field + ':' + err[field];
+        alert('error=\r\n' + str);
+      });
+    }
+
+
+
+
+
 
     //车险保额选择
     $scope.price_select=function(item,prices) {
@@ -553,52 +655,336 @@ angular.module('starter')
 
     }
 
-    //寿险的投保意向
-    $scope.life_insurance={
-      tabs:['insurancer','insuranced']
-    };
-    $scope.life_insurance.tab='insurancer';
 
-    $scope.gurantees=['重疾','健康','理财'];
-    $scope.guarantee=$scope.gurantees[0];
-    $scope.gurantees_select=function()
+
+    $scope.lifeInsuranceder_insuranceType_select=function()
     {
 
-        var buttons=[];
-        $scope.gurantees.map(function(person,i) {
-          buttons.push({text: person});
-        });
-
+        var buttons=[{text:'重疾'},{text:'健康'},{text:'理财'}];
         $ionicActionSheet.show({
           buttons:buttons,
           titleText: '选择你需要的保障',
           cancelText: 'Cancel',
           buttonClicked: function(index) {
-            $scope.gurantee = $scope.gurantees[index];
+            $scope.life_insurance.order.insuranceType = buttons[index].text;
             return true;
           },
           cssClass:'motor_insurance_actionsheet'
         });
     }
 
-    $scope.relations=['自己','老人','子女','配偶'];
-    $scope.relation=$scope.relations[0];
-    $scope.relation_select=function(){
-      var buttons=[];
-      $scope.relations.map(function(relation,i) {
-        buttons.push({text: relation});
-      });
+
+    $scope.lifeInsuranceder_relation_select=function(){
+      var buttons=[{text:'自己'},{text:'老人'},{text:'子女'},{text:'配偶'}];
 
       $ionicActionSheet.show({
         buttons:buttons,
-        titleText: '选择被投保人关系',
+        titleText: '选择投保人与被保险人关系',
         cancelText: 'Cancel',
         buttonClicked: function(index) {
-          $scope.relation = $scope.relations[index];
+          $scope.life_insurance.insuranceder.relation = buttons[index].text;
           return true;
         },
         cssClass:'motor_insurance_actionsheet'
       });
+    };
+
+
+
+    $scope.append_insurer=function(props){
+      //TODO:append a popup
+      //$scope.ionicPopup=function(title,item,field,cb) {
+      $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendInsurerModal);
+
+    }
+
+
+
+
+    $scope.Setter=function(type,item,field,cmd){
+      switch(type)
+      {
+        case 'remote':
+          $http({
+            method: "POST",
+            url: "/proxy/node_server/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token,
+            },
+            data:
+            {
+              request:cmd
+            }
+          }).then(function(res) {
+            var data=res.data;
+            if(data.re==2)
+            {
+              //var confirmPopup = $ionicPopup.confirm({
+              //  title: '<strong>选择投保人?</strong>',
+              //  template: '可选人员没有,是否进行添加?',
+              //  okText: '添加',
+              //  cancelText: '取消'
+              //});
+              //
+              //confirmPopup.then(function (res) {
+              //  if (res) {
+              //    //TODO:bind new relative customer
+              //    $scope.open_appendPersonModal();
+              //    $scope.life_insurance.person.perType=1;
+              //  } else {
+              //    // Don't close
+              //  }
+              //});
+
+
+
+            }else if(date.re==1)
+            {
+              var buttons=[];
+              data.map(function(item,i) {
+                buttons.push({text: item});
+              });
+              $ionicActionSheet.show({
+                buttons:buttons,
+                titleText: '',
+                cancelText: '取消',
+                buttonClicked: function(index) {
+                  $scope[item][field] = buttons[index].text;
+                  return true;
+                },
+                cssClass:'motor_insurance_actionsheet'
+              });
+            }else{}
+
+          }).catch(function(err) {
+            var str='';
+            for(var field in err)
+              str += field + ':' + err[field];
+            alert('error=\r\n' + str);
+          });
+              break;
+        default:
+          break;
+      }
+    };
+
+
+
+
+    $scope.ionicPopup=function(title,item,field,cb) {
+
+      var buttons=[];
+      if(Object.prototype.toString.call(cb)=='[object Array]')
+      {
+        buttons.push({text: '<b>取消</b>', type: 'button-assertive'});
+        cb.map(function(item,i) {
+          buttons.push({text: item.text, type: 'button-positive', onTap: item.cb});
+        });
+      }else{
+        buttons=[
+          {
+            text: '<b>取消</b>',
+            type:'button-assertive'
+          },
+          {
+            text: '<b>自己</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              item[field]='self';
+            }
+          },
+          {
+            text: '<b>添加</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              cb();
+              //$scope.open_appendPersonModal();
+              //$scope.life_insurance.person.perType=1;
+            }
+          }
+        ];
+      }
+
+      var myPopup = $ionicPopup.show({
+        template: '可选人员没有,是否进行添加',
+        title: '<strong>选择投保人?</strong>',
+        subTitle: '',
+        scope: $scope,
+        buttons: buttons
+      });
+
+      myPopup.then(function(res) {
+        console.log('...');
+      });
+    };
+
+    $scope.life_insurance.person=
+    {};
+
+
+
+    $scope.getBin=function(item,field){
+      var deferred=$q.defer();
+      var absPath=item[field];
+      var isAndroid = ionic.Platform.isAndroid();
+      if(isAndroid)
+      {
+        if(absPath.indexOf('Android/data/')!=-1)//externalApplicationStorageDirectory
+        {
+          var re=/Android\/data\/.*?\/(.*)$/.exec(absPath);
+          alert('scirror path=\r\n'+re[1]);
+          $cordovaFile.readAsBinaryString( cordova.file.externalApplicationStorageDirectory,re[1])
+            .then(function (success) {
+              alert('read binary of img success');
+              deferred.resolve({re:1,data:success});
+            }, function (error) {
+              // error
+              var err = '';
+              for (var field in error)
+                err += field + ':' + error[field];
+              deferred.reject('image read encounter error=\r\n' + err);
+            });
+        }
+      }
+
+
+      return deferred.promise;
+    }
+
+    $scope.detectImg=function(item){
+      var deferred=$q.defer();
+      for(var field in item)
+      {
+        //检测是否有图片字段
+        var reg=/_img$/;
+        if(reg.exec(field))
+        {
+          $scope.getBin(item,field).then(function(res) {
+            var gen_feild=field.replace('_img','Photo');
+            var type=null;
+            if(item[field].indexOf('.jpg')!=-1)
+              type = 'jpg';
+            else if(item[field].indexOf('.png')!=-1)
+              type='png';
+            else{}
+            item[gen_feild]={
+              type:type,
+              bin:res
+            }
+            deferred.resolve({re: 1});
+          }).catch(function(err) {
+            deferred.reject(err.toString());
+          });
+        }
+      }
+
+      return deferred.promise;
+    }
+
+    //提交统一函数
+    $scope.upload=function(cmd,item){
+
+      $scope.detectImg(item)
+        .then(function(json) {
+        return  $http({
+          method: "POST",
+          url: "/proxy/node_server/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
+          {
+            request:cmd,
+            info:item
+          }
+        });
+        })
+        .then(function(res) {
+          alert('...it is back')
+        })
+        .catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          alert('error=\r\n' + str);
+      });
+
+    }
+
+    $scope.ActionSheet= function (options,item,field,addon_field,url,fail) {
+      if((options==null||options==undefined)&&url!==undefined&&url!==null)//远程
+      {
+        $http({
+          method: "POST",
+          url: "/proxy/node_server/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          },
+          data:
+          {
+            request:url
+          }
+        }).then(function(json) {
+          var res=json.data;
+          if(res.re==2)
+          {
+            if(fail!==undefined&&fail!==null)
+            {
+              var cb=fail.cb;
+              cb(fail.title,item,field);
+            }
+          }else{
+            var buttons=[];
+            json.data.map(function(item,i) {
+              buttons.push({text: item});
+            });
+            $ionicActionSheet.show({
+              buttons:buttons,
+              titleText: '',
+              cancelText: '取消',
+              buttonClicked: function(index) {
+                item[field] = buttons[index].text;
+                if(addon_field!==undefined&&addon_field!==null)
+                  item[addon_field]=(index+1);
+                return true;
+              },
+              cssClass:'motor_insurance_actionsheet'
+            });
+          }
+        });
+      }
+      else{//本地
+        var person=$scope.life_insurance.person;
+        var buttons=[];
+        options.map(function(item,i) {
+          buttons.push({text: item});
+        });
+        $ionicActionSheet.show({
+          buttons:buttons,
+          titleText: '',
+          cancelText: '取消',
+          buttonClicked: function(index) {
+            item[field] = buttons[index].text;
+            if(addon_field!==undefined&&addon_field!==null)
+              item[addon_field]=(index+1);
+            return true;
+          },
+          cssClass:'motor_insurance_actionsheet'
+        });
+      }
+    }
+
+    $scope.Toggle=function(type,item,field)
+    {
+      switch(type)
+      {
+        case 'boolean':
+          if(item[field]!=true)
+            item[field]=true;
+          else
+            item[field]=false;
+          break;
+      }
     }
 
       //intial BMap service
@@ -621,5 +1007,52 @@ angular.module('starter')
         },{enableHighAccuracy: true});
 
       });
+
+    $scope.add_op=function(item,field){
+      if(item[field]==undefined||item[field]==null)
+        item[field]=0;
+      item[field]++;
+    }
+
+    $scope.minus_op=function(item,field)
+    {
+      if(item[field]==undefined||item[field]==null)
+      {
+        item[field] = 0;
+        return ;
+      }
+      if(item[field]>0)
+        item[field]--;
+    }
+
+
+    $scope.getLastCarInsuranceOrderSerial=function(){
+        $http({
+          method: "POST",
+          url: "/proxy/node_server/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
+          {
+            request:'getCurDayOrderNumTest',
+            info:{
+              type:'carInsurance'
+            }
+          }
+        })
+        .then(function(res) {
+            alert('...it is back')
+          })
+        .catch(function(err) {
+            var str='';
+            for(var field in err) {
+              str += err[field];
+            }
+            alert('err=\r\n' + str);
+          });
+
+
+    }
 
   });

@@ -12,13 +12,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     })
 
 
-    .run(function($ionicPlatform,$rootScope) {
+    .run(function($ionicPlatform,$rootScope,$interval) {
 
-    $rootScope.myGoBack = function() {
-      //$rootScope.$ionicGoBack();
-      var backView = $ionicHistory.backView();
-      backView.go();
-    };
+
 
     $rootScope.car_orders=[
         [
@@ -28,6 +24,16 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         ],
       {}
     ];
+
+    //定时器刷新获取订单
+    var timer=$interval(function(){
+      console.log('....timer logging');
+    },200,10);
+    timer.then(function(){
+      console.log('log over');
+    },function(){
+
+    });
 
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -167,6 +173,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       url:'/car_orders/:selected',
       controller:'carOrdersController',
       templateUrl:'views/car_orders/car_orders.html'
+    })
+
+    .state('life_insurance_orders',{
+      url:'/life_insurance_orders',
+      controller:'lifeInsuranceOrdersController',
+      templateUrl:'views/life_insurance_orders/life_insurance_orders.html'
     })
 
 

@@ -889,7 +889,7 @@ table.table1{
 }
 
 .item-detail.ng-leave{
-  -webkit-animation: fadeOutRight .4s;
-  animation: fadeOutRight .4s;
+  -webkit-animation: fadeOutRight 0s;
+  animation: fadeOutRight 0s;
 }
 

@@ -1,0 +1,58 @@
+<ion-modal-view  class="detail_modal animated slideInDown>" style="background: transparent">
+  <div class="close_detmodal" ng-click="close_appendInsurerModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content
+    style="padding:14px;width: 85%;margin: 0 auto;height: 50%;top: 10%;background: #fff;border: 1px solid #eee;">
+
+
+    <div class="scroll" style="overflow: scroll">
+
+
+
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+             <span class="input-label" style="display: inline-block;">
+              姓名:
+            </span>
+        <input type="text" placeholder="输入亲属姓名"
+               style="display: inline-block"  ng-value="life_insurance.insurer.perName"
+               ng-model="life_insurance.person.perName"/>
+      </div>
+
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+             <span class="input-label" style="display: inline-block;">
+              身份证:
+            </span>
+        <input type="text" placeholder="上传身份证照片"
+               style="display: inline-block"
+               disabled="true"/>
+            <span class="camera"
+                  style="position: absolute;right:10%;top:30%;font-size: 1.5em;"
+                  ng-click="addAttachment(life_insurance.insurer,'perIdCard_img')"
+              >
+              <i class="ion-android-camera"></i>
+            </span>
+      </div>
+
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;width:55%;">
+              选择亲属关系:
+            </span>
+            <span class="input-label" style="display: inline-block;">
+              {{life_insurance.insurer.relation}}
+            </span>
+        <div style="position: absolute;right: 15%;top:30%;bottom: 30%;">
+              <span ng-click="ActionSheet(['老人','孩子','配偶'],life_insurance.insurer,'relation','relType')">
+                <i class="ion-chevron-down"></i>
+              </span>
+        </div>
+      </div>
+
+      <button class="button button-block button-calm" ng-click="upload('createRelativePerson',life_insurance.insurer)">
+        关联亲属信息
+      </button>
+
+    </div>
+
+  </ion-content>
+</ion-modal-view >
