@@ -11,12 +11,6 @@ angular.module('starter')
 
     $scope.formUser = {};
 
-    var inputData = {
-      grant_type: 'password',
-      username: '123456789',
-      password: "1234"
-    };
-
     $scope.user={};
 
 
@@ -147,26 +141,6 @@ angular.module('starter')
             //    alert('error=' + err);
             //  });
           }
-      //if(window.cordova!==undefined&&window.cordova!==null)
-      //{
-      //  var url='http://211.87.225.197:3000/get/photo/home.jpg';
-      //  var targetPath=cordova.file.externalRootDirectory+'home.jpg';
-      //  $cordovaFileTransfer.download(url, targetPath, {}, true)
-      //    .then(function(result) {
-      //      alert('home图片');
-      //      // Success!
-      //    }, function(err) {
-      //      var str='';
-      //      for(var field in err)
-      //        str+=err[field]+'\n';
-      //      alert('error='+str);
-      //      // Error
-      //    }, function (progress) {
-      //    });
-      //}
-
-          //var targetPath=cordova.file.externalRootDirectory+'ionic.jpg';
-
 
           var carInfo = {
             carNum : "5",

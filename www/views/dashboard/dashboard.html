@@ -57,13 +57,109 @@
       <div class="list " ng-if="tabIndex==1" scroll="true">
 
         <div class="item item-divider">
-          已有公司产品列表
+          填写寿险意向
           <span class="right" style="position: absolute;right: 10%" ng-click="open_lifeModal()">
             订制寿险方案
             <i class="ion-ios-compose-outline" style="color:#3F7B12"></i>
           </span>
         </div>
 
+        <div class="list list-inset padding" style="margin-bottom:40px;">
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;width: 35%;">
+              投保人:
+            </span>
+            <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+              {{life_insurance.order.insurerId!==undefined&&life_insurance.order.insurerId!==null?life_insurance.order.insurerName:'请选择投保人'}}
+            </div>
+            <div style="display: inline-block;width: 30%;"
+                 ng-click="ActionSheet(null,life_insurance.order,'insurerId',null,'getRelativePersons',
+                 {cb:append_insurer,title:'<strong>选择投保人?</strong>'})">
+              <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
+            </div>
+
+          </div>
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;">
+              被保险人:
+            </span>
+            <input type="text" placeholder="请输入被保险人姓名"
+                   style="display: inline-block" ng-value="life_insurance.order.insurancederId"
+                   ng-model="life_insurance.order.insurancederId"/>
+          </div>
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+             <span class="input-label" style="display: inline-block;">
+              受益人:
+            </span>
+            <input type="text" placeholder="请输入受益人姓名"
+                   style="display: inline-block"  ng-value="life_insurance.order.benefiterId"
+                   ng-model="life_insurance.order.benefiterId"/>
+          </div>
+          <!-- 针对寿险被保险人 -->
+
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;width:55%;">
+              需要的保障:
+            </span>
+            <span class="input-label" style="display: inline-block;">
+              {{life_insurance.order.insuranceType}}
+            </span>
+            <div style="position: absolute;right: 15%;top:30%;bottom: 30%;">
+              <span ng-click="lifeInsuranceder_insuranceType_select()">
+                <i class="ion-gear-b"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;width: 60%;">
+              有无社保:
+            </span>
+             <span class="input-label" style="display: inline-block;">
+                  {{life_insurance.order.hasSocietyInsurance==true?'有':'无'}}
+                </span>
+            <div
+              style="position: absolute;display:inline-block;font-size: 2em;right: 22%;"
+              ng-click="Toggle('boolean',life_insurance.order,'hasSocietyInsurance')"
+              >
+              <i ng-if="life_insurance.order.hasSocietyInsurance!=true" class="ion-ios-checkmark-outline"></i>
+              <i ng-if="life_insurance.order.hasSocietyInsurance==true" class="ion-ios-checkmark"></i>
+            </div>
+          </div>
+
+          <div class="item"
+               style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+            <span class="input-label" style="display: inline-block;width:60%;">
+              有无商业保险:
+            </span>
+            <span class="input-label" style="display: inline-block;">
+                  {{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}
+                </span>
+            <div
+              style="position: absolute;display:inline-block;font-size: 2em;right: 22%;"
+              ng-click="Toggle('boolean',life_insurance.order,'hasCommerceInsurance')"
+              >
+              <i ng-if="life_insurance.order.hasCommerceInsurance!=true" class="ion-ios-checkmark-outline"></i>
+              <i ng-if="life_insurance.order.hasCommerceInsurance==true" class="ion-ios-checkmark"></i>
+            </div>
+          </div>
+
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;">
+              计划保费:
+            </span>
+            <input type="text" placeholder="请输入...."
+                   style="display: inline-block"  ng-value="life_insurance.order.planInsuranceFee"
+                   ng-model="life_insurance.order.planInsuranceFee"/>
+          </div>
+
+          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="saveLifeInsuranceIntend()">
+            <h1 class="title">提交寿险意向</h1>
+          </div>
+
+        </div>
+
+        <!-- 寿险产品列表 -->
         <div ng-if="tabIndex==1"
              ng-repeat="item in tabs[tabIndex].insurances">
           <!--  公司简介 -->
@@ -71,48 +167,83 @@
                ng-model="life_insurance.flag"
                style="padding-bottom: 0px;"
             >
-            <div class="col" style="padding-bottom: 0px;">
-              <div class="item item-text-wrap item-thumbnail-left"
-                   ng-style="item.show_detail==true?{position: 'relative',borderBottom: '0px'}:{position:'relative'}">
+            <div class="col col-100" style="padding-bottom: 0px;">
 
+              <div class="item item-text-wrap item-thumbnail-left"
+                   style="border-bottom: 0px;padding-bottom: 0px;">
                 <img ng-src="{{'img/tk_life_insurance.jpg'}}"/>
 
                 <!-- 公司名称-->
-                <div style="text-decoration: none;position: absolute;bottom: 40%;">
+                <div style="text-decoration: none;position: absolute;bottom: 20%;left:30%;">
                   <h2 class="product-title">{{item.companyName}}</h2>
+                  <!-- 主险产品名称 -->
+                  <h2 class="product-title">{{item.main.productName}}</h2>
                 </div>
 
-                <span
-                  style="position: absolute;right: 10%;bottom: 10%;font-size: 1.4em;"
-                  ng-click="setDetail(item)">
-                  <i ng-if="item.show_detail!=true" class="ion-chevron-down"></i>
-                  <i ng-if="item.show_detail==true" class="ion-chevron-up"></i>
-                </span>
-
               </div>
+              <div class="item"
+                   ng-style="item.show_detail==true?
+                   {position: 'relative',padding:'0px',borderBottom: '0px',textAlign:'center'}:{position:'relative',textAlign:'center',padding:'0px'}"
+                >
+                <ul>
+                  <li style="width: 50%;display: inline-block;border-right: 1px solid #ddd;padding-left:20px;padding-right:20px;">
+                    <button class="button button-full button-positive">
+                      confirm
+                    </button>
+                  </li>
+                  <li style="width: 50%;display: inline-block;padding-left:20px;padding-right:20px;">
+                    <button class="button button-full button-positive" ng-click="setDetail(item)">
+                      edit
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
             </div>
+
           </div>
 
-          <!-- 公司产品简介 -->
+          <!-- 公司产品细项编辑 -->
           <div class="padding"
                style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
-            <div class="item item-detail"
-                 ng-style="$index!=item.products.length-1?{margin:'1px',padding:'8px',borderBottom:'0px'}:{margin:'1px',padding:'8px'}"
-                 ng-repeat="product in item.products"
-                 ng-if="item.show_detail==true"
-                 ng-click="toggle_lifeinsurance_product(product)"
+            <div
+              ng-if="item.show_detail==true"
+              style="margin:1px;padding:1px"
               >
-              <span class="input-label" style="display: inline-block;width: 15%;">
-                产品:
-              </span>
-              <span>
-                {{product.productName}}
-              </span>
-              <span style="font-size: 2em;position: absolute;right: 10%;">
-                <i ng-if="product.productId!=life_insurance.product.productId" class=" ion-ios-checkmark-outline"></i>
-                <i ng-if="product.productId==life_insurance.product.productId" class=" ion-ios-checkmark"></i>
-              </span>
+
+              <div class="item item-detail item-input-inset">
+                <span style="width: 20%;">保额</span>
+
+                <input type="text"
+                  ng-value="item.main.insuranceQuota"
+                  ng-model="item.main.insuranceQuota"
+                  style="background: rgba(158, 158, 158, 0.12);width: 35%;">
+                <span style="width: 20%;">保费</span>
+                <span>{{item.main.insuranceFee}}</span>
+
+              </div>
+              <div class="item item-detail"
+                   ng-style="$index!=item.attachs.length-1?{borderBottom:'0px'}:{}"
+                   ng-repeat="product in item.attachs"
+                >
+                <span class="input-label" style="display: inline-block;width: 15%;">
+                  附加险:
+                </span>
+                <span>
+                  {{product.productName}}
+                </span>
+                <div style="position: relative">
+                  count:
+                  <span>{{product.count}}</span>
+                  <span style="font-size: 1.2em;position: absolute;top:20%;left: 30%;">
+                    <i class="ion-plus" ng-click="add_op(product,'count')"></i>
+                    <i class="ion-minus" ng-click="minus_op(product,'count')"></i>
+                  </span>
+                </div>
+              </div>
+
             </div>
+
           </div>
 
         </div>
@@ -204,7 +335,6 @@
           <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type();postCarInfo()">
             <h1 class="title">保存车辆信息</h1>
           </div>
-
 
         </div>
       </div>
