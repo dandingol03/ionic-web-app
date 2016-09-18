@@ -80,7 +80,7 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-        url:"/pm/login",
+        url:"/proxy/node_server/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -114,56 +114,56 @@ angular.module('starter')
             $scope.photo = '';
 
 
-            $cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
-              .then(function (success) {
-                alert('content of image=' + success);
-                carInfo.carPhoto = success;
-                carInfo.ownerIdPhoto = success;
-                $http({
-                  method: "POST",
-                  url: "http://192.168.1.102:3000/svr/request",
-                  headers: {
-                    'Authorization': "Bearer " + access_token,
-                  },
-                  data: {
-                    request: 'uploadCarAndOwnerInfo',
-                    info: carInfo
-                  }
-                }).
-                  success(function (response) {
-                    console.log('success');
-                  }).
-                  error(function (err) {
-                    var str = '';
-                    for (var field in err)
-                      str += field + ':' + err[field];
-                    console.log('error=' + str);
-                  });
-              }, function (error) {
-                // error
-                var err = '';
-                for (var field in error)
-                  err += field + ':' + error[field];
-                alert('error=' + err);
-              });
+            //$cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
+            //  .then(function (success) {
+            //    alert('content of image=' + success);
+            //    carInfo.carPhoto = success;
+            //    carInfo.ownerIdPhoto = success;
+            //    $http({
+            //      method: "POST",
+            //      url: "http://192.168.1.102:3000/svr/request",
+            //      headers: {
+            //        'Authorization': "Bearer " + access_token,
+            //      },
+            //      data: {
+            //        request: 'uploadCarAndOwnerInfo',
+            //        info: carInfo
+            //      }
+            //    }).
+            //      success(function (response) {
+            //        console.log('success');
+            //      }).
+            //      error(function (err) {
+            //        var str = '';
+            //        for (var field in err)
+            //          str += field + ':' + err[field];
+            //        console.log('error=' + str);
+            //      });
+            //  }, function (error) {
+            //    // error
+            //    var err = '';
+            //    for (var field in error)
+            //      err += field + ':' + error[field];
+            //    alert('error=' + err);
+            //  });
           }
-      if(window.cordova!==undefined&&window.cordova!==null)
-      {
-        var url='http://211.87.225.197:3000/get/photo/home.jpg';
-        var targetPath=cordova.file.externalRootDirectory+'home.jpg';
-        $cordovaFileTransfer.download(url, targetPath, {}, true)
-          .then(function(result) {
-            alert('home图片');
-            // Success!
-          }, function(err) {
-            var str='';
-            for(var field in err)
-              str+=err[field]+'\n';
-            alert('error='+str);
-            // Error
-          }, function (progress) {
-          });
-      }
+      //if(window.cordova!==undefined&&window.cordova!==null)
+      //{
+      //  var url='http://211.87.225.197:3000/get/photo/home.jpg';
+      //  var targetPath=cordova.file.externalRootDirectory+'home.jpg';
+      //  $cordovaFileTransfer.download(url, targetPath, {}, true)
+      //    .then(function(result) {
+      //      alert('home图片');
+      //      // Success!
+      //    }, function(err) {
+      //      var str='';
+      //      for(var field in err)
+      //        str+=err[field]+'\n';
+      //      alert('error='+str);
+      //      // Error
+      //    }, function (progress) {
+      //    });
+      //}
 
           //var targetPath=cordova.file.externalRootDirectory+'ionic.jpg';
 
@@ -261,27 +261,6 @@ angular.module('starter')
         });
     }
 
-    //文件下载
-    $scope.download=function(){
-      var url='http://192.168.0.199:9030/get/photo/home.jpg';
-      var targetPath=cordova.file.externalRootDirectory + "/home.jpg";
-      var trustHosts = true;
-      var options = {};
-      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-        .then(function(result) {
-          alert('success');
-        }, function(err) {
-          // Error
-          var str='';
-          for(var field in err)
-          {
-            str+=field+':'+err[field];
-          }
-          alert('error=====\r\n'+str);
-        }, function (progress) {
-
-        });
-    }
 
     //文件上传
     $scope.upload=function(){

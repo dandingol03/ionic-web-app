@@ -2,7 +2,7 @@ angular.module('starter')
 
   .controller('carOrdersController',function($scope,$state,$http, $location,$rootScope){
 
-    //车险订单  0.报价中;1.已生成;2.待支付
+    //车险订单  0.已生成;1.待支付
     $scope.tabIndex=0;
 
     $scope.orders=$rootScope.car_orders;

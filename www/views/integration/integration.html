@@ -1,0 +1,145 @@
+<ion-view view-title="我的积分">
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content class="padding" lazy-scroll>
+
+    <ul class="list">
+
+      <li class="item item-icon-right"
+          style="padding-top:0px;padding-left:0px;padding-bottom:0px;border: 0px;"
+          >
+        <div style="width: 30%;float:left;">
+           <span style="display: inline-block">
+             <img src="img/iverson.jpg" style="width:65px;"/>
+           </span>
+        </div>
+        <div style="width:70%;float:left;padding-top:2%;">
+          <h2 style="margin-bottom: 5%;">
+            <span>用户:</span>
+            <span>alon iverson</span>
+          </h2>
+
+          <h2>
+            <span>手机:</span>
+            <span>17865135730</span>
+          </h2>
+
+          <!--<i class="icon ion-chevron-right" style="font-size: 1.2em;"></i>-->
+        </div>
+
+      </li>
+    </ul>
+
+    <!-- 积分tab 改为车驾管服务-->
+    <div class="list" scroll="true">
+      <div class="list" style="margin-bottom: 0px;">
+        <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
+          <li style="width:50%;">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[score_tab==0]"
+                 ng-click="change_scoreTab(0)"
+                 style="text-align: center"
+              >
+            <span style="position:absolute;left: 20%;right:20%;top:30%;">
+              积分余额
+            </span>
+            </div>
+          </li>
+
+          <li style="width:50%">
+            <div class="cell"
+                 ng-class="{true: 'selected', false: ''}[score_tab==1]"
+                 ng-click="change_scoreTab(1)"
+                 style="text-align: center"
+              >
+            <span style="position:absolute;left: 20%;right:20%;top:30%;">
+              今日积分
+            </span>
+
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="list" ng-if="score_tab==0">
+      <div class="item" style="border: 0px;">
+        <span>您已积累积分</span>
+        {{score_total}}
+      </div>
+
+
+      <div class="item item-divider" style="background:#CBCBCB;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+        <div style="display: inline-block;width: 33%;text-align: center">
+           积分来源
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          获取日期
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          积分数量
+        </div>
+      </div>
+
+
+      <div class="item">
+        <div style="display: inline-block;width: 33%;text-align: center">
+          订单购买
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          2014-07-29
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          2
+        </div>
+      </div>
+
+      <div class="item">
+        <div style="display: inline-block;width: 33%;text-align: center">
+          订单购买
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          2014-07-29
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          2
+        </div>
+      </div>
+
+      <div class="item">
+        <div style="display: inline-block;width: 33%;text-align: center">
+          订单购买
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          2014-07-29
+        </div>
+        <div style="display: inline-block;width: 33%;text-align: center">
+          2
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </ion-content>
+
+
+
+
+</ion-view>

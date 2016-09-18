@@ -10,9 +10,10 @@ angular.module('starter')
     $scope.goto=function(url){
       $location.path(url);
     };
+
     $http({
       method: "post",
-      url: "/pm/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -20,15 +21,17 @@ angular.module('starter')
       {
         request:'getCarAndOwnerInfo'
       }
-    }).
-      success(function (response) {
+    })
+      .success(function (response) {
         $scope.carInfo=response.carInfo[0];
         console.log('success');
       })
+
+
     $scope.postLifeInfo=function(){
       $http({
         method: "POST",
-        url: "/pm/svr/request",
+        url: "/proxy/node_server/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -230,64 +233,10 @@ angular.module('starter')
 
 
 
-    //$http.get("http://202.194.14.106:9030/insurance/get_lifeinsurance_list").
-    //  then(function(res) {
-    //    if(res.data!==undefined&&res.data!==null)
-    //    {
-    //      var data=res.data;
-    //      var life_insurances=data.life_insurances;
-    //      if(Object.prototype.toString.call(life_insurances)!='[object Array]')
-    //        life_insurances=JSON.parse(life_insurances);
-    //      $scope.life_insurances=life_insurances;
-    //      return $http.get("http://202.194.14.106:9030/insurance/project_provide");
-    //    }
-    //  }).
-    //  then(function(res){
-    //        if(res.data!==undefined&&res.data!==null)
-    //        {
-    //          var data=res.data;
-    //          var projects=data.projects;
-    //          if(Object.prototype.toString.call(projects)!='[object Array]')
-    //            projects=JSON.parse(projects);
-    //          $scope.motor_specials=projects;
-    //          return true;
-    //        }
-    //        else
-    //          return false;
-    //      }).
-    //  then(function(re) {
-    //      if(re==true)
-    //      {
-    //        $scope.tabs=[
-    //          {type:'车险',insurances:$scope.motor_specials},
-    //          {type:'寿险',insurances:$scope.life_insurances},
-    //          {type:'维修'},
-    //          {type:'车驾管服务',
-    //            services:[
-    //              {name:'代办车辆年审',href:''},
-    //              {name:'代办驾驶证年审',href:''},
-    //              {name:'取送车',href:''},
-    //              {name:'接送机',href:''},
-    //              {name:'违章查询',href:''}
-    //            ]
-    //          }
-    //        ];
-    //      }
-    //  })
-    //  .catch(function(err) {
-    //    var error='';
-    //    for(var field in err)
-    //    {
-    //      error+=field+':'+err[field]+'\r\n';
-    //    }
-    //    alert('err=' + error);
-    //  });
-
-
     //返回寿险产品列表
     $http({
       method: "POST",
-      url: "/pm/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -354,6 +303,7 @@ angular.module('starter')
 
     //寿险产品勾选
     $scope.toggle_lifeinsurance_product=function(item){
+      //如果本次行为为寿险选中,则
       if($scope.life_insurance.product!==undefined&&$scope.life_insurance.product!==null)
       {
         if($scope.life_insurance.product.productId==item.productId)
@@ -362,6 +312,7 @@ angular.module('starter')
           $scope.life_insurance.product=item;
       }else{
         $scope.life_insurance.product=item;
+        $state.go('life_insurance_detail',{insurance:JSON.stringify(item)});
       }
     }
 
@@ -464,17 +415,29 @@ angular.module('starter')
 
 
 
-      //维修救援
-      $scope.maintain={
-        tabs:['日常保养','故障维修','事故维修'],
-        tab:'日常保养',
-        items:{}
-      };
+    //维修救援
+    $scope.maintain={
+      tabs:['日常保养','故障维修','事故维修'],
+      tab:'日常保养',
+      items:{}
+    };
 
-      $scope.accident={
+    $scope.accident={
 
-      };
+    };
 
+    $scope.daily_check=function(item){
+      if(item.checked==true)
+        item.checked=false;
+      else
+        item.checked=true;
+    }
+
+    $scope.accident={};
+    $scope.accidant_check=function(type)
+    {
+      $scope.accident.type=type;
+    }
 
     //车驾管服务
 

@@ -12,6 +12,7 @@ angular.module('starter')
       $state.go(state);
     };
 
+
     $scope.detail=false;
     $scope.setDetail=function(){
       $scope.detail=!$scope.detail;
