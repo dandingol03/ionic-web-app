@@ -97,10 +97,18 @@ angular.module('starter')
 
 
     //上传照片
-    $scope.uploadCertificate=function(img_type) {
-      alert('the type of image=' + img_type);
-      alert('path of image=' + $scope.image[img_type]);
-      var server='http://192.168.1.102:3000/svr/request?request=uploadPhoto&imageName='+img_type;
+    //1.img_type:enum
+    //=>perIdCard,perDriver,carLicense
+    $scope.uploadCertificate=function(imgName) {
+      var absPath = $scope.image[imgName];
+      alert('path=\r\n' + absPath);
+      var type='';
+      if(absPath.indexOf('.jpg')!=-1)
+        type='jpg';
+      else if(absPath.indexOf('.png')!=-1)
+        type='png';
+      else{}
+      var server='http://192.168.1.102:3000/svr/request?request=uploadPhoto&imageName='+imgName+'&imageType='+type;
       var options = {
         fileKey:'file',
         headers: {

@@ -247,6 +247,24 @@ angular.module('starter')
     };
     /**************选择公司模态框*************************/
 
+    /**
+     * 获得正式服务器的险种套餐
+     */
+    $http({
+      method: "POST",
+      url: "/proxy/node_server/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token
+      },
+      data:
+      {
+        request:'getCarInsuranceMeals'
+      }
+    }).
+      success(function (response) {
+        console.log('success');
+      });
+
 
 
 

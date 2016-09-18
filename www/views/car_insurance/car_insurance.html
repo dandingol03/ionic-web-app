@@ -30,39 +30,16 @@
 
     <div class="list" style="margin-bottom: 0px;">
       <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
-        <li style="width:33.3%;">
+        <li style="width:33.3%;" ng-repeat="tab in tabs">
           <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==0]"
-               ng-click="tab_change(0)">
+               ng-class="{true: 'selected', false: ''}[tabIndex==$index]"
+               ng-click="tab_change($index)">
             <span style="position:absolute;left: 20%;top:40%;">
-              基础套餐
+              {{tab.mealName}}
             </span>
           </div>
         </li>
 
-
-        <li style="width:33.3%">
-          <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==1]"
-               ng-click="tab_change(1)">
-            <span style="position:absolute;left: 20%;top:40%;">
-              建议套餐
-            </span>
-
-          </div>
-        </li>
-
-
-        <li style="width:33.3%">
-          <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==2]"
-               ng-click="tab_change(2)">
-            <span style="position:absolute;left: 25%;top:40%;">
-              自定义
-            </span>
-
-          </div>
-        </li>
 
       </ul>
     </div>
@@ -74,7 +51,7 @@
       <div ng-if="tabIndex==0">
 
         <div class="row"
-             ng-repeat="item in tabs[tabIndex].insurances"
+             ng-repeat="item in tabs[tabIndex].products"
              style="border-bottom:1px solid #eee;padding:0px;margin-bottom:6px">
           <div class="col-80">
             <label class="item"
