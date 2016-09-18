@@ -28,7 +28,7 @@ angular.module('starter')
       }
     })
       .success(function (response) {
-        $scope.carInfo=response.carInfo[0];
+        var meal=response.meal;
         console.log('success');
       })
 

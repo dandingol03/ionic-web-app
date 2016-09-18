@@ -85,7 +85,7 @@
             <label class="item" style="border:0px;display: inline-block;width: 50%"
                    ng-click="">
               <span>不计免赔</span>
-              <i class="ion-ios-checkmark-outline"></i>
+              <input type="checkbox">
             </label>
             <label class="item" style="border:0px;display: inline-block"
                    ng-click="price_select(item,item.prices)">
@@ -95,9 +95,8 @@
             </span>
               <i class="ion-ios-arrow-down" ng-if="item.prices!==undefined&&item.prices!==null"></i>
             </label>
-            <label class="item" style="border:0px;display: inline-block"
-                   ng-click="">
-              <i class="ion-ios-checkmark-outline"></i>
+            <label class="checkbox" style="float: right">
+              <input type="checkbox">
             </label>
           </div>
 
@@ -132,6 +131,11 @@
                    style="border:0px;display: inline-block;width: 50%">
               {{item.name}}
             </label>
+            <label class="item" style="border:0px;display: inline-block;width: 50%"
+                   ng-click="">
+              <span>不计免赔</span>
+              <input type="checkbox">
+            </label>
             <label class="item" style="border:0px;display: inline-block"
                    ng-click="price_select(item,item.prices)">
               保额:
@@ -139,6 +143,9 @@
               {{item.price}}
             </span>
               <i class="ion-ios-arrow-down" ng-if="item.prices!==undefined&&item.prices!==null"></i>
+            </label>
+            <label class="checkbox" style="float: right">
+              <input type="checkbox">
             </label>
           </div>
 

@@ -4,10 +4,10 @@
    "proxies": [
             {
               "path":"/login",
-              "proxyUrl":"http://localhost:3000/login"
+              "proxyUrl":"http://localhost:3000/login"},
 
 
-
+{
                "path":"/pm",
                "proxyUrl":"http://localhost:3000"
                         }
