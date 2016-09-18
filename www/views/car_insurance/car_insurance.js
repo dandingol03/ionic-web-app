@@ -16,7 +16,21 @@ angular.module('starter')
       $scope.modalTabIndex=i;
     };
 
-
+    $http({
+      method: "post",
+      url: "/pm/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token,
+      },
+      data:
+      {
+        request:'getCarInsuranceMeals'
+      }
+    })
+      .success(function (response) {
+        $scope.carInfo=response.carInfo[0];
+        console.log('success');
+      })
 
 //从服务器取得险种
     $scope.tabs=[
