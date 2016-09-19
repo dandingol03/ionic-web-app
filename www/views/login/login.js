@@ -376,5 +376,19 @@ angular.module('starter')
     }
 
 
+    $scope.baidu=function(){
+      $http({
+        method:'GET',
+        url:"/proxy/send",
+        headers:{
+          'Access-Control-Allow-Origin':'*'
+        }}).
+        success(function (response) {
+          console.log('success');
+        }).error(function(err) {
+          console.log('...');
+        });
+    }
+
 
   });

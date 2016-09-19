@@ -99,23 +99,23 @@ angular.module('starter')
     //上传照片
     //1.img_type:enum
     //=>perIdCard,perDriver,carLicense
-    $scope.uploadCertificate=function(imgName) {
-      var absPath = $scope.image[imgName];
-      alert('path=\r\n' + absPath);
-      var type='';
-      if(absPath.indexOf('.jpg')!=-1)
-        type='jpg';
-      else if(absPath.indexOf('.png')!=-1)
-        type='png';
+    $scope.uploadCertificate=function(img_type) {
+      alert('the type of image=' + img_type);
+      alert('path of image=' + $scope.image[img_type]);
+      var suffix='';
+      if($scope.image[img_type].indexOf('.jpg')!=-1)
+        suffix='jpg';
+      else if($scope.image[img_type].indexOf('.png')!=-1)
+        suffix='png';
       else{}
-      var server='http://192.168.1.102:3000/svr/request?request=uploadPhoto&imageName='+imgName+'&imageType='+type;
+      var server='http://211.87.225.197:3000/svr/request?request=uploadPhoto' +
+        '&imageType='+img_type+'&suffix='+suffix;
       var options = {
         fileKey:'file',
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         }
       };
-
       $cordovaFileTransfer.upload(server, $scope.image[img_type], options)
         .then(function(result) {
           // Success!
@@ -128,41 +128,6 @@ angular.module('starter')
         }, function (progress) {
           // constant progress updates
         });
-
-
-      //$cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, $scope.picture)
-      //  .then(function (success) {
-      //    alert('content of image=' + success);
-      //    carInfo.carPhoto = success;
-      //    carInfo.ownerIdPhoto = success;
-      //    $http({
-      //      method: "POST",
-      //      url: "/proxy/node_server/svr/request",
-      //      headers: {
-      //        'Authorization': "Bearer " + access_token,
-      //      },
-      //      data: {
-      //        request: 'uploadCertificate',
-      //        info: carInfo
-      //      }
-      //    }).
-      //      success(function (response) {
-      //        console.log('success');
-      //      }).
-      //      error(function (err) {
-      //        var str = '';
-      //        for (var field in err)
-      //          str += field + ':' + err[field];
-      //        console.log('error=' + str);
-      //      });
-      //  }, function (error) {
-      //    // error
-      //    var err = '';
-      //    for (var field in error)
-      //      err += field + ':' + error[field];
-      //    alert('error=' + err);
-      //  });
-
 
     }
   });
