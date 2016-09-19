@@ -204,49 +204,39 @@ angular.module('starter')
 
 
 
+    //提交车险意向
     $scope.apply=function(){
-      switch($scope.tabIndex)
-      {
-        case 0: //基础套餐
-        case 1: //建议套餐
-          var flag=true;
-          var meals = $scope.tabs[$scope.tabIndex];
-          var selected=meals.insurances.map(function(meal,i) {
-              if(meal.price!==undefined&&meal.price!==null)
-                return meal;
-              else
-              {
-                flag=false;
-                  return null;
-              }
-          });
-
-          if(flag!=true){
-            alert('请填写完成您的套餐选择');
-          }else{
-              //TODO:pass the meals to next step
-           $state.go('car_orders',{selected:JSON.stringify(selected)})
-
-
-          }
-
-          break;
-        case 2: //自定义套餐
-          var meals=$scope.basic_meal.map(function(meal,i) {
-            if(meal.checked==true)
-              return meal;
-          });
-
-          if(flag!=true){
-            alert('请填写完成您的基础套餐');
-          }else{
-            //TODO:pass the meals to next step
-          }
-
-          break;
-        default:
-          break;
+      var products=[];
+      var meal = $scope.tabs[$scope.tabIndex];
+      for(var productName in meal.products) {
+        var product=meal.products[productName];
+        if(product.checked==true)
+        {
+          products.push(product);
+        }
       }
+      var companys=[];
+      $scope.companys.map(function(company,i) {
+        if(company.checked==true)
+          companys.push(company);
+      });
+      //TODO:apply selected product
+      $http({
+        method: "POST",
+        url: "/proxy/node_server/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'generateCarInsuranceOrder',
+          info:
+          {
+            products:products,
+            companys:companys
+          }
+        }
+      })
     }
 
 
