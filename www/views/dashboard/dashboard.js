@@ -4,7 +4,7 @@ angular.module('starter')
                                              $rootScope,$ionicModal,$timeout,
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,BaiduMapService,$ionicPopup,$cordovaFile,
-                                             $q,$ionicPlatform){
+                                             $q,$ionicPlatform,$interval){
 
     $scope.carInfo={};
 
@@ -413,11 +413,20 @@ angular.module('starter')
 
     //寿险意向保留
     $scope.saveLifeInsuranceIntend=function()
-    {
+    { $scope.life_insurance.order=
+    { insurancederId:1,
+      insurerId:1,
+      benefiterId:1,
+      insuranceType:'重疾',
+      hasSocietyInsurance:0,
+      hasCommerceInsurance:0,
+      planInsuranceFee:1000
+    };
+
       $rootScope.life_insurance=$scope.life_insurance;
       $http({
         method: "POST",
-        url: "http://192.168.0.199:3000/svr/request",
+        url: "/proxy/node_server/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -427,8 +436,40 @@ angular.module('starter')
           info:$scope.life_insurance.order
         }
       }).then(function(res) {
+          //$rootScope.
 
-        console.log('request has been back');
+        if(res.data!==undefined&&res.data!==null)
+        {
+          var orderId=res.data.data;
+            $http({
+              method: "POST",
+              url: "/proxy/node_server/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token,
+              },
+              data:
+              {
+                request:'getOrderState',
+                orderId:orderId
+              }
+            }).then(function(res) {
+              var data=res.state;
+              if(data==3)
+              {
+
+
+              }
+            }).catch(function(err) {
+              var str='';
+              for(var field in err)
+                str += field + ':' + err[field];
+              alert('error=\r\n' + str);
+            });
+
+
+
+        }
+
       }).catch(function(err) {
         var str='';
         for(var field in err)
@@ -436,10 +477,6 @@ angular.module('starter')
         alert('error=\r\n' + str);
       });
     }
-
-
-
-
 
 
     //车险保额选择
