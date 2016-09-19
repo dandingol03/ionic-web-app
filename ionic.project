@@ -21,10 +21,6 @@
             {
                "path":"/proxy/send",
                "proxyUrl":"http://sms.cloud.hbsmservice.com:8080/sms_send2.do"
-            },
-            {
-              "path":"proxy/baidu",
-              "proxyUrl":"http://www.baidu.com"
             }
 
           ]
