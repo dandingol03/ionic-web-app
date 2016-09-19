@@ -7,6 +7,10 @@ angular.module('starter')
 
     $scope.orders=$rootScope.car_orders;
 
+    $scope.prices=$rootScope.car_insurance.prices;
+
+
+
     $scope.goto=function(url){
       $location.path(url);
     };
@@ -20,9 +24,24 @@ angular.module('starter')
       $scope.tabIndex=i;
     }
 
-    $scope.setDetail=function(order){
-      order.detail=!order.detail;
+    $scope.setDetail=function(item){
+      if(item.detail!=true)
+        item.detail=true;
+      else
+        item.detail=false;
     }
+
+    $scope.toggle=function(item,field)
+    {
+      if(item[field]!=true)
+        item[field]=true;
+      else
+        item[field]=false;
+    }
+
+    $scope.editDetail=function(order) {
+
+    };
 
     $scope.goDetail=function(order)
     {

@@ -14,16 +14,47 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
     .run(function($ionicPlatform,$rootScope,$interval) {
 
-
-
     $rootScope.car_orders=[
         [
-        {name:"ABC",carNum:"鲁A00003",sum:200},
-        {name:"ABC",carNum:"鲁A00003",sum:200},
-        {name:"ABC",carNum:"鲁A00003",sum:200}
+          {feeDate:"2016-02-01",carNum:"鲁A00003",insuranceFeeTotal:2000},
+          {feeDate:"2016-03-17",carNum:"鲁A00003",insuranceFeeTotal:2000},
+          {feeDate:"2016-05-20",carNum:"鲁A00003",insuranceFeeTotal:2000}
         ],
-      {}
+      {},
+      [
+        {companyName:'',products:[]},
+        {companyName:'',products:[]}
+      ]
     ];
+
+    $rootScope.car_insurance={
+      prices:[
+        {
+          companyName:'永安财产保险',
+          products: [
+            {
+              productId:1,productName:'车辆损失险',insuranceType:null
+            },
+            {
+              productId:null,insuranceType:null,productName:'第三者责任险',
+              insuranceTypes:['5万','10万','20万']
+            }
+          ]
+        },
+        {
+          companyName:'泰山财产保险',
+          products:[
+            {
+              productId:1,productName:'车辆损失险',insuranceType:null
+            },
+            {
+              productId:2,insuranceType:'5万',productName:'第三者责任险'
+            }
+          ]
+        }
+      ]
+
+    };
 
     //定时器刷新获取订单
     var timer=$interval(function(){
@@ -32,7 +63,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     timer.then(function(){
       console.log('log over');
     },function(){
-
     });
 
     $ionicPlatform.ready(function() {
@@ -199,6 +229,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       controller:'carOrderDetailController',
       templateUrl:'views/car_order_detail/car_order_detail.html'
 
+    })
+
+    .state('life_insurance_product_list',{
+      url:'/life_insurance_product_list',
+      controller:'lifeInsuranceProductList',
+      templateUrl:'views/life_insurance_product_list/life_insurance_product_list.html'
     })
 
 

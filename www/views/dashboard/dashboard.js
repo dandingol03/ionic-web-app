@@ -414,6 +414,8 @@ angular.module('starter')
     //寿险意向保留
     $scope.saveLifeInsuranceIntend=function()
     {
+      $state.go('car_insurance_product_list');
+
       $rootScope.life_insurance=$scope.life_insurance;
       $http({
         method: "POST",

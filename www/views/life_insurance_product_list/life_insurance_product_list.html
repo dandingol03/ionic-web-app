@@ -1,0 +1,88 @@
+<!-- 寿险产品列表 -->
+<div ng-if="tabIndex==1"
+     ng-repeat="item in tabs[tabIndex].insurances">
+  <!--  公司简介 -->
+  <div class="row home-tab"
+       ng-model="life_insurance.flag"
+       style="padding-bottom: 0px;"
+    >
+    <div class="col col-100" style="padding-bottom: 0px;">
+
+      <div class="item item-text-wrap item-thumbnail-left"
+           style="border-bottom: 0px;padding-bottom: 0px;">
+        <img ng-src="{{'img/tk_life_insurance.jpg'}}"/>
+
+        <!-- 公司名称-->
+        <div style="text-decoration: none;position: absolute;bottom: 20%;left:30%;">
+          <h2 class="product-title">{{item.companyName}}</h2>
+          <!-- 主险产品名称 -->
+          <h2 class="product-title">{{item.main.productName}}</h2>
+        </div>
+
+      </div>
+      <div class="item"
+           ng-style="item.show_detail==true?
+                   {position: 'relative',padding:'0px',borderBottom: '0px',textAlign:'center'}:{position:'relative',textAlign:'center',padding:'0px'}"
+        >
+        <ul>
+          <li style="width: 50%;display: inline-block;border-right: 1px solid #ddd;padding-left:20px;padding-right:20px;">
+            <button class="button button-full button-positive">
+              confirm
+            </button>
+          </li>
+          <li style="width: 50%;display: inline-block;padding-left:20px;padding-right:20px;">
+            <button class="button button-full button-positive" ng-click="setDetail(item)">
+              edit
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 公司产品细项编辑 -->
+  <div class="padding"
+       style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
+    <div
+      ng-if="item.show_detail==true"
+      style="margin:1px;padding:1px"
+      >
+
+      <div class="item item-detail item-input-inset">
+        <span style="width: 20%;">保额</span>
+
+        <input type="text"
+               ng-value="item.main.insuranceQuota"
+               ng-model="item.main.insuranceQuota"
+               style="background: rgba(158, 158, 158, 0.12);width: 35%;">
+        <span style="width: 20%;">保费</span>
+        <span>{{item.main.insuranceFee}}</span>
+
+      </div>
+      <div class="item item-detail"
+           ng-style="$index!=item.attachs.length-1?{borderBottom:'0px'}:{}"
+           ng-repeat="product in item.attachs"
+        >
+                <span class="input-label" style="display: inline-block;width: 15%;">
+                  附加险:
+                </span>
+                <span>
+                  {{product.productName}}
+                </span>
+        <div style="position: relative">
+          count:
+          <span>{{product.count}}</span>
+                  <span style="font-size: 1.2em;position: absolute;top:20%;left: 30%;">
+                    <i class="ion-plus" ng-click="add_op(product,'count')"></i>
+                    <i class="ion-minus" ng-click="minus_op(product,'count')"></i>
+                  </span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

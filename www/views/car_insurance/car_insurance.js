@@ -233,10 +233,19 @@ angular.module('starter')
           info:
           {
             products:products,
-            companys:companys
+            companys:companys,
+            carId:1
           }
         }
-      })
+      }).then(function(res) {
+        var json=res.data;
+        console.log('...');
+      }).catch(function(err) {
+        var str='';
+        for(var feild in err)
+        str+=err[field];
+        console.error('error=\r\n' + str);
+      });
     }
 
 
