@@ -64,57 +64,47 @@
                 <i ng-if="product.checked==true" class="ion-ios-checkmark"></i>
               </div>
             </label>
+
             <label class="item" style="border:0px;display: inline-block;width: 100%;"
                    ng-if="product.insuranceTypes!==undefined&&product.insuranceTypes!==null"
                    ng-click="actionSheet(product,'insuranceTypes',['insuranceTypes=>insuranceType','productIds=>productId'])"
               >
                 保额:
-                <span>
+                <span style="position: absolute;right: 50%;">
                   {{product.insuranceType}}
-                </span>
-                <span>
                   <i class="ion-ios-arrow-down"></i>
                 </span>
+
+
             </label>
             <label class="item" style="border:0px;display: inline-block;width: 100%;"
                    ng-if="product.insuranceTypes==undefined||product.insuranceTypes==null"
               >
-              保额:
-                <span>
+                保额:
+                <span style="position: absolute;right:50%;">
                   {{product.insuranceType}}
                 </span>
             </label>
-            <label class="item item-toggle" style="border:0px;display: inline-block;width: 100%;"
-                   ng-if="product.insuranceTypes==undefined||product.insuranceTypes==null"
+
+
+            <label class="item"
+                   style="border:0px;display: inline-block;width: 100%;position: relative"
               >
-              不计免赔险:
-              <label class="toggle toggle-calm">
+              不计免赔
+              <div class="toggle toggle-assertive" style="position: absolute;right: 50%;">
                 <input type="checkbox" ng-model="product.irrespective">
                 <div class="track">
                   <div class="handle"></div>
                 </div>
-              </label>
+              </div>
             </label>
-            <!--<label style="display: inline-block;width: 10%;"-->
-                 <!--ng-click="tt()"-->
-                 <!--ng-if="product.insuranceTypes!==undefined&&product.insuranceTypes!==null"-->
-              <!-->
-              <!--tt-->
-              <!--<i class="ion-ios-arrow-down">-->
-              <!--</i>-->
-            <!--</label>-->
+
 
           </div>
+
         </div>
 
-
-
-
       </div>
-
-
-
-
 
 
     </div>

@@ -17,13 +17,6 @@ angular.module('starter')
     };
 
 
-
-    //选择公司
-    $scope.companys=[
-      {name:"太平洋保险"},{name:"平安保险"},{name:"新华保险"},
-      {name:"太平洋保险"},{name:"太平洋保险"},{name:"太平洋保险"},
-      {name:"太平洋保险"},{name:"太平洋保险"},{name:"太平洋保险"}
-      ];
     $scope.company={name:"选择公司"};
     //公司选择
     $scope.selectCompany=function(companyName){
@@ -204,7 +197,7 @@ angular.module('starter')
       var str='';
       for(var field in err)
       str+=err[field];
-      alert('error=\r\n'+str);
+      console.log('error=\r\n'+str);
     });
 
 
