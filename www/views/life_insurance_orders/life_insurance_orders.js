@@ -15,11 +15,13 @@ angular.module('starter')
       $scope.tabIndex=i;
     }
 
+    $scope.orders=[];
     $scope.plans=[];
 
 
 
     $scope.test=function(){
+
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
@@ -32,7 +34,7 @@ angular.module('starter')
           orderId:1
         }
       }).then(function(res) {
-        $scope.plans=res.data;
+        $scope.plans=res.data.data;
 
 
       }).catch(function(err) {
