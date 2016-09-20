@@ -15,10 +15,19 @@ angular.module('starter')
       $scope.tabIndex=i;
     }
 
+    $scope.toggle=function (item,field) {
+      if(item[field]!=true)
+        item[field]=true;
+      else
+        item[field]=false;
+    }
+
     $scope.orders=[];
     $scope.plans=[];
 
+    $scope.goDetail=function(){
 
+    }
 
     $scope.test=function(){
 
