@@ -995,7 +995,7 @@ angular.module('starter')
         });
       }
       else{//本地
-        var person=$scope.life_insurance.person;
+
         var buttons=[];
         options.map(function(item,i) {
           buttons.push({text: item});
@@ -1028,26 +1028,27 @@ angular.module('starter')
       }
     }
 
-      // //intial BMap service
-      // BaiduMapService.getBMap(function(BMap){
+      ////intial BMap service
+      //BaiduMapService.getBMap(function(BMap){
       //
-      //   /**
-      //    * 自身定位
-      //    */
-      //   var geolocation = new BMap.Geolocation();
-      //   geolocation.getCurrentPosition(function(r){
-      //     if(this.getStatus() == BMAP_STATUS_SUCCESS){
-      //       //var mk = new BMap.Marker(r.point);
-      //       //map.addOverlay(mk);
-      //       //map.panTo(r.point);
-      //       //alert('您的位置：'+r.point.lng+','+r.point.lat);
-      //     }
-      //     else {
-      //       //alert('failed'+this.getStatus());
-      //     }
-      //   },{enableHighAccuracy: true});
+      //  /**
+      //   * 自身定位
+      //   */
+      //  var geolocation = new BMap.Geolocation();
+      //  geolocation.getCurrentPosition(function(r){
+      //    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+      //      //var mk = new BMap.Marker(r.point);
+      //      //map.addOverlay(mk);
+      //      //map.panTo(r.point);
+      //      //alert('您的位置：'+r.point.lng+','+r.point.lat);
+      //    }
+      //    else {
+      //      //alert('failed'+this.getStatus());
+      //    }
+      //  },{enableHighAccuracy: true});
       //
-      // });
+      //});
+
 
     $scope.add_op=function(item,field){
       if(item[field]==undefined||item[field]==null)

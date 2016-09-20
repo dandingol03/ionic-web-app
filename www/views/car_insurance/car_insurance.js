@@ -238,9 +238,37 @@ angular.module('starter')
           }
         }
       }).then(function(res) {
+        $scope.closeCompanyModal();
         var json=res.data;
-        console.log('...');
+        var orderId=json.data;
+        if(orderId!==undefined&&orderId!==null)
+        {
+          //$rootScope.carInsurance.timer=$interval(
+          //  function(){
+          //    $http({
+          //      method: "POST",
+          //      url: "/proxy/node_server/svr/request",
+          //      headers: {
+          //        'Authorization': "Bearer " + $rootScope.access_token
+          //      },
+          //      data:
+          //      {
+          //        request:'generateCarInsuranceOrder',
+          //        orderId:orderId
+          //      }
+          //    }).then(function(res) {
+          //      var json=res.data;
+          //      if(json.state==3)
+          //      {
+          //        $interval.cancle($rootScope.carInsurance.timer);
+          //      }
+          //    });
+          //  }
+          //  ,3000);
+          $state.go('car_orders');
+        }
       }).catch(function(err) {
+        $scope.closeCompanyModal();
         var str='';
         for(var feild in err)
         str+=err[field];

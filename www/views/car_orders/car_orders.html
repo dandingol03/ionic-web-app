@@ -70,6 +70,7 @@
 
     <div class="list list-inset padding" style="margin-bottom:40px;" >
 
+      <!-- 已生成 -->
       <div class="item"
            ng-if="tabIndex==0"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
@@ -142,26 +143,18 @@
 
       <!-- 车险估价列表 -->
       <div ng-if="tabIndex==2"
-           ng-repeat="price in prices">
-        <!--  估价公司 -->
-        <!--<div class="row home-tab"-->
-             <!--style="padding-bottom: 0px;"-->
-          <!-->
-          <!--<div class="col col-100" style="padding-bottom: 0px;">-->
-            <!--<h2 class="product-title">{{price.companyName}}</h2>-->
-          <!--</div>-->
-        <!--</div>-->
+           ng-repeat="price in orderPriceItems">
         <!-- 公司产品细项 -->
         <div class="padding"
              style="padding:0px 10px">
-          <ion-item style="border-bottom: 0px;position: relative" ng-click="toggle(price,'checked')">
+          <ion-item style="border-bottom: 0px;position: relative" ng-click="setterPrice($index)">
             <h2>
               {{price.companyName}}
             </h2>
             <div style="position: absolute;right:20%;top:20%;">
               <span style="font-size: 2em;">
-                <i ng-if="price.checked==true" class="ion-ios-checkmark-outline"></i>
-                <i ng-if="price.checked!=true" class="ion-ios-checkmark"></i>
+                <i ng-if="$index!=priceIndex" class="ion-ios-checkmark-outline"></i>
+                <i ng-if="$index==priceIndex" class="ion-ios-checkmark"></i>
               </span>
             </div>
           </ion-item>
@@ -175,7 +168,7 @@
             class="list"
             >
             <ion-item
-              ng-repeat="product in price.products"
+              ng-repeat="product in price.items"
               >
               <div style="display:inline-block;width:60%;">
                 <span>{{product.productName}}</span>
