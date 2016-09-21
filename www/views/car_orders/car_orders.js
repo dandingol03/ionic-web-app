@@ -119,8 +119,11 @@ angular.module('starter')
       })
     }
 
-    $scope.change_specials=function(){
-      $rootScope.carInsurance={};
+
+    //重选套餐
+    $scope.reset_specials=function(){
+      $rootScope.Insurance={};
+
       $state.go('car_insurance');
     }
 
