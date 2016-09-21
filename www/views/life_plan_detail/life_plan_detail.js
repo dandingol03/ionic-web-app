@@ -2,21 +2,27 @@
  * Created by apple-2 on 16/9/1.
  */
 angular.module('starter')
-    .controller('lifeDetailController',function($scope,$rootScope,$state,$http, $location,$ionicModal,$ionicActionSheet,
-                                                $cordovaCamera,$cordovaImagePicker,$stateParams,$ionicSlideBoxDelegate){
+    .controller('lifePlanDetailController',function($scope,$rootScope,$state,$http,
+                                                    $location,$ionicModal,$ionicActionSheet,
+                                                $cordovaCamera,$cordovaImagePicker,$stateParams,
+                                                    $ionicSlideBoxDelegate,$ionicPopup){
 
-      $scope.item=$stateParams.insurance;
+    $scope.item=$stateParams.plan;
 
-      if(Object.prototype.toString.call($scope.item)=='[object String]')
+    if(Object.prototype.toString.call($scope.item)=='[object String]')
         $scope.item=JSON.parse($scope.item);
 
-      $scope.title=$scope.item.main.name;
+    //for contrast....
+    $scope.backup=$scope.item;
 
-      $scope.tabs=['产品简介','保费测算'];
-      $scope.tab=$scope.tabs[0];
-      $scope.tab_change=function(i){
-        $scope.tab=$scope.tabs[i];
-      }
+    $scope.title=$scope.item.main.name;
+
+    $scope.tabs=['产品简介','保费测算'];
+    $scope.tab=$scope.tabs[0];
+    $scope.tab_change=function(i){
+      $scope.tab=$scope.tabs[i];
+      $ionicSlideBoxDelegate.slide(i);
+    }
 
 
 
@@ -51,16 +57,28 @@ angular.module('starter')
        *
        * this is where we handle 附加险操作
        */
-      $scope.increment=function(index){
-        $scope.item.additions[index].count++;
-        $scope.item.additions[index].gurantee_fee+=$scope.item.additions[index].singleton;
-        $scope.total+=$scope.item.additions[index].singleton;
+      $scope.increment=function(item,field){
+        if(item[field]==0)
+        {
+          item['insuranceFee']+=item.singleton;
+        }else{
+          var singleton=item['insuranceFee']/item[field];
+          item['insuranceFee']+=singleton;
+        }
+        item[field]++;
+        $scope.total_compute();
       };
 
-      $scope.decrement=function(index) {
-        $scope.item.additions[index].count--;
-        $scope.item.additions[index].gurantee_fee-=$scope.item.additions[index].singleton;
-        $scope.total-=$scope.item.additions[index].singleton;
+      $scope.decrement=function(item,field) {
+        if(item[field]>0)
+        {
+          var singleton=item['insuranceFee']/item[field];
+          item[field]--;
+          if(item[field]==0)
+          item.singleton=singleton;
+          item['insuranceFee']-=singleton;
+        }
+        $scope.total_compute();
       };
 
       $scope.total_compute=function(){
@@ -148,15 +166,41 @@ angular.module('starter')
         });
       }
 
+    //保存修改,同布数据至$rootScope
+    $scope.sync=function(plan) {
+      var buttons=[
+        {
+          text: '<b>取消</b>',
+          type:'button-assertive'
+        },
+        {
+          text: '<b>确认</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            //TODO:do contrast
+            var planId=plan.planId;
+            var plans=$rootScope.lifeInsurance.plans;
+            plans.map(function(item,i) {
+              if(item.planId==planId)
+              {
+                plan.modified=true;
+                plans[i]=plan;
+              }
+            });
+            $state.go('life_insurance_orders', {tabIndex: 2});
+          }
+        }
+      ];
+      var myPopup = $ionicPopup.show({
+        template: '保存修改之后,需要等待后台工作人员进行审核',
+        title: '<strong>修改保修方案?</strong>',
+        subTitle: '',
+        scope: $scope,
+        buttons: buttons
+      });
 
-      $scope.changeState=function(){
-        $scope.life_insurance.state='modified';//订单状态为正在编辑
-        $rootScope.life_insurance.state= $scope.life_insurance.state;
-        $rootScope.orders.map(function(item,i){
-          if($rootScope.orders.type){}
-        })
-      }
 
+    };
 
 
       $scope.checkCarInfo=function(){

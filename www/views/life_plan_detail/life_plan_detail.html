@@ -81,78 +81,107 @@
       <ion-slide>
         <div class="item_desc" style="margin-bottom: 44px;">
           <div class="prop_over">
+
+            <!-- 主险项 -->
             <h4>主险</h4>
             <ion-list>
-              <ion-item ng-if="key!='img'" ng-repeat="(key, value)  in item.main">
+
+              <ion-item>
                 <div class="row">
-                  <div class="col"><p><i class="ion-record"></i>{{key}}</p></div>
-                  <div class="col"><p>{{value}}</p></div>
+                  <div class="col">
+                    <p><i class="ion-record"></i>险别</p>
+                  </div>
+                  <div class="col"><p>{{item.main.productName}}</p></div>
                 </div>
               </ion-item>
+
+              <ion-item>
+                <div class="row">
+                  <div class="col">
+                    <p><i class="ion-record"></i>保额</p>
+                  </div>
+                  <div class="col"><p>{{item.main.insuranceQuota}}</p></div>
+                </div>
+              </ion-item>
+
+              <ion-item>
+                <div class="row">
+                  <div class="col">
+                    <p><i class="ion-record"></i>保费</p>
+                  </div>
+                  <div class="col"><p>{{item.main.insuranceFee}}</p></div>
+                </div>
+              </ion-item>
+
+              <ion-item>
+                <div class="row">
+                  <div class="col">
+                    <p><i class="ion-record"></i>缴费年限</p>
+                  </div>
+                  <div class="col"><p>{{item.main.insuranceFeeYear}}</p></div>
+                </div>
+              </ion-item>
+
             </ion-list>
           </div>
 
-          <div style="margin-top:50px">
-            <span style="font-size: 1.3em">附加险</span>
-          </div>
+          <!-- 附加险 -->
+          <div ng-if="item.additions!==undefined&&item.additions!==null&&item.additions.length>0">
+            <div style="margin-top:50px">
+              <span style="font-size: 1.3em">附加险</span>
+            </div>
+            <div class="list life_insurance_detail">
+              <div class="item addition" ng-repeat="addition in item.additions"
+                   style="position: relative;border-left:0px;border-right:0px;padding:0px;">
+                <div class="row">
 
-          <div class="list life_insurance_detail">
-            <div class="item addition" ng-repeat="addition in item.additions" style="height: 140px;position: relative;border-left:0px;border-right:0px;">
-              <div class="row">
-                <div class="delete_item">
-                  <i class="ion-android-close"></i>
-                </div>
-                <div class="col det_content">
-                  <h3>{{addition.name}}</h3>
-                  <p class="price">
-                    保费&nbsp;&nbsp;: {{addition.gurantee_fee}}
-                  </p>
+                  <div class="col det_content">
+                    <h3>{{addition.productName}}</h3>
+                    <p class="price">
+                      保费&nbsp;&nbsp;: {{addition.insuranceFee}}
+                    </p>
 
-                  <div class="row qty_div">
-                    <div class="col col-20">
-                      <button class="button button-icon" ng-click="increment($index)">
-                        <i class="ion-ios-plus-empty"></i>
-                      </button>
+                    <div class="row qty_div">
+                      <div class="col col-20">
+                        <button class="button button-icon" ng-click="increment(addition,'productCount')">
+                          <i class="ion-ios-plus-empty"></i>
+                        </button>
+                      </div>
+
+                      <div class="col col-25">
+                        <label class="item item-input">
+                          <input type="number" value="{{addition.productCount}}">
+                        </label>
+                      </div>
+
+                      <div class="col col-20">
+                        <button class="button button-icon"  ng-click="decrement(addition,'productCount')">
+                          <i class="ion-ios-minus-empty"></i>
+                        </button>
+                      </div>
+
                     </div>
-
-                    <div class="col col-25">
-                      <label class="item item-input">
-                        <input type="number" value="{{addition.count}}">
-                      </label>
-                    </div>
-
-                    <div class="col col-20">
-                      <button class="button button-icon"  ng-click="decrement($index)">
-                        <i class="ion-ios-minus-empty"></i>
-                      </button>
-                    </div>
-
                   </div>
                 </div>
-              </div>
 
+              </div>
             </div>
           </div>
 
+
+          <!-- 合计保费 -->
           <div class="row" style="padding:0px 26px">
-            <div class="delete_item">
-              <i class="ion-android-close"></i>
-            </div>
             <div class="col det_content">
 
               <h4>
-                合计&nbsp;&nbsp;:   <span>{{total}}</span>
+                合计&nbsp;&nbsp;:   <span>{{item.insuranceFeeTotal}}</span>
               </h4>
             </div>
           </div>
 
-          <button class="button button-block button-positive comm_btn" ng-click="changeState()">
+          <button class="button button-block button-positive comm_btn" ng-click="sync(item)">
             保存修改
           </button>
-          <button ng-click="checkCarInfo()" class="button button-block button-positive comm_btn">
-            提交
-          </button>
-
 
         </div>
       </ion-slide>

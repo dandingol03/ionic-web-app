@@ -175,13 +175,11 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/orderCluster/orderCluster.html'
     })
 
-    /**
-     * 寿险列表详情
-     */
-    .state('life_insurance_detail',{
-      url:'/life_insurance_detail/:insurance',
-      controller:'lifeDetailController',
-      templateUrl:'views/life_insurance_detail/life_insurance_detail.html'
+
+    .state('lifePlanDetail',{
+      url:'/life_plan_detail/:plan',
+      controller:'lifePlanDetailController',
+      templateUrl:'views/life_plan_detail/life_plan_detail.html'
     })
 
     /**
@@ -200,13 +198,15 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     })
 
     .state('car_orders',{
+      cache:false,
       url:'/car_orders/:selected',
       controller:'carOrdersController',
       templateUrl:'views/car_orders/car_orders.html'
     })
 
     .state('life_insurance_orders',{
-      url:'/life_insurance_orders',
+      cache: false,
+      url:'/life_insurance_orders/:tabIndex',
       controller:'lifeInsuranceOrdersController',
       templateUrl:'views/life_insurance_orders/life_insurance_orders.html'
     })
