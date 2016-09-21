@@ -6,6 +6,23 @@ angular.module('starter')
   .controller('lifeInsuranceOrdersController',function($scope,$state,$http,
                                                        $location,$rootScope,$stateParams){
 
+
+
+    $scope.changedState= false;
+
+    if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
+      &&$rootScope.lifeInsurance.plans!==undefined&&$rootScope.lifeInsurance.plans!==null)
+    {
+      var plans=$rootScope.lifeInsurance.plans;
+      plans.map(function (plan, i){
+        if(plan.modified==true&plan.checked==true){
+          $scope.changedState=true;
+        }
+      });
+    }
+
+
+
     $scope.go_back=function(){
       window.history.back();
     }
@@ -23,6 +40,10 @@ angular.module('starter')
         item[field]=true;
       else
         item[field]=false;
+      if(field=='checked')
+      {
+
+      }
     }
 
     $scope.orders=[];
@@ -84,7 +105,7 @@ angular.module('starter')
 
 
 
-    $scope.test();
+
     //提交已选方案
     $scope.apply=function() {
       var plans = [];

@@ -119,4 +119,9 @@ angular.module('starter')
       })
     }
 
+    $scope.change_specials=function(){
+      $rootScope.carInsurance={};
+      $state.go('car_insurance');
+    }
+
   });

@@ -184,6 +184,7 @@ angular.module('starter')
               if(item.planId==planId)
               {
                 plan.modified=true;
+                plan.checked=true;
                 plans[i]=plan;
               }
             });
