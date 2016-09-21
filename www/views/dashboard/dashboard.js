@@ -3,7 +3,7 @@ angular.module('starter')
   .controller('dashboardController',function($scope,$state,$http, $location,
                                              $rootScope,$ionicModal,$timeout,
                                              $cordovaCamera,ionicDatePicker,
-                                             $ionicActionSheet){
+                                             $ionicActionSheet,$ionicPopup,$q,$cordovaFile){
 
     $scope.carInfo={};
 
@@ -97,24 +97,6 @@ angular.module('starter')
     };
     /*** bind car modal ***/
 
-    /*** bind coverage_tab_modal ***/
-    $ionicModal.fromTemplateUrl('views/modal/coverage_tab_modal.html',{
-      scope:  $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.coverage_tab_modal = modal;
-    });
-
-    //待定
-    $scope.open_lifeModal= function(){
-        $scope.coverage_tab_modal.show();
-    };
-
-
-    $scope.close_lifeModal= function() {
-      $scope.coverage_tab_modal.hide();
-    };
-    /*** bind coverage_tab_modal ***/
 
     /*** bind append_insurer_modal ***/
     $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html',{
@@ -924,15 +906,17 @@ angular.module('starter')
           $scope.getBin(item,field).then(function(res) {
             var gen_feild=field.replace('_img','Photo');
             var type=null;
-            if(item[field].indexOf('.jpg')!=-1)
+            alert(item[field]);
+            if(item[field].toString().indexOf('.jpg')!=-1)
               type = 'jpg';
-            else if(item[field].indexOf('.png')!=-1)
+            else if(item[field].toString().indexOf('.png')!=-1)
               type='png';
             else{}
             item[gen_feild]={
               type:type,
               bin:res
             }
+            alert('photo field=\r\n' + gen_feild);
             deferred.resolve({re: 1});
           }).catch(function(err) {
             deferred.reject(err.toString());
@@ -950,7 +934,7 @@ angular.module('starter')
         .then(function(json) {
         return  $http({
           method: "POST",
-          url: "http://192.168.1.116:3000/svr/request",
+          url: "proxy/node_server/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
@@ -978,7 +962,7 @@ angular.module('starter')
       {
         $http({
           method: "POST",
-          url: "/proxy/node_server/svr/request",
+          url: "proxy/node_server/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token
           },
@@ -1006,6 +990,7 @@ angular.module('starter')
               cancelText: '取消',
               buttonClicked: function(index) {
                 item[field] = buttons[index].text;
+                item.perType=index+1;
                 if(addon_field!==undefined&&addon_field!==null)
                   item[addon_field]=(index+1);
                 return true;

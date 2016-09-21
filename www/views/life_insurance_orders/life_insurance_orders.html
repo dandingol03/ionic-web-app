@@ -190,7 +190,8 @@
         </div>
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="apply()">
-          <h1 class="title">提交已选方案</h1>
+          <h1 ng-if="changedState!=true" class="title">提交已选方案</h1>
+          <h1 ng-if="changedState==true" class="title">请等待工作人员确认</h1>
         </div>
       </div>
 

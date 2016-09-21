@@ -6,16 +6,24 @@ angular.module('starter')
   .controller('lifeInsuranceOrdersController',function($scope,$state,$http,
                                                        $location,$rootScope,$stateParams,
                                                        $ionicPopup){
-    $scope.changedState=false;
 
-    if($scope.lifeInsurance!==undefined&&$scope.lifeInsurance!==null
-      &&$scope.lifeInsurance.plans!==undefined&&$scope.lifeInsurance.plans!==null)
+    $scope.changedState= false;
+
+    if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
+      &&$rootScope.lifeInsurance.plans!==undefined&&$rootScope.lifeInsurance.plans!==null)
     {
       var plans=$rootScope.lifeInsurance.plans;
-      plans.map(function(plan,i) {
-        if(plan.modified==true&&plan.checked==true)
+      plans.map(function (plan, i){
+        if(plan.modified==true&plan.checked==true){
           $scope.changedState=true;
+        }
       });
+    }
+
+
+
+    $scope.go_back=function(){
+      window.history.back();
 
     }
 
@@ -41,6 +49,12 @@ angular.module('starter')
       else
       {
         item[field]=false;
+
+      if(field=='checked')
+      {
+
+      }
+
         if(field=='checked')
         {
           var flag=false;
@@ -114,7 +128,7 @@ angular.module('starter')
 
 
 
-    $scope.test();
+
     //提交已选方案
     $scope.apply=function() {
       var plans = [];
