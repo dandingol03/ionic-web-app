@@ -184,6 +184,7 @@ angular.module('starter')
               if(item.planId==planId)
               {
                 plan.modified=true;
+                plan.checked=true;
                 plans[i]=plan;
               }
             });
@@ -215,7 +216,7 @@ angular.module('starter')
     }
 
       $scope.go_back=function(){
-        window.history.back();
+        $state.go('life_insurance_orders', {tabIndex: 2});
       }
 
       $scope.$on('$destroy', function() {

@@ -98,29 +98,36 @@
               <ion-item>
                 <div class="row">
                   <div class="col">
-                    <p><i class="ion-record"></i>保额</p>
+                    <p><i class="ion-record"></i>每年缴费</p>
                   </div>
-                  <div class="col"><p>{{item.main.insuranceQuota}}</p></div>
+                  <div class="col"><p>{{item.main.insuranceFeeYear}}</p></div>
+                </div>
+              </ion-item>
+
+              <ion-item>
+                <div class="row">
+                  <label class="item item-input" style="width: 50%;">
+                    <i class="ion-record"></i>保额
+                  </label>
+                  <label class="item item-input">
+                    <input type="text" value="{{item.main.insuranceQuota}}"
+                           style="font-size: 1em;background: #FF9696;color: #fff;"
+                           ng-model="item.main.insuranceQuota"/>
+                  </label>
+
                 </div>
               </ion-item>
 
               <ion-item>
                 <div class="row">
                   <div class="col">
-                    <p><i class="ion-record"></i>保费</p>
+                    <p style="color:#f00"><i class="ion-record"></i>保费</p>
                   </div>
                   <div class="col"><p>{{item.main.insuranceFee}}</p></div>
                 </div>
               </ion-item>
 
-              <ion-item>
-                <div class="row">
-                  <div class="col">
-                    <p><i class="ion-record"></i>缴费年限</p>
-                  </div>
-                  <div class="col"><p>{{item.main.insuranceFeeYear}}</p></div>
-                </div>
-              </ion-item>
+
 
             </ion-list>
           </div>
@@ -170,10 +177,10 @@
 
 
           <!-- 合计保费 -->
-          <div class="row" style="padding:0px 26px">
+          <div class="row" style="padding:0px 0px">
             <div class="col det_content">
 
-              <h4>
+              <h4 style="color:#f00">
                 合计&nbsp;&nbsp;:   <span>{{item.insuranceFeeTotal}}</span>
               </h4>
             </div>

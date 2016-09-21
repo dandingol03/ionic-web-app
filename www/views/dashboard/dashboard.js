@@ -410,11 +410,39 @@ angular.module('starter')
         });
     }
 
+    //寿险状态查询
+    $scope.lifeInsuranceStateQuery=function(){
+      $http({
+        method: "POST",
+        url: "/proxy/node_server/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'getOrderState',
+          orderId:orderId
+        }
+      }).then(function(res) {
+        var data=res.state;
+        if(data==3)
+        {
+
+
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str += field + ':' + err[field];
+        alert('error=\r\n' + str);
+      });
+    }
+
     //寿险意向保留
     $scope.saveLifeInsuranceIntend=function()
     {
 
-      $state.go('car_insurance_product_list');
+
 
       $scope.life_insurance.order= {
         insurancederId:1,
@@ -427,7 +455,7 @@ angular.module('starter')
       };
 
 
-      $rootScope.life_insurance=$scope.life_insurance;
+
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
@@ -440,7 +468,6 @@ angular.module('starter')
           info:$scope.life_insurance.order
         }
       }).then(function(res) {
-          //$rootScope.
 
         if(res.data!==undefined&&res.data!==null)
         {
@@ -450,33 +477,8 @@ angular.module('starter')
             if($rootScope.lifeInsurance==undefined||$rootScope.lifeInsurance==null)
               $rootScope.lifeInsurance={};
             $rootScope.lifeInsurance.orderId=orderId;
+            $state.go('life_insurance_orders',{tabIndex:2});
           }
-            $http({
-              method: "POST",
-              url: "/proxy/node_server/svr/request",
-              headers: {
-                'Authorization': "Bearer " + $rootScope.access_token,
-              },
-              data:
-              {
-                request:'getOrderState',
-                orderId:orderId
-              }
-            }).then(function(res) {
-              var data=res.state;
-              if(data==3)
-              {
-
-
-              }
-            }).catch(function(err) {
-              var str='';
-              for(var field in err)
-                str += field + ':' + err[field];
-              alert('error=\r\n' + str);
-            });
-
-
 
         }
 

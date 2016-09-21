@@ -4,11 +4,21 @@ angular.module('starter')
  * 本页面不开启缓存
  */
   .controller('lifeInsuranceOrdersController',function($scope,$state,$http,
-                                                       $location,$rootScope,$stateParams){
+                                                       $location,$rootScope,$stateParams,
+                                                       $ionicPopup){
+    $scope.changedState=false;
 
-    $scope.go_back=function(){
-      window.history.back();
+    if($scope.lifeInsurance!==undefined&&$scope.lifeInsurance!==null
+      &&$scope.lifeInsurance.plans!==undefined&&$scope.lifeInsurance.plans!==null)
+    {
+      var plans=$rootScope.lifeInsurance.plans;
+      plans.map(function(plan,i) {
+        if(plan.modified==true&&plan.checked==true)
+          $scope.changedState=true;
+      });
+
     }
+
     if($stateParams.tabIndex!==undefined&&$stateParams.tabIndex!==null&&$stateParams.tabIndex!='')
       $scope.tabIndex = parseInt($stateParams.tabIndex);
     else
@@ -17,11 +27,34 @@ angular.module('starter')
       $scope.tabIndex=i;
     }
 
+    $scope.go_back=function(){
+      window.history.back();
+    }
+
     $scope.toggle=function (item,field) {
-      if(item[field]!=true)
+      if(item[field]!=true)//勾选
+      {
         item[field]=true;
+        if(field=='checked')
+        {
+          $scope.changedState=true;
+        }
+      }
       else
+      {
         item[field]=false;
+        if(field=='checked')
+        {
+          var flag=false;
+          $scope.plans.map(function(plan,i) {
+            if(plan.checked==true&&plan.modified==true)
+            flag=true;
+          });
+          if(!flag)
+            $scope.changedState=false;
+        }
+      }
+
     }
 
     $scope.orders=[];
@@ -74,7 +107,7 @@ angular.module('starter')
         var str='';
         for(var field in err)
           str+=err[field];
-        console.log('error=\r\n'+str);
+        console.error('error=\r\n'+str);
       });
     }
 
@@ -106,11 +139,19 @@ angular.module('starter')
           {
             request:'userUpdateLifeOrder',
             info:{
-              orderId:$rootScope.lifeInsurance.orderId,
+              orderId:1,
               plans:plans
             }
           }
-        })
+        }).then(function(res) {
+          var json=res.data;
+          console.log('...');
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          console.error('error=\r\n' + str);
+        });
       }else{//如果未产生如何改动
         $http({
           method: "POST",
@@ -122,13 +163,17 @@ angular.module('starter')
           {
             request:'userApplyUnchangedLifeOrder',
             info:{
-              orderId:$rootScope.lifeInsurance.orderId,
+              orderId:1,
               planIds:planIds
             }
           }
         }).then(function(json) {
           if(json.re==1) {
             //TODO:取消保存的寿险方案列表,从服务器获取寿险方案列表时匹配userSelect字段
+            var alertPopup = $ionicPopup.alert({
+              title: '修改方案已提交',
+              template: '等待后台工作人员重新报价'
+            });
 
 
           }
