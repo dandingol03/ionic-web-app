@@ -60,6 +60,7 @@ angular.module('starter')
     $scope.orders=[];
     $scope.plans=[];
 
+
     $scope.goDetail=function(plan){
       $state.go('lifePlanDetail',{plan:JSON.stringify(plan)});
     }
@@ -83,6 +84,8 @@ angular.module('starter')
           orderId:1
         }
       }).then(function(res) {
+        $scope.plans=res.data.data;
+
         var data=res.data.data;
         var plans=[];
         data.map(function(plan,i) {
@@ -111,24 +114,24 @@ angular.module('starter')
       });
     }
 
+
+
+    $scope.test();
     //提交已选方案
-    $scope.apply=function()
-    {
-      var plans=[];
-      var planIds=[];
-      var flag=false;
-      $scope.plans.map(function(plan,i) {
-        if(plan.checked==true)
-        {
+    $scope.apply=function() {
+      var plans = [];
+      var planIds = [];
+      var flag = false;
+      $scope.plans.map(function (plan, i) {
+        if (plan.checked == true) {
           plans.push(plan);
           planIds.push(plan.planId);
-          if(plan.modified==true)
-            flag=true;
+          if (plan.modified == true)
+            flag = true;
         }
       });
       //如果已经进行修改
-      if(flag==true)
-      {
+      if (flag == true) {
         $http({
           method: "POST",
           url: "/proxy/node_server/svr/request",
@@ -152,23 +155,23 @@ angular.module('starter')
             str+=err[field];
           console.error('error=\r\n' + str);
         });
-      }else{//如果未产生如何改动
+      }else {//如果未产生如何改动
+
         $http({
           method: "POST",
           url: "/proxy/node_server/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token
           },
-          data:
-          {
-            request:'userApplyUnchangedLifeOrder',
-            info:{
-              orderId:1,
-              planIds:planIds
+          data: {
+            request: 'userApplyUnchangedLifeOrder',
+            info: {
+              orderId: 1,
+              planIds: planIds
             }
           }
-        }).then(function(json) {
-          if(json.re==1) {
+        }).then(function (json) {
+          if (json.re == 1) {
             //TODO:取消保存的寿险方案列表,从服务器获取寿险方案列表时匹配userSelect字段
             var alertPopup = $ionicPopup.alert({
               title: '修改方案已提交',
@@ -177,15 +180,14 @@ angular.module('starter')
 
 
           }
-        }).catch(function(err) {
-          var str='';
-          for(var field in err)
-            str+=err[field];
+        }).catch(function (err) {
+          var str = '';
+          for (var field in err)
+            str += err[field];
           console.error('error=\r\n' + str);
         });
       }
 
     }
-
 
   });

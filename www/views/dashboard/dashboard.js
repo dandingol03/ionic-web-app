@@ -438,12 +438,39 @@ angular.module('starter')
       });
     }
 
+    //获取寿险订单状态
+    $scope.getLifeOrderState=function(){
+      $http({
+        method: "POST",
+        url: "/proxy/node_server/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'getLifeOrderState',
+          orderId:orderId
+        }
+      }).then(function(res) {
+        var data=res.state;
+        if(data==3)
+        {
+
+
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str += field + ':' + err[field];
+        alert('error=\r\n' + str);
+      });
+
+    }
+
+
     //寿险意向保留
     $scope.saveLifeInsuranceIntend=function()
     {
-
-
-
       $scope.life_insurance.order= {
         insurancederId:1,
         insurerId:1,
@@ -453,8 +480,6 @@ angular.module('starter')
         hasCommerceInsurance:0,
         planInsuranceFee:1000
       };
-
-
 
       $http({
         method: "POST",
@@ -479,7 +504,6 @@ angular.module('starter')
             $rootScope.lifeInsurance.orderId=orderId;
             $state.go('life_insurance_orders',{tabIndex:2});
           }
-
         }
 
       }).catch(function(err) {
@@ -550,17 +574,6 @@ angular.module('starter')
       $rootScope.selected_daily= $scope.selected_daily;
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
