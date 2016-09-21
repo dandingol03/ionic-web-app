@@ -19,10 +19,8 @@ angular.module('starter')
 
     }
 
-    if($stateParams.tabIndex!==undefined&&$stateParams.tabIndex!==null&&$stateParams.tabIndex!='')
-      $scope.tabIndex = parseInt($stateParams.tabIndex);
-    else
-      $scope.tabIndex=0;
+
+
     $scope.tab_change=function(i){
       $scope.tabIndex=i;
     }
@@ -188,6 +186,17 @@ angular.module('starter')
         });
       }
 
+    }
+
+    //tabIndex选定
+    if($stateParams.tabIndex!==undefined&&$stateParams.tabIndex!==null&&$stateParams.tabIndex!='')
+      $scope.tabIndex = parseInt($stateParams.tabIndex);
+    else
+    {
+      if($scope.plans!==undefined&&$scope.plans!==null&&$scope.plans.length>0)
+        $scope.tabIndex=2;
+      else
+        $scope.tabIndex=0;
     }
 
   });

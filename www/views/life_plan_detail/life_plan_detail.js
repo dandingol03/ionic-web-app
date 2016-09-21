@@ -216,7 +216,7 @@ angular.module('starter')
     }
 
       $scope.go_back=function(){
-        $state.go('life_insurance_orders', {tabIndex: 2});
+        window.history.back();
       }
 
       $scope.$on('$destroy', function() {
