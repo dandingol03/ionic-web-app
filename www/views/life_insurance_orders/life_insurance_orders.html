@@ -142,52 +142,56 @@
 
 
       <!-- 寿险估价列表 -->
-      <div ng-if="tabIndex==2"
-           ng-repeat="plan in plans">
-        <!-- 公司名称 -->
-        <div class="padding"
-             style="padding:0px 10px">
-          <ion-item style="border-bottom:0px;position: relative" ng-click="toggle(plan,'checked')">
-            <h2>
-              {{plan.companyName}}
-            </h2>
-            <div style="position: absolute;right:20%;top:20%;">
+      <div ng-if="tabIndex==2">
+        <div ng-repeat="plan in plans">
+          <!-- 公司名称 -->
+          <div class="padding"
+               style="padding:0px 10px">
+            <ion-item style="border-bottom:0px;position: relative" ng-click="toggle(plan,'checked')">
+              <h2>
+                {{plan.companyName}}
+              </h2>
+              <div style="position: absolute;right:20%;top:20%;">
               <span style="font-size: 2em;">
                 <i ng-if="plan.checked!=true" class="ion-ios-checkmark-outline"></i>
                 <i ng-if="plan.checked==true" class="ion-ios-checkmark"></i>
               </span>
-            </div>
-          </ion-item>
-          <ion-item style="border-bottom:0px;position: relative">
-            <h2 style="width: 70%;display: inline-block">
-              合计保费:
-            </h2>
-            <h2 style="width: 30%;display: inline-block">
-              {{plan.insuranceFeeTotal}}
-            </h2>
-          </ion-item>
-          <ion-item style="position: relative" ng-click="goDetail(plan)">
-            <h2 style="width: 30%;display: inline-block">
-              查看详情:
-            </h2>
-            <h2 style="display: inline-block">
+              </div>
+            </ion-item>
+            <ion-item style="border-bottom:0px;position: relative">
+              <h2 style="width: 70%;display: inline-block">
+                合计保费:
+              </h2>
+              <h2 style="width: 30%;display: inline-block">
+                {{plan.insuranceFeeTotal}}
+              </h2>
+            </ion-item>
+            <ion-item style="position: relative" ng-click="goDetail(plan)">
+              <h2 style="width: 30%;display: inline-block">
+                查看详情:
+              </h2>
+              <h2 style="display: inline-block">
                  <span  style="font-size: 1.3em;">
                    <i class="ion-compose"></i>
                  </span>
-            </h2>
-          </ion-item>
-        </div>
+              </h2>
+            </ion-item>
+          </div>
 
-        <!-- 公司产品细项 -->
-        <div class="padding"
-             style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
-          <div
-            style="margin:1px;padding:1px"
-            class="list"
-          >
+          <!-- 公司产品细项 -->
+          <div class="padding"
+               style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
+            <div
+              style="margin:1px;padding:1px"
+              class="list"
+              >
+            </div>
           </div>
         </div>
 
+        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="apply()">
+          <h1 class="title">提交已选方案</h1>
+        </div>
       </div>
 
 

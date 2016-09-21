@@ -445,6 +445,12 @@ angular.module('starter')
         if(res.data!==undefined&&res.data!==null)
         {
           var orderId=res.data.data;
+          if(orderId!==undefined&&orderId!==null)
+          {
+            if($rootScope.lifeInsurance==undefined||$rootScope.lifeInsurance==null)
+              $rootScope.lifeInsurance={};
+            $rootScope.lifeInsurance.orderId=orderId;
+          }
             $http({
               method: "POST",
               url: "/proxy/node_server/svr/request",
