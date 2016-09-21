@@ -453,7 +453,7 @@ angular.module('starter')
               },
               data:
               {
-                request:'getOrderState',
+                request:'getLifeOrderState',
                 orderId:orderId
               }
             }).then(function(res) {
@@ -542,17 +542,6 @@ angular.module('starter')
       $rootScope.selected_daily= $scope.selected_daily;
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

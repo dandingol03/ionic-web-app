@@ -24,6 +24,7 @@ angular.module('starter')
 
     $scope.orders=[];
     $scope.plans=[];
+    $scope
 
     $scope.goDetail=function(){
 
@@ -45,7 +46,6 @@ angular.module('starter')
       }).then(function(res) {
         $scope.plans=res.data.data;
 
-
       }).catch(function(err) {
         var str='';
         for(var field in err)
@@ -54,7 +54,6 @@ angular.module('starter')
       });
 
     };
-
 
     $scope.test();
 
