@@ -5,6 +5,23 @@ angular.module('starter')
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile){
 
+    $http({
+      method: "post",
+      url: "/proxy/node_server/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token,
+      },
+      data:
+      {
+        request:'generateCode'
+      }
+    }).then(function(res) {
+      var json=res.data;
+    }).catch(function(err) {
+      console.log('...');
+    });
+
+
     $scope.carInfo={};
 
     $scope.goto=function(url){
