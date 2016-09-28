@@ -1,0 +1,41 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="closeCompanyModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" style="width: 95%;padding:10px">
+
+    <div class="list list-inset padding" style="margin-bottom:40px;">
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;">
+              选择地:
+            </span>
+        <input type="text" placeholder="请输入您的车牌"
+               style="display: inline-block" ng-value="carInfo.carNum"
+               ng-model="carInfo.carNum"/>
+      </div>
+
+
+      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+              <span class="input-label" style="display: inline-block">
+                预约时间
+              </span>
+        <div style="display: inline-block" ng-click= "datepick()">
+                <span>
+                  <i class="ion-calendar" style="font-size: 1.5em;"></i>
+                </span>
+          <input id="date"
+                 ng-model="carInfo.issueDate" type="text" style="display: inline-block"
+                 placeholder="点击设置日期！">
+        </div>
+      </div>
+
+      <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="">
+        <h1 class="title">保存车辆信息</h1>
+      </div>
+
+    </div>
+
+
+  </ion-content>
+
+</ion-modal-view>

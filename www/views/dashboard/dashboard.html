@@ -203,7 +203,7 @@
              <span class="input-label" style="display: inline-block;">
               行驶证:
             </span>
-            <input type="text" placeholder="输入车主行驶证"
+            <input type="text" placeholder="请上传行驶证照片"
                    style="display: inline-block" value="{{}}"
                    ng-model="carInfo.carPhoto"/>
             <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
@@ -214,7 +214,7 @@
              <span class="input-label" style="display: inline-block;">
               厂牌型号:
             </span>
-            <input type="text" placeholder="设置厂牌型号"
+            <input type="text" placeholder="请输入厂牌型号"
                    style="display: inline-block" ng-value="carInfo.factoryNum"
                    ng-model="carInfo.factoryNum"/>
           </div>
@@ -236,7 +236,7 @@
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
               <span class="input-label" style="display: inline-block">
-                发证日期
+                初次登记日期
               </span>
             <div style="display: inline-block" ng-click= "datepick()">
                 <span>
@@ -334,7 +334,7 @@
                 查看保养计划
               </button>
             </div>
-            <button class="button button-block button-positive" ng-click="commit_daily()">
+            <button class="button button-block button-positive" ng-click="commit_daily();open_weixiu_timeModal()">
               提交服务项目
             </button>
           </div>

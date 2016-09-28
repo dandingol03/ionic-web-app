@@ -134,6 +134,25 @@ angular.module('starter')
     /*** bind append_insurer_modal ***/
 
 
+    /*** bind weixiu_time_modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/weixiu_time_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.weixiu_time_modal = modal;
+    });
+
+    $scope.open_weixiu_timeModal= function(){
+      $scope.weixiu_time_modal.show();
+    };
+
+
+    $scope.close_weixiu_timeModal= function() {
+      $scope.weixiu_time_modal.hide();
+    };
+    /*** bind weixiu_time_modal ***/
+
+
 
 
 
@@ -566,6 +585,7 @@ angular.module('starter')
     $scope.selected_daily=[];
 
     $scope.commit_daily=function(){
+
       dailys.map(function(daily,i) {
         if(daily.checked)
            selected_daily.push(daily);
