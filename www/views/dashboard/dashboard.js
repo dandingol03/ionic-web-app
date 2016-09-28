@@ -3,7 +3,8 @@ angular.module('starter')
   .controller('dashboardController',function($scope,$state,$http, $location,
                                              $rootScope,$ionicModal,$timeout,
                                              $cordovaCamera,ionicDatePicker,
-                                             $ionicActionSheet,$ionicPopup,$q,$cordovaFile){
+                                             $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
+                                             BaiduMapService,$ionicLoading){
 
     $scope.carInfo={};
 
@@ -48,13 +49,13 @@ angular.module('starter')
 
 
     //use factory to improve
-    $scope.datepick = function(){
+    $scope.datepick = function(item,field){
       var ipObj1 = {
         callback: function (val) {  //Mandatory
-          var t1 = document.getElementById('date');//根据id获取input节点
+
           var date=new Date(val);
           var month=parseInt(date.getMonth())+1;
-          t1.value=date.getFullYear()+'-'+month+'-'+date.getDate();
+          item[field]=date.getFullYear()+'-'+month+'-'+date.getDate();
         },
         disabledDates: [            //Optional
           new Date(2016, 2, 16),
@@ -116,6 +117,40 @@ angular.module('starter')
     };
     /*** bind append_insurer_modal ***/
 
+
+    /*** bind append_insuranceder_modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/append_insuranceder_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.append_insuranceder_modal = modal;
+    });
+
+    $scope.open_appendInsurancederModal= function(){
+      $scope.append_insuranceder_modal.show();
+    };
+
+    $scope.close_appendInsurancederModal= function() {
+      $scope.append_insuranceder_modal.hide();
+    };
+    /*** bind append_insuranceder_modal ***/
+
+    /*** bind append_benefiter_modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/append_benefiter_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.append_benifiter_modal = modal;
+    });
+
+    $scope.open_appendBenifiterModal= function(){
+      $scope.append_benifiter_modal.show();
+    };
+
+    $scope.close_appendBenifiterModal= function() {
+      $scope.append_benifiter_modal.hide();
+    };
+    /*** bind append_benefiter_modal ***/
 
 
 
@@ -237,7 +272,12 @@ angular.module('starter')
       insurer:{},
       insuranceder:{},
       benefiter:{},
-      intend:{}
+      intend:{},
+      order:{
+        insurer:{},
+        insuranceder:{},
+        benefiter:{}
+      }
     };
 
     $scope.car={};
@@ -548,13 +588,16 @@ angular.module('starter')
     $scope.daily={};
     $scope.selected_daily=[];
 
+    //提交服务项目
     $scope.commit_daily=function(){
-      dailys.map(function(daily,i) {
-        if(daily.checked)
-           selected_daily.push(daily);
-      });
-      $rootScope.selected_daily= $scope.selected_daily;
-
+      if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
+      {
+        var dailys=[];
+        $scope.dailys.map(function(daily,i) {
+          if(daily.checked)
+            dailys.push(daily);
+        });
+      }
     }
 
 
@@ -734,14 +777,23 @@ angular.module('starter')
     };
 
 
-
+    //添加投保人
     $scope.append_insurer=function(props){
-      //TODO:append a popup
-      //$scope.ionicPopup=function(title,item,field,cb) {
       $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendInsurerModal);
 
     }
 
+    //添加被保险人
+    $scope.append_insuranceder=function(props){
+      $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendInsurancederModal);
+
+    }
+
+    //添加受益人
+    $scope.append_benefiter=function(props){
+      $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendBenifiterModal);
+
+    }
 
 
 
@@ -890,8 +942,6 @@ angular.module('starter')
             });
         }
       }
-
-
       return deferred.promise;
     }
 
@@ -957,6 +1007,76 @@ angular.module('starter')
 
     }
 
+    //从服务器拉取数据
+    /**
+     *  1.filter,用于actionSheet展示的字段
+     *
+     */
+    $scope.Select=function(type,filter,data,url,item,fields,failOb) {
+      var buttons=[];
+
+      switch (type) {
+        case 'remote':
+          $http({
+            method: "POST",
+            url: "proxy/node_server/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data: {
+              request: url
+            }
+          }).then(function (res) {
+            var json=res.data;
+            json.data.map(function(item,i) {
+              var btn=item;
+              btn.text = item[filter];
+              buttons.push(btn);
+            });
+            if(buttons.length==0) {
+              if(failOb!==undefined&&failOb!==null)
+              {
+                var cb=failOb.cb;
+                cb(failOb.title,item,fields);
+              }
+            }else{
+              $ionicActionSheet.show({
+                buttons:buttons,
+                titleText: '',
+                cancelText: '取消',
+                buttonClicked: function(index) {
+                  fields.map(function(field) {
+                    item[field]=buttons[index][field];
+                  });
+                  return true;
+                },
+                cssClass:'motor_insurance_actionsheet'
+              });
+            }
+          });
+          break;
+        case 'local':
+              if(data!==undefined&&data!==null) {
+                data.map(function(item,i) {
+                  var btn=item;
+                  btn.text = item[filter];
+                  buttons.push(btn);
+                });
+              }else{
+                if(failOb!==undefined&&failOb!==null)
+                {
+                  var cb=failOb.cb;
+                  cb(failOb.title,item,fields);
+                }
+              }
+          break;
+        default:
+          break;
+      }
+
+    };
+
+
     $scope.ActionSheet= function (options,item,field,addon_field,url,fail) {
       if((options==null||options==undefined)&&url!==undefined&&url!==null)//远程
       {
@@ -970,9 +1090,9 @@ angular.module('starter')
           {
             request:url
           }
-        }).then(function(json) {
-          var res=json.data;
-          if(res.re==2)
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==2)
           {
             if(fail!==undefined&&fail!==null)
             {
@@ -982,7 +1102,7 @@ angular.module('starter')
           }else{
             var buttons=[];
             json.data.map(function(item,i) {
-              buttons.push({text: item});
+              buttons.push({text: item.perName});
             });
             $ionicActionSheet.show({
               buttons:buttons,
@@ -1099,8 +1219,81 @@ angular.module('starter')
             }
             alert('err=\r\n' + str);
           });
-
-
     }
+
+    /*** bind maintenance_t&a ***/
+    $ionicModal.fromTemplateUrl('views/modal/maintenance_t_a.html',{
+      scope:  $scope,
+      animation: 'animated '+'bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.maintenance_t_a_modal = modal;
+    });
+
+    $scope.open_maintenanceTAModal= function(cb){
+      if(cb!==undefined&&cb!==null)
+        $scope.maintenance_t_a_modal_cb=cb;
+      $scope.maintenance_t_a_modal.show();
+    };
+
+    $scope.close_maintenanceTAModal= function() {
+      $scope.maintenance_t_a_modal.hide();
+      if($scope.maintenance_t_a_modal_cb!==undefined&&
+        $scope.maintenance_t_a_modal_cb!==null&&
+        Object.prototype.toString.call($scope.maintenance_t_a_modal_cb)=='[object Function]')
+      {
+        $scope.maintenance_t_a_modal_cb();
+      }
+    };
+
+
+    $scope.selfGeoLocation=function(item,field){
+      var geolocation = new $scope.bMap.Geolocation();
+        $ionicLoading.show({
+          template: 'Loading...',
+          showBackdrop:true,
+          animation:'fade-in'
+        });
+      geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+          //var mk = new BMap.Marker(r.point);
+          //map.addOverlay(mk);
+          //map.panTo(r.point);
+          item[field]={lng:r.point.lng,lat:r.point.lat};
+          $scope.$apply();
+          $ionicLoading.hide();
+        }
+        else {
+          alert('failed'+this.getStatus());
+        }
+      },{enableHighAccuracy: true});
+    }
+
+    BaiduMapService.getBMap().then(function(res){
+      $scope.bMap=res;
+    });
+
+
+    /*** bind append_benefiter_modal ***/
+
+
+    //$scope.showModal = function(animation) {
+    //  console.log(animation);
+    //  $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html', {
+    //    scope: $scope,
+    //    animation: 'animated ' + animation,
+    //    hideDelay:920
+    //  }).then(function(modal) {
+    //    $scope.modal = modal;
+    //    $scope.modal.show();
+    //    $scope.hideModal = function(){
+    //      $scope.modal.hide();
+    //      // Note that $scope.$on('destroy') isn't called in new ionic builds where cache is used
+    //      // It is important to remove the modal to avoid memory leaks
+    //      $scope.modal.remove();
+    //    }
+    //  });
+    //};
+
 
   });

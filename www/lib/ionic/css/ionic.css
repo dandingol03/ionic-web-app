@@ -608,6 +608,7 @@
 .ion-person:before,
 .ion-person-add:before,
 .ion-person-stalker:before,
+.ion-person-stalker-outline:before,
 .ion-pie-graph:before,
 .ion-pin:before,
 .ion-pinpoint:before,
@@ -2506,6 +2507,10 @@
 
 .ion-person-stalker:before {
   content: ""; }
+
+.ion-person-stalker-outline:before{
+  content: "";
+}
 
 .ion-pie-graph:before {
   content: ""; }
@@ -6801,7 +6806,7 @@ button.item.item-button-right {
 
 .slider-pager {
   position: absolute;
-  bottom: 20px;
+  bottom: 0px;
   z-index: 1;
   width: 100%;
   height: 15px;
@@ -6816,7 +6821,9 @@ button.item.item-button-right {
     .slider-pager .slider-pager-page.active {
       -webkit-transition: opacity 0.4s ease-in;
       transition: opacity 0.4s ease-in;
-      opacity: 1; }
+      opacity: 1;
+      color: #67ff39;
+    }
 
 .slider-slide.ng-enter, .slider-slide.ng-leave, .slider-slide.ng-animate,
 .slider-pager-page.ng-enter,
