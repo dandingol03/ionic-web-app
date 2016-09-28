@@ -66,10 +66,16 @@
               投保人:
             </span>
             <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
-              {{life_insurance.order.insurerId!==undefined&&life_insurance.order.insurerId!==null?life_insurance.order.insurerName:'请选择投保人'}}
+              {{life_insurance.order.insurer.perName!==undefined&&life_insurance.order.insurer.perName!==null?
+              life_insurance.order.insurer.perName:'请选择投保人'}}
             </div>
+            <!--<div style="display: inline-block;width: 30%;"-->
+                 <!--ng-click="ActionSheet(null,life_insurance.order,'insurerName',null,'getRelativePersons',-->
+                 <!--{cb:append_insurer,title:'<strong>选择投保人?</strong>'})">-->
+              <!--<span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>-->
+            <!--</div>-->
             <div style="display: inline-block;width: 30%;"
-                 ng-click="ActionSheet(null,life_insurance.order,'insurerId',null,'getRelativePersons',
+                 ng-click="Select('remote','perName',null,'getRelativePersons',life_insurance.order.insurer,['perId','perName'],
                  {cb:append_insurer,title:'<strong>选择投保人?</strong>'})">
               <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
             </div>
@@ -81,23 +87,33 @@
               被保险人:
             </span>
             <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
-              {{life_insurance.order.insurerId!==undefined&&life_insurance.order.insurerId!==null?life_insurance.order.insurerName:'请选择被保险人'}}
+              {{life_insurance.order.insuranceder.perName!==undefined&&life_insurance.order.insuranceder.perName!==null?
+              life_insurance.order.insuranceder.perName:'请选择被保险人'}}
             </div>
             <div style="display: inline-block;width: 30%;"
-                 ng-click="ActionSheet(null,life_insurance.order,'insurerId',null,'getRelativePersons',
-                 {cb:append_insurer,title:'<strong>选择被保险人</strong>'})">
+                 ng-click="Select('remote','perName',null,'getRelativePersons',life_insurance.order.insuranceder,['perId','perName'],
+                 {cb:append_insuranceder,title:'<strong>选择被保险人</strong>'})">
               <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
             </div>
           </div>
 
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
+            <span class="input-label" style="display: inline-block;">
               受益人:
             </span>
-            <input type="text" placeholder="请输入受益人姓名"
-                   style="display: inline-block"  ng-value="life_insurance.order.benefiterId"
-                   ng-model="life_insurance.order.benefiterId"/>
+            <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+              {{life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null?
+              life_insurance.order.benefiter.perName:'请选择受益人'}}
+            </div>
+            <div style="display: inline-block;width: 30%;"
+                 ng-click="Select('remote','perName',null,'getRelativePersons',life_insurance.order.benefiter,['perId','perName'],
+                 {cb:append_benefiter,title:'<strong>选择受益人</strong>'})">
+              <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
+            </div>
           </div>
+
+
+
           <!-- 针对寿险被保险人 -->
 
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
@@ -178,15 +194,21 @@
             </span>
             <input type="text" placeholder="请输入您的车牌"
                    style="display: inline-block" ng-value="carInfo.carNum"
-                   ng-model="carInfo.carNum"/>
+                   ng-model="carInfo.carNum"
+              />
           </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
+            >
+             <span class="input-label" style="display: inline-block;width: 35%;">
               姓名:
             </span>
-            <input type="text" placeholder="输入车主姓名"
-                   style="display: inline-block"  ng-value="carInfo.ownerName"
-                   ng-model="carInfo.ownerName"/>
+            <span style="width: 65%;display: inline-block">
+                <input type="text"
+                       placeholder="输入车主姓名"
+                       style="display: inline-block;width: 65%;"
+                       ng-value="carInfo.ownerName"
+                       ng-model="carInfo.ownerName"/>
+            </span>
           </div>
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
              <span class="input-label" style="display: inline-block;">
@@ -195,10 +217,13 @@
             <input type="text" placeholder="请输入被保险人身份证"
                    style="display: inline-block" ng-value="carInfo.ownerIdCard"
                    ng-model="carInfo.ownerIdPhoto"/>
-            <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
+            <span
+              class="camera"
+              style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
               <i class="ion-android-camera"></i>
             </span>
           </div>
+
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
              <span class="input-label" style="display: inline-block;">
               行驶证:
@@ -237,17 +262,100 @@
           <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
               <span class="input-label" style="display: inline-block">
                 初次登记日期
+
+          <div class="item"
+               style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
+               ng-click="datepick(carInfo,'issueDate')"
+            >
+              <span class="input-label" style="display: inline-block;width: 35%;">
+                发证日期
+
               </span>
-            <div style="display: inline-block" ng-click= "datepick()">
-                <span>
-                  <i class="ion-calendar" style="font-size: 1.5em;"></i>
-                </span>
-              <input id="date"
-                     ng-model="carInfo.issueDate" type="text" style="display: inline-block"
-                     placeholder="点击设置日期！">
-            </div>
+
+
+              <span style="display: inline-block;width: 49%;">
+                {{carInfo.issueDate!==undefined&&carInfo.issueDate!==null?carInfo.issueDate:'请填写发证日期'}}
+              </span>
+
+              <span
+                style="display: inline-block;width: 16%;"
+                >
+                <i class="ion-calendar" style="font-size: 1.5em;"></i>
+              </span>
+
+          </div>
+          <div
+            class="item item-divider"
+            style="margin:1px;border:0px;padding:10px;position: relative"
+            >
+            <span>绑定用户信息</span>
           </div>
 
+
+          <ion-slide-box on-slide-changed="slideChanged($index)">
+            <ion-slide>
+              <div class="item"
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative"
+                >
+                <span class="input-label" style="display: inline-block;">
+                  行驶证:
+                </span>
+                <input type="text" placeholder="输入车主行驶证"
+                       style="display: inline-block" value="{{}}"
+                       ng-model="carInfo.carPhoto"/>
+              </div>
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                <span class="input-label" style="display: inline-block;">
+                  厂牌型号:
+                </span>
+                <input type="text" placeholder="设置厂牌型号"
+                       style="display: inline-block" ng-value="carInfo.factoryNum"
+                       ng-model="carInfo.factoryNum"/>
+              </div>
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                <span class="input-label" style="display: inline-block;">
+                  发动机号:
+                </span>
+                <input type="text" placeholder="设置发动机号"
+                       style="display: inline-block" ng-value="carInfo.engineNum"
+                       ng-model="carInfo.engineNum"/>
+              </div>
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                <span class="input-label" style="display: inline-block;">
+                  车架号:
+                </span>
+                <input type="text" placeholder="设置车架号"
+                       style="display: inline-block" ng-value="carInfo.frameNum"
+                       ng-model="carInfo.frameNum"/>
+              </div>
+
+            </ion-slide>
+            <ion-slide>
+              <div class="item" ng-click="addAttachment(carInfo,'drivingLicense_img')">
+                <div
+                  style="padding-left:10px;padding-right: 10px; position: relative"
+                  >
+                  <span class="input-label" style="display: inline-block;width: 80%;">
+                    上传行驶证照片:
+                  </span>
+                  <span style="font-size: 2em;position: absolute;right: 15%;">
+                    <i class="ion-camera"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="item" style="position: relative;margin-bottom: 20px;">
+                <div style="width:  60%;margin-left:20%;height:160px;border:1px dashed #9e9e9e">
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slide-box>
+        </div>
+
+
+
+
+
+        <div class="list list-inset padding" style="margin-bottom:40px;">
           <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type();postCarInfo()">
             <h1 class="title">保存车辆信息</h1>
           </div>
@@ -334,7 +442,11 @@
                 查看保养计划
               </button>
             </div>
+
             <button class="button button-block button-positive" ng-click="commit_daily();open_weixiu_timeModal()">
+
+            <button class="button button-block button-positive" ng-click="open_maintenanceTAModal(commit_daily)">
+
               提交服务项目
             </button>
           </div>

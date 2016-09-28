@@ -1,0 +1,49 @@
+<ion-view view-title="chatting....">
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+  <ion-content>
+
+
+    <div class="list padding">
+
+      <div
+        ng-repeat="msg in messages"
+        style="position: relative;margin-bottom: 20px;"
+        >
+        <div style="display: inline-block;width: 10%;position: absolute;bottom:4%;left:4%;">
+             <span>user:</span>
+        </div>
+        <div
+          class="item item-text-wrap chat-bubble chat-bubble-left"
+          style="border: 0px;display: inline-block;width: 80%;margin-left:20%;background-color: #9F91E6"
+          >
+          <div ng-bind-html="msg.text"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+      <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+        <label class="item-input-wrapper">
+          <span class="input-label">to danding:</span>
+          <input type="text" placeholder="echoing......">
+        </label>
+        <div class="footer-btn-wrap">
+          <button class="button button-icon icon ion-android-send footer-btn" type="submit"
+                  ng-disabled="!input.message || input.message === ''">
+          </button>
+        </div>
+      </ion-footer-bar>
+
+
+  </ion-content>
+
+</ion-view>

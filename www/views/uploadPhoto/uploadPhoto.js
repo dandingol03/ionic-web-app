@@ -128,6 +128,7 @@ angular.module('starter')
         }, function (progress) {
           // constant progress updates
         });
-
     }
+
+
   });

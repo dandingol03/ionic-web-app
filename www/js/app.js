@@ -156,6 +156,17 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       }
     })
 
+    .state('tabs.chatter',{
+      url:'/chatter',
+      views:{
+        'chatter-tab':{
+          controller:'chatterController',
+          templateUrl:'views/chatter/chatter.html'
+        }
+      }
+    })
+
+
     .state('login',{
       url:'/login',
       controller: 'loginController',
@@ -239,26 +250,20 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
 
-})
-    .factory('BaiduMapService', function($q, baiduMapApi) {
+    $urlRouterProvider.otherwise('/login');
+
+  })
+
+  .factory('BaiduMapService', function($q, baiduMapApi) {
+
       return {
-        getLocalCity: function() {
-          return baiduMapApi.then(function(BMap) {
-            var localcity = new BMap.LocalCity();
-            return $q(function(resolve, reject) {
-              localcity.get(function(r) {
-                resolve(r);
-              });
-            });
-          });
-        }
-        ,
-        getBMap:function(callback){
+        getBMap:function(){
+          var deferred=$q.defer();
           baiduMapApi.then(function(BMap) {
-            callback(BMap);
+            deferred.resolve(BMap);
           });
+          return deferred.promise;
         }
       };
     })
