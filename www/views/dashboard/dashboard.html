@@ -1,23 +1,14 @@
 <ion-view view-title="主页">
-  <ion-content>
-    <ion-slide-box does-continue="false" show-pager="true" >
-      <ion-slide>
-        <div class="banner">
-          <img src="img/moutains.jpg"/>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="banner">
-          <img src="img/flowers.jpg"/>
-        </div>
-      </ion-slide>
-    </ion-slide-box>
+  <ion-content class="background">
 
+    <div class="banner">
+      <img src="img/banner@2x.png"/>
+    </div>
 
     <div class="row">
       <div class="col tabs_col car_insurance" ng-click="tab_change(0)">
         <div style="text-align: center">
-          <img src="img/001.png" class="animated zoomIn"/>
+          <img src="img/车险@2x.png" class="animated zoomIn"/>
         </div>
         <div class="label">
           <span>车险</span>
@@ -25,15 +16,15 @@
       </div>
       <div class="col tabs_col life_insurance" ng-click="tab_change(1)">
         <div style="text-align: center">
-          <img src="img/002.png" class="animated zoomIn"/>
+          <img src="img/寿险@2x.png" class="animated zoomIn"/>
         </div>
         <div class="label">
           <span>寿险</span>
         </div>
       </div>
-      <div class="col tabs_col maintain" ng-click="tab_change(2)">
+      <div class="col tabs_col maintain" ng-click="tab_change(2)" >
         <div style="text-align: center">
-          <img src="img/003.png" class="animated zoomIn"/>
+          <img src="img/维修@2x.png" class="animated zoomIn"/>
         </div>
         <div class="label">
           维修
@@ -41,7 +32,7 @@
       </div>
       <div class="col tabs_col drive_service" ng-click="tab_change(3)">
         <div style="text-align: center">
-          <img src="img/004.png" class="animated zoomIn"/>
+          <img src="img/车驾管服务@2x.png" class="animated zoomIn"/>
         </div>
         <div class="label">
           车驾管服务
@@ -54,7 +45,7 @@
 
 
       <!-- 寿险 -->
-      <div class="list " ng-if="tabIndex==1" scroll="true">
+      <div class="list " ng-if="tabIndex==1" scroll="true" style="background-color:rgba(255,255,255,0);">
 
         <div class="item item-divider">
           填写寿险意向
@@ -186,92 +177,56 @@
 
 
       <!-- 车险 -->
-      <div ng-if="tabIndex==0" class='home-tab'>
-        <div class="list list-inset padding" style="margin-bottom:40px;">
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+      <div ng-if="tabIndex==0" class='home-tab' style="background-color: transparent;">
+        <div class="list list-inset padding" style="margin-bottom:40px;background-color: transparent;">
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;">
             <span class="input-label" style="display: inline-block;">
               车牌:
             </span>
-            <input type="text" placeholder="请输入您的车牌"
-                   style="display: inline-block" ng-value="carInfo.carNum"
+            <span style="width: 65%;display: inline-block">
+              <input type="text" placeholder="请输入您的车牌"
+                   style="display:inline-block;background-color: transparent;" ng-value="carInfo.carNum"
                    ng-model="carInfo.carNum"
               />
+            </span>
           </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;"
             >
-             <span class="input-label" style="display: inline-block;width: 35%;">
+            <span class="input-label" style="display:inline-block;">
               姓名:
             </span>
             <span style="width: 65%;display: inline-block">
                 <input type="text"
                        placeholder="输入车主姓名"
-                       style="display: inline-block;width: 65%;"
+                       style="display: inline-block;width: 65%;background-color:transparent;"
                        ng-value="carInfo.ownerName"
                        ng-model="carInfo.ownerName"/>
             </span>
           </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative;background-color:transparent;">
              <span class="input-label" style="display: inline-block;">
               身份证:
             </span>
-            <input type="text" placeholder="请输入被保险人身份证"
-                   style="display: inline-block" ng-value="carInfo.ownerIdCard"
+            <span style="width: 65%;display: inline-block">
+              <input type="text" placeholder="请输入被保险人身份证"
+                   style="display: inline-block;background-color:transparent;"
+                   ng-value="carInfo.ownerIdCard"
                    ng-model="carInfo.ownerIdPhoto"/>
+            </span>
             <span
               class="camera"
-              style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
-              <i class="ion-android-camera"></i>
+              style="position: absolute;right:5%;top:30%;font-size: 1.5em;">
+              <i class="ion-android-camera" style=";"></i>
             </span>
           </div>
-
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
-             <span class="input-label" style="display: inline-block;">
-              行驶证:
-            </span>
-            <input type="text" placeholder="请上传行驶证照片"
-                   style="display: inline-block" value="{{}}"
-                   ng-model="carInfo.carPhoto"/>
-            <span class="camera" style="position: absolute;right:10%;top:30%;font-size: 1.5em;">
-              <i class="ion-android-camera"></i>
-            </span>
-          </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
-              厂牌型号:
-            </span>
-            <input type="text" placeholder="请输入厂牌型号"
-                   style="display: inline-block" ng-value="carInfo.factoryNum"
-                   ng-model="carInfo.factoryNum"/>
-          </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
-              发动机号:
-            </span>
-            <input type="text" placeholder="设置发动机号"
-                   style="display: inline-block" ng-value="carInfo.engineNum"
-                   ng-model="carInfo.engineNum"/>
-          </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-             <span class="input-label" style="display: inline-block;">
-              车架号:
-            </span>
-            <input type="text" placeholder="设置车架号"
-                   style="display: inline-block" ng-value="carInfo.frameNum"
-                   ng-model="carInfo.frameNum"/>
-          </div>
-          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-              <span class="input-label" style="display: inline-block">
-                初次登记日期
 
           <div class="item"
-               style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
+               style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;"
                ng-click="datepick(carInfo,'issueDate')"
             >
               <span class="input-label" style="display: inline-block;width: 35%;">
-                发证日期
-
+                发证日期:
               </span>
-
 
               <span style="display: inline-block;width: 49%;">
                 {{carInfo.issueDate!==undefined&&carInfo.issueDate!==null?carInfo.issueDate:'请填写发证日期'}}
@@ -286,64 +241,59 @@
           </div>
           <div
             class="item item-divider"
-            style="margin:1px;border:0px;padding:10px;position: relative"
+            style="margin:1px;border:0px;padding:10px;position: relative;background-color:transparent;"
             >
-            <span>绑定用户信息</span>
+            <span>绑定车辆信息</span>
           </div>
 
 
-          <ion-slide-box on-slide-changed="slideChanged($index)">
+          <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
             <ion-slide>
-              <div class="item"
-                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative"
-                >
-                <span class="input-label" style="display: inline-block;">
-                  行驶证:
-                </span>
-                <input type="text" placeholder="输入车主行驶证"
-                       style="display: inline-block" value="{{}}"
-                       ng-model="carInfo.carPhoto"/>
-              </div>
-              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;">
                 <span class="input-label" style="display: inline-block;">
                   厂牌型号:
                 </span>
                 <input type="text" placeholder="设置厂牌型号"
-                       style="display: inline-block" ng-value="carInfo.factoryNum"
-                       ng-model="carInfo.factoryNum"/>
+                       style="display: inline-block;background-color:transparent;"
+                       ng-value="carInfo.factoryNum"
+                       ng-model="carInfo.factoryNum"
+                       ng-change="showDemoPicture()"/>
+                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture()"></i>
               </div>
-              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;">
                 <span class="input-label" style="display: inline-block;">
                   发动机号:
                 </span>
                 <input type="text" placeholder="设置发动机号"
-                       style="display: inline-block" ng-value="carInfo.engineNum"
+                       style="display: inline-block;background-color:transparent;" ng-value="carInfo.engineNum"
                        ng-model="carInfo.engineNum"/>
+                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture1()"></i>
               </div>
-              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+              <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;">
                 <span class="input-label" style="display: inline-block;">
                   车架号:
                 </span>
                 <input type="text" placeholder="设置车架号"
-                       style="display: inline-block" ng-value="carInfo.frameNum"
+                       style="display: inline-block;background-color:transparent;" ng-value="carInfo.frameNum"
                        ng-model="carInfo.frameNum"/>
+                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture2()"></i>
               </div>
 
             </ion-slide>
             <ion-slide>
-              <div class="item" ng-click="addAttachment(carInfo,'drivingLicense_img')">
+              <div class="item" ng-click="addAttachment(carInfo,'drivingLicense_img')" style="background-color:transparent;">
                 <div
-                  style="padding-left:10px;padding-right: 10px; position: relative"
+                  style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
                   >
-                  <span class="input-label" style="display: inline-block;width: 80%;">
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
                     上传行驶证照片:
                   </span>
-                  <span style="font-size: 2em;position: absolute;right: 15%;">
+                  <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
                     <i class="ion-camera"></i>
                   </span>
                 </div>
               </div>
-              <div class="item" style="position: relative;margin-bottom: 20px;">
+              <div class="item" style="position: relative;margin-bottom: 20px;background-color:transparent;">
                 <div style="width:  60%;margin-left:20%;height:160px;border:1px dashed #9e9e9e">
                 </div>
               </div>
@@ -355,7 +305,7 @@
 
 
 
-        <div class="list list-inset padding" style="margin-bottom:40px;">
+        <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
           <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type();postCarInfo()">
             <h1 class="title">保存车辆信息</h1>
           </div>

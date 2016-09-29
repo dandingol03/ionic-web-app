@@ -96,9 +96,125 @@ angular.module('starter')
 
 
     $scope.car={};
+    $scope.isShowPicture = false;
+    $scope.isShowPicture1 = false;
+    $scope.isShowPicture2 = false;
+    $scope.isShowPicture3= false;
+    $scope.setIsShowPicture = function(){
+      $scope.isShowPicture = true;
+      $scope.showDemoPicture();
+    };
+    $scope.setIsShowPicture1 = function(){
+      $scope.isShowPicture1 = true;
+      $scope.showDemoPicture1();
+    };
+    $scope.setIsShowPicture2 = function(){
+      $scope.isShowPicture2 = true;
+      $scope.showDemoPicture2();
+    };
+    $scope.setIsShowPicture3 = function(){
+      $scope.isShowPicture3 = true;
+      $scope.showDemoPicture3();
+    };
+
+    $scope.showDemoPicture = function() {
+      if ($scope.isShowPicture == true) {
+        $scope.openDemoModal();
+      };
+    };
+    $scope.showDemoPicture1 = function() {
+      if ($scope.isShowPicture1 == true) {
+        $scope.openDemoModal1();
+      };
+    };
+    $scope.showDemoPicture2 = function() {
+      if ($scope.isShowPicture2 == true) {
+        $scope.openDemoModal2();
+      };
+    };
+    $scope.showDemoPicture3 = function() {
+      if ($scope.isShowPicture3 == true) {
+        $scope.openDemoModal3();
+      };
+    };
+
+
+    /*** show demo modal ***/
+    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.show_demo_modal = modal;
+    });
+
+    $scope.openDemoModal= function(){
+      $scope.show_demo_modal.show();
+
+    };
+
+    $scope.closeDemoModal= function() {
+      $scope.show_demo_modal.hide();
+    };
+    /*** show demo modal ***/
+
+    /*** show demo modal1 ***/
+    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal1.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.show_demo_modal1 = modal;
+    });
+
+    $scope.openDemoModal1= function(){
+      $scope.show_demo_modal1.show();
+
+    };
+
+    $scope.closeDemoModal1= function() {
+      $scope.show_demo_modal1.hide();
+    };
+    /*** show demo modal1 ***/
+
+    /*** show demo modal2 ***/
+    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal2.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.show_demo_modal2 = modal;
+    });
+
+    $scope.openDemoModal2= function(){
+      $scope.show_demo_modal2.show();
+
+    };
+
+    $scope.closeDemoModal2= function() {
+      $scope.show_demo_modal2.hide();
+    };
+    /*** show demo modal2 ***/
+
+    /*** show demo modal3 ***/
+    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal3.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.show_demo_modal3 = modal;
+    });
+
+    $scope.openDemoModal3= function(){
+      $scope.show_demo_modal3.show();
+
+    };
+
+    $scope.closeDemoModal3= function() {
+      $scope.show_demo_modal3.hide();
+    };
+    /*** show demo modal3 ***/
+
+
 
     /*** bind car modal ***/
-    $ionicModal.fromTemplateUrl('views/modal/bind_car.html',{
+    $ionicModal.fromTemplateUrl('/views/modal/bind_car.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -133,26 +249,6 @@ angular.module('starter')
       $scope.append_insurer_modal.hide();
     };
     /*** bind append_insurer_modal ***/
-
-
-
-    /*** bind weixiu_time_modal ***/
-    $ionicModal.fromTemplateUrl('views/modal/weixiu_time_modal.html',{
-      scope:  $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.weixiu_time_modal = modal;
-    });
-
-    $scope.open_weixiu_timeModal= function(){
-      $scope.weixiu_time_modal.show();
-    };
-
-
-    $scope.close_weixiu_timeModal= function() {
-      $scope.weixiu_time_modal.hide();
-    };
-    /*** bind weixiu_time_modal ***/
 
 
     /*** bind append_insuranceder_modal ***/
@@ -434,7 +530,6 @@ angular.module('starter')
 
 
 
-
     $scope.tabIndex=0;
 
     $scope.tab_change=function(i){
@@ -628,15 +723,6 @@ angular.module('starter')
 
     //提交服务项目
     $scope.commit_daily=function(){
-
-
-      dailys.map(function(daily,i) {
-        if(daily.checked)
-           selected_daily.push(daily);
-      });
-      $rootScope.selected_daily= $scope.selected_daily;
-
-
       if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
       {
         var dailys=[];
