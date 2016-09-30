@@ -9,7 +9,7 @@ angular.module('starter')
     //搜索可用聊天客服
     $http({
       method: "post",
-      url: "/proxy/node_server/svr/request",
+      url: "http://192.168.1.106:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -48,6 +48,26 @@ angular.module('starter')
 
     };
 
+    $scope.sendMsg=function(){
+      if($scope.input.message!==undefined&&$scope.input.message!==null)
+      {
+        $http({
+          method: "post",
+          url: "http://192.168.1.106:3000/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
+          {
+            request:'pushTextMsg',
+            info:{
+              msg:$scope.input.message,
+              type:'customer'
+            }
+          }
+        })
+      }
+    }
 
 
     $scope.viewProfile=function(msg){

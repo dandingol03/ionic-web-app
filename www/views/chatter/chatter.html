@@ -34,11 +34,16 @@
       <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
         <label class="item-input-wrapper">
           <span class="input-label">to danding:</span>
-          <input type="text" placeholder="echoing......">
+          <input type="text"
+                 placeholder="echoing......"
+                  ng-model="input.message"
+            >
         </label>
         <div class="footer-btn-wrap">
-          <button class="button button-icon icon ion-android-send footer-btn" type="submit"
-                  ng-disabled="!input.message || input.message === ''">
+          <button class="button button-icon icon ion-android-send footer-btn"
+                  ng-disabled="!input.message || input.message === ''"
+                  ng-click="sendMsg()"
+            >
           </button>
         </div>
       </ion-footer-bar>

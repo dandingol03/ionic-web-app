@@ -1247,6 +1247,7 @@ angular.module('starter')
       $scope.maintenance_t_a_modal = modal;
     });
 
+    //提交服务项目
     $scope.open_maintenanceTAModal= function(cb){
       if(cb!==undefined&&cb!==null)
         $scope.maintenance_t_a_modal_cb=cb;
