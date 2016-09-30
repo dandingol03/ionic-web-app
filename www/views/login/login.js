@@ -76,7 +76,11 @@ angular.module('starter')
     $scope.doLogin=function(){
       if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
       {
-        window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
+        if(window.plugins!==undefined&&window.plugins!==null)
+            window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
+        else{
+          $scope.login();
+        }
       }else{
         $scope.login();
       }
@@ -91,7 +95,7 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-        url:"http://192.168.1.106:3000/login",
+        url:"/proxy/node_server/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -110,14 +114,14 @@ angular.module('starter')
           }
           return  $http({
             method: "POST",
-            url: "http://192.168.1.106:3000/svr/request",
+            url: "/proxy/node_server/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token
             },
             data: {
               request: 'activatePersonOnline',
               info:{
-                registrationId:$rootScope.registrationId
+                registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
               }
             }
           });
