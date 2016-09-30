@@ -64,6 +64,24 @@ angular.module('starter')
     };
 
 
+    $scope.onGetRegistradionID = function(data) {
+      try{
+        $rootScope.registrationId=data;
+        alert('registrationId=\r\n' + data);
+        $scope.login();
+      }catch(exception){
+      }
+    };
+
+    $scope.doLogin=function(){
+      if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
+      {
+        window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
+      }else{
+        $scope.login();
+      }
+    }
+
 
     //登录
     $scope.login = function(){
