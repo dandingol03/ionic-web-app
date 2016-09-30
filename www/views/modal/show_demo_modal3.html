@@ -1,0 +1,24 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="closeDemoModal3()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" style="width:95%;padding:10px;height:50%;">
+
+    <ion-slide-box on-slide-changed="slideChanged($index)">
+      <ion-slide>
+        <img src="img/brandModel.jpg" style="padding-top: 10%;"/>
+      </ion-slide>
+
+    </ion-slide-box>
+    <div
+      class="bar bar-footer bar-assertive"
+      style="width: 70%;margin-left:15%;margin-right:15%;"
+      ng-click="closeDemoModal3()"
+    >
+      <div class="title">确认</div>
+    </div>
+
+
+  </ion-content>
+
+</ion-modal-view>

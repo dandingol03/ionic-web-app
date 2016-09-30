@@ -1,7 +1,8 @@
 /* Empty. Add your own CSS if you like */
 .banner{
   width: 100%;
-  height: 30%;
+  height: 40%;
+  margin-top: 20%;
 }
 
 .banner img {
@@ -10,7 +11,12 @@
   max-height: 200px;
 }
 
-
+.background{
+  background:url(../img/装饰图案@2x.png)no-repeat;
+  background-size:100% 100%;
+  text-align:center;
+  margin:0
+}
 
 .grid img {
   width: 62px;
@@ -746,25 +752,25 @@ table.table1{
 
 .row .col.tabs_col.car_insurance img{
   border-radius: 50%;
-  background: #b0ff75;
+  background: #fafafa;
   max-width:50px;
 }
 
 .row .col.tabs_col.life_insurance img{
   border-radius: 50%;
-  background:#00f;
+  background:#fafafa;
   max-width:50px;
 }
 
 .row .col.tabs_col.maintain img{
   border-radius: 50%;
-  background: #ffba41;
+  background: #fafafa;
   max-width:50px;
 }
 
 .row .col.tabs_col.drive_service img{
   border-radius: 50%;
-  background: #ef70ff;
+  background: #fafafa;
   max-width:50px;
 }
 
