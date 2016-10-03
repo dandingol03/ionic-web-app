@@ -35,8 +35,18 @@
           我的位置:
         </span>
 
-        <span style="display: inline-block;width: 49%;">
+        <span
+          style="display: inline-block;width: 49%;"
+          ng-if="maintain.geolocation==undefined||maintain.geolocation==null"
+          >
           点击获取位置
+        </span>
+
+         <span
+           style="display: inline-block;width: 49%;"
+           ng-if="maintain.geolocation!==undefined&&maintain.geolocation!==null"
+           >
+          点击刷新地理位置
         </span>
 
         <span
@@ -47,32 +57,7 @@
 
       </div>
 
-      <div class="item"
-           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-            ng-if="maintain.geolocation!==undefined&&maintain.geolocation!==null"
-        >
-        <span class="input-label" style="display: inline-block;width: 35%;">
-           经度:
-        </span>
-        <span>
-            {{maintain.geolocation.lng}}
-        </span>
-      </div>
-
-      <div class="item"
-           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-if="maintain.geolocation!==undefined&&maintain.geolocation!==null"
-        >
-        <span class="input-label" style="display: inline-block;width: 35%;">
-           纬度:
-        </span>
-        <span>
-            {{maintain.geolocation.lat}}
-        </span>
-      </div>
-
-
-      <button class="button button-block button-calm" ng-click="upload('createRelativePerson',life_insurance.benefiter)">
+      <button class="button button-block button-calm" ng-click="commit_daily()">
         上报服务
       </button>
 

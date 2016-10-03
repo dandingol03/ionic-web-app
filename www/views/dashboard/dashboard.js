@@ -447,7 +447,7 @@ angular.module('starter')
     //返回寿险产品列表
     $http({
       method: "POST",
-      url: "/proxy/node_server/svr/request",
+      url: "http://192.168.1.100:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -499,6 +499,27 @@ angular.module('starter')
             ]
           }
         ];
+        return ({re: 1});
+      }
+    }).then(function(json) {
+      if(json.re==1) {
+        return $http({
+          method: "POST",
+          url: "http://192.168.1.100:3000/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
+          {
+            request:'getMaintainServiceRoutine'
+          }
+        });
+      }
+    }).then(function(res){
+      var json=res.data;
+      if(json.re==1) {
+        $scope.routines=json.data;
+        $scope.dailys = json.data['日常保养'];
       }
     }).catch(function (err) {
       console.log('server fetch error');
@@ -597,7 +618,7 @@ angular.module('starter')
     $scope.getLifeOrderState=function(){
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+        url: "http://192.168.0.198:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -717,7 +738,8 @@ angular.module('starter')
     $scope.subTab_change=function(i) {
       $scope.subTabIndex=i;
     };
-    $scope.dailys=[{name:'机油,机滤'},{name:'机油,三滤'},{name:'更换刹车片'},{name:'雨刷片更换'},{name:'轮胎更换'}]
+
+
     $scope.daily={};
     $scope.selected_daily=[];
 
@@ -725,13 +747,39 @@ angular.module('starter')
     $scope.commit_daily=function(){
       if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
       {
-        var dailys=[];
+        var routineIds=[];
         $scope.dailys.map(function(daily,i) {
           if(daily.checked)
-            dailys.push(daily);
+            routineIds.push(daily.routineId);
+        });
+        //TODO:apply your selected maintain items
+        $http({
+          method: "POST",
+          url: "/proxy/node_server/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          },
+          data:
+          {
+            request:'generateCarServiceOrder',
+            info:{
+              routineIds:routineIds,
+              serviceType:1,
+              estimateTime:$scope.maintain.estimateTime
+            }
+          }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+            console.log('service order has been generated');
+          }
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          console.error('error=\r\n' + str);
         });
       }
-
     }
 
 
@@ -1396,7 +1444,35 @@ angular.module('starter')
           //map.panTo(r.point);
           item[field]={lng:r.point.lng,lat:r.point.lat};
           $scope.$apply();
-          $ionicLoading.hide();
+          $http({
+            method: "POST",
+            url: "/proxy/node_server/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token,
+            },
+            data:
+            {
+              request:'uploadGeolocation',
+              info:{
+                geolocation:item[field]
+              }
+            }
+          }).then(function(res) {
+            $ionicLoading.hide();
+            var alertPopup = $ionicPopup.alert({
+              title: '',
+              template: '您的地理位置已同布'
+            });
+
+
+          }).catch(function(err) {
+            var str='';
+            for(var field in err)
+              str+=err[field];
+            console.error('error=\r\n' + str);
+            $ionicLoading.hide();
+          });
+
         }
         else {
           alert('failed'+this.getStatus());
@@ -1404,31 +1480,8 @@ angular.module('starter')
       },{enableHighAccuracy: true});
     }
 
-    BaiduMapService.getBMap().then(function(res){
-      $scope.bMap=res;
-    });
-
-
-    /*** bind append_benefiter_modal ***/
-
-
-    //$scope.showModal = function(animation) {
-    //  console.log(animation);
-    //  $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html', {
-    //    scope: $scope,
-    //    animation: 'animated ' + animation,
-    //    hideDelay:920
-    //  }).then(function(modal) {
-    //    $scope.modal = modal;
-    //    $scope.modal.show();
-    //    $scope.hideModal = function(){
-    //      $scope.modal.hide();
-    //      // Note that $scope.$on('destroy') isn't called in new ionic builds where cache is used
-    //      // It is important to remove the modal to avoid memory leaks
-    //      $scope.modal.remove();
-    //    }
-    //  });
-    //};
-
+    $scope.pickMaintain=function(){
+      $state.go('locate_maintain_nearby');
+    }
 
   });

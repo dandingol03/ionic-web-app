@@ -8,7 +8,7 @@
 angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker'])
 
     .config(function(baiduMapApiProvider) {
-      baiduMapApiProvider.version('2.0').accessKey('2me89doy9NE2HgG7FmTXa0XZsedThXDD');
+      baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
     })
 
     .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location) {
@@ -80,13 +80,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
       window.plugins.jPushPlugin.init();
       window.plugins.jPushPlugin.setDebugMode(true);
-      var onGetRegistradionID = function(data) {
-        try{
-          $rootScope.registrationId=data;
-          alert('registrationId=\r\n' + data);
-        }catch(exception){
-        }
-      };
+
       //获取自定义消息的回调
       var onReceiveMessage = function(event) {
         try{
@@ -114,7 +108,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         }
       }
 
-      window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
+
       window.plugins.jPushPlugin.setTags(['game']);
       document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
       document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
@@ -322,6 +316,17 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/life_insurance_product_list/life_insurance_product_list.html'
     })
 
+    .state('locate_maintain_nearby',{
+      url:'/locate_maintain_nearby',
+      controller:'locateMaintainNearbyController',
+      templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
+    })
+
+    .state('transclude',{
+      url:'/transclude',
+      controller:'transcludeController',
+      templateUrl:'views/transclude/transclude.html'
+    })
 
   // if none of the above states are matched, use this as the fallback
 
