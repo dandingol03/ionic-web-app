@@ -97,10 +97,9 @@ angular.module('starter')
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
 
-        url:"proxy/node_server/login",
+        url:"http://192.168.1.110:3000/login",
 
         //url:"http://192.168.1.100:3000/login",
-
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -119,7 +118,7 @@ angular.module('starter')
           }
           return  $http({
             method: "POST",
-            url: "http://192.168.1.100:3000/svr/request",
+            url: "http://192.168.1.110:3000/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token
             },
@@ -135,7 +134,7 @@ angular.module('starter')
           return ({re: -1});
       }).then(function(res) {
         var json=res.data;
-        if(json.re==1)
+        if(json.re==1||json.result=='ok')
         {
           $state.go('tabs.dashboard');
         }

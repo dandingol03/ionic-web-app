@@ -4,26 +4,30 @@ angular.module('starter')
                                              $rootScope,$ionicModal,$timeout,
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
-                                             BaiduMapService,$ionicLoading){
-
-    $http({
-      method: "post",
-      url: "/proxy/node_server/svr/request",
-      headers: {
-        'Authorization': "Bearer " + $rootScope.access_token,
-      },
-      data:
-      {
-        request:'generateCode'
-      }
-    }).then(function(res) {
-      var json=res.data;
-    }).catch(function(err) {
-      console.log('...');
-    });
+                                             BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture){
 
 
-    $scope.carInfo={};
+    //生成验证码
+    // $http({
+    //   method: "post",
+    //   url: "/proxy/node_server/svr/request",
+    //   headers: {
+    //     'Authorization': "Bearer " + $rootScope.access_token,
+    //   },
+    //   data:
+    //   {
+    //     request:'generateCode'
+    //   }
+    // }).then(function(res) {
+    //   var json=res.data;
+    // }).catch(function(err) {
+    //   console.log('...');
+    // });
+
+
+    //车辆信息
+    $scope.carInfo=
+    {};
 
     $scope.goto=function(url){
       $location.path(url);
@@ -46,6 +50,7 @@ angular.module('starter')
       })
 
 
+    //获取寿险列表
     $scope.postLifeInfo=function(){
       $http({
         method: "POST",
@@ -95,6 +100,7 @@ angular.module('starter')
     };
 
 
+    //填写车辆信息的示例图片
     $scope.car={};
     $scope.isShowPicture = false;
     $scope.isShowPicture1 = false;
@@ -138,7 +144,6 @@ angular.module('starter')
       };
     };
 
-
     /*** show demo modal ***/
     $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
       scope:  $scope,
@@ -149,7 +154,6 @@ angular.module('starter')
 
     $scope.openDemoModal= function(){
       $scope.show_demo_modal.show();
-
     };
 
     $scope.closeDemoModal= function() {
@@ -167,7 +171,6 @@ angular.module('starter')
 
     $scope.openDemoModal1= function(){
       $scope.show_demo_modal1.show();
-
     };
 
     $scope.closeDemoModal1= function() {
@@ -185,7 +188,6 @@ angular.module('starter')
 
     $scope.openDemoModal2= function(){
       $scope.show_demo_modal2.show();
-
     };
 
     $scope.closeDemoModal2= function() {
@@ -203,7 +205,6 @@ angular.module('starter')
 
     $scope.openDemoModal3= function(){
       $scope.show_demo_modal3.show();
-
     };
 
     $scope.closeDemoModal3= function() {
@@ -232,7 +233,7 @@ angular.module('starter')
     /*** bind car modal ***/
 
 
-    /*** bind append_insurer_modal ***/
+    /*** bind append_insurer_modal 选择投保人模态框***/
     $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html',{
       scope:  $scope,
       animation: 'slide-in-up'
@@ -251,7 +252,7 @@ angular.module('starter')
     /*** bind append_insurer_modal ***/
 
 
-    /*** bind append_insuranceder_modal ***/
+    /*** bind append_insuranceder_modal 选择被保险人模态框***/
     $ionicModal.fromTemplateUrl('views/modal/append_insuranceder_modal.html',{
       scope:  $scope,
       animation: 'slide-in-up'
@@ -268,7 +269,7 @@ angular.module('starter')
     };
     /*** bind append_insuranceder_modal ***/
 
-    /*** bind append_benefiter_modal ***/
+    /*** bind append_benefiter_modal 选择受益人模态框***/
     $ionicModal.fromTemplateUrl('views/modal/append_benefiter_modal.html',{
       scope:  $scope,
       animation: 'slide-in-up'
@@ -299,7 +300,6 @@ angular.module('starter')
         },300);
       }
     };
-
 
 
 
@@ -414,7 +414,6 @@ angular.module('starter')
       }
     };
 
-    $scope.car={};
 
     $scope.apply=function () {
       $scope.life_insurance.state = 'pricing';//订单状态是报价中
@@ -444,10 +443,10 @@ angular.module('starter')
 
 
 
-    //返回寿险产品列表
+    //
     $http({
       method: "POST",
-      url: "http://192.168.1.100:3000/svr/request",
+      url: "http://192.168.1.110:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -489,7 +488,7 @@ angular.module('starter')
           {type:'车险',insurances:$scope.motor_specials},
           {type:'寿险',insurances:$scope.life_insurances},
           {type:'维修'},
-          {type:'车驾管服务',
+          {type:'车驾管',
             services:[
               {name:'代办车辆年审',href:''},
               {name:'代办驾驶证年审',href:''},
@@ -502,28 +501,26 @@ angular.module('starter')
         return ({re: 1});
       }
     }).then(function(json) {
-      if(json.re==1) {
-        return $http({
-          method: "POST",
-          url: "http://192.168.1.100:3000/svr/request",
-          headers: {
-            'Authorization': "Bearer " + $rootScope.access_token,
-          },
-          data:
-          {
-            request:'getMaintainServiceRoutine'
-          }
-        });
-      }
-    }).then(function(res){
-      var json=res.data;
-      if(json.re==1) {
-        $scope.routines=json.data;
-        $scope.dailys = json.data['日常保养'];
-      }
-    }).catch(function (err) {
-      console.log('server fetch error');
-    });
+      if (json.re == 1) {
+
+        return data = [
+          {routineId:'1',routineName:'机油,机滤',routineType:'日常保养'},
+          {routineId:'2',routineName:'机油,三滤',routineType:'日常保养'},
+          {routineId:'3',routineName:'更换刹车片',routineType:'日常保养'},
+          {routineId:'4',routineName:'雨刷片更换',routineType:'日常保养'},
+          {routineId:'5',routineName:'轮胎更换',routineType:'日常保养'}
+        ];
+    }
+
+     }).then(function(res){
+       var json=res.data;
+       if(json.re==1) {
+         $scope.routines=json.data;
+         $scope.dailys = json.data['日常保养'];
+       }
+     }).catch(function (err) {
+       console.log('server fetch error');
+     });
 
     //寿险详情展示
     $scope.setDetail=function(item){
@@ -618,7 +615,7 @@ angular.module('starter')
     $scope.getLifeOrderState=function(){
       $http({
         method: "POST",
-        url: "http://192.168.0.198:3000/svr/request",
+        url: "/proxy/node_server/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -722,7 +719,6 @@ angular.module('starter')
 
 
 
-
     $scope.service='代办车辆年审';
     $scope.services=[
       '代办车辆年审',
@@ -732,7 +728,8 @@ angular.module('starter')
       '违章查询'
     ];
 
-    //维修救援
+    //维修服务
+
 
     $scope.subTabIndex=0;
     $scope.subTab_change=function(i) {
@@ -740,17 +737,26 @@ angular.module('starter')
     };
 
 
-    $scope.daily={};
+
+    $scope.dailys = [
+      {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'日常保养'},
+      {subServiceId:'2',subServiceTypes:'机油,三滤',serviceType:'日常保养'},
+      {subServiceId:'3',subServiceTypes:'更换刹车片',serviceType:'日常保养'},
+      {subServiceId:'4',subServiceTypes:'雨刷片更换',serviceType:'日常保养'},
+      {subServiceId:'5',subServiceTypes:'轮胎更换',serviceType:'日常保养'}
+    ];
+
+    //$scope.daily=['机油,机滤','机油,三滤','更换刹车片','雨刷片更换','轮胎更换']
     $scope.selected_daily=[];
 
-    //提交服务项目
+    //提交服务项目,生成"日常保养"类型的订单
     $scope.commit_daily=function(){
       if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
       {
-        var routineIds=[];
+        var subServiceTypes=[];
         $scope.dailys.map(function(daily,i) {
           if(daily.checked)
-            routineIds.push(daily.routineId);
+            subServiceTypes.push(daily.subServiceId);
         });
         //TODO:apply your selected maintain items
         $http({
@@ -763,9 +769,10 @@ angular.module('starter')
           {
             request:'generateCarServiceOrder',
             info:{
-              routineIds:routineIds,
+              subServiceTypes:subServiceTypes,//日常保养服务项目的具体内容
               serviceType:1,
               estimateTime:$scope.maintain.estimateTime
+
             }
           }
         }).then(function(res) {
@@ -790,7 +797,8 @@ angular.module('starter')
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
-      items:{}
+      items:{},
+      description:{}
     };
 
     $scope.accident={
@@ -1207,6 +1215,7 @@ angular.module('starter')
             },
             data: {
               request: url
+
             }
           }).then(function (res) {
             var json=res.data;
@@ -1482,6 +1491,41 @@ angular.module('starter')
 
     $scope.pickMaintain=function(){
       $state.go('locate_maintain_nearby');
+    }
+
+    $scope.startCapture=function(){
+      var options = { limit: 3, duration: 15 };
+      $cordovaCapture.captureVideo(options).then(function(videoData) {
+        // Success! Video data is here
+        $scope.videoData=videoData[0];
+        for(var field in $scope.videoData) {
+          alert('field=' + field);
+          alert('data=\r\n' + $scope.videoData[field]);
+        }
+      }, function(err) {
+        // An error occurred. Show a message to the user
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
+    }
+
+    $scope.startRecord=function(){
+
+      var src = "audio.mp3";
+      $scope.mediaRec =$cordovaMedia.newMedia(src);
+      alert('mediarec=\r\n' + $scope.mediaRec);
+      $scope.mediaRec.startRecord();
+
+    }
+
+    $scope.stopRecord=function(){
+      $scope.mediaRec.stopRecord();
+    }
+
+    $scope.play=function(){
+      $scope.mediaRec.play();
     }
 
   });
