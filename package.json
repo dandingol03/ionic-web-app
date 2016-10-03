@@ -24,7 +24,17 @@
     "cordova-plugin-file-transfer",
     "cordova-plugin-camera",
     "cordova-plugin-app-preferences",
-    "cordova-plugin-keyboard"
+    "cordova-plugin-keyboard",
+    "cordova-plugin-media",
+    {
+      "variables": {
+        "API_KEY": "bc3a1ec18c59544ebfb6e136"
+      },
+      "locator": "jpush-phonegap-plugin",
+      "id": "jpush-phonegap-plugin"
+    },
+    "cordova-plugin-media-capture",
+    "cordova-plugin-geolocation"
   ],
   "cordovaPlatforms": [
     "ios",

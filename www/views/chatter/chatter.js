@@ -3,13 +3,13 @@
  */
 angular.module('starter')
 
-  .controller('chatterController',function($scope,$http,$rootScope){
+  .controller('chatterController',function($scope,$http,$rootScope,$cordovaMedia,$ionicLoading,$cordovaCapture){
 
 
     //搜索可用聊天客服
     $http({
       method: "post",
-      url: "/proxy/node_server/svr/request",
+      url: "http://192.168.1.100:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -48,6 +48,26 @@ angular.module('starter')
 
     };
 
+    $scope.sendMsg=function(){
+      if($scope.input.message!==undefined&&$scope.input.message!==null)
+      {
+        $http({
+          method: "post",
+          url: "http://192.168.1.100:3000/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
+          {
+            request:'pushTextMsg',
+            info:{
+              msg:$scope.input.message,
+              type:'customer'
+            }
+          }
+        })
+      }
+    }
 
 
     $scope.viewProfile=function(msg){
@@ -55,4 +75,46 @@ angular.module('starter')
     }
 
 
+
+
+    //录音
+    $scope.startRecord=function(){
+
+      var src = "audio.mp3";
+      $scope.mediaRec =$cordovaMedia.newMedia(src);
+      alert('mediarec=\r\n' + $scope.mediaRec);
+      $scope.mediaRec.startRecord();
+
+    }
+
+    $scope.stopRecord=function(){
+      $scope.mediaRec.stopRecord();
+    }
+
+    $scope.play=function(){
+      $scope.mediaRec.play();
+    }
+
+    $scope.startCapture=function(){
+      var options = { limit: 3, duration: 15 };
+      $cordovaCapture.captureVideo(options).then(function(videoData) {
+        // Success! Video data is here
+        $scope.videoData=videoData[0];
+        for(var field in $scope.videoData) {
+          alert('field=' + field);
+          alert('data=\r\n' + $scope.videoData[field]);
+        }
+      }, function(err) {
+        // An error occurred. Show a message to the user
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
+    }
+
+
+    $scope.stopCapture=function(){
+
+    }
   });

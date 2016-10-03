@@ -8,11 +8,10 @@
 angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker'])
 
     .config(function(baiduMapApiProvider) {
-      baiduMapApiProvider.version('2.0').accessKey('2me89doy9NE2HgG7FmTXa0XZsedThXDD');
+      baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
     })
 
-
-    .run(function($ionicPlatform,$rootScope,$interval) {
+    .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location) {
 
     $rootScope.car_orders=[
         [
@@ -79,7 +78,76 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         StatusBar.styleDefault();
       }
 
+      window.plugins.jPushPlugin.init();
+      window.plugins.jPushPlugin.setDebugMode(true);
+
+      //获取自定义消息的回调
+      var onReceiveMessage = function(event) {
+        try{
+          var message=null;
+          if(device.platform == "Android") {
+            message = event.message;
+          } else {
+            message = event.content;
+          }
+          alert('message=' + message);
+        } catch(exception) {
+          console.log("JPushPlugin:onReceiveMessage-->" + exception);
+        }
+      }
+
+      var onTagsWithAlias = function(event) {
+        try {
+          console.log("onTagsWithAlias");
+          var result = "result code:" + event.resultCode + " ";
+          result += "tags:" + event.tags + " ";
+          result += "alias:" + event.alias + " ";
+          alert('result=\r\n' + result);
+        } catch(exception) {
+          console.log(exception);
+        }
+      }
+
+
+      window.plugins.jPushPlugin.setTags(['game']);
+      document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
+      document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+
+
     });
+
+    //双击退出
+    $ionicPlatform.registerBackButtonAction(function (e) {
+      //判断处于哪个页面时双击退出
+      if ($location.path() == '/login') {
+        if ($rootScope.backButtonPressedOnceToExit) {
+          ionic.Platform.exitApp();
+        } else {
+          $rootScope.backButtonPressedOnceToExit = true;
+          //TODO:delete record in info-person-online
+          //TODO:delete record in
+
+
+          $cordovaToast.showShortTop('再按一次退出系统');
+          setTimeout(function () {
+            $rootScope.backButtonPressedOnceToExit = false;
+          }, 2000);
+        }
+      }
+      else if ($ionicHistory.backView()) {
+        $ionicHistory.goBack();
+      } else {
+        $rootScope.backButtonPressedOnceToExit = true;
+        $cordovaToast.showShortTop('再按一次退出系统');
+        setTimeout(function () {
+          $rootScope.backButtonPressedOnceToExit = false;
+        }, 2000);
+      }
+      e.preventDefault();
+      return false;
+    }, 101);
+
+
 })
 
   .config(function (ionicDatePickerProvider) {
@@ -248,6 +316,17 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/life_insurance_product_list/life_insurance_product_list.html'
     })
 
+    .state('locate_maintain_nearby',{
+      url:'/locate_maintain_nearby',
+      controller:'locateMaintainNearbyController',
+      templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
+    })
+
+    .state('transclude',{
+      url:'/transclude',
+      controller:'transcludeController',
+      templateUrl:'views/transclude/transclude.html'
+    })
 
   // if none of the above states are matched, use this as the fallback
 

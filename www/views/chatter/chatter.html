@@ -1,12 +1,12 @@
 <ion-view view-title="chatting....">
   <ion-nav-bar class="bar-stable" align-title="center" >
-    <ion-nav-buttons side="right">
-      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
-        <i class="ion-ios-search-strong"></i>
-      </button>
-    </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+      <i class="ion-ios-search-strong"></i>
+    </button>
+  </ion-nav-buttons>
 
-  </ion-nav-bar>
+</ion-nav-bar>
 
   <ion-content>
 
@@ -28,19 +28,65 @@
         </div>
       </div>
 
-    </div>
+      <div class="item item-divider">
+        audio
+      </div>
 
+      <div class="item">
+        <button class="button "
+                ng-click="startRecord()">
+          <span>
+            <i class="ion-mic-a"></i>
+          </span>
+          <span>record.....</span>
+        </button>
+        <button class="button" ng-click="stopRecord()">
+           <span>
+            <i class="ion-pause"></i>
+          </span>
+          <span>stop record</span>
+        </button>
+        <button class="button" ng-click="play()">
+           <span>
+            <i class="ion-pause"></i>
+          </span>
+          <span>play record</span>
+        </button>
+      </div>
+
+      <div class="item item-divider">
+        video
+      </div>
+
+      <div class="item">
+        <button class="button "
+                ng-click="startCapture()">
+          <span>
+            <i class="ion-mic-a"></i>
+          </span>
+          <span>capture video....</span>
+        </button>
+
+      </div>
+
+
+    </div>
 
       <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
         <label class="item-input-wrapper">
           <span class="input-label">to danding:</span>
-          <input type="text" placeholder="echoing......">
+          <input type="text"
+                 placeholder="echoing......"
+                  ng-model="input.message"
+            >
         </label>
         <div class="footer-btn-wrap">
-          <button class="button button-icon icon ion-android-send footer-btn" type="submit"
-                  ng-disabled="!input.message || input.message === ''">
+          <button class="button button-icon icon ion-android-send footer-btn"
+                  ng-disabled="!input.message || input.message === ''"
+                  ng-click="sendMsg()">
           </button>
         </div>
+
       </ion-footer-bar>
 
 

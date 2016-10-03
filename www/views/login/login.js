@@ -7,8 +7,6 @@ angular.module('starter')
     ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera){
 
 
-
-
     $scope.formUser = {};
 
     $scope.user={};
@@ -66,148 +64,82 @@ angular.module('starter')
     };
 
 
+    $scope.onGetRegistradionID = function(data) {
+      try{
+        $rootScope.registrationId=data;
+        alert('registrationId=\r\n' + data);
+        $scope.login();
+      }catch(exception){
+
+      }
+    };
+
+    $scope.doLogin=function(){
+      if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
+      {
+        if(window.plugins!==undefined&&window.plugins!==null)
+            window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+        else{
+          $scope.login();
+        }
+      }else{
+        $scope.login();
+      }
+    }
+
 
     //登录
     $scope.login = function(){
 
-      var access_token=null;
+
 
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
+
         url:"proxy/node_server/login",
+
+        //url:"http://192.168.1.100:3000/login",
+
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
         }
 
-      }).success(function(response){
+      }).then(function(res){
 
-        var access_token=response.access_token;
-        $state.go('tabs.dashboard');
+        var json=res.data;
+
+        var access_token=json.access_token;
+
         if(access_token!==undefined&&access_token!==null)
         {
           $rootScope.access_token=access_token;
           if(window.cordova!=undefined && window.cordova!=null) {
-            var targetPath = cordova.file.externalRootDirectory + 'ionic.jpg';
-
-
-            var carInfo = {
-              carNum: "5",
-              engineNum: "2",
-              frameNum: "3",
-              factoryNum: "4",
-              firstRegisterTime: "2016-01-01",
-              ownerName: "6",
-              ownerIdCard: "7",
-              ownerAddress: "8",
-              carPhoto: null,
-              ownerIdPhoto: null
-            };
-
-
-            $scope.photo = '';
-
-
-            //$cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
-            //  .then(function (success) {
-            //    alert('content of image=' + success);
-            //    carInfo.carPhoto = success;
-            //    carInfo.ownerIdPhoto = success;
-            //    $http({
-            //      method: "POST",
-            //      url: "http://192.168.1.102:3000/svr/request",
-            //      headers: {
-            //        'Authorization': "Bearer " + access_token,
-            //      },
-            //      data: {
-            //        request: 'uploadCarAndOwnerInfo',
-            //        info: carInfo
-            //      }
-            //    }).
-            //      success(function (response) {
-            //        console.log('success');
-            //      }).
-            //      error(function (err) {
-            //        var str = '';
-            //        for (var field in err)
-            //          str += field + ':' + err[field];
-            //        console.log('error=' + str);
-            //      });
-            //  }, function (error) {
-            //    // error
-            //    var err = '';
-            //    for (var field in error)
-            //      err += field + ':' + error[field];
-            //    alert('error=' + err);
-            //  });
           }
-
-          var carInfo = {
-            carNum : "5",
-            engineNum : "2",
-            frameNum : "3",
-            factoryNum : "4",
-            firstRegisterTime : "2016-01-01",
-            ownerName : "6",
-            ownerIdCard : "7",
-            ownerAddress : "8",
-            carPhoto: null,
-            ownerIdPhoto: null
-          };
-
-          $rootScope.access_token=access_token;
-          $state.go('tabs.dashboard');
-
-
-          $scope.photo='';
-
-
-          /**
-           * $cordovaFile 读取文件
-           */
-          //$cordovaFile.readAsBinaryString(cordova.file.externalRootDirectory, 'ionic.jpg')
-          //  .then(function (success) {
-          //    alert('content of image=' + success);
-          //    carInfo.carPhoto=success;
-          //    carInfo.ownerIdPhoto=success;
-          //    $http({
-          //      method: "POST",
-          //      url: "http://192.168.1.102:3000/svr/request",
-          //      headers: {
-          //        'Authorization': "Bearer " + access_token,
-          //      },
-          //      data:
-          //      {
-          //        request:'uploadCarAndOwnerInfo',
-          //        info:carInfo
-          //      }
-          //    }).
-          //      success(function (response) {
-          //        console.log('success');
-          //      }).
-          //      error(function (err) {
-          //        var str='';
-          //        for(var field in err)
-          //          str+=field+':'+err[field];
-          //        console.log('error='+str);
-          //      });
-          //  }, function (error) {
-          //    // error
-          //    var err='';
-          //    for(var field in error)
-          //    err+=field+':'+error[field];
-          //    alert('error=' + err);
-          //  });
-
-
-
-
-
+          return  $http({
+            method: "POST",
+            url: "http://192.168.1.100:3000/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data: {
+              request: 'activatePersonOnline',
+              info:{
+                registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
+              }
+            }
+          });
         }
-
-
-      }).error(function(err){
+        else
+          return ({re: -1});
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1)
+        {
+          $state.go('tabs.dashboard');
+        }
+      }).catch(function(err){
         var error='';
         for(var field in err)
         {

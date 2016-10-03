@@ -2,7 +2,6 @@
 .banner{
   width: 100%;
   height: 40%;
-  margin-top: 20%;
 }
 
 .banner img {
@@ -12,7 +11,7 @@
 }
 
 .background{
-  background:url(../img/装饰图案@2x.png)no-repeat;
+  background:url(../img/decorateImage.png)no-repeat;
   background-size:100% 100%;
   text-align:center;
   margin:0
@@ -899,3 +898,11 @@ table.table1{
   animation: fadeOutRight 0s;
 }
 
+
+.tabs-custom .tab-nav.tabs{
+  background-color: #ddd;
+}
+
+.item .row.activated{
+  background-color: #e5e5e5;
+}
