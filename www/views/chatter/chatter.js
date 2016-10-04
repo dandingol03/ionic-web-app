@@ -9,7 +9,7 @@ angular.module('starter')
     //搜索可用聊天客服
     $http({
       method: "post",
-      url: "http://192.168.1.100:3000/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -53,7 +53,7 @@ angular.module('starter')
       {
         $http({
           method: "post",
-          url: "http://192.168.1.100:3000/svr/request",
+          url: "/proxy/node_server/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },

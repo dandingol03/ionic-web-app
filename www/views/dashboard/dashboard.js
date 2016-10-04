@@ -29,21 +29,22 @@ angular.module('starter')
       $location.path(url);
     };
 
-    $http({
-      method: "post",
-      url: "/proxy/node_server/svr/request",
-      headers: {
-        'Authorization': "Bearer " + $rootScope.access_token,
-      },
-      data:
-      {
-        request:'getCarAndOwnerInfo'
-      }
-    })
-      .success(function (response) {
-        $scope.carInfo=response.carInfo[0];
-        console.log('success');
-      })
+    //暂时打住
+    //$http({
+    //  method: "post",
+    //  url: "/proxy/node_server/svr/request",
+    //  headers: {
+    //    'Authorization': "Bearer " + $rootScope.access_token,
+    //  },
+    //  data:
+    //  {
+    //    request:'getCarAndOwnerInfo'
+    //  }
+    //})
+    //  .success(function (response) {
+    //    $scope.carInfo=response.carInfo[0];
+    //    console.log('success');
+    //  })
 
 
     $scope.postLifeInfo=function(){
@@ -447,7 +448,7 @@ angular.module('starter')
     //返回寿险产品列表
     $http({
       method: "POST",
-      url: "http://192.168.1.100:3000/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -505,7 +506,7 @@ angular.module('starter')
       if(json.re==1) {
         return $http({
           method: "POST",
-          url: "http://192.168.1.100:3000/svr/request",
+          url: "/proxy/node_server/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
@@ -612,35 +613,6 @@ angular.module('starter')
           str += field + ':' + err[field];
         alert('error=\r\n' + str);
       });
-    }
-
-    //获取寿险订单状态
-    $scope.getLifeOrderState=function(){
-      $http({
-        method: "POST",
-        url: "http://192.168.0.198:3000/svr/request",
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token,
-        },
-        data:
-        {
-          request:'getLifeOrderState',
-          orderId:orderId
-        }
-      }).then(function(res) {
-        var data=res.state;
-        if(data==3)
-        {
-
-
-        }
-      }).catch(function(err) {
-        var str='';
-        for(var field in err)
-          str += field + ':' + err[field];
-        alert('error=\r\n' + str);
-      });
-
     }
 
 
@@ -868,11 +840,10 @@ angular.module('starter')
     };
 
 
-    $scope.addresses=['tow1','tow2','tow3'];
-    $scope.address=$scope.addresses[0];
-    $scope.addresses_select=function(addresses) {
-      if (addresses !== undefined && addresses !== null &&addresses.length > 0)
-      {
+
+
+    $scope.addresses_select=function(item,field) {
+
         var buttons=[];
         addresses.map(function(address,i) {
           buttons.push({text: address});
@@ -888,9 +859,7 @@ angular.module('starter')
           },
           cssClass:'motor_insurance_actionsheet'
         });
-      }
-      else
-      {}
+
     }
 
 
@@ -1255,7 +1224,75 @@ angular.module('starter')
         default:
           break;
       }
+    };
 
+    /*** bind select_relative modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/select_relative.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.select_relative={
+        modal:modal
+      }
+    });
+
+    $scope.open_selectRelativeModal= function(item,field,matched){
+      $scope.select_relative.modal.show();
+      if(item!==undefined&&item!==null&&field!==undefined&&field!==null)
+      {
+        $scope.select_relative.item=item;
+        $scope.select_relative.field=field;
+        $scope.select_relative.matched=matched;
+      }
+    };
+
+    $scope.close_selectRelativeModal= function(cluster) {
+      if(cluster!==undefined&&cluster!==null)
+      {
+        cluster.map(function(singleton,i) {
+          if(singleton.checked==true)
+          {
+            if($scope.select_relative.item!==undefined&&$scope.select_relative.item!==null
+            &&$scope.select_relative.field!==undefined&&$scope.select_relative.field!==null)
+            {
+              if($scope.select_relative.matched!==undefined&&$scope.select_relative.matched!==null)
+                $scope.select_relative.item[$scope.select_relative.field]=singleton[$scope.select_relative.matched];
+              else
+                $scope.select_relative.item[$scope.select_relative.field]=singleton;
+            }
+          }
+        });
+      }
+      $scope.select_relative.modal.hide();
+    };
+    /*** bind select_relative modal ***/
+
+
+
+    $scope.fetchRelative=function(item,field,matched) {
+      $http({
+        method: "POST",
+        url: "proxy/node_server/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'getRelativePersons'
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          $scope.relatives=json.data;
+          $scope.open_selectRelativeModal(item,field,matched);
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
     };
 
 
@@ -1335,6 +1372,20 @@ angular.module('starter')
           break;
       }
     }
+
+    $scope.Mutex=function(item,field,cluster) {
+      if(item[field])
+      {
+        item[field]=false;
+      }
+      else{
+        item[field]=true;
+        cluster.map(function(cell,i) {
+            if(cell.carNum!=item.carNum)
+                cell[field]=false;
+        })
+      }
+    };
 
       ////intial BMap service
       //BaiduMapService.getBMap(function(BMap){
@@ -1483,5 +1534,158 @@ angular.module('starter')
     $scope.pickMaintain=function(){
       $state.go('locate_maintain_nearby');
     }
+
+
+    /*** bind matching_car_info modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/matching_car_info.html',{
+      scope:  $scope,
+      animation: 'animated '+'bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.matching_car_info_modal = modal;
+    });
+
+    $scope.open_matchingCarInfoModal= function(){
+      $scope.matching_car_info_modal.show();
+    };
+
+    $scope.close_matchingCarInfoModal= function() {
+      $scope.matching_car_info_modal.hide();
+    };
+    /*** bind matching_car_info modal ***/
+
+
+
+    $scope.getCarInfoByCarNum=function(item){
+      if($scope.doFilterCarNumFlag)
+      {
+        $http({
+          method: "post",
+          url: "/proxy/node_server/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+            info:{
+              perIdCard:item
+            }
+          },
+          data:
+          {
+            request:'getCarInfoByCarNum',
+            info:{
+              carNum:item
+            }
+          }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+            var confirmPopup = $ionicPopup.confirm({
+              title: '',
+              template: '匹配车辆信息'
+            });
+            confirmPopup.then(function(res) {
+              if(res)//用户选择匹配车辆信息
+              {
+                //TODO:inject carInfo
+                if(json.data!==undefined&&json.data!==null)
+                {
+                  var carInfo=json.data;
+                  $scope.carInfo.carNum=carInfo.carNum;
+                  $scope.carInfo.factoryNum=carInfo.factoryNum;
+                  $scope.carInfo.engineNum=carInfo.engineNum;
+                  $scope.carInfo.frameNum=carInfo.frameNum;
+                  $scope.carInfo.issueDate=carInfo.issueDate;
+                  $scope.carInfo.ownerName=carInfo.ownerName;
+                }
+              }
+            });
+          }
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          console.error('error=\r\n'+str);
+        })
+      }else{
+        if(item!==undefined&&item!==null)
+        {
+          $scope.doFilterCarNumFlag=false;
+          $timeout(function(){
+            $scope.doFilterCarNumFlag=true;
+          },1000);
+        }
+      }
+    }
+
+
+
+    $scope.filterInfoByPerIdCard=function(item)
+    {
+      if($scope.doFilterFlag)
+      {
+        $http({
+          method: "post",
+          url: "/proxy/node_server/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+            info:{
+              perIdCard:item
+            }
+          },
+          data:
+          {
+            request:'getCarInfoByPerIdCard',
+            info:{
+              perIdCard:item
+            }
+          }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+            var confirmPopup = $ionicPopup.confirm({
+              title: '',
+              template: '匹配车辆信息'
+            });
+            confirmPopup.then(function(res) {
+              if(res)//用户选择匹配车辆信息
+              {
+                $scope.cars=json.data;
+                $scope.open_matchingCarInfoModal();
+              }
+            });
+          }
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          console.error('error=\r\n'+str);
+        })
+      }else{
+        if(item!==undefined&&item!==null)
+        {
+          $scope.doFilterFlag=false;
+          $timeout(function(){
+            $scope.doFilterFlag=true;
+          },1000);
+        }
+      }
+
+    }
+
+    $scope.bind_car_info=function(cluster){
+        cluster.map(function(car,i) {
+          if(car.checked)
+          {
+            var carInfo=car;
+            $scope.carInfo.carNum=carInfo.carNum;
+            $scope.carInfo.factoryNum=carInfo.factoryNum;
+            $scope.carInfo.engineNum=carInfo.engineNum;
+            $scope.carInfo.frameNum=carInfo.frameNum;
+            $scope.carInfo.issueDate=carInfo.issueDate;
+            $scope.carInfo.ownerName=carInfo.ownerName;
+          }
+        });
+      $scope.close_matchingCarInfoModal();
+    }
+
 
   });
