@@ -36,6 +36,7 @@ angular.module('starter')
     $http({
       method: "post",
       url: "/proxy/node_server/svr/request",
+     // url: "http://192.168.1.106/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -55,6 +56,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
+        //url: "http://192.168.1.106/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -308,6 +310,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
+        //url: "http://192.168.1.106/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -446,7 +449,8 @@ angular.module('starter')
     //
     $http({
       method: "POST",
-      url: "http://192.168.1.110:3000/svr/request",
+      //url: "http://192.168.1.106:3000/svr/request",
+      url: "/proxy/node_server/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -544,16 +548,6 @@ angular.module('starter')
         $state.go('life_insurance_detail',{insurance:JSON.stringify(item)});
       }
     }
-
-
-
-
-    $scope.tabIndex=0;
-
-    $scope.tab_change=function(i){
-      $scope.tabIndex=i;
-    };
-
 
     $scope.detail_ref=function(insurance){
       switch($scope.tabIndex)
@@ -729,81 +723,32 @@ angular.module('starter')
     ];
 
     //维修服务
-
-
+    $scope.tabIndex=0;
+    $scope.tab_change=function(i){
+      $scope.tabIndex=i;
+    };
     $scope.subTabIndex=0;
     $scope.subTab_change=function(i) {
       $scope.subTabIndex=i;
     };
 
-
-
-    $scope.dailys = [
-      {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'日常保养'},
-      {subServiceId:'2',subServiceTypes:'机油,三滤',serviceType:'日常保养'},
-      {subServiceId:'3',subServiceTypes:'更换刹车片',serviceType:'日常保养'},
-      {subServiceId:'4',subServiceTypes:'雨刷片更换',serviceType:'日常保养'},
-      {subServiceId:'5',subServiceTypes:'轮胎更换',serviceType:'日常保养'}
-    ];
-
-    //$scope.daily=['机油,机滤','机油,三滤','更换刹车片','雨刷片更换','轮胎更换']
-    $scope.selected_daily=[];
-
-    //提交服务项目,生成"日常保养"类型的订单
-    $scope.commit_daily=function(){
-      if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
-      {
-        var subServiceTypes=[];
-        $scope.dailys.map(function(daily,i) {
-          if(daily.checked)
-            subServiceTypes.push(daily.subServiceId);
-        });
-        //TODO:apply your selected maintain items
-        $http({
-          method: "POST",
-          url: "/proxy/node_server/svr/request",
-          headers: {
-            'Authorization': "Bearer " + $rootScope.access_token
-          },
-          data:
-          {
-            request:'generateCarServiceOrder',
-            info:{
-              subServiceTypes:subServiceTypes,//日常保养服务项目的具体内容
-              serviceType:1,
-              estimateTime:$scope.maintain.estimateTime
-
-            }
-          }
-        }).then(function(res) {
-          var json=res.data;
-          if(json.re==1) {
-            console.log('service order has been generated');
-          }
-        }).catch(function(err) {
-          var str='';
-          for(var field in err)
-            str+=err[field];
-          console.error('error=\r\n' + str);
-        });
-      }
-    }
-
-
-
-
-
-    //维修救援
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
       items:{},
-      description:{}
+      description:{},//故障文字描述,放在remark字段下
+      tabIndex:'',
+      serviceType:''//服务项目
+
     };
 
-    $scope.accident={
-
-    };
+    $scope.dailys = [
+      {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
+      {subServiceId:'2',subServiceTypes:'机油,三滤',serviceType:'11'},
+      {subServiceId:'3',subServiceTypes:'更换刹车片',serviceType:'11'},
+      {subServiceId:'4',subServiceTypes:'雨刷片更换',serviceType:'11'},
+      {subServiceId:'5',subServiceTypes:'轮胎更换',serviceType:'11'}
+    ];
 
     $scope.daily_check=function(item){
       if(item.checked==true)
@@ -812,11 +757,148 @@ angular.module('starter')
         item.checked=true;
     }
 
-    $scope.accident={};
+    $scope.accident = {};
     $scope.accidant_check=function(type)
     {
       $scope.accident.type=type;
     }
+
+
+    $scope.videoCheck = function (orderId) {
+      var deferred = $q.defer();
+      if($scope.maintain.description.video!=null&&$scope.maintain.description.video!=undefined)
+      {
+        var server='http://211.87.225.197:3000/svr/request?' +
+          'request=uploadVideo&orderId=orderId&fileName='+$scope.maintain.description.video;
+       // var server='http://localhost:3000/svr/request?request=uploadVideo';
+        var options = {
+          fileKey:'file',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          }
+        };
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.video, options).then(function(json) {
+          if(json.re==1){
+            deferred.resolve({re:1});
+          }else{
+            deferred.reject({re:-1});
+          }
+        })
+      }
+      else{
+       deferred.resolve({re:1});
+      }
+      return deferred.promise;
+    }
+
+    //提交服务项目,生成服务订单
+    $scope.commit_daily=function(){
+      var deferred=$q.defer();
+      $scope.maintain.subServiceTypes=[];
+      $scope.dailys.map(function(daily,i) {
+        if(daily.checked==true)
+          $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
+      });
+      if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
+      {
+        if( $scope.tabIndex==2 && $scope.subTabIndex==0)
+        { $scope.maintain.serviceType=11;
+
+        }
+        if( $scope.tabIndex==2 && $scope.subTabIndex==1)
+        { $scope.maintain.serviceType=12;
+
+        }
+        if( $scope.tabIndex==2 && $scope.subTabIndex==2)
+        { $scope.maintain.serviceType=13;
+          $scope.maintain.subServiceTypes=$scope.accident.type;
+        }
+        //TODO:apply your selected maintain items
+
+        $http({
+          method: "POST",
+          url: "/proxy/node_server/svr/request",
+          //url: "http://192.168.1.106/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          },
+          data:
+          {
+            request:'generateCarServiceOrder',
+            info:{
+              maintain:$scope.maintain
+            }
+          }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+
+            $scope.close_maintenanceTAModal();
+            console.log('service order has been generated');
+            $scope.videoCheck(json.orderId).then(function(json) {
+               if(json.re==1){
+                 console.log('u');
+               }else
+                 deferred.reject({re:-1});
+             })
+          }
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          console.error('error=\r\n' + str);
+        });
+
+      }
+      return deferred.promise;
+    }
+
+
+
+
+
+
+
+    // $scope.commit_daily=function(){
+    //   if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
+    //   {
+    //     var subServiceTypes=[];
+    //     $scope.dailys.map(function(daily,i) {
+    //       if(daily.checked)
+    //         subServiceTypes.push(daily.subServiceId);
+    //     });
+    //     //TODO:apply your selected maintain items
+    //     $http({
+    //       method: "POST",
+    //       url: "/proxy/node_server/svr/request",
+    //       headers: {
+    //         'Authorization': "Bearer " + $rootScope.access_token
+    //       },
+    //       data:
+    //       {
+    //         request:'generateCarServiceOrder',
+    //         info:{
+    //           subServiceTypes:subServiceTypes,//日常保养服务项目的具体内容
+    //
+    //           serviceType:1,
+    //           estimateTime:$scope.maintain.estimateTime
+    //
+    //         }
+    //       }
+    //     }).then(function(res) {
+    //       var json=res.data;
+    //       if(json.re==1) {
+    //         console.log('service order has been generated');
+    //       }
+    //     }).catch(function(err) {
+    //       var str='';
+    //       for(var field in err)
+    //         str+=err[field];
+    //       console.error('error=\r\n' + str);
+    //     });
+    //   }
+    // }
+    //
 
     //车驾管服务
 
@@ -1497,11 +1579,9 @@ angular.module('starter')
       var options = { limit: 3, duration: 15 };
       $cordovaCapture.captureVideo(options).then(function(videoData) {
         // Success! Video data is here
+
+        $scope.maintain.description.video=videoData[0].fullPath;
         $scope.videoData=videoData[0];
-        for(var field in $scope.videoData) {
-          alert('field=' + field);
-          alert('data=\r\n' + $scope.videoData[field]);
-        }
       }, function(err) {
         // An error occurred. Show a message to the user
         var str='';
@@ -1522,6 +1602,11 @@ angular.module('starter')
 
     $scope.stopRecord=function(){
       $scope.mediaRec.stopRecord();
+      for(var field in $scope.mediaRec.media) {
+        alert('field=' + field);
+        alert('data=\r\n' + $scope.mediaRec.media[field]);
+      }
+
     }
 
     $scope.play=function(){

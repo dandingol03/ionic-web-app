@@ -178,12 +178,14 @@
             <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
               车牌:
             </span>
-          <span style="width: 65%;display: inline-block;text-align: left;">
+            <span style="width: 65%;display: inline-block;text-align: left;">
               <input type="text" placeholder="请输入您的车牌"
                      style="display:inline-block;background-color: transparent;" ng-value="carInfo.carNum"
                      ng-model="carInfo.carNum"
               />
             </span>
+
+
         </div>
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
@@ -433,7 +435,7 @@
             <ion-slide>
               <div class="item"
                    style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;position: relative;background-color:transparent;"
-                   ng-click="startCapture()"
+
               >
                 <span class="input-label" style="display: inline-block;width: 55%;text-align: left;">
                        上传故障描述视频:
@@ -441,7 +443,7 @@
                 <span class="camera"
                       style="width:45%;display: inline-block;font-size: 1.4em;"
                 >
-                  <i class="ion-android-camera"></i>
+                  <i class="ion-android-camera" ng-click="startCapture()"></i>
                 </span>
               </div>
             </ion-slide>
@@ -485,7 +487,7 @@
           </ion-slide-box>
 
 
-          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click=>
+          <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_maintenanceTAModal()">
             <h1 class="title">确认故障维修</h1>
           </div>
         </div>
@@ -534,7 +536,7 @@
               </div>
             </div>
 
-            <button class="button button-block button-assertive" ng-click="">
+            <button class="button button-block button-assertive" ng-click="open_maintenanceTAModal()">
               确认事故状况
             </button>
           </div>
