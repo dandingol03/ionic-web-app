@@ -94,9 +94,7 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-
         url:"/proxy/node_server/login",
-        //url:"http://192.168.1.106:3000/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -113,9 +111,9 @@ angular.module('starter')
           $rootScope.access_token=access_token;
           if(window.cordova!=undefined && window.cordova!=null) {
           }
+
           return  $http({
             method: "POST",
-           // url: "http://192.168.1.106:3000/svr/request",
             url: "/proxy/node_server/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token

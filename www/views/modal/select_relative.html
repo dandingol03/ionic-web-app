@@ -1,0 +1,46 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="close_selectRelativeModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" style="width: 75%;padding:10px;height:40%;">
+
+    <div class="list" scroll="true">
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:14px;"
+           ng-repeat="relative in relatives"
+           ng-click="Mutex(relative,'checked',relatives)"
+        >
+            <span style="display: inline-block;font-size: 0.9em;">
+              {{relative.perName}}
+            </span>
+       <span
+         style="font-size: 2em;position: absolute;right: 0%;width: 20%;text-align: center"
+         >
+         <i ng-if="relative.checked!=true" class="ion-ios-checkmark-outline"></i>
+         <i ng-if="relative.checked==true" class="ion-ios-checkmark"></i>
+       </span>
+      </div>
+    </div>
+
+
+    <div
+      class="bar bar-footer bar-assertive"
+      style="width: 40%;margin-left:5%;margin-right:15%;"
+      ng-click="bind_car_info(cars)"
+      >
+      <div class="title">添加</div>
+    </div>
+
+    <div
+      class="bar bar-footer bar-assertive"
+      style="width: 40%;margin-left:55%;margin-right:15%;"
+      ng-click="close_selectRelativeModal(relatives)"
+      >
+      <div class="title">确认</div>
+    </div>
+
+
+
+  </ion-content>
+
+</ion-modal-view>

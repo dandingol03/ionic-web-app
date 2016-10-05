@@ -906,3 +906,21 @@ table.table1{
 .item .row.activated{
   background-color: #e5e5e5;
 }
+
+.select_pct_modal .item span{
+
+  float:left;
+  width: 45%;
+  display:inline-block;
+  text-align: center;
+}
+
+.select_pct_modal .item span.selected{
+  background-color: #666;
+  color:#fff;
+  border:0px;
+  float:left;
+  width: 45%;
+  display:inline-block;
+  text-align: center;
+}
