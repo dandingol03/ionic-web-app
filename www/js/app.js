@@ -283,6 +283,19 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       templateUrl:'views/car_orders/car_orders.html'
     })
 
+    .state('service_orders',{
+      cache:false,
+      url:'/service_orders',
+      controller:'serviceOrdersController',
+      templateUrl:'views/service_orders/service_orders.html'
+    })
+
+    .state('service_order_detail',{
+      url:'/service_order_detail/:order',
+      controller:'serviceOrderDetailController',
+      templateUrl:'views/service_order_detail/service_order_detail.html'
+    })
+
     .state('life_insurance_orders',{
       cache: false,
       url:'/life_insurance_orders/:tabIndex',
