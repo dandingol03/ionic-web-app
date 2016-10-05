@@ -36,6 +36,28 @@ angular.module('starter')
       mk.setLabel(label);
 
 
+      $scope. maintain_select=function(){
+        alert('select.....');
+        label1.setStyle({
+          color:'#00f'
+        });
+      }
+
+      var marker1=new BMap.Marker(new BMap.Point(117.144816,36.670));
+      map.addOverlay(marker1);
+      var label1 = new BMap.Label("marker1",{offset:new BMap.Size(20,-10)});
+      label1.setStyle({
+        color :'#222',
+        fontSize : "12px",
+        height : "20px",
+        lineHeight : "20px",
+        fontFamily:"微软雅黑",
+        border:'0px'
+      });
+      marker1.setLabel(label1);
+      marker1.addEventListener("click",$scope.maintain_select);
+
+
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
       $cordovaGeolocation
         .getCurrentPosition(posOptions)
@@ -150,6 +172,9 @@ angular.module('starter')
         town:'历下区'
       }
 
+      //fetch maintenances in area
+
+
       $scope.Mutex=function(item,field,cluster) {
         if(item[field])
         {
@@ -176,7 +201,6 @@ angular.module('starter')
       {
         item[field]=value;
       }
-
 
       $scope.fetchCitiesByProvince=function(pro) {
         $http({
@@ -226,7 +250,10 @@ angular.module('starter')
           var json=res.data;
           if(json.re==1) {
             $scope.towns=json.data;
-            $scope.area.town='请选择';
+            if($scope.towns!==''&&$scope.towns!==undefined&&$scope.towns!==null)
+              $scope.area.town='请选择';
+            else
+              $scope.area.town='';
             $scope.tab_change('town');
           }
         }).catch(function(err) {
@@ -256,9 +283,7 @@ angular.module('starter')
         }).then(function(res) {
           var json=res.data;
           if(json.re==1) {
-            $scope.cities=json.data;
-            $scope.area.city='请选择';
-            $scope.tab_change('city');
+            //TODO:append map markfer for every maintenance
           }
         }).catch(function(err) {
           var str='';
@@ -266,6 +291,13 @@ angular.module('starter')
             str+=err[field];
           console.error('error=\r\n' + str);
         })
+      }
+
+      $scope.pct_confirm=function(town){
+        if(town!==undefined&&town!==null)
+          $scope.area.town=town;
+        $scope.close_selectPCTModal();
+        map.setCenter($scope.area.province + $scope.area.city + $scope.area.town);
       }
 
 

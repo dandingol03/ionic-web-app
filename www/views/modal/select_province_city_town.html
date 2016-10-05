@@ -14,7 +14,7 @@
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[tabTag=='province']"
                  ng-click="tab_change('province')">
-                  <span style="position:absolute;left: 20%;top:40%;">
+                  <span style="position:absolute;left: 0%;top:40%;width: 100%;">
                      {{area.province}}
                   </span>
             </div>
@@ -25,7 +25,7 @@
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[tabTag=='city']"
                  ng-click="tab_change('city')">
-                   <span style="position:absolute;left: 20%;top:40%;">
+                   <span style="position:absolute;left: 0%;top:40%;">
                      {{area.city}}
                    </span>
             </div>
@@ -36,7 +36,7 @@
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[tabTag=='town']"
                  ng-click="tab_change('town')">
-                   <span style="position:absolute;left: 20%;top:40%;">
+                   <span style="position:absolute;left: 0%;top:40%;">
                       {{area.town}}
                    </span>
 
@@ -80,17 +80,36 @@
       <!-- town 城镇列表选择 -->
       <div class="item"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-if="tabTag=='town'"
+           ng-if="tabTag=='town'&&towns!==undefined&&towns!==null&&towns.length>0"
         >
         <span
-          class="input-label"
-          ng-repeat="town in towns"
-          ng-class="{true: 'selected', false: ''}[town.selected==true]"
-          ng-click="Mutex(town,'selected',towns);"
+            ng-if="towns!==undefined&&towns!==null"
+            class="input-label"
+            ng-repeat="town in towns"
+            ng-class="{true: 'selected', false: ''}[town.selected==true]"
+            ng-click="Mutex(town,'selected',towns);pct_confirm(town.townName)"
           >
-          {{city.cityName}}
+          {{town.townName}}
         </span>
       </div>
+
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;text-align: center"
+           ng-if="tabTag=='town'&&(towns==undefined||towns==null||towns.length==0)"
+        >
+          <span
+            class="input-label"
+            style="float:none"
+            >
+         <button
+           class="button button-block button-positive"
+           ng-click="pct_confirm()"
+           >
+           确认选择
+         </button>
+        </span>
+      </div>
+
 
 
 
