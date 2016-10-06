@@ -183,13 +183,20 @@
             </span>
             <span style="width: 65%;display: inline-block;text-align: left;">
               <input type="text" placeholder="请输入您的车牌"
-                     style="display:inline-block;background-color: transparent;" ng-value="carInfo.carNum"
+                     style="display:inline-block;background-color: transparent;"
+                     ng-value="carInfo.carNum"
                      ng-model="carInfo.carNum"
               />
             </span>
-
-
+            <span
+              class="camera"
+              style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
+              ng-click="selectCarInfoByCarNum()"
+              >
+            <i class="ion-chevron-down"></i>
+          </span>
         </div>
+
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
         >
@@ -501,10 +508,6 @@
                 <span class="input-label" style="display: inline-block;width: 55%;text-align: left;">
                        上传故障描述音频:
                 </span>
-                <span class="camera" style="width:45%;display: inline-block;font-size: 1.4em;">
-                  <i class="ion-android-camera"></i>
-                </span>
-
 
                 <div class="item" style="background-color: transparent;">
                   <button class="button "
@@ -598,7 +601,7 @@
     <div ng-if="tabIndex==3" class='home-tab'>
 
       <div class="list" style="margin-bottom: 0px;">
-        <ul class="ul-tabs" style="padding-left:6%;padding-right:6%;">
+        <ul class="ul-tabs transparent" style="padding-left:6%;padding-right:6%;border-bottom: 0px;">
           <!-- 代办车辆年审 -->
           <li style="width:25%;">
             <div class="cell"
@@ -650,10 +653,9 @@
       </div>
 
 
-      <div class="list list-inset padding" style="margin-bottom:40px;" ng-if="service=='代办车辆年审'">
+      <div class="list list-inset padding" style="margin-bottom:40px;background: transparent" ng-if="service=='代办车辆年审'">
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
-
+        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
             选择地点:
           </span>
@@ -663,27 +665,26 @@
           <span ng-click="pickMaintain()" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
-
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
                  <span class="input-label" style="display: inline-block;">
                   服务人员:
                 </span>
-
           <span ng-click="service_person_select(service_persons)">
                   {{service_person}}
-                  <i class="ion-ios-arrow-down"></i>
+            <span style="font-size: 1.6em;">
+              <i class="ion-ios-arrow-down"></i>
+            </span>
                 </span>
-
         </div>
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
                  <span class="input-label" style="display: inline-block;">
                   服务费:
                 </span>
           <span>$40000</span>
         </div>
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
                   <span class="input-label" style="display: inline-block">
                     预约时间:
                   </span>
@@ -692,7 +693,7 @@
                       <i class="ion-calendar" style="font-size: 1.5em;"></i>
                     </span>
             <input id="date"
-                   ng-model="carInfo.issueDate" type="text" style="display: inline-block"
+                   ng-model="carInfo.issueDate" type="text" style="display: inline-block;background: transparent"
                    placeholder="点击设置日期！">
           </div>
         </div>

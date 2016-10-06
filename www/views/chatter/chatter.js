@@ -11,7 +11,7 @@ angular.module('starter')
       method: "post",
       url: "/proxy/node_server/svr/request",
       headers: {
-        'Authorization': "Bearer " + $rootScope.access_token,
+        'Authorization': "Bearer " + $rootScope.access_token
       },
       data:
       {

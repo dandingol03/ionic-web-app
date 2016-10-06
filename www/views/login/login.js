@@ -105,7 +105,6 @@ angular.module('starter')
       }).then(function(res){
 
         var json=res.data;
-
         var access_token=json.access_token;
 
         if(access_token!==undefined&&access_token!==null)
@@ -147,6 +146,8 @@ angular.module('starter')
       });
 
     }
+
+
     //文件下载
     $scope.download=function(){
       var url='http://192.168.0.199:9030/get/photo/home.jpg';

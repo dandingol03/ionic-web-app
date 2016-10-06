@@ -63,8 +63,18 @@ angular.module('starter')
         request:'getCarAndOwnerInfo'
       }
     })
-      .success(function (response) {
-        $scope.carInfo=response.carInfo[0];
+      .success(function (res) {
+        var json=res.carInfo;
+        if(json.re==1) {
+          var carInfo=json.data[0];
+          $scope.carInfo.ownerIdCard=carInfo.ownerIdCard;
+          $scope.carInfo.carNum=carInfo.carNum;
+          $scope.carInfo.factoryNum=carInfo.factoryNum;
+          $scope.carInfo.engineNum=carInfo.engineNum;
+          $scope.carInfo.frameNum=carInfo.frameNum;
+          $scope.carInfo.issueDate=carInfo.issueDate;
+          $scope.carInfo.ownerName=carInfo.ownerName;
+        }
         console.log('success');
       })
 
@@ -536,10 +546,10 @@ angular.module('starter')
       }
     }).then(function(res){
       var json=res.data;
-      if(json.re==1) {
-        $scope.routines=json.data;
-        $scope.dailys = json.data['日常保养'];
-      }
+      //if(json.re==1) {
+      //  $scope.routines=json.data;
+      //  $scope.dailys = json.data['日常保养'];
+      //}
     }).catch(function (err) {
       console.log('server fetch error');
     });
@@ -949,6 +959,56 @@ angular.module('starter')
       else
       {}
     }
+    $scope.selectCarInfoByCarNum=function(){
+      $http({
+        method: "POST",
+        url: "/proxy/node_server/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'fetchInsuranceCarInfoByCustomerId'
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          var cars=json.data;
+          var buttons=[];
+          cars.map(function(car,i) {
+            var ele=car;
+            ele.text='<b>'+car.carNum+'</b>';
+            buttons.push(ele);
+          });
+          var carSheet = $ionicActionSheet.show({
+            buttons: buttons,
+            titleText: '<b>选择车辆信息</b>',
+            cancelText: 'Cancel',
+            cancel: function() {
+              // add cancel code..
+            },
+            buttonClicked: function(index) {
+              var car=cars[index];
+              //TODO:override default feild
+              $scope.carInfo.carNum=car.carNum;
+              $scope.carInfo.ownerName=car.ownerName;
+              $scope.carInfo.ownerIdCard=car.ownerIdCard;
+              $scope.carInfo.issueDate=car.issueDate;
+              $scope.carInfo.factoryNum=car.factoryNum;
+              $scope.carInfo.engineNum=car.engineNum;
+              $scope.carInfo.frameNum=car.frameNum;
+              return true;
+            },
+            cssClass:'center'
+          });
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
+    }
 
     $scope.actionSheet_show = function() {
 
@@ -1029,9 +1089,6 @@ angular.module('starter')
       {}
     }
 
-    $scope.makePhone=function () {
-
-    }
 
 
 
@@ -1839,15 +1896,14 @@ angular.module('starter')
         alert('field=' + field);
         alert('data=\r\n' + $scope.mediaRec.media[field]);
       }
-
     }
-
 
     $scope.bind_car_info=function(cluster){
         cluster.map(function(car,i) {
           if(car.checked)
           {
             var carInfo=car;
+            $scope.carInfo.ownerIdCard=carInfo.ownerIdCard;
             $scope.carInfo.carNum=carInfo.carNum;
             $scope.carInfo.factoryNum=carInfo.factoryNum;
             $scope.carInfo.engineNum=carInfo.engineNum;

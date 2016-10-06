@@ -67,7 +67,7 @@ angular.module('starter')
 
     };
 
-
+    //取消服务中的订单
     $scope.cancleOrder = function(state){
       $http({
         method: "post",
@@ -85,8 +85,6 @@ angular.module('starter')
         }
       })
     }
-
-
 
 
   });

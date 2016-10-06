@@ -872,6 +872,17 @@ table.table1{
   border-bottom: 1px solid #eee;
 }
 
+.ul-tabs.transparent li .cell{
+  position:absolute;
+  left:0%;
+  top:4%;
+  display:  inline-block;
+  height: 100%;
+  width: 100%;
+  background:transparent;
+  border-bottom: 1px solid #222;
+}
+
 .ul-tabs.dark-theme li .cell{
   background: transparent;
   color:#fff;
@@ -887,6 +898,14 @@ table.table1{
 
 }
 
+.ul-tabs.transparent li .cell.selected{
+  border-top:1px solid #222;
+  border-left:1px solid #222;
+  border-right: 1px solid #222;
+  border-bottom:transparent;
+  background: transparent;
+  color:#444444;
+}
 
 .item-detail.ng-enter{
   -webkit-animation: fadeInLeft .4s;
@@ -923,4 +942,9 @@ table.table1{
   width: 45%;
   display:inline-block;
   text-align: center;
+}
+
+.action-sheet-backdrop.center .action-sheet button.action-sheet-option{
+  text-align: center;
+  color:#00f;
 }
