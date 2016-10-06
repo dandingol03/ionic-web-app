@@ -79,14 +79,11 @@ angular.module('starter')
         {
           request:'updateServiceOrderState',
           info:{
-            orderNum:$scope.order.orderNum,
             orderState:state,
-            orderId:$scope.order.orderId
+            order:$scope.order
           }
         }
       })
-
-
     }
 
 

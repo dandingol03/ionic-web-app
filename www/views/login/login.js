@@ -94,7 +94,9 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
+
         url:"/proxy/node_server/login",
+        //url:"http://192.168.1.106/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -114,6 +116,7 @@ angular.module('starter')
 
           return  $http({
             method: "POST",
+            //url: "http://192.168.1.106/login/svr/request",
             url: "/proxy/node_server/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token

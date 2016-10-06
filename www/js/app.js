@@ -96,6 +96,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         }
       }
 
+
       var onTagsWithAlias = function(event) {
         try {
           console.log("onTagsWithAlias");

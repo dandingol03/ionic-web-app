@@ -48,8 +48,8 @@
         填写寿险意向
       </div>
 
-      <div class="list list-inset padding" style="margin-bottom:40px;">
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+      <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent">
+        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
             <span class="input-label" style="display: inline-block;width: 35%;">
               投保人:
             </span>
@@ -70,7 +70,7 @@
 
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
             <span class="input-label" style="display: inline-block;">
               被保险人:
             </span>
@@ -87,7 +87,7 @@
 
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
             <span class="input-label" style="display: inline-block;">
               受益人:
             </span>
@@ -106,7 +106,7 @@
 
         <!-- 针对寿险被保险人 -->
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
             <span class="input-label" style="display: inline-block;width:55%;">
               需要的保障:
             </span>
@@ -120,7 +120,7 @@
           </div>
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
             <span class="input-label" style="display: inline-block;width: 60%;">
               有无社保:
             </span>
@@ -137,7 +137,7 @@
         </div>
 
         <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative;background-color:transparent">
             <span class="input-label" style="display: inline-block;width:60%;">
               有无商业保险:
             </span>
@@ -153,12 +153,12 @@
           </div>
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
             <span class="input-label" style="display: inline-block;">
               计划保费:
             </span>
           <input type="text" placeholder="请输入...."
-                 style="display: inline-block" ng-value="life_insurance.order.planInsuranceFee"
+                 style="display: inline-block;background-color:transparent" ng-value="life_insurance.order.planInsuranceFee"
                  ng-model="life_insurance.order.planInsuranceFee"/>
         </div>
 
@@ -413,8 +413,8 @@
             服务项目列表
           </div>
 
-          <div class="list">
-            <div class="item" ng-repeat="item in dailys">
+          <div class="list" style="background-color: transparent;">
+            <div class="item" ng-repeat="item in dailys" style="background-color: transparent;">
 
               <div class="row" ng-click="daily_check(item)">
                 <div class="col-80">
@@ -432,12 +432,12 @@
           <div>
 
             <div class="item"
-                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color: transparent;">
               <span class="input-label" style="display: inline-block;width:20%;padding-left: 3%;max-width: 150px;">
                 里程:
               </span>
               <input type="text" placeholder="请输入您的里程"
-                     style="display: inline-block"
+                     style="display: inline-block;background-color: transparent;"
               />
               <button class="button button-stable" style="display: inline-block;">
                 查看保养计划
@@ -456,7 +456,7 @@
         </div>
 
         <!-- 故障维修 -->
-        <div class="list list-inset padding" style="margin-bottom:40px;padding:3px;" ng-if="subTabIndex==1">
+        <div class="list list-inset padding" style="margin-bottom:40px;padding:3px;background-color: transparent;" ng-if="subTabIndex==1">
 
 
           <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
@@ -506,21 +506,22 @@
                 </span>
 
 
-                <div class="item">
+                <div class="item" style="background-color: transparent;">
                   <button class="button "
-                          ng-click="startRecord()">
+                          ng-click="startRecord()"
+                          style="background-color: transparent;">
                     <span>
                     <i class="ion-mic-a"></i>
                     </span>
                     <span>record.....</span>
                   </button>
-                  <button class="button" ng-click="stopRecord()">
+                  <button class="button" ng-click="stopRecord()" style="background-color: transparent;">
                     <span>
                     <i class="ion-pause"></i>
                     </span>
                     <span>stop record</span>
                   </button>
-                  <button class="button" ng-click="play()">
+                  <button class="button" ng-click="play()" style="background-color: transparent;">
                     <span>
                     <i class="ion-pause"></i>
                     </span>
@@ -545,7 +546,7 @@
 
           <div class="list">
 
-            <div class="item">
+            <div class="item" style="background-color: transparent;">
               <div class="row" ng-click="accidant_check('已报案')">
                 <div class="col-80">
                   <span>已报案</span>
@@ -557,7 +558,7 @@
               </div>
             </div>
 
-            <div class="item">
+            <div class="item" style="background-color: transparent;">
               <div class="row" ng-click="accidant_check('未报案')">
                 <div class="col-80">
                   <span>未报案</span>
@@ -569,7 +570,7 @@
               </div>
             </div>
 
-            <div class="item">
+            <div class="item" style="background-color: transparent;">
               <div class="row" ng-click="accidant_check('代索赔')">
                 <div class="col-80">
                   <span>代索赔</span>

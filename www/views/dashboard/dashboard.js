@@ -54,6 +54,7 @@ angular.module('starter')
     $http({
       method: "post",
       url: "/proxy/node_server/svr/request",
+
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -468,6 +469,7 @@ angular.module('starter')
     $http({
       method: "POST",
       url: "/proxy/node_server/svr/request",
+      //url: "http://192.168.1.106/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },

@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('serviceOrdersController',function($scope,$state,$http, $location,$rootScope){
 
-    $scope.tabIndex==0;
+    $scope.tabIndex=0;
 
     $scope.goto=function(url){
       $location.path(url);
