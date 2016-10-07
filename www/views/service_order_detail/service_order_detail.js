@@ -17,61 +17,13 @@ angular.module('starter')
       window.history.back();
     };
 
-    $scope.takeOrders = function(){
-      $http({
-        method: "post",
-        url: "/proxy/node_server/svr/request",
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token,
-        },
-        data:
-        {
-          request:'updateServiceOrderStateAndServicePersonId',
-          info:{
-            orderNum:$scope.order.orderNum,
-            orderState:2
-          }
-        }
-      }).then(function (res) {
-        var json=res.data;
-        if(json.re==1) {
-          $http({
-            method: "post",
-            url: "/proxy/node_server/svr/request",
-            headers: {
-              'Authorization': "Bearer " + $rootScope.access_token,
-            },
-            data:
-            {
-              request:'servicePersonTakeOrder',
-              info:{
-                customerId:$scope.order.customerId
-              }
-            }
-          }).then(function(res) {
-            var json=res.data;
-            if(json.re==1) {
-              console.log('service order has been generated');
-            }
-          }).catch(function(err) {
-            var str='';
-            for(var field in err)
-              str+=err[field];
-            console.error('error=\r\n' + str);
-          });
 
-
-        }
-
-      })
-
-    };
-
-    //取消服务中的订单
+    //取消订单
     $scope.cancleOrder = function(state){
       $http({
         method: "post",
         url: "/proxy/node_server/svr/request",
+        //url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -85,6 +37,5 @@ angular.module('starter')
         }
       })
     }
-
 
   });

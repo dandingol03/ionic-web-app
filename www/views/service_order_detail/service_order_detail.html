@@ -73,8 +73,16 @@
 
     <button class="button button-block button-positive"
             ng-click="cancleOrder(-1)"
+            ng-if="order.orderState==1||order.orderState==2"
     >
       取消订单
+    </button>
+
+    <button class="button button-block button-positive"
+
+            ng-if="order.orderState==3"
+    >
+      评价订单
     </button>
 
 

@@ -11,7 +11,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
     })
 
-    .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location) {
+    .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location,$ionicPopup) {
 
     $rootScope.car_orders=[
         [
@@ -78,41 +78,69 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         StatusBar.styleDefault();
       }
 
-      window.plugins.jPushPlugin.init();
-      window.plugins.jPushPlugin.setDebugMode(true);
+      // window.plugins.jPushPlugin.init();
+      // window.plugins.jPushPlugin.setDebugMode(true);
 
       //获取自定义消息的回调
-      var onReceiveMessage = function(event) {
-        try{
-          var message=null;
-          if(device.platform == "Android") {
-            message = event.message;
-          } else {
-            message = event.content;
-          }
-          alert('message=' + message);
-        } catch(exception) {
-          console.log("JPushPlugin:onReceiveMessage-->" + exception);
-        }
-      }
+      // $rootScope.onReceiveMessage = function(event) {
+      //   try{
+      //     var message=null;
+      //     if(device.platform == "Android") {
+      //       message = event.message;
+      //       console.log('message=\r\n' + message);
+      //       var json = JSON.parse(message);
+      //       var msg='';
+      //       console.log('json.order.orderState=\r\n' +json.order.orderState);
+      //       switch (json.order.orderState) {
+      //         case -2:
+      //           msg='服务人员已取消订单'
+      //           break;
+      //         case 2:
+      //           msg='订单已被接单,服务人员为:'
+      //            // +json.servicePerson+',服务人员联系方式为:'+json.mobilePhone
+      //           break;
+      //         case 3:
+      //           msg='订单已完成,服务人员为:'
+      //           // +json.servicePerson+',服务人员联系方式为:'+json.mobilePhone
+      //           break;
+      //       }
+      //
+      //
+      //       var alertPopup = $ionicPopup.alert({
+      //         title: 'alert',
+      //         template: msg
+      //       });
+      //       alertPopup.then(function(res) {
+      //         console.log('Thank you for not eating my delicious ice cream cone');
+      //       });
+      //
+      //
+      //     } else {
+      //       message = event.content;
+      //     }
+      //     //alert('message=' + message);
+      //   } catch(exception) {
+      //     console.error("JPushPlugin:onReceiveMessage-->" + exception);
+      //   }
+      // }
+      //
+      //
+      // var onTagsWithAlias = function(event) {
+      //   try {
+      //     console.log("onTagsWithAlias");
+      //     var result = "result code:" + event.resultCode + " ";
+      //     result += "tags:" + event.tags + " ";
+      //     result += "alias:" + event.alias + " ";
+      //     alert('result=\r\n' + result);
+      //   } catch(exception) {
+      //     console.log(exception);
+      //   }
+      // }
 
 
-      var onTagsWithAlias = function(event) {
-        try {
-          console.log("onTagsWithAlias");
-          var result = "result code:" + event.resultCode + " ";
-          result += "tags:" + event.tags + " ";
-          result += "alias:" + event.alias + " ";
-          alert('result=\r\n' + result);
-        } catch(exception) {
-          console.log(exception);
-        }
-      }
-
-
-      window.plugins.jPushPlugin.setTags(['game']);
-      document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
-      document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+      // window.plugins.jPushPlugin.setTags(['game']);
+      // document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
+      // document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
 
 
     });
@@ -344,7 +372,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
   // if none of the above states are matched, use this as the fallback
 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/tabs/dashboard');
 
   })
 

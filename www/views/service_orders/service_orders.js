@@ -27,6 +27,7 @@ angular.module('starter')
     $http({
       method: "post",
       url: "/proxy/node_server/svr/request",
+      //url: "http://192.168.1.106:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
