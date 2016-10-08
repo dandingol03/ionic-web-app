@@ -389,12 +389,14 @@
     <div class="list " ng-if="tabIndex==2" scroll="true">
 
       <div class="list" style="margin-bottom: 0px;">
-        <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
+        <ul class="ul-tabs transparent" style="background: rgb(203,203,203);background-color: transparent;">
           <li style="width:33.3%;">
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[subTabIndex==0]"
-                 ng-click="subTab_change(0)">
-            <span style="position:absolute;left: 20%;top:40%;">
+                 ng-click="subTab_change(0)"
+                 style="background-color: transparent;
+                       ">
+            <span style="position:absolute;left: 20%;top:40%;color: black;">
               日常保养
             </span>
             </div>
@@ -403,8 +405,10 @@
           <li style="width:33.3%">
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[subTabIndex==1]"
-                 ng-click="subTab_change(1)">
-            <span style="position:absolute;left: 20%;top:40%;">
+                 ng-click="subTab_change(1)"
+                 style="background-color: transparent;
+                       ">
+            <span style="position:absolute;left: 20%;top:40%;color: black;">
               故障维修
             </span>
 
@@ -414,8 +418,10 @@
           <li style="width:33.3%">
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[subTabIndex==2]"
-                 ng-click="subTab_change(2)">
-            <span style="position:absolute;left: 25%;top:40%;">
+                 ng-click="subTab_change(2)"
+                 style="background-color: transparent;
+                        ">
+            <span style="position:absolute;left: 25%;top:40%;color: black;">
               事故维修
             </span>
 
@@ -429,7 +435,7 @@
       <ion-scroll style="height: 100%;margin-top:2px;">
         <!-- 日常保养 -->
         <div ng-if="subTabIndex==0">
-          <div class="item item-divider">
+          <div class="item item-divider" style="background-color: transparent;">
             服务项目列表
           </div>
 
@@ -557,7 +563,7 @@
 
         <!-- 事故维修 -->
         <div ng-if="subTabIndex==2">
-          <div class="item item-divider">
+          <div class="item item-divider" style="background-color:transparent;">
             事故状况
           </div>
 
