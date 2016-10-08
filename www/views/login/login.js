@@ -77,8 +77,10 @@ angular.module('starter')
     $scope.doLogin=function(){
       if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
       {
-        if(window.plugins!==undefined&&window.plugins!==null){
-          $scope.login
+
+        if(window.plugins!==undefined&&window.plugins!==null)
+        {
+          $scope.login();
          // window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
          // document.addEventListener("jpush.receiveMessage", $rootScope.onReceiveMessage, false);
         }
@@ -94,16 +96,15 @@ angular.module('starter')
     //登录
     $scope.login = function(){
 
+      $http({
+        method:"POST",
+        data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
+        url:"/proxy/node_server/login",
+        headers: {
+          'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
 
-        $http({
-          method:"POST",
-          data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-          //url:"http://192.168.1.106:3000/login",
-          url:"/proxy/node_server/login",
-          headers: {
-            'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
 
         }).then(function(res){
 
