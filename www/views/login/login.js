@@ -78,7 +78,10 @@ angular.module('starter')
       if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
       {
         if(window.plugins!==undefined&&window.plugins!==null)
-            window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+        {
+          $scope.login();
+          //window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+        }
         else{
           $scope.login();
         }

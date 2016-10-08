@@ -1915,6 +1915,7 @@ angular.module('starter')
 
 
     $scope.play=function(){
+
       $scope.mediaRec.play();
     }
 

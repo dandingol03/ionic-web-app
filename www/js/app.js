@@ -78,8 +78,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         StatusBar.styleDefault();
       }
 
-      window.plugins.jPushPlugin.init();
-      window.plugins.jPushPlugin.setDebugMode(true);
+     // window.plugins.jPushPlugin.init();
+     // window.plugins.jPushPlugin.setDebugMode(true);
 
       //获取自定义消息的回调
       var onReceiveMessage = function(event) {
@@ -109,9 +109,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       }
 
 
-      window.plugins.jPushPlugin.setTags(['game']);
-      document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
-      document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+      //window.plugins.jPushPlugin.setTags(['game']);
+      //document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
+      //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
 
 
     });
