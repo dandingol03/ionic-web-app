@@ -54,6 +54,8 @@ angular.module('starter')
     $http({
       method: "post",
       url: "/proxy/node_server/svr/request",
+      //url: "http://192.168.1.106:3000/svr/request",
+
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -84,7 +86,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
-        //url: "http://192.168.1.106/svr/request",
+        //url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -338,7 +340,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
-        //url: "http://192.168.1.106/svr/request",
+        //url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -478,6 +480,7 @@ angular.module('starter')
     $http({
       method: "POST",
       url: "/proxy/node_server/svr/request",
+     // url: "http://192.168.1.106:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -609,6 +612,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
+        // url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -639,6 +643,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
+        // url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -681,6 +686,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
+        // url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -848,7 +854,7 @@ angular.module('starter')
         $http({
           method: "POST",
           url: "/proxy/node_server/svr/request",
-          //url: "http://192.168.1.106/svr/request",
+          //url: "http://192.168.1.106:3000/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token
           },
@@ -884,52 +890,6 @@ angular.module('starter')
     }
 
 
-
-
-
-
-
-    // $scope.commit_daily=function(){
-    //   if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
-    //   {
-    //     var subServiceTypes=[];
-    //     $scope.dailys.map(function(daily,i) {
-    //       if(daily.checked)
-    //         subServiceTypes.push(daily.subServiceId);
-    //     });
-    //     //TODO:apply your selected maintain items
-    //     $http({
-    //       method: "POST",
-    //       url: "/proxy/node_server/svr/request",
-    //       headers: {
-    //         'Authorization': "Bearer " + $rootScope.access_token
-    //       },
-    //       data:
-    //       {
-    //         request:'generateCarServiceOrder',
-    //         info:{
-    //           subServiceTypes:subServiceTypes,//日常保养服务项目的具体内容
-    //
-    //           serviceType:1,
-    //           estimateTime:$scope.maintain.estimateTime
-    //
-    //         }
-    //       }
-    //     }).then(function(res) {
-    //       var json=res.data;
-    //       if(json.re==1) {
-    //         console.log('service order has been generated');
-    //       }
-    //     }).catch(function(err) {
-    //       var str='';
-    //       for(var field in err)
-    //         str+=err[field];
-    //       console.error('error=\r\n' + str);
-    //     });
-    //   }
-    // }
-    //
-
     //车驾管服务
 
     //选择车驾管服务项目
@@ -961,6 +921,7 @@ angular.module('starter')
       $http({
         method: "POST",
         url: "/proxy/node_server/svr/request",
+        // url: "http://192.168.1.106:3000/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
@@ -1150,6 +1111,7 @@ angular.module('starter')
           $http({
             method: "POST",
             url: "/proxy/node_server/svr/request",
+            // url: "http://192.168.1.106:3000/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token,
             },

@@ -11,7 +11,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
     })
 
-    .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location) {
+    .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location,$ionicPopup) {
 
     $rootScope.car_orders=[
         [
@@ -78,9 +78,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         StatusBar.styleDefault();
       }
 
-     // window.plugins.jPushPlugin.init();
-     // window.plugins.jPushPlugin.setDebugMode(true);
-
       //获取自定义消息的回调
       var onReceiveMessage = function(event) {
         try{
@@ -109,10 +106,11 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       }
 
 
+      // window.plugins.jPushPlugin.init();
+      // window.plugins.jPushPlugin.setDebugMode(true);
       //window.plugins.jPushPlugin.setTags(['game']);
       //document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
       //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
-
 
     });
 
@@ -343,7 +341,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
   // if none of the above states are matched, use this as the fallback
 
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/login');
 
   })
 

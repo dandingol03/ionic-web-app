@@ -926,6 +926,21 @@ table.table1{
   background-color: #e5e5e5;
 }
 
+
+.item .meal {
+
+  background-color: #fff;
+  color: #444;
+
+  z-index: 2;
+  margin: -1px;
+  padding: 3%;
+  padding-bottom: 0;
+
+
+  font-size: 16px; }
+
+
 .select_pct_modal .item span{
 
   float:left;

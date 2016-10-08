@@ -59,17 +59,11 @@
             </div>
           </div>
         </li>
-
-
-
-
-
       </ul>
     </div>
 
 
     <div class="list list-inset padding" style="margin-bottom:40px;" >
-
       <!-- 已生成 -->
       <div class="item"
            ng-if="tabIndex==0"
@@ -77,14 +71,9 @@
            ng-repeat="order in orders[0]"
         >
         <ul style="width: 100%;">
-          <li style="float:left;width: 20%;text-align: center;border-right: 1px solid #9e9e9e;">
-            <span style="font-size:3em;">
-              <i class="ion-android-person"></i>
-            </span>
-          </li>
           <li style="float:left;width: 80%;">
             <div style="width: 70%;display: inline-block;margin-left:10%;">
-              <div style="width:100%;">
+              <div style="width:80%;">
                 <div>
                   车牌号:<span>{{order.carNum}}</span>
                 </div>
@@ -97,9 +86,13 @@
               </div>
 
               <i ng-if="tabIndex!=0" class="ion-compose" style="position: absolute;right: 10%;bottom:20%;"></i>
-              <i class="ion-ios-paper" style="position: absolute;right: 20%;bottom:20%;font-size: 1.4em;"
-                 ng-click="goDetail(order)"></i>
+              <div style="width:20%;">
+                <i class="ion-ios-paper" style="position: absolute;right: 20%;bottom:20%;font-size: 1.4em;"
+                   ng-click="goDetail(order)"></i>
+              </div>
+
             </div>
+
           </li>
         </ul>
       </div>

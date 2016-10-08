@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('serviceOrdersController',function($scope,$state,$http, $location,$rootScope){
 
-    $scope.tabIndex==0;
+    $scope.tabIndex=0;
 
     $scope.goto=function(url){
       $location.path(url);
@@ -27,6 +27,7 @@ angular.module('starter')
     $http({
       method: "post",
       url: "/proxy/node_server/svr/request",
+      //url: "http://192.168.1.106:3000/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -55,15 +56,6 @@ angular.module('starter')
     $scope.showOrderDetail=function(order){
       $state.go('service_order_detail',{order:JSON.stringify(order)});
     }
-
-
-
-
-
-
-
-
-
 
 
   });

@@ -77,10 +77,12 @@ angular.module('starter')
     $scope.doLogin=function(){
       if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
       {
+
         if(window.plugins!==undefined&&window.plugins!==null)
         {
           $scope.login();
-          //window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+         // window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+         // document.addEventListener("jpush.receiveMessage", $rootScope.onReceiveMessage, false);
         }
         else{
           $scope.login();
@@ -102,47 +104,54 @@ angular.module('starter')
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
         }
-      }).then(function(res){
 
-        var json=res.data;
-        var access_token=json.access_token;
 
-        if(access_token!==undefined&&access_token!==null)
-        {
-          $rootScope.access_token=access_token;
-          if(window.cordova!=undefined && window.cordova!=null) {
-          }
+        }).then(function(res){
 
-          return  $http({
-            method: "POST",
-            url: "/proxy/node_server/svr/request",
-            headers: {
-              'Authorization': "Bearer " + $rootScope.access_token
-            },
-            data: {
-              request: 'activatePersonOnline',
-              info:{
-                registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
-              }
+          var json=res.data;
+          var access_token=json.access_token;
+          alert('access_token=\r\n' + access_token);
+
+          if(access_token!==undefined&&access_token!==null)
+          {
+            $rootScope.access_token=access_token;
+            if(window.cordova!=undefined && window.cordova!=null) {
             }
-          });
-        }
-        else
-          return ({re: -1});
-      }).then(function(res) {
-        var json=res.data;
-        if(json.re==1||json.result=='ok')
-        {
-          $state.go('tabs.dashboard');
-        }
-      }).catch(function(err){
-        var error='';
-        for(var field in err)
-        {
-          error+=err[field]+'\r\n';
-        }
-        alert('error=' + error);
-      });
+
+            alert('activatePersonOnline');
+            return  $http({
+              method: "POST",
+              //url: "http://192.168.1.106:3000/svr/request",
+              url: "/proxy/node_server/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'activatePersonOnline',
+                info:{
+                  registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
+                }
+              }
+            });
+          }
+          else
+            return ({re: -1});
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1||json.result=='ok')
+          {
+            $state.go('tabs.dashboard');
+          }
+        }).catch(function(err){
+          var error='';
+          for(var field in err)
+          {
+            error+=err[field]+'\r\n';
+          }
+          alert('error=' + error);
+        });
+
+
 
     }
 
