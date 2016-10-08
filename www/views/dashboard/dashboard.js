@@ -1879,21 +1879,35 @@ angular.module('starter')
       });
     }
 
+
+    //开始录音
     $scope.startRecord=function(){
-
-      var src = "audio.mp3";
-      $scope.mediaRec =$cordovaMedia.newMedia(src);
-      alert('mediarec=\r\n' + $scope.mediaRec);
-      $scope.mediaRec.startRecord();
-
+      try{
+          CordovaAudio.startRecordAudio(function(data) {
+            alert('data=\r\n'+data);
+          });
+      }catch(e) {
+        alert('error=\r\n'+ e.toString());
+      };
     }
 
+    //暂停录音
     $scope.stopRecord=function(){
-      $scope.mediaRec.stopRecord();
-      for(var field in $scope.mediaRec.media) {
-        alert('field=' + field);
-        alert('data=\r\n' + $scope.mediaRec.media[field]);
+      //$scope.mediaRec.stopRecord();
+      //for(var field in $scope.mediaRec.media) {
+      //  alert('field=' + field);
+      //  alert('data=\r\n' + $scope.mediaRec.media[field]);
+      //}
+      try{
+        CordovaAudio.stopRecordAudio(function(success) {
+          $scope.resourceUrl=success;
+          alert('url=\r\n' + $scope.resourceUrl);
+        });
+      }catch(e)
+      {
+        alert('error=\r\n'+ e.toString());
       }
+
     }
 
     $scope.bind_car_info=function(cluster){
@@ -1915,8 +1929,15 @@ angular.module('starter')
 
 
     $scope.play=function(){
-
-      $scope.mediaRec.play();
+      //$scope.mediaRec.play();
+      try{
+        CordovaAudio.playingRecorder(function(success) {
+          alert('success=\r\n'+success);
+        });
+      }catch(e)
+      {
+        alert('error=\r\n' + e.toString());
+      }
     }
 
   });

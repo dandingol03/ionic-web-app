@@ -102,7 +102,6 @@ angular.module('starter')
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
         }
-
       }).then(function(res){
 
         var json=res.data;
