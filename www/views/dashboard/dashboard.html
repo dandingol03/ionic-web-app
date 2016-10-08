@@ -49,121 +49,130 @@
       </div>
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent">
+
         <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;width: 35%;">
+          <span style="display: inline-block;width: 10%;">
+          </span>
+          <span class="input-label" style="display: inline-block;width: 35%;text-align: left">
               投保人:
-            </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+          </span>
+          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left">
             {{life_insurance.order.insurer.perName!==undefined&&life_insurance.order.insurer.perName!==null?
             life_insurance.order.insurer.perName:'请选择投保人'}}
           </div>
-          <!--<div style="display: inline-block;width: 30%;"-->
-          <!--ng-click="ActionSheet(null,life_insurance.order,'insurerName',null,'getRelativePersons',-->
-          <!--{cb:append_insurer,title:'<strong>选择投保人?</strong>'})">-->
-          <!--<span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>-->
-          <!--</div>-->
-
-          <div style="display: inline-block;width: 30%;"
+          <div style="display: inline-block;width: 15%;text-align: left"
                ng-click="fetchRelative(life_insurance.order,'insurer')">
             <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
           </div>
-
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;">
+        <!-- 被保险人 -->
+        <div class="item"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
+          <span style="display: inline-block;width: 10%;">
+          </span>
+          <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
               被保险人:
-            </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+          </span>
+          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
             {{life_insurance.order.insuranceder.perName!==undefined&&life_insurance.order.insuranceder.perName!==null?
             life_insurance.order.insuranceder.perName:'请选择被保险人'}}
           </div>
-
-
-          <div style="display: inline-block;width: 30%;"
+          <div style="display: inline-block;width: 15%;text-align: left"
                ng-click="fetchRelative(life_insurance.order,'insuranceder')">
             <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
           </div>
-
         </div>
 
+        <!-- 受益人 -->
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;">
+            <span style="display: inline-block;width: 10%;"></span>
+            <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
               受益人:
             </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
-            {{life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null?
-            life_insurance.order.benefiter.perName:'请选择受益人'}}
+          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
+              {{life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null?
+              life_insurance.order.benefiter.perName:'请选择受益人'}}
           </div>
-
-          <div style="display: inline-block;width: 30%;"
+          <div style="display: inline-block;width: 15%;text-align: left;"
                ng-click="fetchRelative(life_insurance.order,'benefiter')">
             <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
           </div>
 
         </div>
 
-        <!-- 针对寿险被保险人 -->
+        <!-- 需要的保障 -->
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;">
+          <span style="display: inline-block;width: 10%;"></span>
+            <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
                需要的保障::
             </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
             {{life_insurance.order.insuranceType!==undefined&&life_insurance.order.insuranceType!==null?
             life_insurance.order.insuranceType:'请选择保障'}}
           </div>
 
-          <div style="display: inline-block;width: 30%;"
+          <div style="display: inline-block;width: 15%;text-align: left;"
                ng-click="lifeInsuranceder_insuranceType_select()">
             <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
           </div>
 
         </div>
 
-
+        <!-- 有无社保 -->
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;">
-               有无社保:
-            </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+          <span style="display: inline-block;width: 10%;"></span>
+          <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
+             有无社保:
+          </span>
+          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
             {{life_insurance.order.hasSocietyInsurance==true?'有':'无'}}
           </div>
 
-          <div style="display: inline-block;width: 30%;"
+          <div style="display: inline-block;width: 25%;text-align: left;"
                ng-click="Toggle('boolean',life_insurance.order,'hasSocietyInsurance')">
-            <i ng-if="life_insurance.order.hasSocietyInsurance!=true" class="ion-ios-checkmark-outline" style="font-size: 150%;"></i>
-            <i ng-if="life_insurance.order.hasSocietyInsurance==true" class="ion-ios-checkmark" style="font-size: 150%;"></i>
+            <i ng-if="life_insurance.order.hasSocietyInsurance!=true" class="ion-ios-checkmark-outline" style="font-size: 1.6em;"></i>
+            <i ng-if="life_insurance.order.hasSocietyInsurance==true" class="ion-ios-checkmark" style="font-size: 1.6em;"></i>
           </div>
         </div>
 
 
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;">
-              有无商业保险:
-            </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">
+          <span style="display: inline-block;width: 10%;"></span>
+          <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
+            有无商业保险:
+          </span>
+          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
             {{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}
           </div>
 
-          <div style="display: inline-block;width: 30%;"
+          <div style="display: inline-block;width: 25%;text-align: left;"
                ng-click="Toggle('boolean',life_insurance.order,'hasCommerceInsurance')">
-            <i ng-if="life_insurance.order.hasCommerceInsurance!=true" class="ion-ios-checkmark-outline" style="font-size: 150%;"></i>
-            <i ng-if="life_insurance.order.hasCommerceInsurance==true" class="ion-ios-checkmark" style="font-size: 150%;"></i>
+            <i ng-if="life_insurance.order.hasCommerceInsurance!=true" class="ion-ios-checkmark-outline" style="font-size: 1.6em;"></i>
+            <i ng-if="life_insurance.order.hasCommerceInsurance==true" class="ion-ios-checkmark" style="font-size: 1.6em;"></i>
           </div>
         </div>
 
-        <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span class="input-label" style="display: inline-block;">
+        <div class="item"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
+          <span style="display: inline-block;width: 10%;"></span>
+          <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
               计划保费:
-            </span>
+          </span>
+          <!--<div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">-->
+            <!--{{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}-->
+          <!--</div>-->
           <input type="text" placeholder="请输入...."
-                 style="display: inline-block;background-color:transparent" ng-value="life_insurance.order.planInsuranceFee"
+                 style="display: inline-block;width:65%;background-color:transparent" ng-value="life_insurance.order.planInsuranceFee"
                  ng-model="life_insurance.order.planInsuranceFee"/>
         </div>
+
+
+
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="saveLifeInsuranceIntend()">
           <h1 class="title">提交寿险意向</h1>
@@ -477,9 +486,13 @@
                        故障文字描述:
                 </span>
 
-                <div style="width: 90%;margin-left:5%;margin-right:5%">
+                <div style="width: 90%;margin-left:5%;margin-right:5%;border:1px solid #222;">
 
-                  <textarea name="a" style="width:100%;height:80px;background-color: transparent;">请描述故障...</textarea>
+                  <textarea
+                    style="width:100%;height:80px;background-color: transparent;"
+                    placeholder="请描述故障..."
+                    ng-model=" $scope.maintain.description.text"
+                    ></textarea>
                 </div>
               </div>
             </ion-slide>
