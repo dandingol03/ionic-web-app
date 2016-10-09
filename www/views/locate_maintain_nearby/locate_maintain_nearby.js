@@ -1,5 +1,6 @@
 /**
  * Created by danding on 16/9/6.
+ * 山大默认经纬度为117.144816,36.672171
  */
 angular.module('starter')
 
@@ -8,7 +9,6 @@ angular.module('starter')
                                                         Proxy){
 
     $scope.maintain={
-
     };
 
     BaiduMapService.getBMap().then(function(res){
@@ -294,11 +294,73 @@ angular.module('starter')
         })
       }
 
+
+      //获取该地区的所有维修厂,并进行距离过滤
+      $scope.fetchAndRenderNearBy=function(){
+        $http({
+          method: "POST",
+          url: Proxy.local()+"/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
+          {
+            request:'fetchMaintenanceInArea',
+            info:{
+              provinceName:$scope.area.province,
+              cityName:$scope.area.city,
+              townName:$scope.area.town
+            }
+          }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+            $scope.maintain.units=[];
+            json.data.map(function(unit,i) {
+              if(unit.longitude!==undefined&&unit.longitude!==null&&
+                  unit.latitude!==undefined&&unit.latitude!==null)
+              {
+                var center=$scope.maintain.center;
+                var distance=map.getDistance(center,new BMap.Point(unit.longitude,unit.latitude)).toFixed(2);
+                if(distance<=5000)
+                  $scope.maintain.units.push(unit);
+              }
+            });
+            //remove previous markers
+            map.clearOverlays();
+            //render new markers
+            $scope.maintain.units.map(function(unit,i) {
+              var mk = new BMap.Marker(new BMap.Point(unit.longitude,unit.latitude));
+              map.addOverlay(mk);
+              var label = new BMap.Label(unit.unitName,{offset:new BMap.Size(20,-10)});
+              label.setStyle({
+                color :'#222',
+                fontSize : "12px",
+                height : "20px",
+                lineHeight : "20px",
+                fontFamily:"微软雅黑",
+                border:'0px'
+              });
+              mk.setLabel(label);
+            });
+          }
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          console.error('error=\r\n' + str);
+        })
+      }
+
       $scope.pct_confirm=function(town){
         if(town!==undefined&&town!==null)
           $scope.area.town=town;
         $scope.close_selectPCTModal();
         map.setCenter($scope.area.province + $scope.area.city + $scope.area.town);
+        $scope.maintain.center='';
+        console.log('center=' + map.getCenter());
+        $scope.maintain.center=map.getCenter();
+        $scope.fetchAndRenderNearBy();
       }
 
 
