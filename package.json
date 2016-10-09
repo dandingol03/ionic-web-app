@@ -27,7 +27,14 @@
     "cordova-plugin-keyboard",
     "cordova-plugin-media",
     "cordova-plugin-media-capture",
-    "cordova-plugin-geolocation"
+    "cordova-plugin-geolocation",
+    {
+      "variables": {
+        "API_KEY": "bc3a1ec18c59544ebfb6e136"
+      },
+      "locator": "jpush-phonegap-plugin",
+      "id": "jpush-phonegap-plugin"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

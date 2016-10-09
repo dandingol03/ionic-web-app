@@ -11,7 +11,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
     })
 
-    .run(function($ionicPlatform,$rootScope,$interval,$cordovaToast,$ionicHistory,$location,$ionicPopup) {
+    .run(function($ionicPlatform,$rootScope,$interval,
+                  $cordovaToast,$ionicHistory,$location,
+                  Push) {
+
 
     $rootScope.car_orders=[
         [
@@ -55,14 +58,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
     };
 
-    //定时器刷新获取订单
-    var timer=$interval(function(){
-      console.log('....timer logging');
-    },200,10);
-    timer.then(function(){
-      console.log('log over');
-    },function(){
-    });
+
 
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -78,20 +74,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         StatusBar.styleDefault();
       }
 
-      //获取自定义消息的回调
-      var onReceiveMessage = function(event) {
-        try{
-          var message=null;
-          if(device.platform == "Android") {
-            message = event.message;
-          } else {
-            message = event.content;
-          }
-          alert('message=' + message);
-        } catch(exception) {
-          console.log("JPushPlugin:onReceiveMessage-->" + exception);
-        }
-      }
+
 
       var onTagsWithAlias = function(event) {
         try {
@@ -105,12 +88,87 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         }
       }
 
+      var onReceiveNotification = function(data) {
+        try{
+          console.log('received notification :' + data);
+          alert('notification got');
+          var notification = angular.fromJson(data);
+          //app 是否处于正在运行状态
+          var isActive = notification.notification;
 
-      // window.plugins.jPushPlugin.init();
-      // window.plugins.jPushPlugin.setDebugMode(true);
-      //window.plugins.jPushPlugin.setTags(['game']);
+          // here add your code
+
+
+          //ios
+          if (ionic.Platform.isIOS()) {
+            window.alert(notification);
+
+          } else {
+            //非 ios(android)
+          }
+        }catch(e)
+        {
+          alert(e);
+        }
+      };
+
+      //获取自定义消息的回调
+      $rootScope.onReceiveMessage = function(event) {
+        try{
+          alert('got message');
+          var message=null;
+          if(device.platform == "Android") {
+            message = event.message;
+          } else {
+            message = event.content;
+          }
+          alert('message=' + message);
+        } catch(exception) {
+          alert("JPushPlugin:onReceiveMessage-->" + exception);
+        }
+      }
+
+      var onGetRegistradionID = function(data) {
+        try {
+          alert("JPushPlugin:registrationID is " + data);
+        } catch(exception) {
+          console.log(exception);
+        }
+      }
+
+      try{
+        window.plugins.jPushPlugin.init();
+        window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
+        document.addEventListener("jpush.receiveMessage",$rootScope.onReceiveMessage, false);
+        document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+        window.plugins.jPushPlugin.getUserNotificationSettings(function(result) {
+          if(result == 0) {
+            // 系统设置中已关闭应用推送。
+            alert('system has canceled notification');
+          } else if(result > 0) {
+            // 系统设置中打开了应用推送。
+            alert('system has opened notification');
+          }
+        });
+      }catch(e)
+      {
+        alert('error=\r\n'+e);
+      }
+
+
+      //try{
+      //  window.plugins.jPushPlugin.init();
+      //  document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+      //  window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+      //  document.addEventListener("jpush.receiveMessage", $rootScope.onReceiveMessage, false);
+      //  window.plugins.jPushPlugin.setDebugMode(true);
+      //}catch(e)
+      //{
+      //  alert('error=\r\n' + e.toString());
+      //}
+
+     // window.plugins.jPushPlugin.setTags(['game']);
       //document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
-      //document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
 
     });
 
@@ -169,8 +227,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
   })
 
 
-
-.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+  .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -357,3 +414,41 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         }
       };
     })
+
+
+
+  //极光推送
+  .factory('Push', function() {
+    var push;
+    return {
+      setBadge: function(badge) {
+        if (push) {
+          console.log('jpush: set badge', badge);
+          plugins.jPushPlugin.setBadge(badge);
+        }
+      },
+      setAlias: function(alias) {
+        if (push) {
+          console.log('jpush: set alias', alias);
+          plugins.jPushPlugin.setAlias(alias);
+        }
+      },
+      check: function() {
+        if (window.jpush && push) {
+          plugins.jPushPlugin.receiveNotificationIniOSCallback(window.jpush);
+          window.jpush = null;
+        }
+      },
+      init: function(notificationCallback) {
+        console.log('jpush: start init-----------------------');
+        push = window.plugins && window.plugins.jPushPlugin;
+        if (push) {
+          console.log('jpush: init');
+          plugins.jPushPlugin.init();
+          plugins.jPushPlugin.setDebugMode(true);
+          plugins.jPushPlugin.openNotificationInAndroidCallback = notificationCallback;
+          plugins.jPushPlugin.receiveNotificationIniOSCallback = notificationCallback;
+        }
+      }
+    };
+  })

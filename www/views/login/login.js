@@ -81,8 +81,8 @@ angular.module('starter')
         if(window.plugins!==undefined&&window.plugins!==null)
         {
           $scope.login();
-         // window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
-         // document.addEventListener("jpush.receiveMessage", $rootScope.onReceiveMessage, false);
+          window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
+          document.addEventListener("jpush.receiveMessage", $rootScope.onReceiveMessage, false);
         }
         else{
           $scope.login();
@@ -110,7 +110,6 @@ angular.module('starter')
 
           var json=res.data;
           var access_token=json.access_token;
-          alert('access_token=\r\n' + access_token);
 
           if(access_token!==undefined&&access_token!==null)
           {
@@ -118,7 +117,7 @@ angular.module('starter')
             if(window.cordova!=undefined && window.cordova!=null) {
             }
 
-            alert('activatePersonOnline');
+
             return  $http({
               method: "POST",
               //url: "http://192.168.1.106:3000/svr/request",
