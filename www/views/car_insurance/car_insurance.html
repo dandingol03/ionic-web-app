@@ -44,7 +44,7 @@
 
 
 
-    <div class="scroll" style="height: 80%;margin-top:2px;overflow: scroll">
+    <div class="scroll" style="height: 90%;margin-top:2px;overflow: scroll">
       <!-- 基础套餐 -->
       <div>
         <div class="row"
@@ -90,7 +90,7 @@
                    style="border:0px;display: inline-block;width: 100%;position: relative"
             >
               不计免赔
-              <div class="toggle toggle-assertive" style="position: absolute;right: 50%;">
+              <div class="toggle toggle-assertive" style="position: absolute;right: 6%;">
                 <input type="checkbox" ng-model="product.irrespective">
                 <div class="track">
                   <div class="handle"></div>
@@ -105,12 +105,12 @@
 
       </div>
 
-
-    </div>
-    <div class="bar  bar-balanced" ng-click="openCompanyModal()" >
-      <div class="title">确认套餐</div>
     </div>
 
   </ion-content>
-
+  <ion-footer-bar align-title="left" class="bar-assertive">
+    <div ng-click="openCompanyModal()" >
+      <div class="title" style="width: 50%;left:35%;">确认套餐</div>
+    </div>
+  </ion-footer-bar>
 </ion-view>

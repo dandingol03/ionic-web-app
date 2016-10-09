@@ -8,6 +8,9 @@ angular.module('starter')
 
     $scope.tabIndex=0;
 
+    //当前页数
+    $scope.companyIndex=0;
+
     $scope.tab_change=function(i) {
       $scope.tabIndex=i;
     };
@@ -193,6 +196,22 @@ angular.module('starter')
       var data=res.data;
       //选择公司
       $scope.companys=data.data;
+      $scope.page_size=6;
+      $scope.companyIndex=0;
+      $scope.page_companys=[];
+      var curIndex=$scope.companyIndex*$scope.page_size;
+      var j=0;
+      for(var i=curIndex;i<$scope.companys.length;i++)
+      {
+          if(j<$scope.page_size)
+          {
+            $scope.page_companys.push($scope.companys[i]);
+            j++;
+          }
+          else
+            break;
+      }
+
     }).catch(function(err) {
       var str='';
       for(var field in err)
@@ -243,28 +262,6 @@ angular.module('starter')
         var orderId=json.data;
         if(orderId!==undefined&&orderId!==null)
         {
-          //$rootScope.carInsurance.timer=$interval(
-          //  function(){
-          //    $http({
-          //      method: "POST",
-          //      url: "/proxy/node_server/svr/request",
-          //      headers: {
-          //        'Authorization': "Bearer " + $rootScope.access_token
-          //      },
-          //      data:
-          //      {
-          //        request:'generateCarInsuranceOrder',
-          //        orderId:orderId
-          //      }
-          //    }).then(function(res) {
-          //      var json=res.data;
-          //      if(json.state==3)
-          //      {
-          //        $interval.cancle($rootScope.carInsurance.timer);
-          //      }
-          //    });
-          //  }
-          //  ,3000);
           $state.go('car_orders');
         }
       }).catch(function(err) {
@@ -277,6 +274,44 @@ angular.module('starter')
     }
 
 
+    $scope.previou_page=function(){
+      var curIndex=($scope.companyIndex-1)*$scope.page_size;
+      if(curIndex>=0) {
+        $scope.companyIndex--;
+        var j=0;
+        $scope.page_companys=[];
+        for(var i=curIndex;i<$scope.companys.length;i++)
+        {
+          if(j<$scope.page_size)
+          {
+            $scope.page_companys.push($scope.companys[i]);
+            j++;
+          }
+          else
+            break;
+        }
+      }
+    }
+
+    $scope.next_page=function(){
+      var curIndex=($scope.companyIndex+1)*$scope.page_size;
+      if(curIndex<$scope.companys.length)
+      {
+        $scope.companyIndex++;
+        var j=0;
+        $scope.page_companys=[];
+        for(var i=curIndex;i<$scope.companys.length;i++)
+        {
+          if(j<$scope.page_size)
+          {
+            $scope.page_companys.push($scope.companys[i]);
+            j++;
+          }
+          else
+            break;
+        }
+      }
+    }
 
   });
 
