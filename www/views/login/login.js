@@ -4,7 +4,7 @@
 angular.module('starter')
 
   .controller('loginController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
-    ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera){
+    ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera,Proxy){
 
 
     $scope.formUser = {};
@@ -81,8 +81,6 @@ angular.module('starter')
         if(window.plugins!==undefined&&window.plugins!==null)
         {
           $scope.login();
-          window.plugins.jPushPlugin.getRegistrationID($scope.onGetRegistradionID);
-          document.addEventListener("jpush.receiveMessage", $rootScope.onReceiveMessage, false);
         }
         else{
           $scope.login();
@@ -99,7 +97,7 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-        url:"/proxy/node_server/login",
+        url:Proxy.local()+"/login",
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -121,7 +119,7 @@ angular.module('starter')
             return  $http({
               method: "POST",
               //url: "http://192.168.1.106:3000/svr/request",
-              url: "/proxy/node_server/svr/request",
+              url: Proxy.local()+"/svr/request",
               headers: {
                 'Authorization': "Bearer " + $rootScope.access_token
               },
