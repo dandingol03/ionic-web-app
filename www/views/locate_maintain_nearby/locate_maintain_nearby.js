@@ -44,19 +44,19 @@ angular.module('starter')
         });
       }
 
-      var marker1=new BMap.Marker(new BMap.Point(117.144816,36.670));
-      map.addOverlay(marker1);
-      var label1 = new BMap.Label("marker1",{offset:new BMap.Size(20,-10)});
-      label1.setStyle({
-        color :'#222',
-        fontSize : "12px",
-        height : "20px",
-        lineHeight : "20px",
-        fontFamily:"微软雅黑",
-        border:'0px'
-      });
-      marker1.setLabel(label1);
-      marker1.addEventListener("click",$scope.maintain_select);
+      //var marker1=new BMap.Marker(new BMap.Point(117.144816,36.670));
+      //map.addOverlay(marker1);
+      //var label1 = new BMap.Label("marker1",{offset:new BMap.Size(20,-10)});
+      //label1.setStyle({
+      //  color :'#222',
+      //  fontSize : "12px",
+      //  height : "20px",
+      //  lineHeight : "20px",
+      //  fontFamily:"微软雅黑",
+      //  border:'0px'
+      //});
+      //marker1.setLabel(label1);
+      //marker1.addEventListener("click",$scope.maintain_select);
 
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
