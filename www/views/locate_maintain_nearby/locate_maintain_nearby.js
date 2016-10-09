@@ -4,7 +4,8 @@
 angular.module('starter')
 
   .controller('locateMaintainNearbyController',function($scope,$state,$http,$timeout,$rootScope,
-                                                        BaiduMapService,$cordovaGeolocation,$ionicModal){
+                                                        BaiduMapService,$cordovaGeolocation,$ionicModal,
+                                                        Proxy){
 
     $scope.maintain={
 
@@ -94,13 +95,13 @@ angular.module('starter')
       //fetch provinces list
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+        url: Proxy.local()+"/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
         data:
         {
-          request:'getProvincesByName',
+          request:'getProvinces',
         }
       }).then(function(res) {
         var json=res.data;
@@ -205,7 +206,7 @@ angular.module('starter')
       $scope.fetchCitiesByProvince=function(pro) {
         $http({
           method: "POST",
-          url: "/proxy/node_server/svr/request",
+          url: Proxy.local()+"/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
@@ -234,7 +235,7 @@ angular.module('starter')
       $scope.fetchTownsByCity=function(city) {
         $http({
           method: "POST",
-          url: "/proxy/node_server/svr/request",
+          url: Proxy.local()+"/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
@@ -267,7 +268,7 @@ angular.module('starter')
       $scope.fetchMaintenancesInArea=function(){
         $http({
           method: "POST",
-          url: "/proxy/node_server/svr/request",
+          url: Proxy.local()+"/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
