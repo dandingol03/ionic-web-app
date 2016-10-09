@@ -152,7 +152,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         });
       }catch(e)
       {
-        alert('error=\r\n'+e);
+        console.error('error=\r\n'+e);
       }
 
 
