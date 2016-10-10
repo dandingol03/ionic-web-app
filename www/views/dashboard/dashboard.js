@@ -1014,14 +1014,14 @@ angular.module('starter')
                 }
               });
             }
-          }).then(function (res) {
-            var json = res.data;
-            if (json.re == 1) {
-              json.data.map(function (servicePerson, i) {
-                servicePersonIds.push(servicePerson.servicePersonId);
-                personIds.push(servicePerson.personId);
-              });
-              servicePersonIds = json.data;
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
+                json.data.map(function(servicePerson,i) {
+                  servicePersonIds.push(servicePerson.servicePersonId);
+                  personIds.push(servicePerson.personId);
+                });
+
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
