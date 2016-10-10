@@ -809,6 +809,18 @@ angular.module('starter')
     };
 
 
+    $scope.candidates=[131,135];//五公里范围内的维修厂对应的服务人员
+
+    $scope.maintain= {
+      tabs: ['日常保养', '故障维修', '事故维修'],
+      tab: '日常保养',
+      items: {},
+      description: {},//故障文字描述,放在remark字段下
+      tabIndex: '',
+      serviceType: ''//服务项目
+    }
+
+
 
     $scope.dailys = [
       {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
@@ -860,121 +872,144 @@ angular.module('starter')
     }
 
     //提交服务项目,生成服务订单
-    $scope.commit_daily=function(){
-      var deferred=$q.defer();
-      $scope.maintain.subServiceTypes=[];
-      $scope.dailys.map(function(daily,i) {
-        if(daily.checked==true)
+    $scope.commit_daily=function() {
+
+      $scope.maintain.subServiceTypes = [];
+      $scope.dailys.map(function (daily, i) {
+        if (daily.checked == true)
           $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
       });
-      if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
-      {
-        if( $scope.tabIndex==2 && $scope.subTabIndex==0)
-        { $scope.maintain.serviceType=11;
+      if ($scope.maintain.estimateTime !== undefined && $scope.maintain.estimateTime !== null) {
+        if ($scope.tabIndex == 2 && $scope.subTabIndex == 0) {
+          $scope.maintain.serviceType = 11;
 
         }
-        if( $scope.tabIndex==2 && $scope.subTabIndex==1)
-        { $scope.maintain.serviceType=12;
+        if ($scope.tabIndex == 2 && $scope.subTabIndex == 1) {
+          $scope.maintain.serviceType = 12;
 
         }
-        if( $scope.tabIndex==2 && $scope.subTabIndex==2)
-        {
-          $scope.maintain.serviceType=13;
-          $scope.maintain.subServiceTypes=$scope.accident.type;
+        if ($scope.tabIndex == 2 && $scope.subTabIndex == 2) {
+          $scope.maintain.serviceType = 13;
+          $scope.maintain.subServiceTypes = $scope.accident.type;
         }
         //选定维修厂,找出服务人员
-        if($rootScope.maintain.maintenance!==undefined&&$rootScope.maintain.maintenance!==null)
-        {
+        if ($rootScope.maintain.maintenance !== undefined && $rootScope.maintain.maintenance !== null) {
           $http({
             method: "POST",
-            url: Proxy.local()+"/svr/request",
+            url: Proxy.local() + "/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token
             },
-            data:
-            {
-              request:'getServicePersonByMaintenance',
-              info:{
-                maintenance:$rootScope.maintain.maintenance
+            data: {
+              request: 'getServicePersonByMaintenance',
+              info: {
+                maintenance: $rootScope.maintain.maintenance
               }
             }
-          }).then(function(res) {
-            var json=res.data;
-            if(json.re==1)
-            {
-              var servicePerson=json.data;
-              $scope.maintain.servicePersonId=servicePerson.servicePersonId;
-                return   $http({
-                  method: "POST",
-                  url: Proxy.local()+"/svr/request",
-                  headers: {
-                    'Authorization': "Bearer " + $rootScope.access_token
-                  },
-                  data:
-                  {
-                    request:'generateCarServiceOrder',
-                    info:{
-                      maintain:$scope.maintain
-                    }
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
+              var servicePerson = json.data;
+              $scope.maintain.servicePersonId = servicePerson.servicePersonId;
+              return $http({
+                method: "POST",
+                url: Proxy.local() + "/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data: {
+                  request: 'generateCarServiceOrder',
+                  info: {
+                    maintain: $scope.maintain
                   }
-                });
-            }else
-            {
+                }
+              });
+            } else {
               return {re: -1};
             }
-          }).then(function(res) {
-              var json=res.data;
-            if(json.re==1) {
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
               $scope.close_maintenanceTAModal();
               console.log('service order has been generated');
-              $scope.videoCheck(json.orderId).then(function(json) {
-                if(json.re==1){
+              $scope.videoCheck(json.orderId).then(function (json) {
+                if (json.re == 1) {
                   console.log('u');
-                }else
-                  deferred.reject({re:-1});
+                } else
+                  deferred.reject({re: -1});
               })
             }
-          }).catch(function(err) {
-            var str='';
-            for(var field in err)
-              str+=err[field];
+          }).catch(function (err) {
+            var str = '';
+            for (var field in err)
+              str += err[field];
 
           });
         }
         else//未选定服务人员
         {
-          var orderId=null;
-          var order=null;
-          var servicePersonIds=[];
-          var personIds=[];
+          var orderId = null;
+          var order = null;
+          var servicePersonIds = [];
+          var personIds = [];
           $http({
             method: "POST",
-            url: Proxy.local()+"/svr/request",
+            url: Proxy.local() + "/svr/request",
             headers: {
               'Authorization': "Bearer " + $rootScope.access_token
             },
-            data:
-            {
-              request:'generateCarServiceOrder',
-              info:{
-                maintain:$scope.maintain
+            data: {
+              request: 'generateCarServiceOrder',
+              info: {
+                maintain: $scope.maintain
               }
             }
-          }).then(function(res) {
-            var json=res.data;
-            if(json.re==1) {
-              order=json.data;
-              return  $http({
+
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
+              var orderId = json.data.orderId;
+              $http({
                 method: "POST",
-                url: Proxy.local()+"/svr/request",
+                url: "/proxy/node_server/svr/request",
+                //url: "http://192.168.1.106:3000/svr/request",
                 headers: {
                   'Authorization': "Bearer " + $rootScope.access_token
                 },
-                data:
-                {
-                  request:'getServicePersonsByUnits',
-                  info:{
-                    units:$rootScope.maintain.units
+                data: {
+                  request: 'updateCandidateState',
+                  info: {
+                    orderId: orderId,
+                    candidates: $scope.candidates
+                  }
+                }
+              })
+            }
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
+              console.log('CandidateState has been changed');
+            }
+          })
+            .catch(function (err) {
+              var str = '';
+              for (var field in err)
+                str += err[field];
+              console.error('error=\r\n' + str);
+            }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
+              order = json.data;
+              return $http({
+                method: "POST",
+                url: Proxy.local() + "/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data: {
+                  request: 'getServicePersonsByUnits',
+                  info: {
+                    units: $rootScope.maintain.units
                   }
                 }
               });
@@ -989,68 +1024,60 @@ angular.module('starter')
 
               return $http({
                 method: "POST",
-                url: Proxy.local()+"/svr/request",
+                url: Proxy.local() + "/svr/request",
                 headers: {
                   'Authorization': "Bearer " + $rootScope.access_token
                 },
-                data:
-                {
-                  request:'updateCandidateState',
-                  info:{
-                    orderId:order.orderId,
-                    servicePersonIds:servicePersonIds
+                data: {
+                  request: 'updateCandidateState',
+                  info: {
+                    orderId: order.orderId,
+                    servicePersonIds: servicePersonIds
                   }
                 }
               });
             }
-          }).then(function(res) {
-            var json=res.data;
-            if(json.re==1)
-            {
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
-              var serviceName=$scope.serviceTypeMap[$scope.maintain.serviceType];
+              var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
               $scope.maintain.subServiceTypes
               return $http({
                 method: "POST",
-                url: Proxy.local()+"/svr/request",
+                url: Proxy.local() + "/svr/request",
                 headers: {
                   'Authorization': "Bearer " + $rootScope.access_token
                 },
-                data:
-                {
-                  request:'sendCustomMessage',
-                  info:{
-                    order:order,
-                    serviceItems:$scope.maintain.subServiceTypes,
-                    servicePersonIds:servicePersonIds,
-                    serviceName:serviceName,
-                    type:'to-servicePerson'
+                data: {
+                  request: 'sendCustomMessage',
+                  info: {
+                    order: order,
+                    serviceItems: $scope.maintain.subServiceTypes,
+                    servicePersonIds: servicePersonIds,
+                    serviceName: serviceName,
+                    type: 'to-servicePerson'
                   }
                 }
               });
-            }else{
+            } else {
               return ({re: -1});
             }
-          }).then(function(res) {
-            var json=res.data;
-            if(json.re==1) {
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
 
             }
-          }).catch(function(err) {
-            var str='';
-            for(var field in err)
-              str+=err[field];
+          }).catch(function (err) {
+            var str = '';
+            for (var field in err)
+              str += err[field];
             console.error('error=\r\n' + str);
           });
+
         }
-
-
-
       }
-      return deferred.promise;
     }
-
-
     //车驾管服务
 
     //选择车驾管服务项目
@@ -2064,3 +2091,4 @@ angular.module('starter')
     }
 
   });
+

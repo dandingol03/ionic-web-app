@@ -10,6 +10,7 @@ angular.module('starter')
                                                         Proxy){
 
     $scope.maintain={
+      maintenances:{}
     };
 
     BaiduMapService.getBMap().then(function(res){
@@ -48,6 +49,27 @@ angular.module('starter')
         else
         {
 
+          $scope.maintain.maintenances[unit.unitId]=unit;
+          label.setStyle({
+            color:'#00f'
+          });
+        }
+      }
+
+      //var marker1=new BMap.Marker(new BMap.Point(117.144816,36.670));
+      //map.addOverlay(marker1);
+      //var label1 = new BMap.Label("marker1",{offset:new BMap.Size(20,-10)});
+      //label1.setStyle({
+      //  color :'#222',
+      //  fontSize : "12px",
+      //  height : "20px",
+      //  lineHeight : "20px",
+      //  fontFamily:"微软雅黑",
+      //  border:'0px'
+      //});
+      //marker1.setLabel(label1);
+      //marker1.addEventListener("click",$scope.maintain_select);
+
           $scope.maintain.maintenance=unit;
           label.setStyle({
             color:'#00f',
@@ -59,9 +81,7 @@ angular.module('starter')
               item.setStyle({color: '#222','font-size':'0.8em'});
             }
           })
-        }
 
-      }
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
       $cordovaGeolocation
@@ -320,6 +340,9 @@ angular.module('starter')
               });
               mk.addEventListener("click",$scope.maintenance_select.bind(this,unit,label));
               mk.setLabel(label);
+
+
+
               $scope.maintain.labels.push(label);
             });
           }
