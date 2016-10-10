@@ -986,7 +986,7 @@ angular.module('starter')
                   servicePersonIds.push(servicePerson.servicePersonId);
                   personIds.push(servicePerson.personId);
                 });
-               servicePersonIds=json.data;
+
               return $http({
                 method: "POST",
                 url: Proxy.local()+"/svr/request",
