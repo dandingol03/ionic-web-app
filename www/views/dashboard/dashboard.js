@@ -8,6 +8,17 @@ angular.module('starter')
                                               Proxy,$stateParams,$anchorScroll){
 
 
+    $scope.serviceTypeMap={
+      11:'维修-日常保养',
+      12:'维修-故障维修',
+      13:'维修-事故维修',
+      21:'车驾管-审车',
+      22:'车驾管-审证',
+      23:'车驾管-接送机',
+      24:'车驾管-取送车',
+      31:'鈑喷'};
+
+
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
@@ -867,7 +878,8 @@ angular.module('starter')
 
         }
         if( $scope.tabIndex==2 && $scope.subTabIndex==2)
-        { $scope.maintain.serviceType=13;
+        {
+          $scope.maintain.serviceType=13;
           $scope.maintain.subServiceTypes=$scope.accident.type;
         }
         //选定维修厂,找出服务人员
@@ -932,6 +944,9 @@ angular.module('starter')
         else//未选定服务人员
         {
           var orderId=null;
+          var order=null;
+          var servicePersonIds=[];
+          var personIds=[];
           $http({
             method: "POST",
             url: Proxy.local()+"/svr/request",
@@ -948,7 +963,7 @@ angular.module('starter')
           }).then(function(res) {
             var json=res.data;
             if(json.re==1) {
-              orderId=json.data;
+              order=json.data;
               return  $http({
                 method: "POST",
                 url: Proxy.local()+"/svr/request",
@@ -967,7 +982,11 @@ angular.module('starter')
           }).then(function(res) {
             var json=res.data;
             if(json.re==1) {
-              var servicePersonIds=json.data;
+                json.data.map(function(servicePerson,i) {
+                  servicePersonIds.push(servicePerson.servicePersonId);
+                  personIds.push(servicePerson.personId);
+                });
+               servicePersonIds=json.data;
               return $http({
                 method: "POST",
                 url: Proxy.local()+"/svr/request",
@@ -978,7 +997,7 @@ angular.module('starter')
                 {
                   request:'updateCandidateState',
                   info:{
-                    orderId:orderId,
+                    orderId:order.orderId,
                     servicePersonIds:servicePersonIds
                   }
                 }
@@ -988,8 +1007,33 @@ angular.module('starter')
             var json=res.data;
             if(json.re==1)
             {
-
+              //TODO:append address and serviceType and serviceTime
+              var serviceName=$scope.serviceTypeMap[$scope.maintain.serviceType];
+              $scope.maintain.subServiceTypes
+              return $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data:
+                {
+                  request:'sendCustomMessage',
+                  info:{
+                    order:order,
+                    serviceItems:$scope.maintain.subServiceTypes,
+                    servicePersonIds:servicePersonIds,
+                    serviceName:serviceName,
+                    type:'to-servicePerson'
+                  }
+                }
+              });
             }else{
+              return ({re: -1});
+            }
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
 
             }
           }).catch(function(err) {
