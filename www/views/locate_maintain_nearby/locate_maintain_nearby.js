@@ -1,6 +1,7 @@
 /**
  * Created by danding on 16/9/6.
  * 山大默认经纬度为117.144816,36.672171
+ * 1.$scope.maintain.maintenance,保存选中的维修厂
  */
 angular.module('starter')
 
@@ -38,19 +39,16 @@ angular.module('starter')
       mk.setLabel(label);
 
 
-      $scope. maintain_select=function(){
-        alert('select.....');
-        label1.setStyle({
-          color:'#00f'
-        });
-      }
-
+      //选择维修厂
       $scope.maintenance_select=function(unit,label){
-        if($scope.maintain.maintenance[unit.unitId]==undefined||$scope.maintain.maintenances[unit.unitId]==null) {
-          $scope.maintain.maintenances.delete(unit.unitId);
+        if($scope.maintain.maintenance!==undefined&&$scope.maintain.maintenance!==null&&
+            $scope.maintain.maintenance.unitId==unit.unitId) {
+          $scope.maintain.maintenance=null;
+          label.setStyle({color: '#222','font-size':'0.8em'});
         }
         else
         {
+
           $scope.maintain.maintenances[unit.unitId]=unit;
           label.setStyle({
             color:'#00f'
@@ -71,6 +69,18 @@ angular.module('starter')
       //});
       //marker1.setLabel(label1);
       //marker1.addEventListener("click",$scope.maintain_select);
+
+          $scope.maintain.maintenance=unit;
+          label.setStyle({
+            color:'#00f',
+            'font-size':'1em'
+          });
+          $scope.maintain.labels.map(function(item,i) {
+            if(item.getContent().trim()!=label.getContent().trim())
+            {
+              item.setStyle({color: '#222','font-size':'0.8em'});
+            }
+          })
 
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -279,34 +289,6 @@ angular.module('starter')
         })
       };
 
-      $scope.fetchMaintenancesInArea=function(){
-        $http({
-          method: "POST",
-          url: Proxy.local()+"/svr/request",
-          headers: {
-            'Authorization': "Bearer " + $rootScope.access_token,
-          },
-          data:
-          {
-            request:'fetchMaintenanceInArea',
-            info:{
-              provinceName:$scope.area.province,
-              cityName:$scope.area.city,
-              townName:$scope.area.town
-            }
-          }
-        }).then(function(res) {
-          var json=res.data;
-          if(json.re==1) {
-            //TODO:append map markfer for every maintenance
-          }
-        }).catch(function(err) {
-          var str='';
-          for(var field in err)
-            str+=err[field];
-          console.error('error=\r\n' + str);
-        })
-      }
 
 
       //获取该地区的所有维修厂,并进行距离过滤
@@ -343,6 +325,7 @@ angular.module('starter')
             //remove previous markers
             map.clearOverlays();
             //render new markers
+            $scope.maintain.labels=[];
             $scope.maintain.units.map(function(unit,i) {
               var mk = new BMap.Marker(new BMap.Point(unit.longitude,unit.latitude));
               map.addOverlay(mk);
@@ -355,8 +338,12 @@ angular.module('starter')
                 fontFamily:"微软雅黑",
                 border:'0px'
               });
+              mk.addEventListener("click",$scope.maintenance_select.bind(this,unit,label));
               mk.setLabel(label);
-              mk.addEventListener("click",$scope.maintenance_select(unit,label));
+
+
+
+              $scope.maintain.labels.push(label);
             });
           }
         }).catch(function(err) {
@@ -378,7 +365,22 @@ angular.module('starter')
         $scope.fetchAndRenderNearBy();
       }
 
+      $scope.maintenance_confirm=function(){
+        if($rootScope.maintain==undefined||$rootScope.maintain==null)
+          $rootScope.maintain={};
+        if($scope.maintain.maintenance!==undefined&&$scope.maintain.maintenance!==null)
+        {
+          $rootScope.maintain.maintenance=$scope.maintain.maintenance;
+        }else{
+          $rootScope.maintain.units=$scope.maintain.units;
+        }
 
+        $scope.go_back();
+      }
+
+      $scope.go_back=function(){
+        window.history.back();
+      }
 
       //var geolocation = new BMap.Geolocation();
       //geolocation.getCurrentPosition(function(r){
