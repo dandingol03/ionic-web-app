@@ -948,7 +948,7 @@ angular.module('starter')
           }).then(function(res) {
             var json=res.data;
             if(json.re==1) {
-              orderId=json.orderId;
+              orderId=json.data;
               return  $http({
                 method: "POST",
                 url: Proxy.local()+"/svr/request",
@@ -967,6 +967,29 @@ angular.module('starter')
           }).then(function(res) {
             var json=res.data;
             if(json.re==1) {
+              var servicePersonIds=json.data;
+              return $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data:
+                {
+                  request:'updateCandidateState',
+                  info:{
+                    orderId:orderId,
+                    servicePersonIds:servicePersonIds
+                  }
+                }
+              });
+            }
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1)
+            {
+
+            }else{
 
             }
           }).catch(function(err) {
