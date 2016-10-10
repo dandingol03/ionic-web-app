@@ -5,8 +5,37 @@ angular.module('starter')
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
-                                              Proxy){
+                                              Proxy,$stateParams,$anchorScroll){
 
+
+    $scope.maintain={
+      tabs:['日常保养','故障维修','事故维修'],
+      tab:'日常保养',
+      items:{},
+      description:{},//故障文字描述,放在remark字段下
+      tabIndex:'',
+      serviceType:''//服务项目
+
+    };
+
+    $scope.tabIndex=0;
+
+    /**
+     * 路由参数初始化
+     */
+    if($stateParams.params!==undefined&&$stateParams.params!==null&&$stateParams.params!=='')
+    {
+      var params=JSON.parse($stateParams.params);
+      if(params.maintenance!==undefined&&params.maintenance!==null)
+        $scope.maintain.maintenance=params.maintenance;
+      if(params.tabIndex!==undefined&&params.tabIndex!==null)
+        $scope.tabIndex=params.tabIndex;
+      if(params.location!==undefined&&params.location!==null)
+      {
+        $location.hash(params.location);
+        $anchorScroll();
+      }
+    }
 
     //生成验证码
     // $http({
@@ -760,7 +789,6 @@ angular.module('starter')
     ];
 
     //维修服务
-    $scope.tabIndex=0;
     $scope.tab_change=function(i){
       $scope.tabIndex=i;
     };
@@ -769,15 +797,7 @@ angular.module('starter')
       $scope.subTabIndex=i;
     };
 
-    $scope.maintain={
-      tabs:['日常保养','故障维修','事故维修'],
-      tab:'日常保养',
-      items:{},
-      description:{},//故障文字描述,放在remark字段下
-      tabIndex:'',
-      serviceType:''//服务项目
 
-    };
 
     $scope.dailys = [
       {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
@@ -850,41 +870,114 @@ angular.module('starter')
         { $scope.maintain.serviceType=13;
           $scope.maintain.subServiceTypes=$scope.accident.type;
         }
-        //TODO:apply your selected maintain items
-
-        $http({
-          method: "POST",
-          url: "/proxy/node_server/svr/request",
-          //url: "http://192.168.1.106:3000/svr/request",
-          headers: {
-            'Authorization': "Bearer " + $rootScope.access_token
-          },
-          data:
-          {
-            request:'generateCarServiceOrder',
-            info:{
-              maintain:$scope.maintain
+        //选定维修厂,找出服务人员
+        if($rootScope.maintain.maintenance!==undefined&&$rootScope.maintain.maintenance!==null)
+        {
+          $http({
+            method: "POST",
+            url: Proxy.local()+"/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data:
+            {
+              request:'getServicePersonByMaintenance',
+              info:{
+                maintenance:$rootScope.maintain.maintenance
+              }
             }
-          }
-        }).then(function(res) {
-          var json=res.data;
-          if(json.re==1) {
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1)
+            {
+              var servicePerson=json.data;
+              $scope.maintain.servicePersonId=servicePerson.servicePersonId;
+                return   $http({
+                  method: "POST",
+                  url: Proxy.local()+"/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data:
+                  {
+                    request:'generateCarServiceOrder',
+                    info:{
+                      maintain:$scope.maintain
+                    }
+                  }
+                });
+            }else
+            {
+              return {re: -1};
+            }
+          }).then(function(res) {
+              var json=res.data;
+            if(json.re==1) {
+              $scope.close_maintenanceTAModal();
+              console.log('service order has been generated');
+              $scope.videoCheck(json.orderId).then(function(json) {
+                if(json.re==1){
+                  console.log('u');
+                }else
+                  deferred.reject({re:-1});
+              })
+            }
+          }).catch(function(err) {
+            var str='';
+            for(var field in err)
+              str+=err[field];
 
-            $scope.close_maintenanceTAModal();
-            console.log('service order has been generated');
-            $scope.videoCheck(json.orderId).then(function(json) {
-               if(json.re==1){
-                 console.log('u');
-               }else
-                 deferred.reject({re:-1});
-             })
-          }
-        }).catch(function(err) {
-          var str='';
-          for(var field in err)
-            str+=err[field];
-          console.error('error=\r\n' + str);
-        });
+          });
+        }
+        else//未选定服务人员
+        {
+          var orderId=null;
+          $http({
+            method: "POST",
+            url: Proxy.local()+"/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data:
+            {
+              request:'generateCarServiceOrder',
+              info:{
+                maintain:$scope.maintain
+              }
+            }
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
+              orderId=json.orderId;
+              return  $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data:
+                {
+                  request:'getServicePersonsByUnits',
+                  info:{
+                    units:$rootScope.maintain.units
+                  }
+                }
+              });
+            }
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
+
+            }
+          }).catch(function(err) {
+            var str='';
+            for(var field in err)
+              str+=err[field];
+            console.error('error=\r\n' + str);
+          });
+        }
+
+
 
       }
       return deferred.promise;
