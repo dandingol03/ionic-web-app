@@ -70,17 +70,7 @@ angular.module('starter')
       //marker1.setLabel(label1);
       //marker1.addEventListener("click",$scope.maintain_select);
 
-          $scope.maintain.maintenance=unit;
-          label.setStyle({
-            color:'#00f',
-            'font-size':'1em'
-          });
-          $scope.maintain.labels.map(function(item,i) {
-            if(item.getContent().trim()!=label.getContent().trim())
-            {
-              item.setStyle({color: '#222','font-size':'0.8em'});
-            }
-          })
+
 
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -340,9 +330,6 @@ angular.module('starter')
               });
               mk.addEventListener("click",$scope.maintenance_select.bind(this,unit,label));
               mk.setLabel(label);
-
-
-
               $scope.maintain.labels.push(label);
             });
           }
