@@ -769,6 +769,8 @@ angular.module('starter')
       $scope.subTabIndex=i;
     };
 
+    $scope.candidates=[131,135];//五公里范围内的维修厂对应的服务人员
+
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
@@ -830,10 +832,11 @@ angular.module('starter')
 
     //提交服务项目,生成服务订单
     $scope.commit_daily=function(){
-      var deferred=$q.defer();
+
+
       $scope.maintain.subServiceTypes=[];
       $scope.dailys.map(function(daily,i) {
-        if(daily.checked==true)
+        if(daily.checked==true)f
           $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
       });
       if($scope.maintain.estimateTime!==undefined&&$scope.maintain.estimateTime!==null)
@@ -869,6 +872,33 @@ angular.module('starter')
         }).then(function(res) {
           var json=res.data;
           if(json.re==1) {
+            var orderId=json.data.orderId;
+            $http({
+              method: "POST",
+              url: "/proxy/node_server/svr/request",
+              //url: "http://192.168.1.106:3000/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data:
+              {
+                request:'updateCandidateState',
+                info:{
+                  orderId:orderId,
+                  candidates:$scope.candidates
+                }
+              }
+            }).then(function(res) {
+              var json=res.data;
+              if(json.re==1)
+              {console.log('CandidateState has been changed');}
+                })
+              .catch(function(err) {
+              var str='';
+              for(var field in err)
+                str+=err[field];
+              console.error('error=\r\n' + str);
+            });
 
             $scope.close_maintenanceTAModal();
             console.log('service order has been generated');
@@ -887,7 +917,7 @@ angular.module('starter')
         });
 
       }
-      return deferred.promise;
+
     }
 
 

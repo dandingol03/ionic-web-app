@@ -9,6 +9,7 @@ angular.module('starter')
                                                         Proxy){
 
     $scope.maintain={
+      maintenances:{}
     };
 
     BaiduMapService.getBMap().then(function(res){
@@ -42,6 +43,19 @@ angular.module('starter')
         label1.setStyle({
           color:'#00f'
         });
+      }
+
+      $scope.maintenance_select=function(unit,label){
+        if($scope.maintain.maintenance[unit.unitId]==undefined||$scope.maintain.maintenances[unit.unitId]==null) {
+          $scope.maintain.maintenances.delete(unit.unitId);
+        }
+        else
+        {
+          $scope.maintain.maintenances[unit.unitId]=unit;
+          label.setStyle({
+            color:'#00f'
+          });
+        }
       }
 
       //var marker1=new BMap.Marker(new BMap.Point(117.144816,36.670));
@@ -342,6 +356,7 @@ angular.module('starter')
                 border:'0px'
               });
               mk.setLabel(label);
+              mk.addEventListener("click",$scope.maintenance_select(unit,label));
             });
           }
         }).catch(function(err) {
@@ -356,7 +371,7 @@ angular.module('starter')
         if(town!==undefined&&town!==null)
           $scope.area.town=town;
         $scope.close_selectPCTModal();
-        map.setCenter($scope.area.province + $scope.area.city + $scope.area.town);
+        //map.setCenter($scope.area.province + $scope.area.city + $scope.area.town);
         $scope.maintain.center='';
         console.log('center=' + map.getCenter());
         $scope.maintain.center=map.getCenter();

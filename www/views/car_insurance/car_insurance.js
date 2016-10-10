@@ -157,9 +157,11 @@ angular.module('starter')
       data.data.map(function(meal,i) {
         var products={};
         meal.products.map(function(product,j) {
+          product.irrespective=true;
           if(products[product.productName]==undefined||products[product.productName]==null)
           {
             products[product.productName]=product;
+
           }
           else
           {
