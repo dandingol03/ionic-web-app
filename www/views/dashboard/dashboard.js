@@ -5,7 +5,8 @@ angular.module('starter')
                                              $cordovaCamera,ionicDatePicker,
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
-                                              Proxy,$stateParams,$anchorScroll){
+                                              Proxy,$stateParams,$anchorScroll,
+                                             $cordovaFileTransfer){
 
 
     $scope.serviceTypeMap={
@@ -804,8 +805,26 @@ angular.module('starter')
       $scope.tabIndex=i;
     };
     $scope.subTabIndex=0;
+
     $scope.subTab_change=function(i) {
       $scope.subTabIndex=i;
+
+      if($scope.tabIndex==2)
+      {
+        switch (i) {
+          case 0:
+            $scope.maintain.serviceType=11;
+            break;
+          case 1:
+            $scope.maintain.serviceType=12;
+            break;
+          case 2:
+            $scope.maintain.serviceType=13;
+            break;
+          default :
+            break;
+        }
+      }
     };
 
 
@@ -848,9 +867,8 @@ angular.module('starter')
       var deferred = $q.defer();
       if($scope.maintain.description.video!=null&&$scope.maintain.description.video!=undefined)
       {
-        var server='http://211.87.225.197:3000/svr/request?' +
-          'request=uploadVideo&orderId=orderId&fileName='+$scope.maintain.description.video;
-       // var server='http://localhost:3000/svr/request?request=uploadVideo';
+        var server=Proxy.local()+'/svr/request?' +
+          'request=uploadVideo&orderId=orderId&fileName='+$scope.maintain.description.video+'&videoType=serviceVideo';
         var options = {
           fileKey:'file',
           headers: {
@@ -880,19 +898,12 @@ angular.module('starter')
           $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
       });
       if ($scope.maintain.estimateTime !== undefined && $scope.maintain.estimateTime !== null) {
-        if ($scope.tabIndex == 2 && $scope.subTabIndex == 0) {
-          $scope.maintain.serviceType = 11;
 
-        }
-        if ($scope.tabIndex == 2 && $scope.subTabIndex == 1) {
-          $scope.maintain.serviceType = 12;
+        //如果为维修订单并且子项为事故维修
+        if($scope.maintain.serviceType ==13)
+            $scope.maintain.subServiceTypes = $scope.accident.type;
 
-        }
-        if ($scope.tabIndex == 2 && $scope.subTabIndex == 2) {
-          $scope.maintain.serviceType = 13;
-          $scope.maintain.subServiceTypes = $scope.accident.type;
-        }
-        //选定维修厂,找出服务人员
+
         if ($rootScope.maintain.maintenance !== undefined && $rootScope.maintain.maintenance !== null) {
           $http({
             method: "POST",
@@ -932,11 +943,14 @@ angular.module('starter')
             if (json.re == 1) {
               $scope.close_maintenanceTAModal();
               console.log('service order has been generated');
+              //检查是否需要上传附件信息
               $scope.videoCheck(json.orderId).then(function (json) {
+                alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
-                  console.log('u');
-                } else
-                  deferred.reject({re: -1});
+                  console.log('附件上传成功')
+                }
+                else
+                {}
               })
             }
           }).catch(function (err) {
@@ -948,7 +962,6 @@ angular.module('starter')
         }
         else//未选定服务人员
         {
-          var orderId = null;
           var order = null;
           var servicePersonIds = [];
           var personIds = [];
@@ -964,39 +977,7 @@ angular.module('starter')
                 maintain: $scope.maintain
               }
             }
-
           }).then(function (res) {
-            var json = res.data;
-            if (json.re == 1) {
-              var orderId = json.data.orderId;
-              $http({
-                method: "POST",
-                url: "/proxy/node_server/svr/request",
-                //url: "http://192.168.1.106:3000/svr/request",
-                headers: {
-                  'Authorization': "Bearer " + $rootScope.access_token
-                },
-                data: {
-                  request: 'updateCandidateState',
-                  info: {
-                    orderId: orderId,
-                    candidates: $scope.candidates
-                  }
-                }
-              })
-            }
-          }).then(function (res) {
-            var json = res.data;
-            if (json.re == 1) {
-              console.log('CandidateState has been changed');
-            }
-          })
-            .catch(function (err) {
-              var str = '';
-              for (var field in err)
-                str += err[field];
-              console.error('error=\r\n' + str);
-            }).then(function (res) {
             var json = res.data;
             if (json.re == 1) {
               order = json.data;
@@ -1066,7 +1047,14 @@ angular.module('starter')
           }).then(function (res) {
             var json = res.data;
             if (json.re == 1) {
-
+              $scope.videoCheck(order.orderId).then(function (json) {
+                alert('result of videocheck=\r\n' + json);
+                if (json.re == 1) {
+                  alert('附件上传成功');
+                }
+                else
+                {}
+              });
             }
           }).catch(function (err) {
             var str = '';
@@ -2019,6 +2007,13 @@ angular.module('starter')
         // Success! Video data is here
 
         $scope.maintain.description.video=videoData[0].fullPath;
+        alert('whole path=' + $scope.maintain.description.video);
+        var basicPath=cordova.file.applicationStorageDirectory;
+        alert('basic path=' + basicPath);
+
+        var suffixIndex=videoData[0].fullPath.indexOf(basicPath)+basicPath.length;
+        var filename=videoData[0].fullPath.substring(suffixIndex+1,videoData[0].fullPath.length);
+        alert('filename=' + filename);
         $scope.videoData=videoData[0];
       }, function(err) {
         // An error occurred. Show a message to the user

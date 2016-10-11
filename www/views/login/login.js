@@ -115,10 +115,9 @@ angular.module('starter')
             if(window.cordova!=undefined && window.cordova!=null) {
             }
 
-
+            alert('registrationId=\r\n' + $rootScope.registrationId);
             return  $http({
               method: "POST",
-              //url: "http://192.168.1.106:3000/svr/request",
               url: Proxy.local()+"/svr/request",
               headers: {
                 'Authorization': "Bearer " + $rootScope.access_token
