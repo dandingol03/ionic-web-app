@@ -295,7 +295,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
             templateUrl:'views/chatter/chatter.html'
           }
         }
-<<<<<<< HEAD
       })
 
 
@@ -406,120 +405,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       })
 
     // if none of the above states are matched, use this as the fallback
-=======
-      }
-    })
-
-
-    .state('login',{
-      url:'/login',
-      controller: 'loginController',
-      templateUrl:'views/login/login.html'
-    })
-
-     .state('car_insurance',{
-       url:'/car_insurance',
-       controller:'carInsuranceController',
-       templateUrl:'views/car_insurance/car_insurance.html'
-    })
-
-
-    .state('orderCluster',{
-      url:'/orderCluster',
-      controller:'orderClusterController',
-      templateUrl:'views/orderCluster/orderCluster.html'
-    })
-
-
-    .state('lifePlanDetail',{
-      url:'/life_plan_detail/:plan',
-      controller:'lifePlanDetailController',
-      templateUrl:'views/life_plan_detail/life_plan_detail.html'
-    })
-
-    /**
-     * 个人信息=>['修改密码','退出登录']
-     */
-    .state('myInfo',{
-      url:'/myInfo',
-      controller:'myInfoController',
-      templateUrl:'views/myInfo/myInfo.html'
-    })
-
-    .state('passwordModify',{
-      url:'/passwordModify',
-      controller:'passwordModifyController',
-      templateUrl:'views/passwordModify/passwordModify.html'
-    })
-
-    .state('car_orders',{
-      cache:false,
-      url:'/car_orders/:selected',
-      controller:'carOrdersController',
-      templateUrl:'views/car_orders/car_orders.html'
-    })
-
-    .state('service_orders',{
-      cache:false,
-      url:'/service_orders',
-      controller:'serviceOrdersController',
-      templateUrl:'views/service_orders/service_orders.html'
-    })
-
-    .state('service_order_detail',{
-      url:'/service_order_detail/:order',
-      controller:'serviceOrderDetailController',
-      templateUrl:'views/service_order_detail/service_order_detail.html'
-    })
-
-    .state('life_insurance_orders',{
-      cache: false,
-      url:'/life_insurance_orders/:tabIndex',
-      controller:'lifeInsuranceOrdersController',
-      templateUrl:'views/life_insurance_orders/life_insurance_orders.html'
-    })
-
-
-    .state('integration', {
-      url: '/integration',
-      controller: 'integrationController',
-      templateUrl: 'views/integration/integration.html'
-    })
-
-    .state('uploadPhoto', {
-      url: '/uploadPhoto',
-      controller: 'uploadPhotoController',
-      templateUrl: 'views/uploadPhoto/uploadPhoto.html'
-    })
-
-    .state('car_order_detail',{
-      url:'/car_order_detail/:order',
-      controller:'carOrderDetailController',
-      templateUrl:'views/car_order_detail/car_order_detail.html'
-
-    })
-
-    .state('life_insurance_product_list',{
-      url:'/life_insurance_product_list',
-      controller:'lifeInsuranceProductList',
-      templateUrl:'views/life_insurance_product_list/life_insurance_product_list.html'
-    })
-
-    .state('locate_maintain_nearby',{
-      url:'/locate_maintain_nearby/:locateType',
-      controller:'locateMaintainNearbyController',
-      templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
-    })
-
-    .state('transclude',{
-      url:'/transclude',
-      controller:'transcludeController',
-      templateUrl:'views/transclude/transclude.html'
-    })
-
-  // if none of the above states are matched, use this as the fallback
->>>>>>> 712332a19784909bc0a0bd41ed026f11ba60cb1e
-
     $urlRouterProvider.otherwise('/login');
 
   })
@@ -536,8 +421,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       }
     };
   })
-
-
 
   //极光推送
   .factory('Push', function() {
@@ -579,11 +462,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-<<<<<<< HEAD
-          return "http://192.168.1.110:3000";
-=======
-          return "http://192.168.3.2:3000";
->>>>>>> 712332a19784909bc0a0bd41ed026f11ba60cb1e
+
+          return "http://192.168.1.106:3000";
         else
           return "/proxy/node_server";
       }
