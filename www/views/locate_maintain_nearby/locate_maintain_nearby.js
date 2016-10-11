@@ -10,7 +10,7 @@ angular.module('starter')
                                                         Proxy){
 
     $scope.maintain={
-      maintenances:{}
+      maintenance:{}
     };
 
     BaiduMapService.getBMap().then(function(res){
@@ -49,7 +49,7 @@ angular.module('starter')
         else
         {
 
-          $scope.maintain.maintenances[unit.unitId]=unit;
+          $scope.maintain.maintenance[unit.unitId]=unit;
           label.setStyle({
             color:'#00f'
           });
@@ -69,18 +69,6 @@ angular.module('starter')
       //});
       //marker1.setLabel(label1);
       //marker1.addEventListener("click",$scope.maintain_select);
-
-          $scope.maintain.maintenance=unit;
-          label.setStyle({
-            color:'#00f',
-            'font-size':'1em'
-          });
-          $scope.maintain.labels.map(function(item,i) {
-            if(item.getContent().trim()!=label.getContent().trim())
-            {
-              item.setStyle({color: '#222','font-size':'0.8em'});
-            }
-          })
 
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};

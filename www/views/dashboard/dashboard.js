@@ -820,8 +820,6 @@ angular.module('starter')
       serviceType: ''//服务项目
     }
 
-
-
     $scope.dailys = [
       {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
       {subServiceId:'2',subServiceTypes:'机油,三滤',serviceType:'11'},
@@ -971,8 +969,7 @@ angular.module('starter')
               var orderId = json.data.orderId;
               $http({
                 method: "POST",
-                url: "/proxy/node_server/svr/request",
-                //url: "http://192.168.1.106:3000/svr/request",
+                url: Proxy.local() + "/svr/request",
                 headers: {
                   'Authorization': "Bearer " + $rootScope.access_token
                 },
@@ -2019,6 +2016,8 @@ angular.module('starter')
         // Success! Video data is here
 
         $scope.maintain.description.video=videoData[0].fullPath;
+
+        alert("视频文件路径"+$scope.maintain.description.video);
         $scope.videoData=videoData[0];
       }, function(err) {
         // An error occurred. Show a message to the user
