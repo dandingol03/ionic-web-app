@@ -386,10 +386,11 @@
 
 
     <!-- 维修 -->
-    <div class="list " ng-if="tabIndex==2" scroll="true">
+    <div class="list " ng-if="tabIndex==2">
 
       <div class="list" style="margin-bottom: 0px;">
-        <ul class="ul-tabs transparent" style="background: rgb(203,203,203);background-color: transparent;border-bottom: 0px;">
+        <ul class="ul-tabs transparent"
+            style="background: rgb(203,203,203);background-color: transparent;border-bottom: 0px;">
           <li style="width:33.3%;">
             <div class="cell"
                  ng-class="{true: 'selected', false: ''}[subTabIndex==0]"
@@ -432,10 +433,10 @@
       </div>
 
 
-      <ion-scroll style="height: 100%;margin-top:2px;">
+      <div style="height: 100%;margin-top:2px;">
         <!-- 日常保养 -->
         <div ng-if="subTabIndex==0">
-          <div class="item item-divider" style="background-color: transparent;">
+          <div class="item item-divider" style="background-color: transparent;border-top:0px;">
             服务项目列表
           </div>
 
@@ -456,7 +457,6 @@
           </div>
 
           <div>
-
             <div class="item"
                  style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color: transparent;">
               <span class="input-label" style="display: inline-block;width:20%;padding-left: 3%;max-width: 150px;">
@@ -471,7 +471,7 @@
             </div>
 
 
-            <button class="button button-block button-positive" ng-click="pickMaintain()">
+            <button class="button button-block button-positive" ng-click="pickMaintain('maintain')">
               选择附近的维修厂
             </button>
             <a id="maintenance_anchor"></a>
@@ -556,6 +556,11 @@
             </ion-slide>
           </ion-slide-box>
 
+          <div class="item" style="padding:0px;background-color:transparent;border:0px;">
+            <button class="button button-block button-positive" ng-click="pickMaintain('maintain')">
+              选择附近的维修厂
+            </button>
+          </div>
 
           <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_maintenanceTAModal()">
             <h1 class="title">确认故障维修</h1>
@@ -613,7 +618,7 @@
 
         </div>
 
-      </ion-scroll>
+      </div>
 
     </div>
 
@@ -683,7 +688,7 @@
           <span>
             {{maintain.servicePlace}}
           </span>
-          <span ng-click="pickMaintain()" style="font-size: 150%;">
+          <span ng-click="pickMaintain(21)" style="font-size: 150%;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -714,6 +719,7 @@
                       <i class="ion-calendar" style="font-size: 1.5em;"></i>
                     </span>
             <input id="date"
+
                    ng-model="carInfo.issueDate" type="text" style="display: inline-block;background: transparent"
                    placeholder="点击设置日期！">
           </div>

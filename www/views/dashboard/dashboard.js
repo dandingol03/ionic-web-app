@@ -1874,8 +1874,8 @@ angular.module('starter')
       },{enableHighAccuracy: true});
     }
 
-    $scope.pickMaintain=function(){
-      $state.go('locate_maintain_nearby');
+    $scope.pickMaintain=function(locateType){
+      $state.go('locate_maintain_nearby',{locateType:locateType});
     }
 
 

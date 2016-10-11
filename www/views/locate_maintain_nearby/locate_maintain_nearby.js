@@ -7,11 +7,17 @@ angular.module('starter')
 
   .controller('locateMaintainNearbyController',function($scope,$state,$http,$timeout,$rootScope,
                                                         BaiduMapService,$cordovaGeolocation,$ionicModal,
-                                                        Proxy){
+                                                        Proxy,$stateParams){
 
     $scope.maintain={
       maintenance:{}
     };
+
+    if($stateParams.locateType!==undefined&&$stateParams.locateType!==null)
+    {
+      $scope.locateType=$stateParams.locateType;
+    }
+
 
     BaiduMapService.getBMap().then(function(res){
       $scope.bMap=res;
@@ -40,14 +46,14 @@ angular.module('starter')
 
 
       //选择维修厂
-      $scope.maintenance_select=function(unit,label){
-        if($scope.maintain.maintenance!==undefined&&$scope.maintain.maintenance!==null&&
-            $scope.maintain.maintenance.unitId==unit.unitId) {
-          $scope.maintain.maintenance=null;
+      $scope.marker_select=function(unit,label){
+        if($scope.unit!==undefined&&$scope.unit!==null) {
+          $scope.unit=null;
           label.setStyle({color: '#222','font-size':'0.8em'});
         }
         else
         {
+
 
           $scope.maintain.maintenance[unit.unitId]=unit;
           label.setStyle({
@@ -69,6 +75,20 @@ angular.module('starter')
       //});
       //marker1.setLabel(label1);
       //marker1.addEventListener("click",$scope.maintain_select);
+
+          $scope.unit=unit;
+          label.setStyle({
+            color:'#00f'
+          });
+          $scope.labels.map(function(item,i) {
+            if(item.getContent().trim()!=label.getContent().trim())
+              item.setStyle({color: '#222','font-size':'0.8em'});
+          })
+        })
+
+
+
+
 
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -299,7 +319,7 @@ angular.module('starter')
         }).then(function(res) {
           var json=res.data;
           if(json.re==1) {
-            $scope.maintain.units=[];
+            $scope.units=[];
             json.data.map(function(unit,i) {
               if(unit.longitude!==undefined&&unit.longitude!==null&&
                   unit.latitude!==undefined&&unit.latitude!==null)
@@ -307,14 +327,14 @@ angular.module('starter')
                 var center=$scope.maintain.center;
                 var distance=map.getDistance(center,new BMap.Point(unit.longitude,unit.latitude)).toFixed(2);
                 if(distance<=5000)
-                  $scope.maintain.units.push(unit);
+                  $scope.units.push(unit);
               }
             });
             //remove previous markers
             map.clearOverlays();
             //render new markers
-            $scope.maintain.labels=[];
-            $scope.maintain.units.map(function(unit,i) {
+            $scope.labels=[];
+            $scope.units.map(function(unit,i) {
               var mk = new BMap.Marker(new BMap.Point(unit.longitude,unit.latitude));
               map.addOverlay(mk);
               var label = new BMap.Label(unit.unitName,{offset:new BMap.Size(20,-10)});
@@ -326,12 +346,9 @@ angular.module('starter')
                 fontFamily:"微软雅黑",
                 border:'0px'
               });
-              mk.addEventListener("click",$scope.maintenance_select.bind(this,unit,label));
+              mk.addEventListener("click",$scope.marker_select.bind(this,unit,label));
               mk.setLabel(label);
-
-
-
-              $scope.maintain.labels.push(label);
+              $scope.labels.push(label);
             });
           }
         }).catch(function(err) {
@@ -353,14 +370,57 @@ angular.module('starter')
         $scope.fetchAndRenderNearBy();
       }
 
+      //确认维修厂回调
       $scope.maintenance_confirm=function(){
-        if($rootScope.maintain==undefined||$rootScope.maintain==null)
-          $rootScope.maintain={};
-        if($scope.maintain.maintenance!==undefined&&$scope.maintain.maintenance!==null)
-        {
-          $rootScope.maintain.maintenance=$scope.maintain.maintenance;
-        }else{
-          $rootScope.maintain.units=$scope.maintain.units;
+        switch ($scope.locateType) {
+          case 'maintain':
+            if($rootScope.maintain==undefined||$rootScope.maintain==null)
+              $rootScope.maintain={};
+            if($scope.unit!==undefined&&$scope.unit!==null)
+            {
+              $rootScope.maintain.maintenance=$scope.unit;
+            }else{
+              $rootScope.maintain.units=$scope.units;
+            }
+                break;
+          case 21:
+            //审车
+            if($rootScope.carManage==undefined||$rootScope.carManage==null)
+              $rootScope.carManage={};
+            if($scope.carManage.unit!==undefined&&$scope.carManage.unit!==null)
+              $rootScope.carManage.unit=$scope.unit;
+            else
+              $rootScope.carManage.units=$scope.units;
+            break;
+          case 22:
+            //审证
+            if($rootScope.carManage==undefined||$rootScope.carManage==null)
+              $rootScope.carManage={};
+            if($scope.carManage.unit!==undefined&&$scope.carManage.unit!==null)
+              $rootScope.carManage.unit=$scope.unit;
+            else
+              $rootScope.carManage.units=$scope.units;
+            break;
+          case 23:
+            //接送机
+            if($rootScope.carManage==undefined||$rootScope.carManage==null)
+              $rootScope.carManage={};
+            if($scope.carManage.unit!==undefined&&$scope.carManage.unit!==null)
+              $rootScope.carManage.unit=$scope.unit;
+            else
+              $rootScope.carManage.units=$scope.units;
+            break;
+          case 24:
+            //取送车
+            if($rootScope.carManage==undefined||$rootScope.carManage==null)
+              $rootScope.carManage={};
+            if($scope.carManage.unit!==undefined&&$scope.carManage.unit!==null)
+              $rootScope.carManage.unit=$scope.unit;
+            else
+              $rootScope.carManage.units=$scope.units;
+            break;
+          default:
+            break;
         }
 
         $scope.go_back();
@@ -391,6 +451,6 @@ angular.module('starter')
       //},{enableHighAccuracy: true});
 
 
-    });
+
 
   });
