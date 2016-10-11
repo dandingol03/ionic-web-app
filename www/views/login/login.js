@@ -111,20 +111,18 @@ angular.module('starter')
           $rootScope.access_token=access_token;
           if(window.cordova!=undefined && window.cordova!=null) {
           }
-
-
+          alert('registrationId=\r\n' + $rootScope.registrationId);
           return  $http({
-            method: "POST",
-            //url: "http://192.168.1.106:3000/svr/request",
-            url: Proxy.local()+"/svr/request",
-            headers: {
-              'Authorization': "Bearer " + $rootScope.access_token
-            },
-            data: {
-              request: 'activatePersonOnline',
-              info:{
-                registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
-              }
+              method: "POST",
+              url: Proxy.local()+"/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'activatePersonOnline',
+                info:{
+                  registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
+                }
             }
           });
         }

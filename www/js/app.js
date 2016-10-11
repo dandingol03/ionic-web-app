@@ -11,9 +11,11 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
   })
 
-  .run(function($ionicPlatform,$rootScope,$interval,
-                $cordovaToast,$ionicHistory,$location,
-                Push) {
+
+    .run(function($ionicPlatform,$rootScope,$interval,
+                  $cordovaToast,$ionicHistory,$location,
+                  $ionicPopup) {
+
 
 
     $rootScope.car_orders=[
@@ -90,6 +92,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
       var onReceiveNotification = function(data) {
         try{
+
           console.log('received notification :' + data);
           alert('notification got');
           var notification = angular.fromJson(data);
@@ -122,15 +125,33 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
           } else {
             message = event.content;
           }
-          alert('message=' + message);
-        } catch(exception) {
-          alert("JPushPlugin:onReceiveMessage-->" + exception);
+          if(Object.prototype.toString.call(message)!='[object Object]')
+          {
+            message = JSON.parse(message);
+          }else{}
+
+          //TODO:message classify
+            var confirmPopup = $ionicPopup.confirm({
+              title: '您的订单'+message.order.orderNum,
+              template: message.unitName+'维修厂的服务人员愿意接单,其联系方式为:'+message.mobilePhone,
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+                console.log('You are sure');
+              } else {
+                console.log('You are not sure');
+              }
+            });
+          }catch(e){
+          alert('exception=\r\n' + e.toString());
         }
       }
 
       var onGetRegistradionID = function(data) {
         try {
           alert("JPushPlugin:registrationID is " + data);
+          if(data!==undefined&&data!==null)
+            $rootScope.registrationId=data;
         } catch(exception) {
          alert(exception);
         }
@@ -287,12 +308,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         }
       })
 
-      .state('tabs.chatter',{
-        url:'/chatter',
-        views:{
-          'chatter-tab':{
-            controller:'chatterController',
-            templateUrl:'views/chatter/chatter.html'
+      .state('tabs.chatter', {
+        url: '/chatter',
+        views: {
+          'chatter-tab': {
+            controller: 'chatterController',
+            templateUrl: 'views/chatter/chatter.html'
           }
         }
       })
@@ -404,7 +425,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
         templateUrl:'views/transclude/transclude.html'
       })
 
+
     // if none of the above states are matched, use this as the fallback
+
     $urlRouterProvider.otherwise('/login');
 
   })
@@ -422,47 +445,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     };
   })
 
-  //极光推送
-  .factory('Push', function() {
-    var push;
-    return {
-      setBadge: function(badge) {
-        if (push) {
-          console.log('jpush: set badge', badge);
-          plugins.jPushPlugin.setBadge(badge);
-        }
-      },
-      setAlias: function(alias) {
-        if (push) {
-          console.log('jpush: set alias', alias);
-          plugins.jPushPlugin.setAlias(alias);
-        }
-      },
-      check: function() {
-        if (window.jpush && push) {
-          plugins.jPushPlugin.receiveNotificationIniOSCallback(window.jpush);
-          window.jpush = null;
-        }
-      },
-      init: function(notificationCallback) {
-        console.log('jpush: start init-----------------------');
-        push = window.plugins && window.plugins.jPushPlugin;
-        if (push) {
-          console.log('jpush: init');
-          plugins.jPushPlugin.init();
-          plugins.jPushPlugin.setDebugMode(true);
-          plugins.jPushPlugin.openNotificationInAndroidCallback = notificationCallback;
-          plugins.jPushPlugin.receiveNotificationIniOSCallback = notificationCallback;
-        }
-      }
-    };
-  })
-
   .factory('Proxy', function() {
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-
           return "http://192.168.1.106:3000";
         else
           return "/proxy/node_server";
