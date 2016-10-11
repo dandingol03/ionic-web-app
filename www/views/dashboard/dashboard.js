@@ -839,8 +839,6 @@ angular.module('starter')
       serviceType: ''//服务项目
     }
 
-
-
     $scope.dailys = [
       {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
       {subServiceId:'2',subServiceTypes:'机油,三滤',serviceType:'11'},
@@ -2085,5 +2083,5 @@ angular.module('starter')
       }
     }
 
-  });
+  })
 

@@ -20,16 +20,16 @@ angular.module('starter')
         method:'POST',
         url:"/proxy/send",
         headers:{
-        'Content-Type':'application/json'
-      },
+          'Content-Type':'application/json'
+        },
         data:{  corp_id:'hy6550',
-        corp_pwd:'mm2289',
-        corp_service:'1069003256550',
-        mobile:'18253160627',
-        msg_content:'hello,xyd',
-        corp_msg_id:'',
-        ext:'' // your data” }
-      }}).
+          corp_pwd:'mm2289',
+          corp_service:'1069003256550',
+          mobile:'18253160627',
+          msg_content:'hello,xyd',
+          corp_msg_id:'',
+          ext:'' // your data” }
+        }}).
       success(function (response) {
         console.log('success');
       }).
@@ -37,7 +37,7 @@ angular.module('starter')
         var str='';
         for(var field in err)
           str+=field+':'+err[field];
-          console.log('error='+str);
+        console.log('error='+str);
       });
     }
 
@@ -64,23 +64,20 @@ angular.module('starter')
     };
 
 
-    $scope.onGetRegistradionID = function(data) {
-      try{
-        $rootScope.registrationId=data;
-        alert('registrationId=\r\n' + data);
-        $scope.login();
-      }catch(exception){
 
-      }
-    };
 
     $scope.doLogin=function(){
       if($rootScope.registrationId==undefined||$rootScope.registrationId==null||$rootScope.registrationId=='')
       {
 
-        if(window.plugins!==undefined&&window.plugins!==null)
-        {
-          $scope.login();
+        if(window.plugins!==undefined&&window.plugins!==null) {
+          try {
+            window.plugins.jPushPlugin.getRegistrationID($rootScope.onGetRegistradionID);
+            $scope.login();
+          } catch (e) {
+            alert(e);
+
+          }
         }
         else{
           $scope.login();
@@ -104,19 +101,18 @@ angular.module('starter')
         }
 
 
-        }).then(function(res){
+      }).then(function(res){
 
-          var json=res.data;
-          var access_token=json.access_token;
+        var json=res.data;
+        var access_token=json.access_token;
 
-          if(access_token!==undefined&&access_token!==null)
-          {
-            $rootScope.access_token=access_token;
-            if(window.cordova!=undefined && window.cordova!=null) {
-            }
-
-            alert('registrationId=\r\n' + $rootScope.registrationId);
-            return  $http({
+        if(access_token!==undefined&&access_token!==null)
+        {
+          $rootScope.access_token=access_token;
+          if(window.cordova!=undefined && window.cordova!=null) {
+          }
+          alert('registrationId=\r\n' + $rootScope.registrationId);
+          return  $http({
               method: "POST",
               url: Proxy.local()+"/svr/request",
               headers: {
@@ -127,25 +123,25 @@ angular.module('starter')
                 info:{
                   registrationId:$rootScope.registrationId!==undefined&&$rootScope.registrationId!==null?$rootScope.registrationId:''
                 }
-              }
-            });
-          }
-          else
-            return ({re: -1});
-        }).then(function(res) {
-          var json=res.data;
-          if(json.re==1||json.result=='ok')
-          {
-            $state.go('tabs.dashboard');
-          }
-        }).catch(function(err){
-          var error='';
-          for(var field in err)
-          {
-            error+=err[field]+'\r\n';
-          }
-          alert('error=' + error);
-        });
+            }
+          });
+        }
+        else
+          return ({re: -1});
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1||json.result=='ok')
+        {
+          $state.go('tabs.dashboard');
+        }
+      }).catch(function(err){
+        var error='';
+        for(var field in err)
+        {
+          error+=err[field]+'\r\n';
+        }
+        alert('error=' + error);
+      });
 
 
 
@@ -193,19 +189,19 @@ angular.module('starter')
 
     $scope.test=function() {
       $http.get("http://202.194.14.106:3000/insurance/get_lifeinsurance_list").
-        then(function(res) {
-          if(res.data!==undefined&&res.data!==null)
-          {
-            var life_insurances=res.data.life_insurances;
-            if(Object.prototype.toString.call(life_insurances)!='[object Array]')
-              life_insurances=JSON.parse(life_insurances);
-            life_insurances.map(function(insurance,i) {
-              alert(insurance);
-            });
-          }
-        }).catch(function(err) {
-          alert('err=' + err);
-        });
+      then(function(res) {
+        if(res.data!==undefined&&res.data!==null)
+        {
+          var life_insurances=res.data.life_insurances;
+          if(Object.prototype.toString.call(life_insurances)!='[object Array]')
+            life_insurances=JSON.parse(life_insurances);
+          life_insurances.map(function(insurance,i) {
+            alert(insurance);
+          });
+        }
+      }).catch(function(err) {
+        alert('err=' + err);
+      });
 
     }
 
@@ -296,19 +292,19 @@ angular.module('starter')
             }
           }
         }).
-        then(function(res) {
-          if(res.data!==undefined&&res.data!==null)
-          {
-            var life_insurances=res.data.life_insurances;
-            if(Object.prototype.toString.call(life_insurances)!='[object Array]')
-              life_insurances=JSON.parse(life_insurances);
-            life_insurances.map(function(insurance,i) {
-              alert(insurance);
-            });
-          }
-        }).catch(function(err) {
-          alert('err=' + err);
-        });
+      then(function(res) {
+        if(res.data!==undefined&&res.data!==null)
+        {
+          var life_insurances=res.data.life_insurances;
+          if(Object.prototype.toString.call(life_insurances)!='[object Array]')
+            life_insurances=JSON.parse(life_insurances);
+          life_insurances.map(function(insurance,i) {
+            alert(insurance);
+          });
+        }
+      }).catch(function(err) {
+        alert('err=' + err);
+      });
     }
 
 
@@ -319,11 +315,11 @@ angular.module('starter')
         headers:{
           'Access-Control-Allow-Origin':'*'
         }}).
-        success(function (response) {
-          console.log('success');
-        }).error(function(err) {
-          console.log('...');
-        });
+      success(function (response) {
+        console.log('success');
+      }).error(function(err) {
+        console.log('...');
+      });
     }
 
 

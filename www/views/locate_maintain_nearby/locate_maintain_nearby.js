@@ -10,7 +10,7 @@ angular.module('starter')
                                                         Proxy,$stateParams){
 
     $scope.maintain={
-      maintenances:{}
+      maintenance:{}
     };
 
     if($stateParams.locateType!==undefined&&$stateParams.locateType!==null)
@@ -53,6 +53,29 @@ angular.module('starter')
         }
         else
         {
+
+
+          $scope.maintain.maintenance[unit.unitId]=unit;
+          label.setStyle({
+            color:'#00f'
+          });
+        }
+      }
+
+      //var marker1=new BMap.Marker(new BMap.Point(117.144816,36.670));
+      //map.addOverlay(marker1);
+      //var label1 = new BMap.Label("marker1",{offset:new BMap.Size(20,-10)});
+      //label1.setStyle({
+      //  color :'#222',
+      //  fontSize : "12px",
+      //  height : "20px",
+      //  lineHeight : "20px",
+      //  fontFamily:"微软雅黑",
+      //  border:'0px'
+      //});
+      //marker1.setLabel(label1);
+      //marker1.addEventListener("click",$scope.maintain_select);
+
           $scope.unit=unit;
           label.setStyle({
             color:'#00f'
@@ -61,8 +84,8 @@ angular.module('starter')
             if(item.getContent().trim()!=label.getContent().trim())
               item.setStyle({color: '#222','font-size':'0.8em'});
           })
-        }
-      }
+        })
+
 
 
 
@@ -428,6 +451,6 @@ angular.module('starter')
       //},{enableHighAccuracy: true});
 
 
-    });
+
 
   });

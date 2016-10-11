@@ -7,21 +7,23 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker'])
 
-    .config(function(baiduMapApiProvider) {
-      baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
-    })
+  .config(function(baiduMapApiProvider) {
+    baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
+  })
+
 
     .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
                   $ionicPopup) {
 
 
+
     $rootScope.car_orders=[
-        [
-          {feeDate:"2016-02-01",carNum:"鲁A00003",insuranceFeeTotal:2000},
-          {feeDate:"2016-03-17",carNum:"鲁A00003",insuranceFeeTotal:2000},
-          {feeDate:"2016-05-20",carNum:"鲁A00003",insuranceFeeTotal:2000}
-        ],
+      [
+        {feeDate:"2016-02-01",carNum:"鲁A00003",insuranceFeeTotal:2000},
+        {feeDate:"2016-03-17",carNum:"鲁A00003",insuranceFeeTotal:2000},
+        {feeDate:"2016-05-20",carNum:"鲁A00003",insuranceFeeTotal:2000}
+      ],
       {},
       [
         {companyName:'',products:[]},
@@ -151,7 +153,15 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
           if(data!==undefined&&data!==null)
             $rootScope.registrationId=data;
         } catch(exception) {
-          console.log(exception);
+         alert(exception);
+        }
+      }
+
+      $rootScope.onGetRegistradionID = function(data) {
+        try {
+          console.log("JPushPlugin:registrationID is " + data);
+        } catch(exception) {
+          alert(exception);
         }
       }
 
@@ -186,7 +196,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       //  alert('error=\r\n' + e.toString());
       //}
 
-     // window.plugins.jPushPlugin.setTags(['game']);
+      // window.plugins.jPushPlugin.setTags(['game']);
       //document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
 
     });
@@ -223,7 +233,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     }, 101);
 
 
-})
+  })
 
   .config(function (ionicDatePickerProvider) {
     var datePickerObj = {
@@ -248,10 +258,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
   .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
+    // Ionic uses AngularUI Router which uses the concept of states
+    // Learn more here: https://github.com/angular-ui/ui-router
+    // Set up the various states which the app can be in.
+    // Each state's controller can be found in controllers.js
 
 
     $ionicConfigProvider.platform.ios.tabs.style('standard');
@@ -269,153 +279,152 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     $ionicConfigProvider.platform.android.views.transition('android');
 
 
-  $stateProvider
+    $stateProvider
 
-  // setup an abstract state for the tabs directive
-    .state('tabs',{
-      url:'/tabs',
-      abstract:true,
-      templateUrl:'views/tabs/tabs.html'
-    })
+    // setup an abstract state for the tabs directive
+      .state('tabs',{
+        url:'/tabs',
+        abstract:true,
+        templateUrl:'views/tabs/tabs.html'
+      })
 
-    .state('tabs.dashboard',{
-      url:'/dashboard/:params',
-      views:{
-        'dashboard-tab':{
-          controller:'dashboardController',
-          templateUrl:'views/dashboard/dashboard.html'
+      .state('tabs.dashboard',{
+        url:'/dashboard/:params',
+        views:{
+          'dashboard-tab':{
+            controller:'dashboardController',
+            templateUrl:'views/dashboard/dashboard.html'
+          }
         }
-      }
-    })
+      })
 
-    .state('tabs.my',{
-      url:'/my',
-      views:{
-        'my-tab':{
-          controller:'myController',
-          templateUrl:'views/my/my.html'
+      .state('tabs.my',{
+        url:'/my',
+        views:{
+          'my-tab':{
+            controller:'myController',
+            templateUrl:'views/my/my.html'
+          }
         }
-      }
-    })
+      })
 
-    .state('tabs.chatter',{
-      url:'/chatter',
-      views:{
-        'chatter-tab':{
-          controller:'chatterController',
-          templateUrl:'views/chatter/chatter.html'
+      .state('tabs.chatter', {
+        url: '/chatter',
+        views: {
+          'chatter-tab': {
+            controller: 'chatterController',
+            templateUrl: 'views/chatter/chatter.html'
+          }
         }
-      }
-    })
+      })
 
 
-    .state('login',{
-      url:'/login',
-      controller: 'loginController',
-      templateUrl:'views/login/login.html'
-    })
+      .state('login',{
+        url:'/login',
+        controller: 'loginController',
+        templateUrl:'views/login/login.html'
+      })
 
-     .state('car_insurance',{
-       url:'/car_insurance',
-       controller:'carInsuranceController',
-       templateUrl:'views/car_insurance/car_insurance.html'
-    })
-
-
-    .state('orderCluster',{
-      url:'/orderCluster',
-      controller:'orderClusterController',
-      templateUrl:'views/orderCluster/orderCluster.html'
-    })
+      .state('car_insurance',{
+        url:'/car_insurance',
+        controller:'carInsuranceController',
+        templateUrl:'views/car_insurance/car_insurance.html'
+      })
 
 
-    .state('lifePlanDetail',{
-      url:'/life_plan_detail/:plan',
-      controller:'lifePlanDetailController',
-      templateUrl:'views/life_plan_detail/life_plan_detail.html'
-    })
-
-    /**
-     * 个人信息=>['修改密码','退出登录']
-     */
-    .state('myInfo',{
-      url:'/myInfo',
-      controller:'myInfoController',
-      templateUrl:'views/myInfo/myInfo.html'
-    })
-
-    .state('passwordModify',{
-      url:'/passwordModify',
-      controller:'passwordModifyController',
-      templateUrl:'views/passwordModify/passwordModify.html'
-    })
-
-    .state('car_orders',{
-      cache:false,
-      url:'/car_orders/:selected',
-      controller:'carOrdersController',
-      templateUrl:'views/car_orders/car_orders.html'
-    })
-
-    .state('service_orders',{
-      cache:false,
-      url:'/service_orders',
-      controller:'serviceOrdersController',
-      templateUrl:'views/service_orders/service_orders.html'
-    })
-
-    .state('service_order_detail',{
-      url:'/service_order_detail/:order',
-      controller:'serviceOrderDetailController',
-      templateUrl:'views/service_order_detail/service_order_detail.html'
-    })
-
-    .state('life_insurance_orders',{
-      cache: false,
-      url:'/life_insurance_orders/:tabIndex',
-      controller:'lifeInsuranceOrdersController',
-      templateUrl:'views/life_insurance_orders/life_insurance_orders.html'
-    })
+      .state('orderCluster',{
+        url:'/orderCluster',
+        controller:'orderClusterController',
+        templateUrl:'views/orderCluster/orderCluster.html'
+      })
 
 
-    .state('integration', {
-      url: '/integration',
-      controller: 'integrationController',
-      templateUrl: 'views/integration/integration.html'
-    })
+      .state('lifePlanDetail',{
+        url:'/life_plan_detail/:plan',
+        controller:'lifePlanDetailController',
+        templateUrl:'views/life_plan_detail/life_plan_detail.html'
+      })
 
-    .state('uploadPhoto', {
-      url: '/uploadPhoto',
-      controller: 'uploadPhotoController',
-      templateUrl: 'views/uploadPhoto/uploadPhoto.html'
-    })
+      /**
+       * 个人信息=>['修改密码','退出登录']
+       */
+      .state('myInfo',{
+        url:'/myInfo',
+        controller:'myInfoController',
+        templateUrl:'views/myInfo/myInfo.html'
+      })
 
-    .state('car_order_detail',{
-      url:'/car_order_detail/:order',
-      controller:'carOrderDetailController',
-      templateUrl:'views/car_order_detail/car_order_detail.html'
+      .state('passwordModify',{
+        url:'/passwordModify',
+        controller:'passwordModifyController',
+        templateUrl:'views/passwordModify/passwordModify.html'
+      })
 
-    })
+      .state('car_orders',{
+        cache:false,
+        url:'/car_orders/:selected',
+        controller:'carOrdersController',
+        templateUrl:'views/car_orders/car_orders.html'
+      })
 
-    .state('life_insurance_product_list',{
-      url:'/life_insurance_product_list',
-      controller:'lifeInsuranceProductList',
-      templateUrl:'views/life_insurance_product_list/life_insurance_product_list.html'
-    })
+      .state('service_orders',{
+        cache:false,
+        url:'/service_orders',
+        controller:'serviceOrdersController',
+        templateUrl:'views/service_orders/service_orders.html'
+      })
 
-    .state('locate_maintain_nearby',{
-      url:'/locate_maintain_nearby/:locateType',
-      controller:'locateMaintainNearbyController',
-      templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
-    })
+      .state('service_order_detail',{
+        url:'/service_order_detail/:order',
+        controller:'serviceOrderDetailController',
+        templateUrl:'views/service_order_detail/service_order_detail.html'
+      })
 
-    .state('transclude',{
-      url:'/transclude',
-      controller:'transcludeController',
-      templateUrl:'views/transclude/transclude.html'
-    })
+      .state('life_insurance_orders',{
+        cache: false,
+        url:'/life_insurance_orders/:tabIndex',
+        controller:'lifeInsuranceOrdersController',
+        templateUrl:'views/life_insurance_orders/life_insurance_orders.html'
+      })
 
-  // if none of the above states are matched, use this as the fallback
+
+      .state('integration', {
+        url: '/integration',
+        controller: 'integrationController',
+        templateUrl: 'views/integration/integration.html'
+      })
+
+      .state('uploadPhoto', {
+        url: '/uploadPhoto',
+        controller: 'uploadPhotoController',
+        templateUrl: 'views/uploadPhoto/uploadPhoto.html'
+      })
+
+      .state('car_order_detail',{
+        url:'/car_order_detail/:order',
+        controller:'carOrderDetailController',
+        templateUrl:'views/car_order_detail/car_order_detail.html'
+
+      })
+
+      .state('life_insurance_product_list',{
+        url:'/life_insurance_product_list',
+        controller:'lifeInsuranceProductList',
+        templateUrl:'views/life_insurance_product_list/life_insurance_product_list.html'
+      })
+
+      .state('locate_maintain_nearby',{
+        url:'/locate_maintain_nearby/:locateType',
+        controller:'locateMaintainNearbyController',
+        templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
+      })
+
+      .state('transclude',{
+        url:'/transclude',
+        controller:'transcludeController',
+        templateUrl:'views/transclude/transclude.html'
+      })
+
 
     $urlRouterProvider.otherwise('/login');
 
@@ -423,16 +432,16 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
   .factory('BaiduMapService', function($q, baiduMapApi) {
 
-      return {
-        getBMap:function(){
-          var deferred=$q.defer();
-          baiduMapApi.then(function(BMap) {
-            deferred.resolve(BMap);
-          });
-          return deferred.promise;
-        }
-      };
-    })
+    return {
+      getBMap:function(){
+        var deferred=$q.defer();
+        baiduMapApi.then(function(BMap) {
+          deferred.resolve(BMap);
+        });
+        return deferred.promise;
+      }
+    };
+  })
 
   .factory('Proxy', function() {
     var ob={
