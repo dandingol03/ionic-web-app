@@ -887,6 +887,38 @@ angular.module('starter')
       return deferred.promise;
     }
 
+
+    $scope.audioCheck = function (orderId) {
+      var deferred = $q.defer();
+
+      if($scope.maintain.description.audio!=null&&$scope.maintain.description.audio!=undefined)
+      {
+        var server=Proxy.local()+'/svr/request?' +
+          'request=uploadAudio&orderId=orderId&fileName='+$scope.maintain.description.audio+'&audioType=serviceAudio';
+        var options = {
+          fileKey:'file',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          }
+        };
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(json) {
+          if(json.re==1){
+            deferred.resolve({re:1});
+          }else{
+            deferred.reject({re:-1});
+          }
+        })
+      }
+      else{
+        deferred.resolve({re:1});
+      }
+      return deferred.promise;
+    }
+
+
+
+
+
     //提交服务项目,生成服务订单
     $scope.commit_daily=function() {
 
@@ -945,10 +977,18 @@ angular.module('starter')
               $scope.videoCheck(json.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
-                  console.log('附件上传成功')
+                  console.log('视频附件上传成功')
                 }
                 else
                 {}
+                $scope.audioCheck(json.orderId).then(function(json) {
+                  alert('result of audiocheck=\r\n' + json);
+                  if (json.re == 1) {
+                    console.log('视频附件上传成功')
+                  }
+                  else
+                  {}
+                })
               })
             }
           }).catch(function (err) {
