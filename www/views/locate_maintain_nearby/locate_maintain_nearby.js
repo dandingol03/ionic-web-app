@@ -341,16 +341,16 @@ angular.module('starter')
               $rootScope.maintain.units = $scope.units;
             }
             break;
-          case 21:
+          case '21':
             //审车
             if ($rootScope.carManage == undefined || $rootScope.carManage == null)
               $rootScope.carManage = {};
-            if ($scope.carManage.unit !== undefined && $scope.carManage.unit !== null)
+            if ($scope.unit !== undefined && $scope.unit !== null)
               $rootScope.carManage.unit = $scope.unit;
             else
               $rootScope.carManage.units = $scope.units;
             break;
-          case 22:
+          case '22':
             //审证
             if ($rootScope.carManage == undefined || $rootScope.carManage == null)
               $rootScope.carManage = {};
@@ -359,7 +359,7 @@ angular.module('starter')
             else
               $rootScope.carManage.units = $scope.units;
             break;
-          case 23:
+          case '23':
             //接送机
             if ($rootScope.carManage == undefined || $rootScope.carManage == null)
               $rootScope.carManage = {};
@@ -368,7 +368,7 @@ angular.module('starter')
             else
               $rootScope.carManage.units = $scope.units;
             break;
-          case 24:
+          case '24':
             //取送车
             if ($rootScope.carManage == undefined || $rootScope.carManage == null)
               $rootScope.carManage = {};
