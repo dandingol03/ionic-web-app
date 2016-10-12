@@ -108,6 +108,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
           } else {
             //非 ios(android)
+
+
           }
         }catch(e)
         {
@@ -455,4 +457,104 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       }
     }
     return ob;
+  })
+
+  .service('$websocket', function () {
+    //window.ws = new WebSocket('ws://192.168.0.196:8090/ReactJPChatter/websocket.ws/'+ 1 +'/'+ 1);
+    WebSocket.pluginOptions ={
+      maxConnectTime: 5000
+    };
+    var self=this;
+    self.ws=null;
+    self.scopes=new Object();
+    /**
+     * <!-- 消息传播域集合的注册 -->
+     */
+    self.register=function(scopeName,scope){
+      if(scopeName==undefined||scopeName==null||scope==null||scope==undefined)
+      {
+        alert("注册域信息缺失");
+        return ;
+      }
+      if(self.scopes[scopeName]!==null&&self.scopes[scopeName]!==undefined)
+      {
+        alert("本消息域已属于消息传播范围");
+      }
+      else{
+        self.scopes[scopeName]=scope;
+      }
+    };
+    /**
+     ** 本域从消息传播范围中注销
+     **/
+    self.un$register=function(scopeName){
+      if(scopeName==undefined||scopeName==null)
+      {
+        alert("域注销失败");
+        return ;
+      }
+      scopeName[scopeName]=null;
+      console.log("域"+scopeName+"注销成功,已从消息传播范围中脱离");
+    };
+    self.connect=function(host,username,connectCb,closeCb,scope) {
+      try{
+        if(username==null||username==undefined)
+          throw "your username is blank";
+        self.ws=new WebSocket(host+"/"+username);
+
+        //websocket event handle
+        self.ws.onopen=function(message){
+          console.log('websocket connection is established');
+          self.scopes["login scope"]=scope;
+          //执行客户端订制的回调
+          connectCb(message);
+        };
+        self.ws.onmessage=function(evt){
+          //向发起连接的scope域发送消息
+          for(var scopeName in self.scopes)
+          {
+            var scope=self.scopes[scopeName];
+            if(scope!==undefined&&scope!==null)
+              scope.$emit('recv',evt.data);
+          }
+
+          console.log("got message:"+event.data+" from server");    // will be "hello"
+        };
+        self.ws.onerr=function(err)
+        {
+          console.log('connection with websocket encounter error!')
+        };
+        self.ws.onclose=function(event)
+        {
+          console.log('websocket shutdown from server' + event.code);
+
+        }
+      }catch(e)
+      {
+        alert("websocket create error:"+e);
+      }
+
+    };
+    self.send=function(message)
+    {
+      try{
+        self.ws.send(message);
+      }catch(e)
+      {
+        alert('websocket send message encounter error:'+e);
+      }
+    };
+
+    self.close=function(){
+      try{
+        self.ws.close();
+        self.ws=null;
+      }catch(e)
+      {
+        alert("webscoket close encounter error:"+e);
+      }
+    };
+
+    return self;
+
   })

@@ -917,8 +917,6 @@ angular.module('starter')
 
 
 
-
-
     //提交服务项目,生成服务订单
     $scope.commit_daily=function() {
 
@@ -968,6 +966,34 @@ angular.module('starter')
             } else {
               return {re: -1};
             }
+          }).then(function(res) {
+            var json = res.data;
+            if (json.re == 1) {
+              //TODO:append address and serviceType and serviceTime
+              var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
+
+              var servicePersonId = [];
+              servicePersonId.push(json.data.servicePersonId);
+              return $http({
+                method: "POST",
+                url: Proxy.local() + "/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data: {
+                  request: 'sendCustomMessage',
+                  info: {
+                    order: json.data,
+                    serviceItems: $scope.maintain.subServiceTypes,
+                    servicePersonIds: servicePersonId,
+                    serviceName: serviceName,
+                    type: 'to-servicePerson'
+                  }
+                }
+              });
+            } else {
+              return ({re: -1});
+            }
           }).then(function (res) {
             var json = res.data;
             if (json.re == 1) {
@@ -984,7 +1010,7 @@ angular.module('starter')
                 $scope.audioCheck(json.orderId).then(function(json) {
                   alert('result of audiocheck=\r\n' + json);
                   if (json.re == 1) {
-                    console.log('视频附件上传成功')
+                    console.log('音频附件上传成功')
                   }
                   else
                   {}
@@ -1061,7 +1087,6 @@ angular.module('starter')
             if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
               var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
-              $scope.maintain.subServiceTypes
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -2064,14 +2089,23 @@ angular.module('starter')
 
 
     //开始录音
+
     $scope.startRecord=function(){
       try{
+
+        if (ionic.Platform.isIOS()) {
           CordovaAudio.startRecordAudio(function(data) {
             alert('data=\r\n'+data);
-          });
+          })
+        } else if(ionic.Platform.isAndroid()) {
+          var src = "audio.mp3";
+          var media = $cordovaMedia.newMedia(src);
+          media.startRecord();
+          $scope.media=media;
+        }
       }catch(e) {
         alert('error=\r\n'+ e.toString());
-      };
+      }
     }
 
     //暂停录音
@@ -2082,10 +2116,23 @@ angular.module('starter')
       //  alert('data=\r\n' + $scope.mediaRec.media[field]);
       //}
       try{
-        CordovaAudio.stopRecordAudio(function(success) {
-          $scope.resourceUrl=success;
-          alert('url=\r\n' + $scope.resourceUrl);
-        });
+        if( ionic.Platform.isIOS()){
+          CordovaAudio.stopRecordAudio(function(success) {
+            $scope.resourceUrl=success;
+
+            alert('url=\r\n' + $scope.resourceUrl);
+
+          })
+        }else if(ionic.Platform.isAndroid()){
+
+          $scope.media.stopRecord();
+          for(var field in $scope.media)
+          {
+            alert('field='+field+'\r\n'+$scope.media[field]);
+          }
+
+        }
+
       }catch(e)
       {
         alert('error=\r\n'+ e.toString());
@@ -2106,7 +2153,7 @@ angular.module('starter')
             $scope.carInfo.issueDate=carInfo.issueDate;
             $scope.carInfo.ownerName=carInfo.ownerName;
           }
-        });
+        })
       $scope.close_matchingCarInfoModal();
     }
 
@@ -2114,9 +2161,15 @@ angular.module('starter')
     $scope.play=function(){
       //$scope.mediaRec.play();
       try{
-        CordovaAudio.playingRecorder(function(success) {
-          alert('success=\r\n'+success);
-        });
+
+        if( ionic.Platform.isIOS()){
+          CordovaAudio.playingRecorder(function(success) {
+            alert('success=\r\n'+success);
+          })
+        }else if(ionic.Platform.isAndroid()){
+          $scope.media.play();
+        }
+
       }catch(e)
       {
         alert('error=\r\n' + e.toString());
