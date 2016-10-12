@@ -2191,14 +2191,20 @@ angular.module('starter')
           CordovaAudio.stopRecordAudio(function(success) {
             $scope.resourceUrl=success;
 
+
             alert('url=\r\n' + $scope.resourceUrl);
 
           })
         }else if(ionic.Platform.isAndroid()){
 
           $scope.media.stopRecord();
-
-
+          $scope.media.media.getAudioFullPath(function(path){
+            if(path!==undefined&&path!==null)
+            {
+              $scope.resourceUrl=path;
+              console.log('path='+$scope.resourceUrl);
+            }
+          });
         }
 
       }catch(e)
