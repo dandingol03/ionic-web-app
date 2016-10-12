@@ -454,107 +454,73 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
           return "http://192.168.1.106:3000";
         else
           return "/proxy/node_server";
+      },
+      remote:function(){
+        if(window.cordova!==undefined&&window.cordova!==null)
+          return 'http://202.194.14.106:3000';
+        else
+          return '/proxy/node_remote';
       }
     }
     return ob;
   })
 
-  .service('$websocket', function () {
-    //window.ws = new WebSocket('ws://192.168.0.196:8090/ReactJPChatter/websocket.ws/'+ 1 +'/'+ 1);
-    WebSocket.pluginOptions ={
-      maxConnectTime: 5000
-    };
+  .factory('$WebSocket',function(){
     var self=this;
-    self.ws=null;
-    self.scopes=new Object();
-    /**
-     * <!-- 消息传播域集合的注册 -->
-     */
-    self.register=function(scopeName,scope){
-      if(scopeName==undefined||scopeName==null||scope==null||scope==undefined)
-      {
-        alert("注册域信息缺失");
-        return ;
-      }
-      if(self.scopes[scopeName]!==null&&self.scopes[scopeName]!==undefined)
-      {
-        alert("本消息域已属于消息传播范围");
-      }
-      else{
-        self.scopes[scopeName]=scope;
-      }
-    };
-    /**
-     ** 本域从消息传播范围中注销
-     **/
-    self.un$register=function(scopeName){
-      if(scopeName==undefined||scopeName==null)
-      {
-        alert("域注销失败");
-        return ;
-      }
-      scopeName[scopeName]=null;
-      console.log("域"+scopeName+"注销成功,已从消息传播范围中脱离");
-    };
-    self.connect=function(host,username,connectCb,closeCb,scope) {
-      try{
-        if(username==null||username==undefined)
-          throw "your username is blank";
-        self.ws=new WebSocket(host+"/"+username);
 
-        //websocket event handle
-        self.ws.onopen=function(message){
-          console.log('websocket connection is established');
-          self.scopes["login scope"]=scope;
-          //执行客户端订制的回调
-          connectCb(message);
-        };
-        self.ws.onmessage=function(evt){
-          //向发起连接的scope域发送消息
-          for(var scopeName in self.scopes)
-          {
-            var scope=self.scopes[scopeName];
-            if(scope!==undefined&&scope!==null)
-              scope.$emit('recv',evt.data);
-          }
+      self.cbs=[];
 
-          console.log("got message:"+event.data+" from server");    // will be "hello"
-        };
-        self.ws.onerr=function(err)
-        {
-          console.log('connection with websocket encounter error!')
-        };
-        self.ws.onclose=function(event)
-        {
-          console.log('websocket shutdown from server' + event.code);
+      self.msgId=1;
 
-        }
-      }catch(e)
+      self.getMsgId=function()
       {
-        alert("websocket create error:"+e);
+        return self.msgId++;
       }
 
-    };
-    self.send=function(message)
-    {
-      try{
-        self.ws.send(message);
-      }catch(e)
-      {
-        alert('websocket send message encounter error:'+e);
+      self.connect=function(cb){
+        self.ws = new window.WebSocket('ws://202.194.14.106:3010');
+        self.ws.onopen=self.onopen;
+        self.ws.onmessage=self.onmessage;
       }
-    };
-
-    self.close=function(){
-      try{
-        self.ws.close();
-        self.ws=null;
-      }catch(e)
-      {
-        alert("webscoket close encounter error:"+e);
+      self.onopen=function(message) {
+        console.log('websocket connection is established');
+        self.cbs.map(function(item,i) {
+          item(message);
+        });
       }
-    };
+      self.onerr=function(err) {
+        console.log('connect error');
+      }
+      self.onclose=function(event) {
+        console.log('websocket shutdown from server' + event.code);
+      }
+      self.onmessage=function(event) {
+        console.log('got message=\r\n' + event.data);
+      }
+      self.send=function(msg) {
+        var info=msg;
+        if(Object.prototype.toString.call(info)!='[object String')
+          info=JSON.stringify(info);
+        self.ws.send(info);
+      }
+      self.registeCallback=function(cb) {
+        var flag=false;
+        self.cbs.map(function(item,i) {
+          if(item==cb)
+            flag=true;
+        })
+        if(!flag)
+        self.cbs.push(cb);
+      };
+      self.unregisteCallback=function(cb) {
+        self.cbs.map(function(item,i) {
+          if(item==cb)
+            self.cbs.slice(i, 1);
+        })
+      };
 
     return self;
-
   })
+
+
+

@@ -66,6 +66,9 @@ angular.module('starter')
     //   console.log('...');
     // });
 
+    //车驾管信息
+    $scope.carManage={
+    };
 
     //车辆信息
     $scope.carInfo=
@@ -860,6 +863,34 @@ angular.module('starter')
       $scope.accident.type=type;
     }
 
+    $scope.audioCheck = function (orderId) {
+      var deferred = $q.defer();
+      alert('audiochecking.....');
+      if($scope.maintain.description.audio!=null&&$scope.maintain.description.audio!=undefined)
+      {
+        var server=Proxy.local()+'/svr/request?' +
+          'request=uploadAudio&orderId='+orderId+'&fileName='+$scope.maintain.description.audio+'&audioType=serviceAudio';
+        var options = {
+          fileKey:'file',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          }
+        };
+        alert('go into audio');
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(json) {
+          if(json.re==1){
+            deferred.resolve({re:1});
+          }else{
+            deferred.reject({re:-1});
+          }
+        })
+      }
+      else{
+        deferred.resolve({re:1});
+      }
+      return deferred.promise;
+    }
+
 
     $scope.videoCheck = function (orderId) {
       var deferred = $q.defer();
@@ -1109,7 +1140,6 @@ angular.module('starter')
             }
           }).then(function (res) {
             var json = res.data;
-            if (json.re == 1) {
               $scope.videoCheck(order.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
@@ -1118,7 +1148,13 @@ angular.module('starter')
                 else
                 {}
               });
-            }
+              $scope.audioCheck(order.orderId).then(function(json) {
+                alert('result of audioCheck=\r\n' + json);
+                if(json.re==1) {
+                  console.log('音频附件上传成功');
+                }else{}
+              });
+
           }).catch(function (err) {
             var str = '';
             for (var field in err)
@@ -1876,6 +1912,41 @@ angular.module('starter')
         $scope.maintenance_t_a_modal_cb();
       }
     };
+    /*** bind maintenance_t&a ***/
+
+    /*** bind carManage_t&a ***/
+    $ionicModal.fromTemplateUrl('views/modal/carManage_t_a.html',{
+      scope:  $scope,
+      animation: 'animated '+'bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.carManage_t_a_modal = modal;
+    });
+
+    //提交车驾管项目
+    $scope.open_carManageTAModal= function(cb){
+      if(cb!==undefined&&cb!==null)
+        $scope.carManage_t_a_modal_cb=cb;
+      $scope.carManage_t_a_modal.show();
+    };
+
+    $scope.close_carManageTAModal= function() {
+      $scope.carManage_t_a_modal.hide();
+      if($scope.carManage_t_a_modal_cb!==undefined&&
+        $scope.carManage_t_a_modal_cb!==null&&
+        Object.prototype.toString.call($scope.carManage_t_a_modal_cb)=='[object Function]')
+      {
+        $scope.carManage_t_a_modal_cb();
+      }
+    };
+    /*** bind carManage_t&a ***/
+
+
+
+
+
+
+
 
 
     $scope.selfGeoLocation=function(item,field){
@@ -2126,10 +2197,7 @@ angular.module('starter')
         }else if(ionic.Platform.isAndroid()){
 
           $scope.media.stopRecord();
-          for(var field in $scope.media)
-          {
-            alert('field='+field+'\r\n'+$scope.media[field]);
-          }
+
 
         }
 
