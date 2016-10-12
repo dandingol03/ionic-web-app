@@ -860,6 +860,34 @@ angular.module('starter')
       $scope.accident.type=type;
     }
 
+    $scope.audioCheck = function (orderId) {
+      var deferred = $q.defer();
+      alert('audiochecking.....');
+      if($scope.maintain.description.audio!=null&&$scope.maintain.description.audio!=undefined)
+      {
+        var server=Proxy.local()+'/svr/request?' +
+          'request=uploadAudio&orderId='+orderId+'&fileName='+$scope.maintain.description.audio+'&audioType=serviceAudio';
+        var options = {
+          fileKey:'file',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          }
+        };
+        alert('go into audio');
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(json) {
+          if(json.re==1){
+            deferred.resolve({re:1});
+          }else{
+            deferred.reject({re:-1});
+          }
+        })
+      }
+      else{
+        deferred.resolve({re:1});
+      }
+      return deferred.promise;
+    }
+
 
     $scope.videoCheck = function (orderId) {
       var deferred = $q.defer();
@@ -1021,7 +1049,6 @@ angular.module('starter')
             if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
               var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
-              $scope.maintain.subServiceTypes
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -1044,7 +1071,6 @@ angular.module('starter')
             }
           }).then(function (res) {
             var json = res.data;
-            if (json.re == 1) {
               $scope.videoCheck(order.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
@@ -1053,7 +1079,13 @@ angular.module('starter')
                 else
                 {}
               });
-            }
+              $scope.audioCheck(order.orderId).then(function(json) {
+                alert('result of audioCheck=\r\n' + json);
+                if(json.re==1) {
+                  console.log('音频附件上传成功');
+                }else{}
+              });
+
           }).catch(function (err) {
             var str = '';
             for (var field in err)
@@ -2045,6 +2077,7 @@ angular.module('starter')
         CordovaAudio.stopRecordAudio(function(success) {
           $scope.resourceUrl=success;
           alert('url=\r\n' + $scope.resourceUrl);
+          $scope.maintain.description.audio=$scope.resourceUrl;
         });
       }catch(e)
       {
