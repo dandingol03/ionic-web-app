@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script>
+    var ws = new window.WebSocket('ws://202.194.14.106:3010');
+    ws.onopen=function(message) {
+      console.log('websocket connection is established');
+      //build connect
+      ws.send(JSON.stringify({action:'login',times:new Date(),token:'',msgid:0}));
+    };
+    ws.onmessage=function(evt) {
+      console.log('got message' + evt.data);
+    };
+    ws.onerr=function(err) {
+      console.log('connenct error');
+    };
+    ws.onclose=function(event) {
+      console.log('websocket shutdown from server' + event.code);
+    };
+  </script>
+</head>
+<body>
+
+</body>
+</html>

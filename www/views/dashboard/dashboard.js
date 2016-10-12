@@ -66,6 +66,9 @@ angular.module('starter')
     //   console.log('...');
     // });
 
+    //车驾管信息
+    $scope.carManage={
+    };
 
     //车辆信息
     $scope.carInfo=
@@ -1843,6 +1846,41 @@ angular.module('starter')
         $scope.maintenance_t_a_modal_cb();
       }
     };
+    /*** bind maintenance_t&a ***/
+
+    /*** bind carManage_t&a ***/
+    $ionicModal.fromTemplateUrl('views/modal/carManage_t_a.html',{
+      scope:  $scope,
+      animation: 'animated '+'bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.carManage_t_a_modal = modal;
+    });
+
+    //提交车驾管项目
+    $scope.open_carManageTAModal= function(cb){
+      if(cb!==undefined&&cb!==null)
+        $scope.carManage_t_a_modal_cb=cb;
+      $scope.carManage_t_a_modal.show();
+    };
+
+    $scope.close_carManageTAModal= function() {
+      $scope.carManage_t_a_modal.hide();
+      if($scope.carManage_t_a_modal_cb!==undefined&&
+        $scope.carManage_t_a_modal_cb!==null&&
+        Object.prototype.toString.call($scope.carManage_t_a_modal_cb)=='[object Function]')
+      {
+        $scope.carManage_t_a_modal_cb();
+      }
+    };
+    /*** bind carManage_t&a ***/
+
+
+
+
+
+
+
 
 
     $scope.selfGeoLocation=function(item,field){
