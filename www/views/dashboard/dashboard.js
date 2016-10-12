@@ -918,6 +918,36 @@ angular.module('starter')
       return deferred.promise;
     }
 
+
+    $scope.audioCheck = function (orderId) {
+      var deferred = $q.defer();
+
+      if($scope.maintain.description.audio!=null&&$scope.maintain.description.audio!=undefined)
+      {
+        var server=Proxy.local()+'/svr/request?' +
+          'request=uploadAudio&orderId=orderId&fileName='+$scope.maintain.description.audio+'&audioType=serviceAudio';
+        var options = {
+          fileKey:'file',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          }
+        };
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(json) {
+          if(json.re==1){
+            deferred.resolve({re:1});
+          }else{
+            deferred.reject({re:-1});
+          }
+        })
+      }
+      else{
+        deferred.resolve({re:1});
+      }
+      return deferred.promise;
+    }
+
+
+
     //提交服务项目,生成服务订单
     $scope.commit_daily=function() {
 
@@ -972,8 +1002,9 @@ angular.module('starter')
             if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
               var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
-              var servicePersonIds = [order.servicePersonId];
               var order=json.data;
+              var servicePersonId = [];
+              servicePersonId.push(order.servicePersonId);
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -985,7 +1016,7 @@ angular.module('starter')
                   info: {
                     order: order,
                     serviceItems: $scope.maintain.subServiceTypes,
-                    servicePersonIds: servicePersonIds,
+                    servicePersonIds: servicePersonId,
                     serviceName: serviceName,
                     type: 'to-servicePerson'
                   }
@@ -1003,10 +1034,18 @@ angular.module('starter')
               $scope.videoCheck(json.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
-                  console.log('附件上传成功')
+                  console.log('视频附件上传成功')
                 }
                 else
                 {}
+                $scope.audioCheck(json.orderId).then(function(json) {
+                  alert('result of audiocheck=\r\n' + json);
+                  if (json.re == 1) {
+                    console.log('音频附件上传成功')
+                  }
+                  else
+                  {}
+                })
               })
             }
           }).catch(function (err) {
@@ -2323,14 +2362,23 @@ angular.module('starter')
 
 
     //开始录音
+
     $scope.startRecord=function(){
       try{
+
+        if (ionic.Platform.isIOS()) {
           CordovaAudio.startRecordAudio(function(data) {
             alert('data=\r\n'+data);
-          });
+          })
+        } else if(ionic.Platform.isAndroid()) {
+          var src = "audio.mp3";
+          var media = $cordovaMedia.newMedia(src);
+          media.startRecord();
+          $scope.media=media;
+        }
       }catch(e) {
         alert('error=\r\n'+ e.toString());
-      };
+      }
     }
 
     //暂停录音
@@ -2341,11 +2389,20 @@ angular.module('starter')
       //  alert('data=\r\n' + $scope.mediaRec.media[field]);
       //}
       try{
-        CordovaAudio.stopRecordAudio(function(success) {
-          $scope.resourceUrl=success;
-          alert('url=\r\n' + $scope.resourceUrl);
-          $scope.maintain.description.audio=$scope.resourceUrl;
-        });
+        if( ionic.Platform.isIOS()){
+          CordovaAudio.stopRecordAudio(function(success) {
+            $scope.resourceUrl=success;
+
+            alert('url=\r\n' + $scope.resourceUrl);
+
+          })
+        }else if(ionic.Platform.isAndroid()){
+
+          $scope.media.stopRecord();
+
+
+        }
+
       }catch(e)
       {
         alert('error=\r\n'+ e.toString());
@@ -2366,7 +2423,7 @@ angular.module('starter')
             $scope.carInfo.issueDate=carInfo.issueDate;
             $scope.carInfo.ownerName=carInfo.ownerName;
           }
-        });
+        })
       $scope.close_matchingCarInfoModal();
     }
 
@@ -2374,9 +2431,15 @@ angular.module('starter')
     $scope.play=function(){
       //$scope.mediaRec.play();
       try{
-        CordovaAudio.playingRecorder(function(success) {
-          alert('success=\r\n'+success);
-        });
+
+        if( ionic.Platform.isIOS()){
+          CordovaAudio.playingRecorder(function(success) {
+            alert('success=\r\n'+success);
+          })
+        }else if(ionic.Platform.isAndroid()){
+          $scope.media.play();
+        }
+
       }catch(e)
       {
         alert('error=\r\n' + e.toString());

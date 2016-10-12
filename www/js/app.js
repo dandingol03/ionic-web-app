@@ -108,6 +108,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
 
           } else {
             //非 ios(android)
+
+
           }
         }catch(e)
         {
@@ -426,6 +428,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       })
 
 
+    // if none of the above states are matched, use this as the fallback
+
     $urlRouterProvider.otherwise('/login');
 
   })
@@ -447,7 +451,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-          return "http://192.168.1.110:3000";
+          return "http://192.168.1.106:3000";
         else
           return "/proxy/node_server";
       },
