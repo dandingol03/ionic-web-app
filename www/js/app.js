@@ -463,6 +463,13 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
       })
 
+      .state('locate_airport_nearby',{
+        url:'/locate_airport_nearby/:locateType',
+        controller:'locateAirportNearbyController',
+        templateUrl:'views/locate_airport_nearby/locate_airport_nearby.html'
+      })
+
+
       .state('transclude',{
         url:'/transclude',
         controller:'transcludeController',
