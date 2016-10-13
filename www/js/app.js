@@ -77,7 +77,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       }
 
 
-      $rootScope.waitConfirm=[];
+      $rootScope.waitConfirm={};
 
       var onTagsWithAlias = function(event) {
         try {
@@ -109,8 +109,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
           } else {
             //非 ios(android)
-
-
           }
         }catch(e)
         {
@@ -128,18 +126,18 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           } else {
             message = event.content;
           }
-          alert('message='+message);
+
           if(Object.prototype.toString.call(message)!='[object Object]')
           {
             message = JSON.parse(message);
           }else{}
-
+          alert('unitName=' + message.unitName);
           if(message.type!=undefined&&message.type!=null){
             switch(message.type){
               case 'to-customer':
 
                 var order=message.order;
-
+                alert('orderId='+order.orderId);
                 if($rootScope.waitConfirm[order.orderId]==undefined||
                   $rootScope.waitConfirm[order.orderId]==null)
                   $rootScope.waitConfirm[order.orderId]=[];
@@ -147,14 +145,18 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
                 var tem='';
                 for(var i=0;i<$rootScope.waitConfirm[order.orderId].length;i++){
-                  tem='<div>'+$rootScope.waitConfirm[order.orderId].unitName+
-                              $rootScope.waitConfirm[order.orderId].mobilePhone+'</div>'
+                  var msg=$rootScope.waitConfirm[order.orderId][i];
+                  var mobilePhone=null;
+                  if(msg.mobilePhone!==undefined&&msg.mobilePhone!==null)
+                    mobilePhone=msg.mobilePhone;
+                  else
+                    mobilePhone='';
+                  tem='<div>'+msg.unitName+ mobilePhone+'</div>'
                 }
+
                 var confirmPopup = $ionicPopup.confirm({
-
-                  title: '您的订单'+$rootScope.waitConfirm[order.orderId].order.orderNum,
-                  template: tem,
-
+                  title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
+                  template: tem
                 });
                 confirmPopup.then(function(res) {
                   if(res) {
@@ -491,7 +493,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-          return "http://192.168.1.110:3000";
+          return "http://192.168.1.106:3000";
         else
           return "/proxy/node_server";
       },
