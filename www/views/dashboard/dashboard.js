@@ -1254,9 +1254,74 @@ angular.module('starter')
             for (var field in err)
               str += err[field];
           });
-        }else{
+        }else if($scope.carManage.servicePerson!==undefined&&$scope.carManage.servicePerson!==null)//如果选择了服务人员却没选维修厂
+        {
 
-        }
+
+
+          var servicePerson = $scope.carManage.servicePerson;
+          $scope.carManage.servicePersonId = servicePerson.servicePersonId;
+
+          $http({
+          method: "POST",
+          url: Proxy.local() + "/svr/request",
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          },
+          data: {
+            request: 'generateCarServiceOrder',
+            info: {
+              maintain: $scope.carManage
+            }
+          }}).then(function(res) {
+            var json = res.data;
+            if (json.re == 1) {
+              //TODO:append address and serviceType and serviceTime
+              var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
+              var order=json.data;
+              var servicePersonIds = [order.servicePersonId];
+              return $http({
+                method: "POST",
+                url: Proxy.local() + "/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data: {
+                  request: 'sendCustomMessage',
+                  info: {
+                    order: order,
+                    serviceItems: $scope.maintain.subServiceTypes,
+                    servicePersonIds: servicePersonIds,
+                    serviceName: serviceName,
+                    category:'carManage',
+                    type: 'to-servicePerson'
+                  }
+                }
+              });
+            } else {
+              return ({re: -1});
+            }
+          }).then(function (res) {
+            var json = res.data;
+            if (json.re == 1) {
+              $scope.close_maintenanceTAModal();
+              console.log('carManage order has been generated');
+              //检查是否需要上传附件信息
+              $scope.videoCheck(json.orderId).then(function (json) {
+                alert('result of videocheck=\r\n' + json);
+                if (json.re == 1) {
+                  console.log('附件上传成功')
+                }
+                else
+                {}
+              })
+            }
+          }).catch(function (err) {
+            var str = '';
+            for (var field in err)
+              str += err[field];
+          });
+        }else{}
       }
     }
 
@@ -1396,133 +1461,78 @@ angular.module('starter')
 
     $scope.service_persons=['person1','person2','person3'];
     $scope.service_person=$scope.service_persons[0];
-    $scope.service_person_select=function(persones) {
-      if (persones !== undefined && persones !== null &&persones.length > 0)
-      {
-        var buttons=[];
-        persones.map(function(person,i) {
-          buttons.push({text: person});
-        });
 
-        $ionicActionSheet.show({
-          buttons:buttons,
-          titleText: '选择你的服务人员',
-          cancelText: 'Cancel',
-          buttonClicked: function(index) {
-            $scope.service_person = $scope.service_persons[index];
-            return true;
-          },
-          cssClass:'motor_insurance_actionsheet'
-        });
-      }
-      else
-      {
-        var order = null;
-        var servicePersonIds = [];
-        var personIds = [];
-        $http({
-          method: "POST",
-          url: Proxy.local() + "/svr/request",
-          headers: {
-            'Authorization': "Bearer " + $rootScope.access_token
-          },
-          data: {
-            request: 'generateCarServiceOrder',
-            info: {
-              carManage: $scope.carManage
-            }
-          }
-        }).then(function (res) {
-          var json = res.data;
-          if (json.re == 1) {
-            order = json.data;
-            return $http({
-              method: "POST",
-              url: Proxy.local() + "/svr/request",
-              headers: {
-                'Authorization': "Bearer " + $rootScope.access_token
-              },
-              data: {
-                request: 'getServicePersonsByUnits',
-                info: {
-                  units: $rootScope.carManage.units
-                }
-              }
-            });
-          }
-        }).then(function(res) {
-          var json=res.data;
-          if(json.re==1) {
-            json.data.map(function(servicePerson,i) {
-              servicePersonIds.push(servicePerson.servicePersonId);
-              personIds.push(servicePerson.personId);
-            });
 
-            return $http({
-              method: "POST",
-              url: Proxy.local() + "/svr/request",
-              headers: {
-                'Authorization': "Bearer " + $rootScope.access_token
-              },
-              data: {
-                request: 'updateCandidateState',
-                info: {
-                  orderId: order.orderId,
-                  servicePersonIds: servicePersonIds
-                }
-              }
-            });
-          }
-        }).then(function (res) {
-          var json = res.data;
-          if (json.re == 1) {
-            //TODO:append address and serviceType and serviceTime
-            var serviceName = $scope.serviceTypeMap[$scope.carManage.serviceType];
-            return $http({
-              method: "POST",
-              url: Proxy.local() + "/svr/request",
-              headers: {
-                'Authorization': "Bearer " + $rootScope.access_token
-              },
-              data: {
-                request: 'sendCustomMessage',
-                info: {
-                  order: order,
-                  serviceItems: $scope.carManage.subServiceTypes,
-                  servicePersonIds: servicePersonIds,
-                  serviceName: serviceName,
-                  type: 'to-servicePerson'
-                }
-              }
-            });
-          } else {
-            return ({re: -1});
-          }
-        }).then(function (res) {
-          var json = res.data;
-          $scope.videoCheck(order.orderId).then(function (json) {
-            alert('result of videocheck=\r\n' + json);
-            if (json.re == 1) {
-              alert('附件上传成功');
-            }
-            else
-            {}
+    //车驾管选择服务人员
+    $scope.service_person_select=function() {
+
+      $http({
+        method: "POST",
+        url: Proxy.local()+"/svr/request",
+        // url: "http://192.168.1.106:3000/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'fetchServicePersonInHistory'
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          var servicePersons=json.data;
+          var buttons=[];
+          servicePersons.map(function(servicePerson,i) {
+            var item=servicePerson;
+            item.text=servicePerson.perName;
+            buttons.push(item);
           });
-          $scope.audioCheck(order.orderId).then(function(json) {
-            alert('result of audioCheck=\r\n' + json);
-            if(json.re==1) {
-              console.log('音频附件上传成功');
-            }else{}
+         var hideSheet= $ionicActionSheet.show({
+            buttons:buttons,
+            titleText: '选择服务人员',
+            cancelText: 'Cancel',
+            buttonClicked: function(index) {
+              var person=buttons[index];
+              $scope.carManage.servicePerson=person;
+              $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                // url: "http://192.168.1.106:3000/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data:
+                {
+                  request:'fetchUnitByUnitId',
+                  info:{
+                    unitId:person.unitId
+                  }
+                }
+              }).then(function(res) {
+                var json=res.data;
+                if(json.re==1) {
+                  var unit=json.data;
+                  $scope.carManage.servicePlace=unit.unitName;
+                  if($rootScope.carManage==undefined||$rootScope.carManage==null)
+                    $rootScope.carManage={};
+                  $rootScope.carManage.unit=unit;
+                }
+              });
+
+              hideSheet();
+              return true;
+            },
+            cssClass:'motor_insurance_actionsheet'
           });
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err) {
+          str+=err[field];
+        }
+        console.error('error=\r\n' + str);
+      });
 
-        }).catch(function (err) {
-          var str = '';
-          for (var field in err)
-            str += err[field];
-          console.error('error=\r\n' + str);
-        });
-
-      }
     }
 
 
@@ -2145,6 +2155,39 @@ angular.module('starter')
 
 
 
+
+    //维修厂的绑定事件
+    $rootScope.$on('unit-choose',function(e,d) {
+      var unit=JSON.parse(d);
+      var unitId=unit.unitId;
+      $http({
+        method: "POST",
+        url: Proxy.local()+"/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'getServicePersonByUnitId',
+          info:{
+            unitId:unitId
+          }
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          var servicePerson=json.data;
+          $scope.carManage.servicePerson=servicePerson;
+          $scope.carManage.servicePlace=unit.unitName;
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in str) {
+          str+=str[field];
+        }
+        console.error('error=\r\n' + str);
+      })
+    });
 
 
 
