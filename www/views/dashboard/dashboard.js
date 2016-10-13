@@ -1108,7 +1108,8 @@ angular.module('starter')
                   request: 'updateCandidateState',
                   info: {
                     orderId: order.orderId,
-                    servicePersonIds: servicePersonIds
+                    servicePersonIds: servicePersonIds,
+                    candidate:1
                   }
                 }
               });

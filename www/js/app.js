@@ -14,7 +14,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
     .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
-                  $ionicPopup) {
+                  $ionicPopup,Proxy,$http) {
 
 
 
@@ -135,15 +135,14 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           if(message.type!=undefined&&message.type!=null){
             switch(message.type){
               case 'to-customer':
-
                 var order=message.order;
+                var servicePersonId=message.servicePersonId;
                 alert('orderId='+order.orderId);
+
                 if($rootScope.waitConfirm[order.orderId]==undefined||
                   $rootScope.waitConfirm[order.orderId]==null)
                   $rootScope.waitConfirm[order.orderId]=[];
                 $rootScope.waitConfirm[order.orderId].push(message);
-
-
 
                 var tem='';
                 for(var i=0;i<$rootScope.waitConfirm[order.orderId].length;i++){
@@ -156,27 +155,145 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                   tem='<div>'+msg.unitName+ mobilePhone+'</div>'
                 }
 
+
                 var confirmPopup = $ionicPopup.confirm({
                   title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
                   template: tem
                 });
+
+
+                var confirm_cb=function(){
+                  $http({
+                    method: "post",
+                    url: Proxy.local()+"/svr/request",
+                    headers: {
+                      'Authorization': "Bearer " + $rootScope.access_token
+                    },
+                    data: {
+                      request:'setServicePersonInOrder',
+                      info:{
+                        orderId: order.orderId,
+                        servicePersonId:servicePersonId,
+                        candidateState:3
+                      }
+                    }
+                  }).then(function(res) {
+                    var json=res.data;
+                    if(json.re==1){
+                      return $http({
+                        method: "POST",
+                        url: Proxy.local() + "/svr/request",
+                        headers: {
+                          'Authorization': "Bearer " + $rootScope.access_token
+                        },
+                        data: {
+                          request: 'getServicePersonIdsByOrderId',
+                          info: {
+                            orderId: order.orderId,
+                          }
+                        }
+                      })
+                    }
+
+                  }).then(function(res) {
+                    var json = res.data;
+                    var servicePersonIds=[];
+                    if(json.re==1){
+                      json.data.map(function(item,i) {
+                        if(item!=servicePersonId)
+                          servicePersonIds.push(item);
+                      })
+                      return $http({
+                        method: "POST",
+                        url: Proxy.local() + "/svr/request",
+                        headers: {
+                          'Authorization': "Bearer " + $rootScope.access_token
+                        },
+                        data: {
+                          request: 'sendCustomMessage',
+                          info: {
+                            type: 'confirm-to-service-person',
+
+
+                          }
+                        }
+                      })
+                    }
+                  }).catch(function(err) {
+                    var str='';
+                    for(var field in err)
+                      str+=err[field];
+                    alert('error=' + str);
+                  })
+                }
+
                 confirmPopup.then(function(res) {
+
                   if(res) {
+                    alert('orderId=' + order.orderId);
+                    alert('svpersonid=' + servicePersonId);
                     $http({
-                      method: "POST",
+                      method: "post",
                       url: Proxy.local()+"/svr/request",
                       headers: {
                         'Authorization': "Bearer " + $rootScope.access_token
                       },
                       data: {
-                        request: 'updateCandidateState',
+                        request:'updateCandidateStateByOrderId',
                         info:{
-                          type:'to-service',
-                          candidate:2
+                          orderId: order.orderId,
+                          servicePersonId:servicePersonId,
+                          candidateState:3
                         }
                       }
-                    });
+                    }).then(function(res) {
+                      var json=res.data;
+                      if(json.re==1) {
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local() + "/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token
+                          },
+                          data: {
+                            request: 'getServicePersonIdsByOrderId',
+                            info: {
+                              orderId: order.orderId,
+                            }
+                          }
+                        });
 
+                      }
+                    }).then(function(res) {
+                      var json=res.data;
+                      if(json.re==1) {
+                        var servicePersonIds=[];
+                        json.data.map(function(item,i) {
+                          if(item!=servicePersonId)
+                            servicePersonIds.push(item);
+                        })
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local() + "/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token
+                          },
+                          data: {
+                            request: 'sendCustomMessage',
+                            info: {
+                              type: 'confirm-to-service-person',
+                              servicePersonIds:servicePersonIds,
+                              order:order
+                            }
+                          }
+                        });
+                      }
+                    }).catch(function(err) {
+                      var str='';
+                      for(var field in err)
+                          str+=err[field];
+                      alert('error=\r\n' + str);
+                    })
                   } else {
                     console.log('You are not sure');
                   }
