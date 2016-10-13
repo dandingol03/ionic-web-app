@@ -128,6 +128,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           } else {
             message = event.content;
           }
+          alert('message='+message);
           if(Object.prototype.toString.call(message)!='[object Object]')
           {
             message = JSON.parse(message);
@@ -136,30 +137,57 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           if(message.type!=undefined&&message.type!=null){
             switch(message.type){
               case 'to-customer':
+
                 var order=message.order;
+
+                if($rootScope.waitConfirm[order.orderId]==undefined||
+                  $rootScope.waitConfirm[order.orderId]==null)
+                  $rootScope.waitConfirm[order.orderId]=[];
                 $rootScope.waitConfirm[order.orderId].push(message);
-                //TODO:message classify
+
+                var tem='';
+                for(var i=0;i<$rootScope.waitConfirm[order.orderId].length;i++){
+                  tem='<div>'+$rootScope.waitConfirm[order.orderId].unitName+
+                              $rootScope.waitConfirm[order.orderId].mobilePhone+'</div>'
+                }
                 var confirmPopup = $ionicPopup.confirm({
-                  title: '您的订单'+message.order.orderNum,
-                  template: message.unitName+'维修厂的服务人员愿意接单,其联系方式为:'+message.mobilePhone,
+
+                  title: '您的订单'+$rootScope.waitConfirm[order.orderId].order.orderNum,
+                  template: tem,
+
                 });
                 confirmPopup.then(function(res) {
                   if(res) {
-                    console.log('You are sure');
+                    $http({
+                      method: "POST",
+                      url: Proxy.local()+"/svr/request",
+                      headers: {
+                        'Authorization': "Bearer " + $rootScope.access_token
+                      },
+                      data: {
+                        request: 'sendCustomMessage',
+                        info:{
+                          type:'to-service'
+
+                        }
+                      }
+                    });
+
                   } else {
                     console.log('You are not sure');
                   }
                 });
+
+
                 break;
             }
           }
-
-
 
           }catch(e){
           alert('exception=\r\n' + e.toString());
         }
       }
+
 
       var onGetRegistradionID = function(data) {
         try {
