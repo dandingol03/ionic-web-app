@@ -145,6 +145,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
                   $rootScope.waitConfirm[order.orderId]=[];
                 $rootScope.waitConfirm[order.orderId].push(message);
 
+
+
                 var tem='';
                 for(var i=0;i<$rootScope.waitConfirm[order.orderId].length;i++){
                   tem='<div>'+$rootScope.waitConfirm[order.orderId].unitName+
@@ -165,10 +167,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
                         'Authorization': "Bearer " + $rootScope.access_token
                       },
                       data: {
-                        request: 'sendCustomMessage',
+                        request: 'updateCandidateState',
                         info:{
-                          type:'to-service'
-
+                          type:'to-service',
+                          candidate:2
                         }
                       }
                     });
