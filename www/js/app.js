@@ -77,6 +77,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
       }
 
 
+      $rootScope.waitConfirm=[];
 
       var onTagsWithAlias = function(event) {
         try {
@@ -132,18 +133,29 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker']
             message = JSON.parse(message);
           }else{}
 
-          //TODO:message classify
-            var confirmPopup = $ionicPopup.confirm({
-              title: '您的订单'+message.order.orderNum,
-              template: message.unitName+'维修厂的服务人员愿意接单,其联系方式为:'+message.mobilePhone,
-            });
-            confirmPopup.then(function(res) {
-              if(res) {
-                console.log('You are sure');
-              } else {
-                console.log('You are not sure');
-              }
-            });
+          if(message.type!=undefined&&message.type!=null){
+            switch(message.type){
+              case 'to-customer':
+                var order=message.order;
+                $rootScope.waitConfirm[order.orderId].push(message);
+                //TODO:message classify
+                var confirmPopup = $ionicPopup.confirm({
+                  title: '您的订单'+message.order.orderNum,
+                  template: message.unitName+'维修厂的服务人员愿意接单,其联系方式为:'+message.mobilePhone,
+                });
+                confirmPopup.then(function(res) {
+                  if(res) {
+                    console.log('You are sure');
+                  } else {
+                    console.log('You are not sure');
+                  }
+                });
+                break;
+            }
+          }
+
+
+
           }catch(e){
           alert('exception=\r\n' + e.toString());
         }
