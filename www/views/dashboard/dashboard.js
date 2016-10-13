@@ -1000,7 +1000,6 @@ angular.module('starter')
           }).then(function(res) {
             var json = res.data;
             if (json.re == 1) {
-              //TODO:append address and serviceType and serviceTime
               var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
               var order=json.data;
               var servicePersonId = [];
@@ -2248,6 +2247,10 @@ angular.module('starter')
     $scope.pickMaintain=function(locateType){
       $state.go('locate_maintain_nearby',{locateType:locateType});
     }
+
+    $scope.pickAirportNearby=function(locateType) {
+      $state.go('locate_airport_nearby', {locateType: locateType});
+    };
 
 
 

@@ -765,7 +765,7 @@
           <span>
             {{carManage.servicePlace}}
           </span>
-          <span ng-click="pickMaintain()" style="font-size: 1.6em;">
+          <span ng-click="pickAirportNearby('接送机')" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -775,7 +775,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{service_person}}
+                  {{carManage.servicePerson!==undefined&&carManage.servicePerson!==null?carManage.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
