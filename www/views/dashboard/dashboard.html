@@ -713,7 +713,7 @@
                   <span class="input-label" style="display: inline-block">
                     预约时间:
                   </span>
-          <div style="display: inline-block" ng-click="datepick()">
+          <div style="display: inline-block" ng-click="datepick(carManage,'validateCar')">
                     <span>
                       <i class="ion-calendar" style="font-size: 1.5em;"></i>
                     </span>
@@ -725,7 +725,7 @@
         </div>
 
 
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
+        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageModal();bind_car()">
           <h1 class="title">确认</h1>
         </div>
       </div>
@@ -767,7 +767,7 @@
                   <span class="input-label" style="display: inline-block">
                     预约时间:
                   </span>
-          <div style="display: inline-block" ng-click="datepick()">
+          <div style="display: inline-block" ng-click="datepick(carManage,'validatePapers')">
                     <span>
                       <i class="ion-calendar" style="font-size: 1.5em;"></i>
                     </span>
@@ -819,7 +819,7 @@
                   <span class="input-label" style="display: inline-block">
                     预约时间:
                   </span>
-          <div style="display: inline-block" ng-click="datepick()">
+          <div style="display: inline-block" ng-click="datepick(carManage,'airportTransfer')">
                     <span>
                       <i class="ion-calendar" style="font-size: 1.5em;"></i>
                     </span>
@@ -830,7 +830,7 @@
         </div>
 
 
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="bind_car()">
+        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="openAirportTransfer()">
           <h1 class="title">确认</h1>
         </div>
       </div>
@@ -871,7 +871,7 @@
                   <span class="input-label" style="display: inline-block">
                     预约时间:
                   </span>
-          <div style="display: inline-block" ng-click="datepick()">
+          <div style="display: inline-block" ng-click="datepick(carManage,'ptCar')">
                     <span>
                       <i class="ion-calendar" style="font-size: 1.5em;"></i>
                     </span>
