@@ -162,70 +162,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                 });
 
 
-                var confirm_cb=function(){
-                  $http({
-                    method: "post",
-                    url: Proxy.local()+"/svr/request",
-                    headers: {
-                      'Authorization': "Bearer " + $rootScope.access_token
-                    },
-                    data: {
-                      request:'setServicePersonInOrder',
-                      info:{
-                        orderId: order.orderId,
-                        servicePersonId:servicePersonId,
-                        candidateState:3
-                      }
-                    }
-                  }).then(function(res) {
-                    var json=res.data;
-                    if(json.re==1){
-                      return $http({
-                        method: "POST",
-                        url: Proxy.local() + "/svr/request",
-                        headers: {
-                          'Authorization': "Bearer " + $rootScope.access_token
-                        },
-                        data: {
-                          request: 'getServicePersonIdsByOrderId',
-                          info: {
-                            orderId: order.orderId,
-                          }
-                        }
-                      })
-                    }
-
-                  }).then(function(res) {
-                    var json = res.data;
-                    var servicePersonIds=[];
-                    if(json.re==1){
-                      json.data.map(function(item,i) {
-                        if(item!=servicePersonId)
-                          servicePersonIds.push(item);
-                      })
-                      return $http({
-                        method: "POST",
-                        url: Proxy.local() + "/svr/request",
-                        headers: {
-                          'Authorization': "Bearer " + $rootScope.access_token
-                        },
-                        data: {
-                          request: 'sendCustomMessage',
-                          info: {
-                            type: 'confirm-to-service-person',
-
-
-                          }
-                        }
-                      })
-                    }
-                  }).catch(function(err) {
-                    var str='';
-                    for(var field in err)
-                      str+=err[field];
-                    alert('error=' + str);
-                  })
-                }
 
                 confirmPopup.then(function(res) {
 
@@ -242,13 +178,34 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                         request:'updateCandidateStateByOrderId',
                         info:{
                           orderId: order.orderId,
-                          servicePersonId:servicePersonId,
                           candidateState:3
                         }
                       }
                     }).then(function(res) {
                       var json=res.data;
+                      if(json.re==1){
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local() + "/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token
+                          },
+                          data: {
+                            request: 'setServicePersonInServiceOrder',
+                            info: {
+                              orderId: order.orderId,
+                              servicePersonId:servicePersonId,
+                              orderState:2
+                            }
+                          }
+                        });
+                      }
+
+                    }).then(function(res) {
+                      var json=res.data;
+                      alert('re='+json.re);
                       if(json.re==1) {
+                        alert('得到所有候选服务人员');
                         return $http({
                           method: "POST",
                           url: Proxy.local() + "/svr/request",
@@ -262,11 +219,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                             }
                           }
                         });
-
                       }
                     }).then(function(res) {
                       var json=res.data;
+                      alert('re=' + json.re);
                       if(json.re==1) {
+                        alert('发给服务人员');
                         var servicePersonIds=[];
                         json.data.map(function(item,i) {
                           if(item!=servicePersonId)
@@ -298,7 +256,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                     console.log('You are not sure');
                   }
                 });
-
 
                 break;
             }

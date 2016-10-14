@@ -741,8 +741,7 @@ angular.module('starter')
 
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
-        // url: "http://192.168.1.106:3000/svr/request",
+        url: Proxy.local()+'/svr/request',
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token,
         },
@@ -1917,7 +1916,7 @@ $scope.carService=function(){
         .then(function(json) {
         return  $http({
           method: "POST",
-          url: "proxy/node_server/svr/request",
+          url: Proxy.local()+'/svr/request',
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
@@ -2056,7 +2055,7 @@ $scope.carService=function(){
     $scope.fetchRelative=function(item,field,matched) {
       $http({
         method: "POST",
-        url: "proxy/node_server/svr/request",
+        url: Proxy.local()+'/svr/request',
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
@@ -2067,9 +2066,14 @@ $scope.carService=function(){
       }).then(function(res) {
         var json=res.data;
         if(json.re==1) {
-          $scope.relatives=json.data;
+          if(json.data!=undefined&&json.data!=null){
+            $scope.relatives=json.data;
+            $scope.open_selectRelativeModal(item,field,matched);
+          }
+        }else{
           $scope.open_selectRelativeModal(item,field,matched);
         }
+
       }).catch(function(err) {
         var str='';
         for(var field in err)
