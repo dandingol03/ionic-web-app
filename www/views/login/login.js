@@ -4,12 +4,23 @@
 angular.module('starter')
 
   .controller('loginController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
-    ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera,Proxy){
+    ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera,Proxy
+      ,$WebSocket){
 
 
     $scope.formUser = {};
 
     $scope.user={};
+
+    $WebSocket.registeCallback(function(msg) {
+      console.log('//-----ws\r\n' + msg);
+    });
+
+    /**
+     * websocket测试
+     */
+    //$WebSocket.connect();
+
 
 
 //*******************测试百悟短信验证码*********************//
@@ -94,7 +105,7 @@ angular.module('starter')
       $http({
         method:"POST",
         data:"grant_type=password&password=" + $scope.user.password + "&username=" + $scope.user.username,
-        url:Proxy.local()+"/login",
+        url:Proxy.local()+'/login',
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -105,7 +116,13 @@ angular.module('starter')
 
         var json=res.data;
         var access_token=json.access_token;
-
+        //send login message to server
+        //$WebSocket.send({
+        //  action:'login',
+        //  msgid:$WebSocket.getMsgId(),
+        //  timems:new Date(),
+        //  token:access_token
+        //  });
         if(access_token!==undefined&&access_token!==null)
         {
           $rootScope.access_token=access_token;
@@ -143,8 +160,18 @@ angular.module('starter')
         alert('error=' + error);
       });
 
+    }
 
-
+    $scope.doSend=function(){
+      $WebSocket.send({
+        action:'msg',
+        msgid:$WebSocket.getMsgId(),
+        timems:new Date(),
+        msg:'first message',
+        to:{
+          groupid:'presale'
+        }
+      });
     }
 
 

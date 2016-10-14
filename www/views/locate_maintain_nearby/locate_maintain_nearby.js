@@ -29,6 +29,79 @@ angular.module('starter')
       map.addControl(new BMap.ScaleControl());
       map.enableScrollWheelZoom(true);
 
+
+      $scope.tpMarkers=[];
+      $scope.dragF=false;
+      //map添加拖拽结束事件
+      map.addEventListener("dragend", function(){
+        //中心点渲染
+        var center = map.getCenter();
+        console.log("地图中心点变更为：" + center.lng + ", " + center.lat);
+        map.clearOverlays();
+        var point=center;
+        //设置地图中心点覆盖物
+        var mkCenter = new BMap.Marker(point);
+        map.addOverlay(mkCenter);
+        var label = new BMap.Label('中心', {offset: new BMap.Size(20, -10)});
+        label.setStyle({
+          color: '#fff',
+          fontSize: "12px",
+          height: "20px",
+          lineHeight: "20px",
+          fontFamily: "微软雅黑",
+          border: '0px',
+          'background-color':'#222'
+        });
+        mkCenter.setLabel(label);
+
+        //拖拽延时
+        if($scope.timer!==undefined&&$scope.timer!==null)
+        {
+          $timeout.cancel( $scope.timer);
+        }
+        else{}
+        $scope.timer = $timeout(
+          function() {
+            render();
+          },
+          1000
+        );
+
+        var render=function(){
+
+          //5公里范围内维修厂集合
+          $scope.units = [];
+          $scope.unitsInTown.map(function (unit, i) {
+            if (unit.longitude !== undefined && unit.longitude !== null &&
+              unit.latitude !== undefined && unit.latitude !== null) {
+              var distance = map.getDistance(point, new BMap.Point(unit.longitude, unit.latitude)).toFixed(2);
+              if (distance <= 5000)
+                $scope.units.push(unit);
+            }
+          });
+
+          $scope.units.map(function (unit, i) {
+            var mk = new BMap.Marker(new BMap.Point(unit.longitude, unit.latitude));
+            map.addOverlay(mk);
+            var label = new BMap.Label(unit.unitName, {offset: new BMap.Size(20, -10)});
+            label.setStyle({
+              color: '#222',
+              fontSize: "12px",
+              height: "20px",
+              lineHeight: "20px",
+              fontFamily: "微软雅黑",
+              border: '0px'
+            });
+            mk.addEventListener("click", $scope.marker_select.bind(this, unit, label));
+            mk.setLabel(label);
+            $scope.labels.push(label);
+          });
+        }
+
+      });
+
+
+
       var mk = new BMap.Marker(point);
       mk.setAnimation(BMAP_ANIMATION_BOUNCE);
       map.addOverlay(mk);
@@ -280,6 +353,7 @@ angular.module('starter')
           var json = res.data;
           if (json.re == 1) {
             $scope.units = [];
+            $scope.unitsInTown = json.data;
             json.data.map(function (unit, i) {
               if (unit.longitude !== undefined && unit.longitude !== null &&
                 unit.latitude !== undefined && unit.latitude !== null) {
@@ -318,6 +392,9 @@ angular.module('starter')
         })
       }
 
+      $scope.maintain.center = map.getCenter();
+      $scope.fetchAndRenderNearBy();
+
       $scope.pct_confirm = function (town) {
         if (town !== undefined && town !== null)
           $scope.area.town = town;
@@ -331,6 +408,7 @@ angular.module('starter')
 
       //确认维修厂回调
       $scope.maintenance_confirm = function () {
+
         switch ($scope.locateType) {
           case 'maintain':
             if ($rootScope.maintain == undefined || $rootScope.maintain == null)
@@ -345,8 +423,11 @@ angular.module('starter')
             //审车
             if ($rootScope.carManage == undefined || $rootScope.carManage == null)
               $rootScope.carManage = {};
-            if ($scope.carManage.unit !== undefined && $scope.carManage.unit !== null)
+            if ($scope.unit !== undefined && $scope.unit !== null)
+            {
               $rootScope.carManage.unit = $scope.unit;
+              $scope.$emit('unit-choose', JSON.stringify($scope.unit));
+            }
             else
               $rootScope.carManage.units = $scope.units;
             break;
