@@ -581,6 +581,11 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         controller:'locateMaintainNearbyController',
         templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
       })
+      .state('locate_airportTransfer_nearby',{
+        url:'/locate_airportTransfer_nearby/:locateType',
+        controller:'locateAirportTransferNearbyController',
+        templateUrl:'views/locate_airportTransfer_nearby/locate_airportTransfer_nearby.html'
+      })
 
       .state('locate_airport_nearby',{
         url:'/locate_airport_nearby/:locateType',

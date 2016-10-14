@@ -1,0 +1,53 @@
+<ion-view view-title="选择目的地">
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+  <ion-content>
+    <div class="list list-inset padding" style="margin-bottom: 0px;">
+
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;
+           padding:10px;background-color:transparent;position: relative">
+        <span class="input-label" style="display: inline-block;width: 35%;">
+          选择维修厂:
+        </span>
+        <span style="width:65%;display: inline-block;" ng-click="selectPTC()">
+          {{area.province+area.city+area.town}}
+          <span style="width: 30%;display: inline-block;text-align: center;font-size: 1.4em;padding-top:10px;">
+            <i class="ion-ios-arrow-down" ></i>
+          </span>
+        </span>
+      </div>
+
+
+
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;
+           padding:10px;background-color:transparent;position: relative"
+           ng-click="maintenance_confirm()"
+        >
+        <button class="button button-positive" style="width: 80%;margin-left:10%;margin-right:10%;">
+          确认维修厂
+        </button>
+      </div>
+
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;padding:10px;background-color:transparent;">
+        <div id="container" style="width:100%;height:300px;"></div>
+      </div>
+
+    </div>
+  </ion-content>
+
+</ion-view>
