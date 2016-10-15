@@ -76,10 +76,10 @@ angular.module('starter')
     {};
     //车驾管信息
     $scope.carManage={
-      validateCar:null,
-      validatePapers:null,
-      airportTransfer:null,
-      ptCar:null
+      carValidate:{},
+      paperValidate:{},
+      airportTransfer:{},
+      parkCar:null
 
     };
 

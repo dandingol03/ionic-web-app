@@ -685,7 +685,7 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.carValidate.servicePlace!==undefined&&carManage.carValidate.servicePlace!==null?carManage.carValidate.servicePlace:''}}
           </span>
           <span ng-click="pickMaintain(21)" style="font-size: 150%;">
               <i class="ion-ios-arrow-down" ></i>
@@ -697,17 +697,19 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{carManage.servicePerson!==undefined&&carManage.servicePerson!==null?carManage.servicePerson.perName:''}}
+                  {{carManage.carValidate.servicePerson!==undefined&&carManage.carValidate.servicePerson!==null?carManage.carValidate.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
           </span>
         </div>
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                 <span class="input-label" style="display: inline-block;">
-                  服务费:
-                </span>
-          <span>$40000</span>
+          <span class="input-label" style="display: inline-block;">
+            服务费:
+          </span>
+          <span>
+            $40000
+          </span>
         </div>
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageTAModal()">
