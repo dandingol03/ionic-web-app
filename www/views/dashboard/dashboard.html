@@ -726,9 +726,9 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.paperValidate.servicePlace}}
           </span>
-          <span ng-click="pickMaintain()" style="font-size: 1.6em;">
+          <span ng-click="pickPaperValidate()" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -738,7 +738,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{service_person}}
+                 {{carManage.paperValidate.servicePerson!==undefined&&carManage.paperValidate.servicePerson!==null?carManage.paperValidate.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
@@ -765,7 +765,7 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.airportTransfer.servicePlace}}
           </span>
           <span ng-click="pickAirportNearby('接送机')" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
@@ -777,7 +777,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{carManage.servicePerson!==undefined&&carManage.servicePerson!==null?carManage.servicePerson.perName:''}}
+                  {{carManage.airportTransfer.servicePerson!==undefined&&carManage.airportTransfer.servicePerson!==null?carManage.airportTransfer.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
@@ -803,9 +803,9 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.parkCar.servicePlace}}
           </span>
-          <span ng-click="pickMaintain()" style="font-size: 1.6em;">
+          <span ng-click="pickParkCarNearby()" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -815,7 +815,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{service_person}}
+                  {{carManage.parkCar.servicePerson!==undefined&&carManage.parkCar.servicePerson!==null?carManage.parkCar.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>

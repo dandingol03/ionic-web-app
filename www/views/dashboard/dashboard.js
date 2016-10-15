@@ -102,7 +102,7 @@ angular.module('starter')
       carValidate:{},
       paperValidate:{},
       airportTransfer:{},
-      parkCar:null
+      parkCar:{}
     };
 
 
@@ -1732,10 +1732,33 @@ $scope.carService=function(){
     }
 
 
-    //车驾管服务
+    //车驾管服务提交
     $scope.commit_carManage_service=function(){
+
       if($scope.carManage.estimateTime!==undefined&&$scope.carManage.estimateTime!==null)
       {
+        var unit=null;
+        var servicePerson=null;
+        switch($scope.service)
+        {
+          case '代办车辆年审':
+            servicePerson=$scope.carManage.carValidate.servicePerson;
+            unit=$scope.carManage.carValidate.unit;
+            break;
+          case '代办行驶证年审':
+            servicePerson=$scope.carManage.paperValidate.servicePerson;
+            unit=$scope.carManage.paperValidate.unit;
+            break;
+          case '接送机':
+            servicePerson=$scope.carManage.airportTransfer.servicePerson;
+            unit=$scope.carManage.airportTransfer.unit;
+            break;
+          case '取送车':
+            servicePerson=$scope.carManage.parkCar.servicePerson;
+            unit=$scope.carManage.parkCar.unit;
+            break;
+        }
+
         if($rootScope.carManage.unit!==undefined&&$rootScope.carManage.unit!==null)//已选维修厂
         {
           $http({
@@ -1747,7 +1770,7 @@ $scope.carService=function(){
             data: {
               request: 'getServicePersonByMaintenance',
               info: {
-                maintenance: $rootScope.carManage.unit
+                maintenance: unit
               }
             }
           }).then(function (res) {
@@ -1764,7 +1787,7 @@ $scope.carService=function(){
                 data: {
                   request: 'generateCarServiceOrder',
                   info: {
-                    maintain: $scope.carManage
+                    carManage: $scope.carManage
                   }
                 }
               });
@@ -2742,7 +2765,8 @@ $scope.carService=function(){
 
     //维修厂的绑定事件
     $rootScope.$on('unit-choose',function(e,d) {
-      var unit=JSON.parse(d);
+      var ob=JSON.parse(d);
+      var unit=ob.unit;
       var unitId=unit.unitId;
       $http({
         method: "POST",
@@ -2761,8 +2785,30 @@ $scope.carService=function(){
         var json=res.data;
         if(json.re==1) {
           var servicePerson=json.data;
-          $scope.carManage.servicePerson=servicePerson;
-          $scope.carManage.servicePlace=unit.unitName;
+          switch (ob.type) {
+            case 'carValidate':
+              $scope.carManage.carValidate.unit=unit;
+              $scope.carManage.carValidate.servicePerson=servicePerson;
+              $scope.carManage.carValidate.servicePlace=unit.unitName;
+              break;
+            case 'airport':
+              $scope.carManage.airportTransfer.unit=unit;
+              $scope.carManage.airportTransfer.servicePerson=servicePerson;
+              $scope.carManage.airportTransfer.servicePlace=unit.unitName;
+              break;
+            case 'parkCar':
+              $scope.carManage.parkCar.unit=unit;
+              $scope.carManage.parkCar.servicePerson=servicePerson;
+              $scope.carManage.parkCar.servicePlace=unit.unitName;
+              break;
+            case 'paperValidate':
+              $scope.carManage.paperValidate.unit=unit;
+              $scope.carManage.paperValidate.servicePerson=servicePerson;
+              $scope.carManage.paperValidate.servicePlace=unit.unitName;
+              break;
+            default:
+              break;
+          }
         }
       }).catch(function(err) {
         var str='';
@@ -2772,6 +2818,8 @@ $scope.carService=function(){
         console.error('error=\r\n' + str);
       })
     });
+
+
 
 
 
@@ -2836,6 +2884,13 @@ $scope.carService=function(){
       $state.go('locate_airport_nearby', {locateType: locateType});
     };
 
+    $scope.pickParkCarNearby=function(locateType) {
+      $state.go('locate_parkCar_nearby', {locateType: locateType});
+    };
+
+    $scope.pickPaperValidate=function(locateType) {
+      $state.go('locate_paperValidate_nearby', {locateType: locateType});
+    };
 
 
     /*** bind matching_car_info modal ***/

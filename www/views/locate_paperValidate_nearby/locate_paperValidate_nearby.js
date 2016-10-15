@@ -5,7 +5,7 @@
  */
 angular.module('starter')
 
-  .controller('locateMaintainNearbyController',function($scope,$state,$http,$timeout,$rootScope,
+  .controller('locatePaperValidateNearbyController',function($scope,$state,$http,$timeout,$rootScope,
                                                         BaiduMapService,$cordovaGeolocation,$ionicModal,
                                                         Proxy,$stateParams) {
 
@@ -409,36 +409,11 @@ angular.module('starter')
       //确认维修厂回调
       $scope.maintenance_confirm = function () {
 
-        switch ($scope.locateType) {
-          case 'maintain':
-            if ($rootScope.maintain == undefined || $rootScope.maintain == null)
-              $rootScope.maintain = {};
-            if ($scope.unit !== undefined && $scope.unit !== null) {
-              $rootScope.maintain.maintenance = $scope.unit;
-            } else {
-              $rootScope.maintain.units = $scope.units;
-            }
-            break;
-          case '21':
-            //审车
-            if ($rootScope.carManage == undefined || $rootScope.carManage == null)
-              $rootScope.carManage = {};
-            if ($scope.unit !== undefined && $scope.unit !== null)
-            {
-              $rootScope.carManage.unit = $scope.unit;
-              var ob={
-                type:'carValidate',
-                unit:$scope.unit
-              }
-              $scope.$emit('unit-choose', JSON.stringify(ob));
-            }
-            else
-              $rootScope.carManage.units = $scope.units;
-            break;
-          default:
-            break;
+        var ob={
+          type:'paperValidate',
+          unit:$scope.unit
         }
-
+        $scope.$emit('unit-choose', JSON.stringify(ob));
         $scope.go_back();
       }
 

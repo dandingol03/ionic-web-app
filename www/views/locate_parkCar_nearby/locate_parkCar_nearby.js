@@ -5,9 +5,9 @@
  */
 angular.module('starter')
 
-  .controller('locateAirportNearbyController',function($scope,$state,$http,$timeout,$rootScope,
-                                                        BaiduMapService,$cordovaGeolocation,$ionicModal,
-                                                        Proxy,$stateParams) {
+  .controller('locateParkCarNearbyController',function($scope,$state,$http,$timeout,$rootScope,
+                                                       BaiduMapService,$cordovaGeolocation,$ionicModal,
+                                                       Proxy,$stateParams) {
     $scope.airTransfer = {
       airTransfers: {}
     };
@@ -137,11 +137,11 @@ angular.module('starter')
           $rootScope.carManage={};
         if($scope.unit!==undefined&&$scope.unit!==null)//选定维修厂
         {
-          var ob={unit:$scope.unit,type:'airport'};
+          var ob={unit:$scope.unit,type:'parkCar'};
           $scope.$emit('unit-choose', JSON.stringify(ob));
         }else//未选定维修厂
         {
-            $rootScope.carManage.airportTransfer.units=$scope.units;
+          $rootScope.carManage.airportTransfer.units=$scope.units;
         }
         $scope.go_back();
       }
