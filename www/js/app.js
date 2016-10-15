@@ -137,9 +137,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           if(message.type!=undefined&&message.type!=null){
             switch(message.type){
               case 'to-customer':
-
                 var order=message.order;
+                var servicePersonId=message.servicePersonId;
                 alert('orderId='+order.orderId);
+
                 if($rootScope.waitConfirm[order.orderId]==undefined||
                   $rootScope.waitConfirm[order.orderId]==null)
                   $rootScope.waitConfirm[order.orderId]=[];
@@ -156,32 +157,107 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                   tem='<div>'+msg.unitName+ mobilePhone+'</div>'
                 }
 
+
                 var confirmPopup = $ionicPopup.confirm({
                   title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
                   template: tem
                 });
+
+
+
                 confirmPopup.then(function(res) {
+
                   if(res) {
+                    alert('orderId=' + order.orderId);
+                    alert('svpersonid=' + servicePersonId);
                     $http({
-                      method: "POST",
+                      method: "post",
                       url: Proxy.local()+"/svr/request",
                       headers: {
                         'Authorization': "Bearer " + $rootScope.access_token
                       },
                       data: {
-                        request: 'sendCustomMessage',
+                        request:'updateCandidateStateByOrderId',
                         info:{
-                          type:'to-service'
-
+                          orderId: order.orderId,
+                          candidateState:3
                         }
                       }
-                    });
+                    }).then(function(res) {
+                      var json=res.data;
+                      if(json.re==1){
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local() + "/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token
+                          },
+                          data: {
+                            request: 'setServicePersonInServiceOrder',
+                            info: {
+                              orderId: order.orderId,
+                              servicePersonId:servicePersonId,
+                              orderState:2
+                            }
+                          }
+                        });
+                      }
 
+                    }).then(function(res) {
+                      var json=res.data;
+                      alert('re='+json.re);
+                      if(json.re==1) {
+                        alert('得到所有候选服务人员');
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local() + "/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token
+                          },
+                          data: {
+                            request: 'getServicePersonIdsByOrderId',
+                            info: {
+                              orderId: order.orderId,
+                            }
+                          }
+                        });
+                      }
+                    }).then(function(res) {
+                      var json=res.data;
+                      alert('re=' + json.re);
+                      if(json.re==1) {
+                        alert('发给服务人员');
+                        var servicePersonIds=[];
+                        json.data.map(function(item,i) {
+                          if(item!=servicePersonId)
+                            servicePersonIds.push(item);
+                        })
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local() + "/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token
+                          },
+                          data: {
+                            request: 'sendCustomMessage',
+                            info: {
+                              type: 'confirm-to-service-person',
+                              servicePersonIds:servicePersonIds,
+                              order:order
+                            }
+                          }
+                        });
+                      }
+                    }).catch(function(err) {
+                      var str='';
+                      for(var field in err)
+                          str+=err[field];
+                      alert('error=\r\n' + str);
+                    })
                   } else {
                     console.log('You are not sure');
                   }
                 });
-
 
                 break;
             }
@@ -463,6 +539,11 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         url:'/locate_maintain_nearby/:locateType',
         controller:'locateMaintainNearbyController',
         templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
+      })
+      .state('locate_airportTransfer_nearby',{
+        url:'/locate_airportTransfer_nearby/:locateType',
+        controller:'locateAirportTransferNearbyController',
+        templateUrl:'views/locate_airportTransfer_nearby/locate_airportTransfer_nearby.html'
       })
 
       .state('locate_airport_nearby',{
