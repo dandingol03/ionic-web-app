@@ -39,11 +39,14 @@
              ng-repeat="company in page_companys"
              ng-click="toggle(company,'checked')"
           >
-            <span style="display: inline-block;font-size: 0.7em;">
+          <div>
+
+          </div>
+            <span style="display: inline-block;font-size: 0.7em;width: 90%;">
               {{company.companyName}}
             </span>
            <span
-             style="font-size: 2em;position: absolute;right: 0%;width: 20%;text-align: center"
+             style="font-size: 1.8em;width: 10%;text-align: center;display: inline-block"
              >
              <i ng-if="company.checked!=true" class="ion-ios-checkmark-outline"></i>
              <i ng-if="company.checked==true" class="ion-ios-checkmark"></i>

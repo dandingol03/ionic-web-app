@@ -9,6 +9,29 @@ angular.module('starter')
                                              $cordovaFileTransfer){
 
 
+    $http({
+      method: "post",
+      url: Proxy.local() + "/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token
+      },
+      data: {
+        request: 'getCarManageFees'
+      }
+    }).then(function (res) {
+      var json=res.data;
+      if(json.re==1) {
+        console.log('...');
+      }
+    }).catch(function(err) {
+      var str='';
+      for(var field in err)
+        str+=err[field];
+      console.error('error=' + str);
+    });
+
+
+
 
     $scope.serviceTypeMap={
       11:'维修-日常保养',
@@ -699,9 +722,32 @@ angular.module('starter')
           }).then(function(res) {
             var json=res.data;
             if(json.re==1) {
-              $scope.close_uploadLicenseCardModal();
-              $scope.select_type();
+              licenseAttachId3=json.data;
+              var ob={
+                licenseAttachId1:licenseAttachId1,
+                licenseAttachId2:licenseAttachId2,
+                licenseAttachId3:licenseAttachId3
+              }
+              return $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'updateInsuranceCarInfo',
+                  info:{
+                    carId:carId,
+                    ob:ob
+                  }
+                }
+              });
             }
+          }).then(function(res) {
+            alert('it is all done');
+            $scope.close_uploadLicenseCardModal();
+            $scope.select_type();
           }).catch(function(err) {
             var str='';
             for(var field in err) {

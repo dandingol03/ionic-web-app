@@ -194,7 +194,7 @@ angular.module('starter')
 
       return $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+        url: Proxy.local()+"/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
