@@ -1,0 +1,85 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="close_uploadOwnerIdCardModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" scroll="false" style="width:80%;padding:10px;height:80%;">
+
+    <div class="list">
+
+
+      <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'ownerIdCard1_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    身份证正面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.ownerIdCard1_img!==undefined&&carInfo.ownerIdCard1_img!==null"
+                ng-src="{{carInfo.ownerIdCard1_img}}"/>
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.ownerIdCard1_img==undefined||carInfo.ownerIdCard1_img==null"
+                ng-src="img/enginNum.jpg"/>
+
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'ownerIdCard2_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    身份证反面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.ownerIdCard2_img!==undefined&&carInfo.ownerIdCard2_img!==null"
+                ng-src="{{carInfo.ownerIdCard2_img}}"/>
+            </div>
+            </div>
+          </div>
+        </ion-slide>
+
+      </ion-slide-box>
+
+    </div>
+
+    <div
+      class="bar bar-assertive"
+      style="width: 70%;margin-left:15%;margin-right:15%;"
+      ng-click="uploadOwnerIdCardPhotoConfirm()"
+      >
+      <div class="title">确认</div>
+    </div>
+
+
+  </ion-content>
+
+</ion-modal-view>

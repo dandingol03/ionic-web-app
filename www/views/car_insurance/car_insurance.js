@@ -4,7 +4,16 @@
 angular.module('starter')
 
   .controller('carInsuranceController',function($scope,$state,$http, $location,
-                                                $rootScope,$ionicActionSheet,$ionicModal){
+                                                $rootScope,$ionicActionSheet,
+                                                $ionicModal,Proxy,$stateParams){
+
+    if($stateParams.carInfo!==undefined&&$stateParams.carInfo!==null)
+    {
+      var carInfo=$stateParams.carInfo;
+      if(Object.prototype.toString.call(carInfo)=='[object String]')
+        carInfo = JSON.parse(carInfo);
+      $scope.carInfo=carInfo;
+    }
 
     $scope.tabIndex=0;
 
@@ -143,7 +152,7 @@ angular.module('starter')
      */
     $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+        url: Proxy.local()+"/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
@@ -244,7 +253,7 @@ angular.module('starter')
       //TODO:apply selected product
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+        url: Proxy.local()+"/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
@@ -255,7 +264,7 @@ angular.module('starter')
           {
             products:products,
             companys:companys,
-            carId:1
+            carId:$scope.carInfo.carId
           }
         }
       }).then(function(res) {

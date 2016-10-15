@@ -42,75 +42,80 @@
       </ul>
     </div>
 
+    <div style="height: 100%;">
+      <div class="scroll" style="height: 78%;margin-top:2px;overflow: scroll">
+        <!-- 基础套餐 -->
+        <div>
+          <div class="row"
+               ng-repeat="(key, product)  in tabs[tabIndex].products"
+               style="border-bottom:1px solid #eee;padding:0px;margin-bottom:6px;">
+            <div class="col-80" style="margin-left: 10%;">
+              <label class="item"
+                     style="border:0px;display: inline-block;width: 100%;position: relative"
+                     ng-click="toggle(product,'checked')"
+                >
+                {{product.productName}}
+                <div
+                  style="font-size: 2.5em;display: inline-block;position: absolute;right: 10%;top:0%;"
+                  >
+                  <i ng-if="product.checked!=true" class="ion-ios-checkmark-outline"></i>
+                  <i ng-if="product.checked==true" class="ion-ios-checkmark"></i>
+                </div>
+              </label>
 
-
-    <div class="scroll" style="height: 90%;margin-top:2px;overflow: scroll">
-      <!-- 基础套餐 -->
-      <div>
-        <div class="row"
-             ng-repeat="(key, product)  in tabs[tabIndex].products"
-             style="border-bottom:1px solid #eee;padding:0px;margin-bottom:6px;">
-          <div class="col-80" style="margin-left: 10%;">
-            <label class="item"
-                   style="border:0px;display: inline-block;width: 100%;position: relative"
-                   ng-click="toggle(product,'checked')"
-            >
-              {{product.productName}}
-              <div
-                style="font-size: 2.5em;display: inline-block;position: absolute;right: 10%;top:0%;"
-              >
-                <i ng-if="product.checked!=true" class="ion-ios-checkmark-outline"></i>
-                <i ng-if="product.checked==true" class="ion-ios-checkmark"></i>
-              </div>
-            </label>
-
-            <label class="item" style="border:0px;display: inline-block;width: 100%;"
-                   ng-if="product.insuranceTypes!==undefined&&product.insuranceTypes!==null"
-                   ng-click="actionSheet(product,'insuranceTypes',['insuranceTypes=>insuranceType','productIds=>productId'])"
-            >
-              保额:
+              <label class="item" style="border:0px;display: inline-block;width: 100%;"
+                     ng-if="product.insuranceTypes!==undefined&&product.insuranceTypes!==null"
+                     ng-click="actionSheet(product,'insuranceTypes',['insuranceTypes=>insuranceType','productIds=>productId'])"
+                >
+                保额:
               <span style="position: absolute;right: 50%;">
                   {{product.insuranceType}}
                   <i class="ion-ios-arrow-down"></i>
                 </span>
 
 
-            </label>
-            <label class="item" style="border:0px;display: inline-block;width: 100%;"
-                   ng-if="product.insuranceTypes==undefined||product.insuranceTypes==null"
-            >
-              保额:
+              </label>
+              <label class="item" style="border:0px;display: inline-block;width: 100%;"
+                     ng-if="product.insuranceTypes==undefined||product.insuranceTypes==null"
+                >
+                保额:
               <span style="position: absolute;right:50%;">
                   {{product.insuranceType}}
                 </span>
-            </label>
+              </label>
 
 
-            <label class="item"
-                   style="border:0px;display: inline-block;width: 100%;position: relative"
-            >
-              不计免赔
-              <div class="toggle toggle-assertive" style="position: absolute;right: 6%;">
-                <input type="checkbox" ng-model="product.irrespective">
-                <div class="track">
-                  <div class="handle"></div>
+              <label class="item"
+                     style="border:0px;display: inline-block;width: 100%;position: relative"
+                >
+                不计免赔
+                <div class="toggle toggle-assertive" style="position: absolute;right: 6%;">
+                  <input type="checkbox" ng-model="product.irrespective">
+                  <div class="track">
+                    <div class="handle"></div>
+                  </div>
                 </div>
-              </div>
-            </label>
+              </label>
 
 
+            </div>
           </div>
-
         </div>
-
       </div>
 
+      <div style="height: 17%;position: relative"
+           ng-click="openCompanyModal();"
+        >
+        <button style="position: absolute;bottom:19%;" class="button button-block button-positive">
+          确认套餐选择
+        </button>
+      </div>
     </div>
 
+
   </ion-content>
-  <ion-footer-bar align-title="left" class="bar-assertive">
-    <div ng-click="openCompanyModal()" >
-      <div class="title" style="width: 50%;left:35%;">确认套餐</div>
-    </div>
-  </ion-footer-bar>
+
+
+
+
 </ion-view>

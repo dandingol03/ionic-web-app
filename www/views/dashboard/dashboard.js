@@ -9,6 +9,7 @@ angular.module('starter')
                                              $cordovaFileTransfer){
 
 
+
     $scope.serviceTypeMap={
       11:'维修-日常保养',
       12:'维修-故障维修',
@@ -98,9 +99,7 @@ angular.module('starter')
 
     $http({
       method: "post",
-      url: "/proxy/node_server/svr/request",
-      //url: "http://192.168.1.106:3000/svr/request",
-
+      url: Proxy.local()+"/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -113,13 +112,7 @@ angular.module('starter')
         var json=res.carInfo;
         if(json.re==1) {
           var carInfo=json.data[0];
-          $scope.carInfo.ownerIdCard=carInfo.ownerIdCard;
-          $scope.carInfo.carNum=carInfo.carNum;
-          $scope.carInfo.factoryNum=carInfo.factoryNum;
-          $scope.carInfo.engineNum=carInfo.engineNum;
-          $scope.carInfo.frameNum=carInfo.frameNum;
-          $scope.carInfo.issueDate=carInfo.issueDate;
-          $scope.carInfo.ownerName=carInfo.ownerName;
+          $scope.carInfo=carInfo;
         }
         console.log('success');
       })
@@ -379,30 +372,220 @@ angular.module('starter')
     };
 
 
+    /*** bind upload_ownerIdCard_modal***/
+    $ionicModal.fromTemplateUrl('views/modal/upload_ownerIdCard_modal.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.upload_ownerIdCard_modal = modal;
+    });
 
+    $scope.open_uploadOwnerIdCardModal= function(){
+      $scope.upload_ownerIdCard_modal.show();
+    };
+
+    $scope.close_uploadOwnerIdCardModal= function() {
+      $scope.upload_ownerIdCard_modal.hide();
+    };
+    /*** bind upload_ownerIdCard_modal ***/
+
+    $scope.uploadOwnerIdCardPhoto=function(){
+      $scope.open_uploadOwnerIdCardModal();
+    }
+
+    $scope.uploadOwnerIdCardPhotoConfirm=function(){
+      if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
+          &&$scope.carInfo.ownerIdCard2_img!==undefined&&$scope.carInfo.ownerIdCard2_img)
+      {
+
+        console.log('path of ownerIdCard1 =' + $scope.carInfo.ownerIdCard1_img);
+        console.log('path of ownerIdCard2 =' + $scope.carInfo.ownerIdCard2_img);
+
+
+
+        var suffix='';
+        var imageType='perIdCard';
+        if($scope.carInfo.ownerIdCard1_img.indexOf('.jpg')!=-1)
+          suffix='jpg';
+        else if($scope.carInfo.ownerIdCard1_img.indexOf('.png')!=-1)
+          suffix='png';
+        else{}
+        var server=Proxy.local()+'/svr/request?request=uploadPhoto' +
+          '&imageType='+imageType+'&suffix='+suffix+'&filename='+'perIdAttachId1';
+        var options = {
+          fileKey:'file',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          }
+        };
+
+        var perIdAttachId1=null;
+        var perIdAttachId2=null;
+
+
+
+
+        $cordovaFileTransfer.upload(server, $scope.carInfo.ownerIdCard1_img, options)
+          .then(function(res) {
+            for(var field in res) {
+              alert('field=' + field + '\r\n' + res[field]);
+            }
+            var su=null
+            if($scope.carInfo.ownerIdCard1_img.indexOf('.jpg')!=-1)
+              su='jpg';
+            else if($scope.carInfo.ownerIdCard1_img.indexOf('.png')!=-1)
+              su='png';
+            alert('suffix=' + su);
+            return $http({
+              method: "POST",
+              url: Proxy.local()+"/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token,
+              },
+              data:
+              {
+                request:'createPhotoAttachment',
+                info:{
+                  imageType:'perIdCard',
+                  filename:'perIdAttachId1',
+                  suffix:su,
+                  docType:'I1'
+                }
+              }
+            });
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
+              perIdAttachId1=json.data;
+              alert('perIdAttachId1=' + perIdAttachId1);
+              var su=null;
+              if($scope.carInfo.ownerIdCard2_img.indexOf('.jpg')!=-1)
+                su='jpg';
+              else if($scope.carInfo.ownerIdCard2_img.indexOf('.png')!=-1)
+                su='png';
+              server=Proxy.local()+'/svr/request?request=uploadPhoto' +
+                '&imageType='+imageType+'&suffix='+su+'&filename='+'perIdAttachId2';
+              return  $cordovaFileTransfer.upload(server, $scope.carInfo.ownerIdCard2_img, options);
+            }
+          }).then(function(res) {
+            alert('second image upload success');
+            var su=null;
+            if($scope.carInfo.ownerIdCard2_img.indexOf('.jpg')!=-1)
+              su='jpg';
+            else if($scope.carInfo.ownerIdCard2_img.indexOf('.png')!=-1)
+              su='png';
+            return $http({
+              method: "POST",
+              url: Proxy.local()+"/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token,
+              },
+              data:
+              {
+                request:'createPhotoAttachment',
+                info:{
+                  imageType:'perIdCard',
+                  filename:'perIdAttachId2',
+                  suffix:su,
+                  docType:'I1'
+                }
+              }
+            });
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
+              perIdAttachId2=json.data;
+              alert('perIdAttachId2=' + perIdAttachId2);
+              return $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'createInsuranceInfoPersonInfo',
+                  info:{
+                    perIdAttachId1:perIdAttachId1,
+                    perIdAttachId2:perIdAttachId2
+                  }
+                }
+              });
+
+            }
+          }).then(function(res) {
+            var json=res.data;
+            $scope.close_uploadOwnerIdCardModal();
+          }).catch(function(err) {
+            var str='';
+            for(var field in err) {
+                str+=err[field];
+            }
+            alert('error=\r\n' + str);
+          });
+
+      }
+      else{
+        $ionicPopup.alert({
+          title: '',
+          template: '请同时上传身份证正反面'
+        });
+      }
+    }
 
     $scope.postCarInfo=function(){
-      $http({
-        method: "POST",
-        url: "/proxy/node_server/svr/request",
-        //url: "http://192.168.1.106:3000/svr/request",
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token,
-        },
-        data:
+      if(window.cordova!==undefined&&window.cordova!==null)
+      {
+        if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
+          &&$scope.carInfo.ownerIdCard2_img!==undefined&&$scope.carInfo.ownerIdCard2_img!==null)
         {
-          request:'uploadCarAndOwnerInfo',
-          info:$scope.carInfo
+          $http({
+            method: "POST",
+            url: Proxy.local()+"/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data:
+            {
+              request:'uploadCarAndOwnerInfo',
+              info:$scope.carInfo
+            }
+          }).
+            then(function (res) {
+              var json=res.data;
+              alert('re=' + json.re);
+              if(json.re==1) {
+                $scope.select_type();
+              }
+            });
+        }else{
+          //TODO:上传身份证照片
+          var confirmPopup = $ionicPopup.confirm({
+            title: '缺少身份证照片',
+            template: '请问是否选择上传身份证',
+            okText:'上传',
+            cancelText:'取消'
+          });
+          confirmPopup.then(function(res) {
+            if(res) {
+              $scope.uploadOwnerIdCardPhoto();
+            } else {
+              console.log('You are not sure');
+            }
+          });
         }
-      }).
-        success(function (response) {
-          console.log('success');
-        })
+      }else{
+        $scope.select_type();
+      }
+
+
+
+
     }
 
     $scope.select_type=function(){
-      var carInfo=$scope.carInfo;
-      $state.go('car_insurance');
+      $state.go('car_insurance',{carInfo:JSON.stringify($scope.carInfo)});
     }
 
 
@@ -1352,11 +1535,12 @@ angular.module('starter')
       else
       {}
     }
+
+    //查询已绑定车辆,并显示车牌信息
     $scope.selectCarInfoByCarNum=function(){
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
-        // url: "http://192.168.1.106:3000/svr/request",
+        url: Proxy.local()+"/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
@@ -2339,7 +2523,7 @@ angular.module('starter')
       if ($scope.doFilterFlag) {
         $http({
           method: "post",
-          url: "/proxy/node_server/svr/request",
+          url: Proxy.local()+"/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
             info: {
