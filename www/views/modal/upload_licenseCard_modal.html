@@ -1,0 +1,107 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="close_uploadLicenseCardModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" scroll="false" style="width:80%;padding:10px;height:80%;">
+
+    <div class="list">
+
+
+      <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'licenseCard1_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    行驶证1面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.licenseCard1_img!==undefined&&carInfo.licenseCard1_img!==null"
+                ng-src="{{carInfo.licenseCard1_img}}"/>
+
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'licenseCard2_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    行驶证2面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.licenseCard2_img!==undefined&&carInfo.licenseCard2_img!==null"
+                ng-src="{{carInfo.licenseCard2_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'licenseCard3_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    行驶证3面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.licenseCard3_img!==undefined&&carInfo.licenseCard3_img!==null"
+                ng-src="{{carInfo.licenseCard3_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+      </ion-slide-box>
+
+    </div>
+
+    <div
+      class="bar bar-assertive"
+      style="width: 70%;margin-left:15%;margin-right:15%;"
+      ng-click="uploadLicenseCardPhotoConfirm()"
+      >
+      <div class="title">确认</div>
+    </div>
+
+
+  </ion-content>
+
+</ion-modal-view>
