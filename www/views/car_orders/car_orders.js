@@ -1,6 +1,59 @@
 angular.module('starter')
 
-  .controller('carOrdersController',function($scope,$state,$http, $location,$rootScope){
+  .controller('carOrdersController',function($scope,$state,$http,
+                                             $location, $rootScope,Proxy){
+
+
+
+    //已完成订单
+    $http({
+      method: "POST",
+      url: Proxy.local()+"/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token
+      },
+      data:
+      {
+        request:'getCarOrdersInHistory'
+      }
+    }).then(function(res) {
+      var json=res.data;
+      if(json.re==1) {
+          $scope.historyOrders=json.data;
+      }
+    }).catch(function(err) {
+      var str='';
+      for(var field in err)
+        str+=err[field];
+      console.error('error=\r\n' + str);
+    });
+
+    //获取估价列表
+    $http({
+      method: "POST",
+      url: Proxy.local()+"/svr/request",
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token
+      },
+      data:
+      {
+        request:'getCarOrderInPricedState'
+      }
+    }).then(function(res) {
+      var json=res.data;
+      if(json.re==1) {
+        $scope.orderPricedList=json.data;
+        if($scope.orderPricedList!==undefined&&$scope.orderPricedList!==null)
+        {}
+      }
+    }).catch(function(err) {
+      var str='';
+      for(var field in err)
+        str+=err[field];
+      console.error('error=\r\n' + str);
+    });
+
+
 
     //车险订单  0.已生成;1.待支付
     $scope.tabIndex=0;
@@ -11,47 +64,6 @@ angular.module('starter')
     $scope.orders=$rootScope.car_orders;
 
     $scope.prices=$rootScope.car_insurance.prices;
-
-    //获取估价列表
-    if($rootScope.carInsurance!==undefined&&$rootScope.carInsurance!==null
-        &&$rootScope.carInsurance.orderPrices!==undefined&&$rootScope.carInsurance.orderPrices!==null)
-    {
-      $scope.orderPrices=$rootScope.carInsurance.orderPrices;
-    }else{
-      $http({
-        method: "POST",
-        url: "/proxy/node_server/svr/request",
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token
-        },
-        data:
-        {
-          request:'getCarOrderPriceItems',
-          orderId:39
-        }
-      }).then(function(res) {
-        var json=res.data;
-        if(json.re==1)
-        {
-          $scope.orderPrices=json.data;
-          if($scope.orderPrices!==undefined&&$scope.orderPrices!==null)
-          {
-            if($rootScope.carInsurance==undefined||$rootScope.carInsurance==null)
-              $rootScope.carInsurance={};
-            $rootScope.carInsurance.orderPrices=json.data;
-          }
-        }
-      }).catch(function(err) {
-        var str='';
-        for(var field in err)
-        {
-          str+=err[field];
-        }
-        console.error('error=\r\n' + str);
-      });
-    }
-
-
 
 
     $scope.goto=function(url){
@@ -82,11 +94,17 @@ angular.module('starter')
         item[field]=false;
     }
 
-    $scope.setterPrice=function(i) {
+    $scope.setterPrice=function(i,item) {
       if($scope.priceIndex==i)
+      {
         $scope.priceIndex=-1;
+        item.checked=null;
+      }
       else
+      {
         $scope.priceIndex=i;
+        item.checked=true;
+      }
     };
 
     $scope.goDetail=function(order)
@@ -94,29 +112,44 @@ angular.module('starter')
       $state.go('car_order_detail',{order:JSON.stringify(order)});
     }
 
+    //提交已选方案
     $scope.apply=function(){
-      var price=null;
-      $scope.orderPrices.map(function(price,i) {
-        if(price.checked==true)
-        {
-          price=price;
-        }
+      var selected_price=null;
+
+      $scope.orderPricedList.map(function(order) {
+        order.prices.map(function(price,i) {
+          if(price.checked==true)
+            selected_price=price;
+        });
       });
+
       $http({
         method: "POST",
-        url: "/proxy/node_server/svr/request",
+        url: Proxy.local()+"/svr/request",
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
         data:
         {
-          request:'userApplyCarOrder',
+          request:'applyCarOrderPrice',
           info:{
-            orderId:$rootScope.carInsurance.orderId,
-            price:price
+            price:selected_price
           }
         }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
       })
+
+
+
     }
 
 

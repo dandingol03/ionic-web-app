@@ -57,7 +57,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           ]
         }
       ]
-
     };
 
 
@@ -78,6 +77,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
 
       $rootScope.waitConfirm={};
+
+      $rootScope.property=null;
+
 
       var onTagsWithAlias = function(event) {
         try {
@@ -446,7 +448,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
       .state('car_insurance',{
-        url:'/car_insurance',
+        url:'/car_insurance/:carInfo',
         controller:'carInsuranceController',
         templateUrl:'views/car_insurance/car_insurance.html'
       })
@@ -556,6 +558,17 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/locate_airport_nearby/locate_airport_nearby.html'
       })
 
+      .state('locate_parkCar_nearby',{
+        url:'/locate_parkCar_nearby/:locateType',
+        controller:'locateParkCarNearbyController',
+        templateUrl:'views/locate_parkCar_nearby/locate_parkCar_nearby.html'
+      })
+
+      .state('locate_paperValidate_nearby',{
+        url:'/locate_paperValidate_nearby/:locateType',
+        controller:'locatePaperValidateNearbyController',
+        templateUrl:'views/locate_paperValidate_nearby/locate_paperValidate_nearby.html'
+      })
 
       .state('transclude',{
         url:'/transclude',
@@ -587,7 +600,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-          return "http://192.168.1.106:3000";
+          return "http://192.168.1.110:3000";
         else
           return "/proxy/node_server";
       },

@@ -86,13 +86,13 @@
         <!-- 受益人 -->
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
-            <span style="display: inline-block;width: 10%;"></span>
+          <span style="display: inline-block;width: 10%;"></span>
             <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
               受益人:
             </span>
           <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
-              {{life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null?
-              life_insurance.order.benefiter.perName:'请选择受益人'}}
+            {{life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null?
+            life_insurance.order.benefiter.perName:'请选择受益人'}}
           </div>
           <div style="display: inline-block;width: 15%;text-align: left;"
                ng-click="fetchRelative(life_insurance.order,'benefiter')">
@@ -164,7 +164,7 @@
               计划保费:
           </span>
           <!--<div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;">-->
-            <!--{{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}-->
+          <!--{{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}-->
           <!--</div>-->
           <input type="text" placeholder="请输入...."
                  style="display: inline-block;width:65%;background-color:transparent" ng-value="life_insurance.order.planInsuranceFee"
@@ -198,7 +198,7 @@
                      style="display:inline-block;background-color: transparent;"
                      ng-value="carInfo.carNum"
                      ng-model="carInfo.carNum"
-              />
+                />
             </span>
             <span
               class="camera"
@@ -211,7 +211,7 @@
 
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
-        >
+          >
             <span class="input-label" style="display:inline-block;width: 25%;text-align: left">
               姓名:
             </span>
@@ -252,9 +252,9 @@
         </div>
 
         <!--<div class="item"-->
-             <!--style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;"-->
-             <!--ng-if="carInfo.ownerIdCard_img!==undefined&&carInfo.ownerIdCard_img!==null"-->
-          <!-->
+        <!--style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;"-->
+        <!--ng-if="carInfo.ownerIdCard_img!==undefined&&carInfo.ownerIdCard_img!==null"-->
+        <!-->
 
 
         <div class="item"
@@ -270,7 +270,7 @@
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
              ng-click="datepick(carInfo,'issueDate')"
-        >
+          >
             <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
                 发证日期:
             </span>
@@ -281,7 +281,7 @@
 
           <span
             style="position: absolute;right: 5%;top:30%;font-size: 1.5em;"
-          >
+            >
               <i class="ion-calendar"></i>
             </span>
         </div>
@@ -289,7 +289,7 @@
         <div
           class="item item-divider"
           style="margin:1px;border:0px;padding:10px;position: relative;background-color:transparent;"
-        >
+          >
           <span>绑定车辆信息</span>
         </div>
 
@@ -349,13 +349,13 @@
             </div>
 
           </ion-slide>
-          <ion-slide>
+          <ion-slide style="border-top:1px solid #222;">
             <div class="item"
                  ng-click="addAttachment(carInfo,'drivingLicense_img')"
                  style="background-color:transparent;border:1px solid #222;">
               <div
                 style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
-              >
+                >
                   <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
                     上传行驶证照片:
                   </span>
@@ -376,7 +376,7 @@
 
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type();postCarInfo()">
+        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="postCarInfo()">
           <h1 class="title">保存车辆信息</h1>
         </div>
 
@@ -463,7 +463,7 @@
               </span>
               <input type="text" placeholder="请输入您的里程"
                      style="display: inline-block;background-color: transparent;width:35%"
-              />
+                />
               <button class="button button-stable" style="display: inline-block;">
                 查看保养计划
               </button>
@@ -508,13 +508,13 @@
               <div class="item"
                    style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;position: relative;background-color:transparent;"
 
-              >
+                >
                 <span class="input-label" style="display: inline-block;width: 55%;text-align: left;">
                        上传故障描述视频:
                 </span>
                 <span class="camera"
                       style="width:45%;display: inline-block;font-size: 1.4em;"
-                >
+                  >
                   <i class="ion-android-camera" ng-click="startCapture()"></i>
                 </span>
               </div>
@@ -524,7 +524,7 @@
               <div class="item"
                    style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;position: relative;background-color:transparent;"
                    ng-click=""
-              >
+                >
                 <span class="input-label" style="display: inline-block;width: 55%;text-align: left;">
                        上传故障描述音频:
                 </span>
@@ -681,7 +681,7 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.carValidate.servicePlace!==undefined&&carManage.carValidate.servicePlace!==null?carManage.carValidate.servicePlace:''}}
           </span>
           <span ng-click="pickMaintain(21)" style="font-size: 150%;">
               <i class="ion-ios-arrow-down" ></i>
@@ -693,40 +693,22 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{carManage.servicePerson!==undefined&&carManage.servicePerson!==null?carManage.servicePerson.perName:''}}
+                  {{carManage.carValidate.servicePerson!==undefined&&carManage.carValidate.servicePerson!==null?carManage.carValidate.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
           </span>
         </div>
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                 <span class="input-label" style="display: inline-block;">
-                  服务费:
-                </span>
-          <span>$40000</span>
+          <span class="input-label" style="display: inline-block;">
+            服务费:
+          </span>
+          <span>
+            $40000
+          </span>
         </div>
-
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                  <span class="input-label" style="display: inline-block">
-                    预约时间:
-                  </span>
-          <div style="display: inline-block" ng-click="datepick(carManage,'validateCar')">
-                    <span>
-                      <i class="ion-calendar" style="font-size: 1.5em;"></i>
-                    </span>
-            <input id="date"
-
-                   ng-model="carInfo.issueDate" type="text" style="display: inline-block;background: transparent"
-                   placeholder="点击设置日期！">
-          </div>
-        </div>
-
-
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageModal();bind_car()">
-
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageTAModal()">
-
           <h1 class="title">确认</h1>
         </div>
       </div>
@@ -740,9 +722,9 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.paperValidate.servicePlace}}
           </span>
-          <span ng-click="pickMaintain()" style="font-size: 1.6em;">
+          <span ng-click="pickPaperValidate()" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -752,7 +734,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{service_person}}
+                 {{carManage.paperValidate.servicePerson!==undefined&&carManage.paperValidate.servicePerson!==null?carManage.paperValidate.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
@@ -764,21 +746,6 @@
                 </span>
           <span>$40000</span>
         </div>
-
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                  <span class="input-label" style="display: inline-block">
-                    预约时间:
-                  </span>
-          <div style="display: inline-block" ng-click="datepick(carManage,'validatePapers')">
-                    <span>
-                      <i class="ion-calendar" style="font-size: 1.5em;"></i>
-                    </span>
-            <input id="date"
-                   ng-model="carInfo.issueDate" type="text" style="display: inline-block;background: transparent"
-                   placeholder="点击设置日期！">
-          </div>
-        </div>
-
 
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageTAModal()">
@@ -794,7 +761,7 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.airportTransfer.servicePlace}}
           </span>
           <span ng-click="pickAirportNearby('接送机')" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
@@ -806,7 +773,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{carManage.servicePerson!==undefined&&carManage.servicePerson!==null?carManage.servicePerson.perName:''}}
+                  {{carManage.airportTransfer.servicePerson!==undefined&&carManage.airportTransfer.servicePerson!==null?carManage.airportTransfer.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
@@ -819,26 +786,7 @@
           <span>$40000</span>
         </div>
 
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                  <span class="input-label" style="display: inline-block">
-                    预约时间:
-                  </span>
-          <div style="display: inline-block" ng-click="datepick(carManage,'airportTransfer')">
-                    <span>
-                      <i class="ion-calendar" style="font-size: 1.5em;"></i>
-                    </span>
-            <input id="date"
-                   ng-model="carInfo.issueDate" type="text" style="display: inline-block;background: transparent"
-                   placeholder="点击设置日期！">
-          </div>
-        </div>
-
-
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="openAirportTransfer()">
-
-
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageTAModal()">
-
           <h1 class="title">确认</h1>
         </div>
       </div>
@@ -851,9 +799,9 @@
             选择地点:
           </span>
           <span>
-            {{carManage.servicePlace}}
+            {{carManage.parkCar.servicePlace}}
           </span>
-          <span ng-click="pickMaintain()" style="font-size: 1.6em;">
+          <span ng-click="pickParkCarNearby()" style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -863,7 +811,7 @@
                   服务人员:
                 </span>
           <span ng-click="service_person_select(service_persons)">
-                  {{service_person}}
+                  {{carManage.parkCar.servicePerson!==undefined&&carManage.parkCar.servicePerson!==null?carManage.parkCar.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
@@ -875,22 +823,6 @@
                 </span>
           <span>$40000</span>
         </div>
-
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                  <span class="input-label" style="display: inline-block">
-                    预约时间:
-                  </span>
-          <div style="display: inline-block" ng-click="datepick(carManage,'ptCar')">
-                    <span>
-                      <i class="ion-calendar" style="font-size: 1.5em;"></i>
-                    </span>
-            <input id="date"
-                   ng-model="carInfo.issueDate" type="text" style="display: inline-block;background: transparent"
-                   placeholder="点击设置日期！">
-          </div>
-        </div>
-
-
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_carManageTAModal()">
           <h1 class="title">确认</h1>

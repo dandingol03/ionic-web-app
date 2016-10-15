@@ -2,9 +2,13 @@
   <div class="close_detmodal" ng-click="close_matchingCarInfoModal()">
     <img src="img/close.png"/>
   </div>
-  <ion-content class="carInfo_content" style="width: 95%;padding:10px">
+  <ion-content
+    class="carInfo_content"
+    style="width: 95%;padding:10px"
+    scroll="false"
+    >
 
-    <div class="list" scroll="true">
+    <div class="list" scroll="true" style="height: 80%;">
       <div class="item"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:14px;"
            ng-repeat="car in cars"
@@ -13,9 +17,7 @@
             <span style="display: inline-block;font-size: 0.9em;">
               {{car.carNum}}
             </span>
-       <span
-         style="font-size: 2em;position: absolute;right: 0%;width: 20%;text-align: center"
-         >
+       <span style="font-size: 2em;position: absolute;right: 0%;width: 20%;text-align: center">
          <i ng-if="car.checked!=true" class="ion-ios-checkmark-outline"></i>
          <i ng-if="car.checked==true" class="ion-ios-checkmark"></i>
        </span>
@@ -25,7 +27,7 @@
 
 
     <div
-      class="bar bar-footer bar-assertive"
+      class="bar bar-assertive"
       style="width: 70%;margin-left:15%;margin-right:15%;"
       ng-click="bind_car_info(cars)"
       >
