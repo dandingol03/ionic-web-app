@@ -20,7 +20,7 @@
     <div class="list" style="margin-bottom: 0px;">
       <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
 
-        <li style="width:33%;">
+        <li style="width:50%;">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==0]"
                ng-click="tab_change(0)"
@@ -33,24 +33,11 @@
           </div>
         </li>
 
-        <li style="width:33%">
+
+        <li style="width:50%">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==1]"
                ng-click="tab_change(1)"
-               style="text-align: center">
-            <div style="width: 100%;">
-              <span style="position:absolute;top: 30%;left:20%;right:20%;">
-                待支付
-              </span>
-            </div>
-
-          </div>
-        </li>
-
-        <li style="width:33%">
-          <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==2]"
-               ng-click="tab_change(2)"
                style="text-align: center">
             <div style="width: 100%;">
               <span style="position:absolute;top: 30%;left:20%;right:20%;">
@@ -100,44 +87,10 @@
         </ul>
       </div>
 
-      <!-- 待支付 -->
-      <div class="item"
-           ng-if="tabIndex==1"
-           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-repeat="order in pricingOrders"
-      >
-        <ul style="width: 100%;">
-          <li style="float:left;width: 20%;text-align: center;border-right: 1px solid #9e9e9e;">
-            <span style="font-size:3em;">
-              <i class="ion-android-person"></i>
-            </span>
-          </li>
-          <li style="float:left;width: 80%;">
-            <div style="width: 70%;display: inline-block;margin-left:10%;">
-              <div style="width:100%;">
-                <div>
-                  订单编号:<span>{{order.orderNum}}</span>
-                </div>
-                <div>
-                  总金额:<span>{{order.insuranceFeeTotal}}</span>
-                </div>
-                <div>
-                  生效时间:<span>{{order.orderStartDate}}</span>
-                </div>
-              </div>
-
-              <i ng-if="tabIndex!=0" class="ion-compose" style="position: absolute;right: 10%;bottom:20%;"></i>
-              <i class="ion-ios-paper" style="position: absolute;right: 20%;bottom:20%;font-size: 1.4em;"
-                 ng-click="goDetail(order)"></i>
-            </div>
-          </li>
-        </ul>
-      </div>
-
 
       <!-- 寿险估价列表 -->
       <div class="item"
-           ng-if="tabIndex==2"
+           ng-if="tabIndex==1"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
            ng-repeat="order in pricingOrders"
       >

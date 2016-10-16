@@ -55,10 +55,18 @@
           <span class="input-label" style="display: inline-block;width: 35%;text-align: left">
               投保人:
           </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left">
-            {{life_insurance.order.insurer.perName!==undefined&&life_insurance.order.insurer.perName!==null?
-            life_insurance.order.insurer.perName:'请选择投保人'}}
+          <div
+            ng-if="life_insurance.order.insurer.perName==undefined||life_insurance.order.insurer.perName==null"
+            style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left"
+            >
+              <span>请选择投保人</span>
           </div>
+          <div
+            ng-if="life_insurance.order.insurer.perName!==undefined&&life_insurance.order.insurer.perName!==null"
+            style="display: inline-block;width: 40%;font-size: 14px;text-align: left">
+            {{life_insurance.order.insurer.perName}}
+          </div>
+
           <div style="display: inline-block;width: 15%;text-align: left"
                ng-click="fetchRelative(life_insurance.order,'insurer')">
             <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
@@ -73,7 +81,16 @@
           <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
               被保险人:
           </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
+          <div
+            ng-if="life_insurance.order.insuranceder.perName==undefined||life_insurance.order.insuranceder.perName==null"
+            style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;"
+            >
+            <span>请选择被保险人</span>
+          </div>
+          <div
+            ng-if="life_insurance.order.insuranceder.perName!==undefined&&life_insurance.order.insuranceder.perName!==null"
+            style="display: inline-block;width: 40%;font-size: 14px;text-align: left;"
+            >
             {{life_insurance.order.insuranceder.perName!==undefined&&life_insurance.order.insuranceder.perName!==null?
             life_insurance.order.insuranceder.perName:'请选择被保险人'}}
           </div>
@@ -90,9 +107,17 @@
             <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
               受益人:
             </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
-            {{life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null?
-            life_insurance.order.benefiter.perName:'请选择受益人'}}
+          <div
+            ng-if="life_insurance.order.benefiter.perName==undefined||life_insurance.order.benefiter.perName==null"
+            style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;"
+            >
+            <span>请选择受益人</span>
+          </div>
+          <div
+            ng-if="life_insurance.order.benefiter.perName!==undefined&&life_insurance.order.benefiter.perName!==null"
+            style="display: inline-block;width: 40%;font-size: 14px;text-align: left;"
+            >
+            {{life_insurance.order.benefiter.perName}}
           </div>
           <div style="display: inline-block;width: 15%;text-align: left;"
                ng-click="fetchRelative(life_insurance.order,'benefiter')">
@@ -108,9 +133,17 @@
             <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
                需要的保障::
             </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
-            {{life_insurance.order.insuranceType!==undefined&&life_insurance.order.insuranceType!==null?
-            life_insurance.order.insuranceType:'请选择保障'}}
+          <div
+            ng-if="life_insurance.order.insuranceType==undefined||life_insurance.order.insuranceType==null"
+            style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;"
+            >
+            <span>请选择保障</span>
+          </div>
+          <div
+            ng-if="life_insurance.order.insuranceType!==undeifned&&life_insurance.order.insuranceType!==null"
+            style="display: inline-block;width: 40%;font-size: 14px;text-align: left;"
+            >
+            {{life_insurance.order.insuranceType}}
           </div>
 
           <div style="display: inline-block;width: 15%;text-align: left;"
@@ -128,7 +161,7 @@
           <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
              有无社保:
           </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
+          <div style="display: inline-block;width: 40%;font-size: 14px;text-align: left;">
             {{life_insurance.order.hasSocietyInsurance==true?'有':'无'}}
           </div>
 
@@ -146,7 +179,7 @@
           <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
             有无商业保险:
           </span>
-          <div style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;">
+          <div style="display: inline-block;width: 40%;font-size: 14px;text-align: left;">
             {{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}
           </div>
 

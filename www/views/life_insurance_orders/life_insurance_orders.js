@@ -101,11 +101,8 @@ angular.module('starter')
         if(json.re==1){
           $scope.orders=json.data;
           $scope.orders.map(function(order,i) {
-            if(order.orderState==2||order.orderState==3){
+            if(order.orderState==3||order.orderState==3){
               $scope.pricingOrders.push(order);
-            }
-            if(order.orderState==4){
-              $scope.unPaidOrders.push(order);
             }
             if(order.orderState==5){
               $scope.finishOrders.push(order);
@@ -184,7 +181,7 @@ angular.module('starter')
       if (flag == true) {
         $http({
           method: "POST",
-          url: "/proxy/node_server/svr/request",
+          url: Proxy.local()+"/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token
           },
@@ -209,7 +206,7 @@ angular.module('starter')
 
         $http({
           method: "POST",
-          url: "/proxy/node_server/svr/request",
+          url: Proxy.local()+"/svr/request",
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token
           },
