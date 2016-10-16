@@ -147,9 +147,6 @@ angular.module('starter')
           str+=err[field];
         console.error('error=\r\n' + str);
       })
-
-
-
     }
 
 
