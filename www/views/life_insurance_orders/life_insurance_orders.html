@@ -60,22 +60,17 @@
           </div>
         </li>
 
-
-
-
-
       </ul>
     </div>
 
 
     <div class="list list-inset padding" style="margin-bottom:40px;" >
 
-
       <!-- 已完成 -->
       <div class="item"
            ng-if="tabIndex==0"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-repeat="order in orders[0]"
+           ng-repeat="order in finishOrders"
       >
         <ul style="width: 100%;">
           <li style="float:left;width: 20%;text-align: center;border-right: 1px solid #9e9e9e;">
@@ -87,7 +82,7 @@
             <div style="width: 70%;display: inline-block;margin-left:10%;">
               <div style="width:100%;">
                 <div>
-                  车牌号:<span>{{order.carNum}}</span>
+                  订单编号:<span>{{order.orderNum}}</span>
                 </div>
                 <div>
                   总金额:<span>{{order.insuranceFeeTotal}}</span>
@@ -109,7 +104,7 @@
       <div class="item"
            ng-if="tabIndex==1"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-repeat="order in orders[1]"
+           ng-repeat="order in pricingOrders"
       >
         <ul style="width: 100%;">
           <li style="float:left;width: 20%;text-align: center;border-right: 1px solid #9e9e9e;">
@@ -121,13 +116,13 @@
             <div style="width: 70%;display: inline-block;margin-left:10%;">
               <div style="width:100%;">
                 <div>
-                  车牌号:<span>{{order.carNum}}</span>
+                  订单编号:<span>{{order.orderNum}}</span>
                 </div>
                 <div>
                   总金额:<span>{{order.insuranceFeeTotal}}</span>
                 </div>
                 <div>
-                  生效时间:<span>{{order.feeDate}}</span>
+                  生效时间:<span>{{order.orderStartDate}}</span>
                 </div>
               </div>
 
@@ -140,54 +135,39 @@
       </div>
 
 
-
       <!-- 寿险估价列表 -->
-      <div ng-if="tabIndex==2">
-        <div ng-repeat="plan in plans">
-          <!-- 公司名称 -->
-          <div class="padding"
-               style="padding:0px 10px">
-            <ion-item style="border-bottom:0px;position: relative" ng-click="toggle(plan,'checked')">
-              <h2>
-                {{plan.companyName}}
-              </h2>
-              <div style="position: absolute;right:20%;top:20%;">
-              <span style="font-size: 2em;">
-                <i ng-if="plan.checked!=true" class="ion-ios-checkmark-outline"></i>
-                <i ng-if="plan.checked==true" class="ion-ios-checkmark"></i>
-              </span>
+      <div class="item"
+           ng-if="tabIndex==2"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
+           ng-repeat="order in pricingOrders"
+      >
+        <ul style="width: 100%;">
+          <li style="float:left;width: 20%;text-align: center;border-right: 1px solid #9e9e9e;">
+            <span style="font-size:3em;">
+              <i class="ion-android-person"></i>
+            </span>
+          </li>
+          <li style="float:left;width: 80%;">
+            <div style="width: 70%;display: inline-block;margin-left:10%;">
+              <div style="width:100%;">
+                <div>
+                  订单编号:<span>{{order.orderNum}}</span>
+                </div>
+                <div>
+                  总金额:<span>{{order.insuranceFeeTotal}}</span>
+                </div>
+                <div>
+                  生效时间:<span>{{order.orderStartDate}}</span>
+                </div>
               </div>
-            </ion-item>
-            <ion-item style="border-bottom:0px;position: relative">
-              <h2 style="width: 70%;display: inline-block">
-                合计保费:
-              </h2>
-              <h2 style="width: 30%;display: inline-block">
-                {{plan.insuranceFeeTotal}}
-              </h2>
-            </ion-item>
-            <ion-item style="position: relative" ng-click="goDetail(plan)">
-              <h2 style="width: 30%;display: inline-block">
-                查看详情:
-              </h2>
-              <h2 style="display: inline-block">
-                 <span  style="font-size: 1.3em;">
-                   <i class="ion-compose"></i>
-                 </span>
-              </h2>
-            </ion-item>
-          </div>
 
-          <!-- 公司产品细项 -->
-          <div class="padding"
-               style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
-            <div
-              style="margin:1px;padding:1px"
-              class="list"
-              >
+              <i ng-if="tabIndex!=0" class="ion-compose" style="position: absolute;right: 10%;bottom:20%;"></i>
+              <i class="ion-ios-paper" style="position: absolute;right: 20%;bottom:20%;font-size: 1.4em;"
+                 ng-click="goDetail(order)"></i>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
+      </div>
 
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="apply()">
           <h1 ng-if="changedState!=true" class="title">提交已选方案</h1>

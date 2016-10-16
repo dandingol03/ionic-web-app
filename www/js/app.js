@@ -509,6 +509,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/life_insurance_orders/life_insurance_orders.html'
       })
 
+      .state('life_plan',{
+        url:'/life_plan/:order',
+        controller:'lifePlanController',
+        templateUrl:'views/life_plan/life_plan.html'
+      })
+
 
       .state('integration', {
         url: '/integration',

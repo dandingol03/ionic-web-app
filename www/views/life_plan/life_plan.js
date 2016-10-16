@@ -1,11 +1,20 @@
+/**
+ * Created by yiming on 16/10/15.
+ */
 angular.module('starter')
 
 /**
  * 本页面不开启缓存
  */
-  .controller('lifeInsuranceOrdersController',function($scope,$state,$http,
+  .controller('lifePlanController',function($scope,$state,$http,
                                                        $location,$rootScope,$stateParams,
                                                        $ionicPopup,Proxy){
+
+    $scope.order=$stateParams.order;
+
+    if(Object.prototype.toString.call($scope.order)=='[object String]')
+      $scope.order=JSON.parse($scope.order);
+
 
     $scope.changedState= false;
 
@@ -19,7 +28,6 @@ angular.module('starter')
         }
       });
     }
-
 
 
     $scope.go_back=function(){
@@ -49,17 +57,17 @@ angular.module('starter')
       {
         item[field]=false;
 
-      if(field=='checked')
-      {
+        if(field=='checked')
+        {
 
-      }
+        }
 
         if(field=='checked')
         {
           var flag=false;
           $scope.plans.map(function(plan,i) {
             if(plan.checked==true&&plan.modified==true)
-            flag=true;
+              flag=true;
           });
           if(!flag)
             $scope.changedState=false;
@@ -75,8 +83,8 @@ angular.module('starter')
     $scope.plans=[];
 
 
-    $scope.goDetail=function(order){
-      $state.go('life_plan',{order:JSON.stringify(order)});
+    $scope.goDetail=function(plan){
+      $state.go('lifePlanDetail',{plan:JSON.stringify(plan)});
     }
 
 

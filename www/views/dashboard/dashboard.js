@@ -921,9 +921,9 @@ angular.module('starter')
 
     $scope.life_insurance=
     {
-      insurer:{},
-      insuranceder:{},
-      benefiter:{},
+      insurer:{perTypeCode:'I'},
+      insuranceder:{perTypeCode:'I'},
+      benefiter:{perTypeCode:'I'},
       intend:{},
       order:{
         insurer:{},
@@ -1158,15 +1158,6 @@ angular.module('starter')
     //寿险意向保留
     $scope.saveLifeInsuranceIntend=function()
     {
-      $scope.life_insurance.order= {
-        insurancederId:1,
-        insurerId:1,
-        benefiterId:1,
-        insuranceType:'重疾',
-        hasSocietyInsurance:0,
-        hasCommerceInsurance:0,
-        planInsuranceFee:1000
-      };
 
       $http({
         method: "POST",
@@ -2347,9 +2338,10 @@ $scope.carService=function(){
     //提交统一函数
     $scope.upload=function(cmd,item){
 
-      $scope.detectImg(item)
-        .then(function(json) {
-        return  $http({
+     // $scope.detectImg(item)
+       // .then(function(json) {
+        //return
+      $http({
           method: "POST",
           url: Proxy.local()+'/svr/request',
           headers: {
@@ -2360,8 +2352,8 @@ $scope.carService=function(){
             request:cmd,
             info:item
           }
-        });
         })
+        //})
         .then(function(res) {
           alert('...it is back')
         })
@@ -2503,6 +2495,7 @@ $scope.carService=function(){
         if(json.re==1) {
           if(json.data!=undefined&&json.data!=null){
             $scope.relatives=json.data;
+
             $scope.open_selectRelativeModal(item,field,matched);
           }
         }else{
