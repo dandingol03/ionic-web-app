@@ -102,7 +102,8 @@ angular.module('starter')
       carValidate:{},
       paperValidate:{},
       airportTransfer:{},
-      parkCar:{}
+      parkCar:{},
+      serviceType:11
     };
 
 
@@ -1759,26 +1760,12 @@ $scope.carService=function(){
             break;
         }
 
-        if($rootScope.carManage.unit!==undefined&&$rootScope.carManage.unit!==null)//已选维修厂
+        if(unit!==undefined&&unit!==null)//已选维修厂
         {
-          $http({
-            method: "POST",
-            url: Proxy.local() + "/svr/request",
-            headers: {
-              'Authorization': "Bearer " + $rootScope.access_token
-            },
-            data: {
-              request: 'getServicePersonByMaintenance',
-              info: {
-                maintenance: unit
-              }
-            }
-          }).then(function (res) {
-            var json = res.data;
-            if (json.re == 1) {
-              var servicePerson = json.data;
+
+
               $scope.carManage.servicePersonId = servicePerson.servicePersonId;
-              return $http({
+               $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
                 headers: {
@@ -1790,11 +1777,7 @@ $scope.carService=function(){
                     carManage: $scope.carManage
                   }
                 }
-              });
-            } else {
-              return {re: -1};
-            }
-          }).then(function(res) {
+              }).then(function(res) {
             var json = res.data;
             if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
