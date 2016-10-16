@@ -1,0 +1,106 @@
+<ion-view view-title="车险估价列表">
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content scroll="false" lazy-scroll>
+
+
+    <div class="list list-inset padding"
+         style="margin-bottom:40px;height: 100%;"
+      >
+
+
+      <!-- 车险估价列表 -->
+      <div class="list list-inset padding"
+           style="margin-bottom: 0px;height: 100%;"
+           >
+        <div style="height: 74%;">
+          <ion-scroll style="height: 100%;">
+            <div class="padding"  style="padding:10px">
+              <div style="width: 60%;" ng-click="reset_specials()">
+                <span style="font-size: 1.2em;">更改险别</span>
+                <span style="font-size: 2.2em;"><i class="ion-ios-compose-outline"></i></span>
+              </div>
+            </div>
+            <div>
+              <div ng-repeat="price in order.prices">
+                <!-- 公司产品细项 -->
+                <div class="padding"
+                     style="padding:0px 10px">
+                  <ion-item style="border-bottom: 0px;position: relative" ng-click="setterPrice($index,price)">
+                    <h2>
+                      {{price.companyName}}
+                    </h2>
+                    <div style="position: absolute;right:10%;top:20%;">
+              <span style="font-size: 2em;">
+                <i ng-if="$index!=priceIndex" class="ion-ios-checkmark-outline"></i>
+                <i ng-if="$index==priceIndex" class="ion-ios-checkmark"></i>
+              </span>
+                    </div>
+                  </ion-item>
+                </div>
+
+                <!-- 公司产品细项 -->
+                <div class="padding"
+                     style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
+                  <div
+                    style="margin:1px;padding:1px"
+                    class="list"
+                    >
+                    <ion-item
+                      ng-repeat="product in price.items"
+                      >
+                      <div style="display:inline-block;width:60%;">
+                        <span>{{product.productName}}</span>
+                      </div>
+                      <div style="display: inline-block">
+                        <span>保费:</span>
+                        {{product.insuranceType}}
+                      </div>
+                    </ion-item>
+                    <ion-item>
+                      <div style="display:inline-block;width:60%;">
+                        <span>总计:</span>
+                      </div>
+                      <div style="display: inline-block">
+                    <span>
+                      {{price.insuranceFeeTotal}}
+                    </span>
+                      </div>
+                    </ion-item>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </ion-scroll>
+        </div>
+
+        <div style="height: 20%;position: relative">
+          <div class="bar bar-footer  bar-assertive"
+               style="position: static;position: absolute;bottom:50%;"
+               ng-click="apply()">
+            <h1 class="title">提交已选方案</h1>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </ion-content>
+
+</ion-view>

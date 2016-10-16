@@ -20,7 +20,7 @@
     <div class="list" style="margin-bottom: 0px;">
       <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
 
-        <li style="width:50%;">
+        <li style="width:33%;">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==0]"
                ng-click="tab_change(0)"
@@ -33,10 +33,25 @@
           </div>
         </li>
 
-        <li style="width:50%">
+        <li style="width:33%;">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==1]"
                ng-click="tab_change(1)"
+               style="text-align: center">
+            <div style="height: 100%">
+               <span style="position:absolute;top:30%;left: 20%;right:20%;">
+                  过渡列表
+               </span>
+            </div>
+          </div>
+        </li>
+
+
+
+        <li style="width:33%">
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tabIndex==2]"
+               ng-click="tab_change(2)"
                style="text-align: center">
             <div style="width: 100%;">
               <span style="position:absolute;top: 30%;left:20%;right:20%;">
@@ -84,13 +99,46 @@
         </ion-scroll>
       </div>
 
+    <!-- 过渡列表 -->
+    <div class="list list-inset padding"
+         style="margin-bottom: 0px;height: 100%;"
+         ng-if="tabIndex==1">
+      <ion-scroll style="height: 90%;">
+        <div class="item"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
+             ng-repeat="order in orderPricedList"
+             ng-click="goDetail(order)"
+          >
 
-
-
+          <ul class="list" style="margin-bottom:0px;">
+            <li class="item item-icon-right"
+                style="padding-right:34px;position: relative;border:0px;">
+              <div style="display:inline-block;width:95%;">
+                <div>订单号:{{order.orderNum}}</div>
+              </div>
+            </li>
+          </ul>
+          <ul class="list">
+            <li class="item item-icon-right"
+                style="padding-right:34px;padding-top:4px;padding-bottom:4px;position: relative;border:0px;">
+              <div style="display:inline-block;width:95%;">
+                <div style="margin-right:5%;">车牌号:{{order.carNum}}</div>
+                <div style="margin-right:5%;">总金额:{{order.insuranceFeeTotal}}</div>
+              </div>
+              <div style="display:inline-block;width:5%;align-items:center;position: absolute;top:20%;font-size: 2em;">
+                <i class="ion-ios-arrow-forward"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </ion-scroll>
+    </div>
 
 
       <!-- 车险估价列表 -->
-    <div class="list list-inset padding" style="margin-bottom: 0px;height: 100%;" ng-if="tabIndex==1">
+    <div class="list list-inset padding"
+         style="margin-bottom: 0px;height: 100%;"
+         ng-if="tabIndex==2">
       <div style="height: 74%;">
         <ion-scroll style="height: 100%;">
           <div class="padding"  style="padding:10px">

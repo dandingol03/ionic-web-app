@@ -576,6 +576,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/transclude/transclude.html'
       })
 
+      .state('car_order_prices',{
+        url:'/car_order_prices/:order',
+        controller:'carOrderPricesController',
+        templateUrl:'views/car_order_prices/car_order_prices.html'
+      })
+
 
     // if none of the above states are matched, use this as the fallback
 
