@@ -113,6 +113,9 @@ angular.module('starter')
     }
 
 
+
+
+
     //获取估价方案
     if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
       &&$rootScope.lifeInsurance.plans!==undefined&&$rootScope.lifeInsurance.plans!==null)

@@ -18,6 +18,51 @@ angular.module('starter')
 
     $scope.changedState= false;
 
+    //获取估价方案
+    $http({
+      method: "POST",
+      url: Proxy.local()+'/svr/request',
+      headers: {
+        'Authorization': "Bearer " + $rootScope.access_token
+      },
+      data:
+      {
+        request:'getLifeOrderPlansByOrderId',
+        info:{
+          orderId:1
+        }
+      }
+    }).then(function(res) {
+      var json=res.data;
+      if(json.re==1) {
+
+        var data=json.data;
+        var plans=[];
+        data.map(function(plan,i) {
+          var main=null;
+          var additions=[];
+          plan.items.map(function(proj,j) {
+            if(proj.product.ownerId!==undefined&&proj.product.ownerId!==null)
+              additions.push(proj);
+            else
+              main=proj;
+          })
+          plan.main=main;
+          plan.additions=additions;
+          plans.push(plan);
+        });
+
+        $scope.plans=plans;
+      }
+    }).catch(function(err) {
+      var str='';
+      for(var field in err)
+        str+=err[field];
+      console.error('error=\r\n' + str);
+    })
+
+
+    //修改状态的初始化
     if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
       &&$rootScope.lifeInsurance.plans!==undefined&&$rootScope.lifeInsurance.plans!==null)
     {
@@ -32,7 +77,6 @@ angular.module('starter')
 
     $scope.go_back=function(){
       window.history.back();
-
     }
 
 
@@ -86,92 +130,6 @@ angular.module('starter')
     $scope.goDetail=function(plan){
       $state.go('lifePlanDetail',{plan:JSON.stringify(plan)});
     }
-
-
-    //获取寿险订单
-    if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
-      &&$rootScope.lifeInsurance.orders!==undefined&&$rootScope.lifeInsurance.orders!==null)
-    {
-      $scope.orders=$rootScope.lifeInsurance.orders;
-    }else{
-      $http({
-        method: "POST",
-        url: Proxy.local()+'/svr/request',
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token
-        },
-        data:
-        {
-          request:'getLifeOrders',
-        }
-      }).then(function(res) {
-        var json=res.data;
-        if(json.re==1){
-          $scope.orders=json.data;
-          $scope.orders.map(function(order,i) {
-            if(order.orderState==2||order.orderState==3){
-              $scope.pricingOrders.push(order);
-            }
-            if(order.orderState==4){
-              $scope.unPaidOrders.push(order);
-            }
-            if(order.orderState==5){
-              $scope.finishOrders.push(order);
-            }
-          })
-        }
-      })
-    }
-
-
-    //获取估价方案
-    if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
-      &&$rootScope.lifeInsurance.plans!==undefined&&$rootScope.lifeInsurance.plans!==null)
-    {
-      $scope.plans=$rootScope.lifeInsurance.plans;
-    }else{
-      $http({
-        method: "POST",
-        url: Proxy.local()+'/svr/request',
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token
-        },
-        data:
-        {
-          request:'getOrderPlan',
-          orderId:1
-        }
-      }).then(function(res) {
-        $scope.plans=res.data.data;
-
-        var data=res.data.data;
-        var plans=[];
-        data.map(function(plan,i) {
-          var main=null;
-          var additions=[];
-          plan.items.map(function(proj,j) {
-            if(proj.ownerId!==undefined&&proj.ownerId!==null)
-              additions.push(proj);
-            else
-              main=proj;
-          })
-          plan.main=main;
-          plan.additions=additions;
-          plans.push(plan);
-        });
-
-        $scope.plans=plans;
-        if($rootScope.lifeInsurance==undefined||$rootScope.lifeInsurance==null)
-          $rootScope.lifeInsurance={};
-        $rootScope.lifeInsurance.plans=plans;
-      }).catch(function(err) {
-        var str='';
-        for(var field in err)
-          str+=err[field];
-        console.error('error=\r\n'+str);
-      });
-    }
-
 
 
 
@@ -248,15 +206,6 @@ angular.module('starter')
 
     }
 
-    //tabIndex选定
-    if($stateParams.tabIndex!==undefined&&$stateParams.tabIndex!==null&&$stateParams.tabIndex!='')
-      $scope.tabIndex = parseInt($stateParams.tabIndex);
-    else
-    {
-      if($scope.plans!==undefined&&$scope.plans!==null&&$scope.plans.length>0)
-        $scope.tabIndex=2;
-      else
-        $scope.tabIndex=0;
-    }
+
 
   });
