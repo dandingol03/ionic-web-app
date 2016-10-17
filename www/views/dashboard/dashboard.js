@@ -768,7 +768,7 @@ angular.module('starter')
 
 
     $scope.postCarInfo=function(){
-      if(window.cordova!==undefined&&window.cordova!==null)
+      if(window!==undefined&&window!==null)
       {
         if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
           &&$scope.carInfo.ownerIdCard2_img!==undefined&&$scope.carInfo.ownerIdCard2_img!==null)
@@ -795,7 +795,32 @@ angular.module('starter')
                     $scope.carInfo.licenseAttachId2_img!==undefined&&scope.carInfo.licenseAttachId2_img!==null&&
                     $scope.carInfo.licenseAttachId3_img!==undefined&&scope.carInfo.licenseAttachId3_img!==null)
                   {
-                    $scope.select_type();
+                    //$scope.select_type();
+                    //TODO:上传验车照片
+                    if($scope.carInfo.carAttachId1_img!==undefined&&$scope.carInfo.carAttachId1_img!==null&&
+                      $scope.carInfo.carAttachId2_img!==undefined&&$scope.carInfo.carAttachId2_img!==null&&
+                      $scope.carInfo.carAttachId3_img!==undefined&&$scope.carInfo.carAttachId3_img!==null&&
+                      $scope.carInfo.carAttachId4_img!==undefined&&$scope.carInfo.carAttachId4_img!==null&&
+                      $scope.carInfo.carAttachId5_img!==undefined&&$scope.carInfo.carAttachId5_img!==null&&
+                      $scope.carInfo.carAttachId6_img!==undefined&&$scope.carInfo.carAttachId6_img!==null)
+                    {
+                      $scope.select_type();
+                    }
+                    else{
+                      var confirmPopup = $ionicPopup.confirm({
+                        title: '缺少验车照片',
+                        template: '请问是否选择上传验车照片',
+                        okText:'上传',
+                        cancelText:'取消'
+                      });
+                      confirmPopup.then(function(res) {
+                        if(res) {
+                          $scope.open_uploadLicenseCardModal();
+                        } else {
+                          console.log('You are not sure');
+                        }
+                      });
+                    }
                   }
                   else{
                     //TODO:上传行驶证照片
