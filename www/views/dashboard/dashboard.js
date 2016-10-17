@@ -768,12 +768,12 @@ angular.module('starter')
 
 
     $scope.postCarInfo=function(){
+
       if(window.cordova!==undefined&&window.cordova!==null)
       {
         if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
           &&$scope.carInfo.ownerIdCard2_img!==undefined&&$scope.carInfo.ownerIdCard2_img!==null)
         {
-
 
             $http({
               method: "POST",

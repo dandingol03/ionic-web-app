@@ -20,8 +20,6 @@ angular.module('starter')
       });
     }
 
-
-
     $scope.go_back=function(){
       window.history.back();
 
@@ -94,14 +92,14 @@ angular.module('starter')
         },
         data:
         {
-          request:'getLifeOrders',
+          request:'getLifeOrders'
         }
       }).then(function(res) {
         var json=res.data;
         if(json.re==1){
           $scope.orders=json.data;
           $scope.orders.map(function(order,i) {
-            if(order.orderState==3||order.orderState==3){
+            if(order.orderState==2||order.orderState==3){
               $scope.pricingOrders.push(order);
             }
             if(order.orderState==5){

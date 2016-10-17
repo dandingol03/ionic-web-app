@@ -76,4 +76,55 @@ angular.module('starter')
         console.error('error=\r\n' + str);
       })
     }
+
+
+    //重选套餐
+    $scope.reset_specials=function(){
+      $rootScope.Insurance={};
+      var carOrderState = -1;
+
+      $http({
+        method: "POST",
+        url: Proxy.local()+"/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'updateCarOrderState',
+          info:{
+            orderState:carOrderState,
+            orderId:$scope.order.orderId
+          }
+        }
+      }).then(function(res) {
+
+        if(res.data.re==1){
+          $http({
+            method: "POST",
+            url: Proxy.local()+"/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data:
+            {
+              request:'getCarInfo',
+              info:{
+                order:$scope.order
+              }
+            }
+          }).then(function(res) {
+            if(res.data.re==1){
+              var carInfo = res.data;
+              $state.go('car_insurance',{carInfo:JSON.stringify(carInfo)});
+
+            }
+          })
+        }
+
+      })
+
+    }
+
+
   });
