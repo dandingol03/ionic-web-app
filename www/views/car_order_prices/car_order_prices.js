@@ -139,11 +139,10 @@ angular.module('starter')
 
     //提交车险已选报价
     $scope.apply=function(){
-
-      //TODO:保险人\受益人
       $scope.open_appendCarOrderModal();
     }
 
+    //提交已选方案
     $scope.confirm=function() {
       var selected_price = null;
       var order = $scope.order;
@@ -187,6 +186,28 @@ angular.module('starter')
       }).then(function (res) {
         var json = res.data;
         if (json.re == 1) {
+          return $http({
+            method: "POST",
+            url: Proxy.local() + "/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data: {
+              request: 'updateInsuranceCarOrder',
+              info: {
+                orderId:$scope.order.orderId,
+                fields:{
+                  insurerId:$scope.ownerId,
+                  insurancederId:$scope.insuranceder.personId
+                }
+              }
+            }
+          });
+
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
 
         }
       }).catch(function (err) {
