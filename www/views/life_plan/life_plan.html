@@ -35,7 +35,7 @@
               <h2>
                 {{plan.companyName}}
               </h2>
-              <div style="position: absolute;right:20%;top:20%;">
+              <div style="position: absolute;right:10%;top:20%;">
               <span style="font-size: 2em;">
                 <i ng-if="plan.checked!=true" class="ion-ios-checkmark-outline"></i>
                 <i ng-if="plan.checked==true" class="ion-ios-checkmark"></i>
@@ -73,9 +73,11 @@
           </div>
         </div>
 
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="apply()">
-          <h1 ng-if="changedState!=true" class="title">提交已选方案</h1>
-          <h1 ng-if="changedState==true" class="title">请等待工作人员确认</h1>
+        <div class="bar bar-footer  bar-assertive"
+             style="position: static"
+             ng-if="modifiedFlag!=true"
+             ng-click="apply()">
+          <h1 ng-if="modifiedFlag!=true" class="title">提交已选方案</h1>
         </div>
       </div>
 

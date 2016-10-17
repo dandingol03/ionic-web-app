@@ -60,12 +60,7 @@
            ng-repeat="order in finishOrders"
       >
         <ul style="width: 100%;">
-          <li style="float:left;width: 20%;text-align: center;border-right: 1px solid #9e9e9e;">
-            <span style="font-size:3em;">
-              <i class="ion-android-person"></i>
-            </span>
-          </li>
-          <li style="float:left;width: 80%;">
+          <li style="float:left;width: 80%;"  ng-click="goDetail(order)">
             <div style="width: 70%;display: inline-block;margin-left:10%;">
               <div style="width:100%;">
                 <div>
@@ -75,18 +70,17 @@
                   总金额:<span>{{order.insuranceFeeTotal}}</span>
                 </div>
                 <div>
-                  生效时间:<span>{{order.feeDate}}</span>
+                  申请时间:
+                  <span>
+                    {{order.applyTime}}
+                  </span>
                 </div>
               </div>
-
-              <i ng-if="tabIndex!=0" class="ion-compose" style="position: absolute;right: 10%;bottom:20%;"></i>
-              <i class="ion-ios-paper" style="position: absolute;right: 20%;bottom:20%;font-size: 1.4em;"
-                 ng-click="goDetail(order)"></i>
+              <i class="ion-ios-arrow-forward" style="position: absolute;right: 20%;bottom:20%;font-size: 1.4em;"></i>
             </div>
           </li>
         </ul>
       </div>
-
 
       <!-- 寿险估价列表 -->
       <div class="item"
@@ -117,10 +111,6 @@
         </ul>
       </div>
 
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="apply()">
-          <h1 ng-if="changedState!=true" class="title">提交已选方案</h1>
-          <h1 ng-if="changedState==true" class="title">请等待工作人员确认</h1>
-        </div>
       </div>
 
 
