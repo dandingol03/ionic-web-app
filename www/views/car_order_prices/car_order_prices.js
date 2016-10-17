@@ -8,7 +8,9 @@ angular.module('starter')
  */
   .controller('carOrderPricesController',function($scope,$state,$http,
                                             $location,$rootScope,$stateParams,
-                                            $ionicPopup,Proxy){
+                                            $ionicPopup,Proxy,$ionicModal){
+
+    $scope.insuranceder={};
 
     $scope.order=$stateParams.order;
 
@@ -40,40 +42,160 @@ angular.module('starter')
       }
     };
 
+    $scope.Mutex=function(item,field,cluster) {
+      if(item[field])
+      {
+        item[field]=false;
+      }
+      else{
+        item[field]=true;
+        cluster.map(function(cell,i) {
+          if(cell.carNum!=item.carNum)
+            cell[field]=false;
+        })
+      }
+    };
+
+    /*** bind select_relative modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/select_relative.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.select_relative={
+        modal:modal
+      }
+    });
+
+    $scope.open_selectRelativeModal= function(field){
+      $scope.select_relative.modal.show();
+      $scope.select_relative.field=field;
+    };
+
+    $scope.close_selectRelativeModal= function(cluster) {
+      if(cluster!==undefined&&cluster!==null)
+      {
+        cluster.map(function(singleton,i) {
+          if(singleton.checked==true)
+          {
+            $scope[$scope.select_relative.field]=singleton;
+          }
+        })
+      }
+      $scope.select_relative.modal.hide();
+    };
+    /*** bind select_relative modal ***/
 
 
-    //提交车险已选报价
-    $scope.apply=function(){
-      var selected_price=null;
-      var order=$scope.order;
-      order.prices.map(function(price,i) {
-        if(price.checked==true)
-          selected_price=price;
-      });
-
+    $scope.fetchRelative=function(field) {
       $http({
         method: "POST",
-        url: Proxy.local()+"/svr/request",
+        url: Proxy.local()+'/svr/request',
         headers: {
           'Authorization': "Bearer " + $rootScope.access_token
         },
         data:
         {
-          request:'applyCarOrderPrice',
-          info:{
-            price:selected_price
-          }
+          request:'getRelativePersons'
         }
       }).then(function(res) {
         var json=res.data;
         if(json.re==1) {
-          //TODO:give a tip to customer to inform car order has been generated
+          if(json.data!=undefined&&json.data!=null){
+            $scope.relatives=json.data;
+
+            $scope.open_selectRelativeModal(field);
+          }
+        }else{
+          $scope.open_selectRelativeModal(field);
         }
+
       }).catch(function(err) {
         var str='';
         for(var field in err)
           str+=err[field];
         console.error('error=\r\n' + str);
-      })
+      });
+    };
+
+
+    /*** bind apeend_carOrderPerson_modal***/
+    $ionicModal.fromTemplateUrl('views/modal/append_carOrder_person.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.append_carOrderPerson_modal = modal;
+    });
+
+    $scope.open_appendCarOrderModal= function(){
+      $scope.append_carOrderPerson_modal.show();
+    };
+
+    $scope.close_appendCarOrderModal= function() {
+      $scope.append_carOrderPerson_modal.hide();
+    };
+    /*** bind apeend_carOrderPerson_modal ***/
+
+    //提交车险已选报价
+    $scope.apply=function(){
+
+      //TODO:保险人\受益人
+      $scope.open_appendCarOrderModal();
     }
-  });
+
+    $scope.confirm=function() {
+      var selected_price = null;
+      var order = $scope.order;
+      order.prices.map(function (price, i) {
+        if (price.checked == true)
+          selected_price = price;
+      });
+
+      //TODO:绑定投保人
+      $http({
+        method: "POST",
+        url: Proxy.local() + "/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data: {
+          request: 'getCompanyOwnerIdByCompanyId',
+          info: {
+            companyId: selected_price.companyId
+          }
+        }
+      }).then(function (res) {
+        var json = res.data;
+        if (json.re == 1) {
+          var ownerId = json.data;
+          $scope.ownerId = ownerId;
+          return $http({
+            method: "POST",
+            url: Proxy.local() + "/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            },
+            data: {
+              request: 'applyCarOrderPrice',
+              info: {
+                price: selected_price
+              }
+            }
+          });
+        }
+      }).then(function (res) {
+        var json = res.data;
+        if (json.re == 1) {
+
+        }
+      }).catch(function (err) {
+        var str = '';
+        for (var field in err)
+          str += err[field];
+        console.error('erro=\r\n' + str);
+      });
+
+    }
+
+  })
