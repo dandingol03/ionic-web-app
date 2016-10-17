@@ -20,7 +20,7 @@
     <div class="list" style="margin-bottom: 0px;">
       <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
 
-        <li style="width:33%;">
+        <li style="width:50%;">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==0]"
                ng-click="tab_change(0)"
@@ -33,7 +33,7 @@
           </div>
         </li>
 
-        <li style="width:33%;">
+        <li style="width:50%;">
           <div class="cell"
                ng-class="{true: 'selected', false: ''}[tabIndex==1]"
                ng-click="tab_change(1)"
@@ -47,19 +47,6 @@
         </li>
 
 
-
-        <li style="width:33%">
-          <div class="cell"
-               ng-class="{true: 'selected', false: ''}[tabIndex==2]"
-               ng-click="tab_change(2)"
-               style="text-align: center">
-            <div style="width: 100%;">
-              <span style="position:absolute;top: 30%;left:20%;right:20%;">
-                估价列表
-              </span>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
 
@@ -99,7 +86,7 @@
         </ion-scroll>
       </div>
 
-    <!-- 过渡列表 -->
+    <!-- 估价列表 -->
     <div class="list list-inset padding"
          style="margin-bottom: 0px;height: 100%;"
          ng-if="tabIndex==1">
@@ -132,94 +119,6 @@
           </ul>
         </div>
       </ion-scroll>
-    </div>
-
-
-      <!-- 车险估价列表 -->
-    <div class="list list-inset padding"
-         style="margin-bottom: 0px;height: 100%;"
-         ng-if="tabIndex==2">
-      <div style="height: 74%;">
-        <ion-scroll style="height: 100%;">
-          <div class="padding"  style="padding:10px">
-            <div style="width: 60%;" ng-click="reset_specials()">
-              <span style="font-size: 1.2em;">更改险别</span>
-              <span style="font-size: 2.2em;"><i class="ion-ios-compose-outline"></i></span>
-            </div>
-          </div>
-          <div ng-repeat="order in orderPricedList">
-            <div class="padding" style="padding:0px 10px">
-              <div class="item item-divider">
-                <span>
-                  订单号
-                </span>
-                <span>
-                  {{order.orderNum}}
-                </span>
-              </div>
-            </div>
-            <div ng-repeat="price in order.prices">
-              <!-- 公司产品细项 -->
-              <div class="padding"
-                   style="padding:0px 10px">
-                <ion-item style="border-bottom: 0px;position: relative" ng-click="setterPrice($index,price)">
-                  <h2>
-                    {{price.companyName}}
-                  </h2>
-                  <div style="position: absolute;right:10%;top:20%;">
-              <span style="font-size: 2em;">
-                <i ng-if="$index!=priceIndex" class="ion-ios-checkmark-outline"></i>
-                <i ng-if="$index==priceIndex" class="ion-ios-checkmark"></i>
-              </span>
-                  </div>
-                </ion-item>
-              </div>
-
-              <!-- 公司产品细项 -->
-              <div class="padding"
-                   style="padding-top: 0px;padding-left:8px;padding-right: 8px;">
-                <div
-                  style="margin:1px;padding:1px"
-                  class="list"
-                  >
-                  <ion-item
-                    ng-repeat="product in price.items"
-                    >
-                    <div style="display:inline-block;width:60%;">
-                      <span>{{product.productName}}</span>
-                    </div>
-                    <div style="display: inline-block">
-                      <span>保费:</span>
-                      {{product.insuranceType}}
-                    </div>
-                  </ion-item>
-                  <ion-item>
-                    <div style="display:inline-block;width:60%;">
-                      <span>总计:</span>
-                    </div>
-                    <div style="display: inline-block">
-                    <span>
-                      {{price.insuranceFeeTotal}}
-                    </span>
-                    </div>
-                  </ion-item>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        </ion-scroll>
-      </div>
-
-      <div style="height: 20%;position: relative">
-        <div class="bar bar-footer  bar-assertive"
-             style="position: static;position: absolute;bottom:50%;"
-             ng-click="apply()">
-          <h1 class="title">提交已选方案</h1>
-        </div>
-      </div>
-
     </div>
 
 
