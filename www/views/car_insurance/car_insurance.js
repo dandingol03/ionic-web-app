@@ -14,7 +14,7 @@ angular.module('starter')
         carInfo = JSON.parse(carInfo);
       $scope.carInfo=carInfo;
     }
-
+    alert($scope.carInfo.carId);
     $scope.tabIndex=0;
 
     //当前页数

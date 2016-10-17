@@ -867,6 +867,7 @@ angular.module('starter')
     }
 
     $scope.select_type=function(){
+      alert('carId=' + $scope.carInfo.carId);
       $state.go('car_insurance',{carInfo:JSON.stringify($scope.carInfo)});
     }
 
