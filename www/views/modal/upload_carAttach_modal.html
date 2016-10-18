@@ -1,0 +1,192 @@
+<ion-modal-view class="carInfo_modal animated slideInDown ">
+  <div class="close_detmodal" ng-click="close_uploadOwnerIdCardModal()">
+    <img src="img/close.png"/>
+  </div>
+  <ion-content class="carInfo_content" scroll="false" style="width:80%;padding:10px;height:80%;">
+
+    <div class="list">
+
+
+      <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'carAttachId1_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    验车照片1面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.carAttachId1_img!==undefined&&carInfo.carAttachId1_img!==null"
+                ng-src="{{carInfo.carAttachId1_img}}"/>
+
+            </div>
+
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'carAttachId2_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    验车照片2面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.carAttachId2_img!==undefined&&carInfo.carAttachId2_img!==null"
+                ng-src="{{carInfo.carAttachId2_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'carAttachId3_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    验车照片3面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.carAttachId3_img!==undefined&&carInfo.carAttachId3_img!==null"
+                ng-src="{{carInfo.carAttachId3_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'carAttachId4_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    验车照片4面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.carAttachId4_img!==undefined&&carInfo.carAttachId4_img!==null"
+                ng-src="{{carInfo.carAttachId4_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'carAttachId5_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    验车照片5面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.carAttachId5_img!==undefined&&carInfo.carAttachId5_img!==null"
+                ng-src="{{carInfo.carAttachId5_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="item"
+               ng-click="addAttachment(carInfo,'carAttachId6_img')"
+               style="background-color:transparent;border: 0px;">
+            <div
+              style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+              >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    验车照片6面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+            <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+              <img
+                style="max-width: 100%;"
+                ng-if="carInfo.carAttachId6_img!==undefined&&carInfo.carAttachId6_img!==null"
+                ng-src="{{carInfo.carAttachId6_img}}"/>
+            </div>
+          </div>
+        </ion-slide>
+
+
+
+    </ion-slide-box>
+
+    </div>
+
+    <div
+      class="bar bar-assertive"
+      style="width: 70%;margin-left:15%;margin-right:15%;"
+      ng-click="uploadCarAttachPhotoConfirm()"
+      >
+      <div class="title">确认</div>
+    </div>
+
+
+  </ion-content>
+
+</ion-modal-view>

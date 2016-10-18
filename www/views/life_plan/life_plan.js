@@ -10,56 +10,30 @@ angular.module('starter')
                                                        $location,$rootScope,$stateParams,
                                                        $ionicPopup,Proxy){
 
-    $scope.order=$stateParams.order;
+    $scope.order = $rootScope.lifeInsuranceOrder;
+    $scope.modifiedFlag = $rootScope.modifiedFlag;
 
-    if(Object.prototype.toString.call($scope.order)=='[object String]')
-      $scope.order=JSON.parse($scope.order);
+    //评价方案
+    var plans=[];
+    var data=$scope.order.plans;
+    data.map(function(plan,i) {
+      var main=null;
+      var additions=[];
+      plan.items.map(function(proj,j) {
+        if(proj.product.ownerId!==undefined&&proj.product.ownerId!==null)
+          additions.push(proj);
+        else
+          main=proj;
+      })
+      plan.main=main;
+      plan.additions=additions;
+      plans.push(plan);
+    });
+    $scope.plans=plans;
+
 
 
     $scope.changedState= false;
-
-    //获取估价方案
-    $http({
-      method: "POST",
-      url: Proxy.local()+'/svr/request',
-      headers: {
-        'Authorization': "Bearer " + $rootScope.access_token
-      },
-      data:
-      {
-        request:'getLifeOrderPlansByOrderId',
-        info:{
-          orderId:1
-        }
-      }
-    }).then(function(res) {
-      var json=res.data;
-      if(json.re==1) {
-
-        var data=json.data;
-        var plans=[];
-        data.map(function(plan,i) {
-          var main=null;
-          var additions=[];
-          plan.items.map(function(proj,j) {
-            if(proj.product.ownerId!==undefined&&proj.product.ownerId!==null)
-              additions.push(proj);
-            else
-              main=proj;
-          })
-          plan.main=main;
-          plan.additions=additions;
-          plans.push(plan);
-        });
-
-        $scope.plans=plans;
-      }
-    }).catch(function(err) {
-      var str='';
-      for(var field in err)
-        str+=err[field];
-      console.error('error=\r\n' + str);
-    })
 
 
     //修改状态的初始化
@@ -120,11 +94,7 @@ angular.module('starter')
 
     }
 
-    $scope.orders=[];
-    $scope.pricingOrders=[];
-    $scope.unPaidOrders=[];
-    $scope.finishOrders=[];
-    $scope.plans=[];
+
 
 
     $scope.goDetail=function(plan){
@@ -193,7 +163,6 @@ angular.module('starter')
               title: '修改方案已提交',
               template: '等待后台工作人员重新报价'
             });
-
 
           }
         }).catch(function (err) {

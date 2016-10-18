@@ -179,16 +179,18 @@ angular.module('starter')
           onTap: function(e) {
             //TODO:do contrast
             var planId=plan.planId;
-            var plans=$rootScope.lifeInsurance.plans;
+            var plans=$rootScope.lifeInsuranceOrder.plans;
             plans.map(function(item,i) {
               if(item.planId==planId)
               {
                 plan.modified=true;
                 plan.checked=true;
                 plans[i]=plan;
+                $rootScope.modifiedFlag=true;
               }
             });
-            $state.go('life_insurance_orders', {tabIndex: 2});
+            $rootScope.lifeInsuranceOrder.plans=plans;
+            $state.go('life_plan');
           }
         }
       ];
