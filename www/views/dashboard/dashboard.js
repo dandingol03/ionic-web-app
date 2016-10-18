@@ -1196,11 +1196,14 @@ angular.module('starter')
                       }).then(function(res) {
                         var json=res.data;
                         if(json.re==1) {
+                          alert('go2');
                           var carState=json.data;
-                          if(carState==1)//免传验车照片
+                          if(carState==1)//免传验车照
                           {
+                            alert('go');
                             $scope.select_type();
                           }else{
+                            alert('go1');
                             var confirmPopup = $ionicPopup.confirm({
                               title: '缺少验车照片',
                               template: '请问是否选择上传验车照片',
