@@ -130,7 +130,6 @@ angular.module('starter')
         if(json.re==1) {
           var carInfo=json.data[0];
           $scope.carInfo=carInfo;
-          alert('carId='+$scope.carInfo.carId)
         }
         console.log('success');
       })
@@ -1986,6 +1985,8 @@ $scope.carService=function(){
             if (json.re == 1) {
               var servicePerson = json.data;
               $scope.maintain.servicePersonId = servicePerson.servicePersonId;
+              var maintain=$scope.maintain;
+              maintain.carId=$scope.carInfo.carId;
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -1995,7 +1996,7 @@ $scope.carService=function(){
                 data: {
                   request: 'generateCarServiceOrder',
                   info: {
-                    maintain: $scope.maintain
+                    maintain:maintain
                   }
                 }
               });
@@ -3673,7 +3674,6 @@ $scope.carService=function(){
         }else if(ionic.Platform.isAndroid()){
           $scope.media.play();
         }
-
       }catch(e)
       {
         alert('error=\r\n' + e.toString());
