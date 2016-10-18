@@ -20,8 +20,6 @@ angular.module('starter')
       });
     }
 
-
-
     $scope.go_back=function(){
       window.history.back();
 
@@ -77,6 +75,7 @@ angular.module('starter')
 
     $scope.goDetail=function(order){
       $state.go('life_plan',{order:JSON.stringify(order)});
+      $rootScope.lifeInsuranceOrder=order;
     }
 
 
@@ -94,14 +93,14 @@ angular.module('starter')
         },
         data:
         {
-          request:'getLifeOrders',
+          request:'getLifeOrders'
         }
       }).then(function(res) {
         var json=res.data;
         if(json.re==1){
           $scope.orders=json.data;
           $scope.orders.map(function(order,i) {
-            if(order.orderState==3||order.orderState==3){
+            if(order.orderState==3){
               $scope.pricingOrders.push(order);
             }
             if(order.orderState==5){
@@ -111,10 +110,6 @@ angular.module('starter')
         }
       })
     }
-
-
-
-
 
     //获取估价方案
     if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null

@@ -510,6 +510,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
       .state('life_plan',{
+        cache:false,
         url:'/life_plan/:order',
         controller:'lifePlanController',
         templateUrl:'views/life_plan/life_plan.html'
@@ -606,7 +607,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-          return "http://192.168.1.108:3000";
+          return "http://211.87.225.197:3000";
+
         else
           return "/proxy/node_server";
       },
