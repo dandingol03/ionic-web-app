@@ -1933,7 +1933,7 @@ $scope.carService=function(){
       $scope.maintain.subServiceTypes = [];
       $scope.dailys.map(function (daily, i) {
         if (daily.checked == true)
-          $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
+          $scope.maintain.subServiceTypes.push(daily.subServiceId);
       });
       if ($scope.maintain.estimateTime !== undefined && $scope.maintain.estimateTime !== null) {
 
@@ -1960,6 +1960,8 @@ $scope.carService=function(){
             if (json.re == 1) {
               var servicePerson = json.data;
               $scope.maintain.servicePersonId = servicePerson.servicePersonId;
+              var maintain=$scope.maintain;
+              maintain.carId=$scope.carInfo.carId;
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -1969,7 +1971,7 @@ $scope.carService=function(){
                 data: {
                   request: 'generateCarServiceOrder',
                   info: {
-                    maintain: $scope.maintain
+                    maintain:maintain
                   }
                 }
               });
@@ -3529,7 +3531,6 @@ $scope.carService=function(){
         }else if(ionic.Platform.isAndroid()){
           $scope.media.play();
         }
-
       }catch(e)
       {
         alert('error=\r\n' + e.toString());

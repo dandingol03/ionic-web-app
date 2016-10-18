@@ -3,7 +3,8 @@
  */
 angular.module('starter')
 
-  .controller('serviceOrdersController',function($scope,$state,$http, $location,$rootScope){
+  .controller('serviceOrdersController',function($scope,$state,$http, $location,
+                                                 $rootScope,Proxy){
 
     $scope.tabIndex=0;
 
@@ -26,15 +27,13 @@ angular.module('starter')
 
     $http({
       method: "post",
-      url: "/proxy/node_server/svr/request",
-      //url: "http://192.168.1.106:3000/svr/request",
+      url: Proxy.local()+"/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
       data:
       {
         request:'fetchServiceOrderByCustomerId',
-
       }
     })
       .then(function (res) {
