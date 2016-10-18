@@ -1953,8 +1953,11 @@ $scope.carService=function(){
       $scope.maintain.subServiceTypes = [];
       $scope.dailys.map(function (daily, i) {
         if (daily.checked == true)
-          $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
+          $scope.maintain.subServiceTypes.push(daily.subServiceId);
       });
+      if($scope.maintain.serviceType==''){
+        $scope.maintain.serviceType='11';
+      }
       if ($scope.maintain.estimateTime !== undefined && $scope.maintain.estimateTime !== null) {
 
         //如果为维修订单并且子项为事故维修
