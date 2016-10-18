@@ -1729,13 +1729,67 @@ $scope.openAirportTransfer=function(){
       serviceType: ''//服务项目
     }
 
+    $scope.miles=0;
     $scope.dailys = [
       {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
-      {subServiceId:'2',subServiceTypes:'机油,三滤',serviceType:'11'},
-      {subServiceId:'3',subServiceTypes:'更换刹车片',serviceType:'11'},
-      {subServiceId:'4',subServiceTypes:'雨刷片更换',serviceType:'11'},
-      {subServiceId:'5',subServiceTypes:'轮胎更换',serviceType:'11'}
+      {subServiceId:'2',subServiceTypes:'检查制动系统,更换刹车片',serviceType:'11'},
+      {subServiceId:'3',subServiceTypes:'雨刷片更换',serviceType:'11'},
+      {subServiceId:'4',subServiceTypes:'轮胎更换',serviceType:'11'},
+      {subServiceId:'5',subServiceTypes:'燃油添加剂',serviceType:'11'},
+      {subServiceId:'6',subServiceTypes:'空气滤清器',serviceType:'11'},
+      {subServiceId:'7',subServiceTypes:'检查火花塞',serviceType:'11'},
+      {subServiceId:'8',subServiceTypes:'检查驱动皮带',serviceType:'11'},
+      {subServiceId:'9',subServiceTypes:'更换空调滤芯',serviceType:'11'},
+      {subServiceId:'10',subServiceTypes:'更换蓄电池,防冻液',serviceType:'11'}
     ];
+
+
+    $scope.getMaintainPlan=function(miles){
+      var miles= parseInt(miles/5000)*5000;
+
+      $http({
+        method: "POST",
+        url: Proxy.local()+'/svr/request',
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:'getMaintainPlan',
+          info:{
+            miles:miles
+          }
+        }
+      }).then(function(res) {
+        var json = res.data;
+        if(json.re==1){
+          $scope.routineName=json.data;
+          $scope.open_maintainPlanModal();
+        }
+
+      })
+    }
+
+    /***  查看保养计划模态框***/
+    $ionicModal.fromTemplateUrl('views/modal/maintain_plan_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.maintain_plan_modal = modal;
+    });
+
+    $scope.open_maintainPlanModal= function(){
+      $scope.maintain_plan_modal.show();
+    };
+
+
+    $scope.close_maintainPlanModal= function() {
+      $scope.maintain_plan_modal.hide();
+    };
+    /*** 查看保养计划模态框 ***/
+
+
+
 
     $scope.daily_check=function(item){
       if(item.checked==true)
