@@ -1136,6 +1136,7 @@ angular.module('starter')
 
     $scope.postCarInfo=function(){
 
+
       if(window.cordova!==undefined&&window.cordova!==null)
       {
         if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
@@ -1162,16 +1163,20 @@ angular.module('starter')
                     $scope.carInfo.licenseAttachId2_img!==undefined&&scope.carInfo.licenseAttachId2_img!==null&&
                     $scope.carInfo.licenseAttachId3_img!==undefined&&scope.carInfo.licenseAttachId3_img!==null)
                   {
+                    //$scope.select_type();
+                    //TODO:上传验车照片
                     if($scope.carInfo.carAttachId1_img!==undefined&&$scope.carInfo.carAttachId1_img!==null&&
-                    $scope.carInfo.carAttachId2_img!==undefined&&$scope.carInfo.carAttachId2_img!==null&&
-                    $scope.carInfo.carAttachId3_img!==undefined&&$scope.carInfo.carAttachId3_img!==null&&
-                    $scope.carInfo.carAttachId4_img!==undefined&&$scope.carInfo.carAttachId4_img!==null&&
-                    $scope.carInfo.carAttachId5_img!==undefined&&$scope.carInfo.carAttachId5_img!==null&&
-                    $scope.carInfo.carAttachId6_img!==undefined&&$scope.carInfo.carAttachId6_img!==null)
+                      $scope.carInfo.carAttachId2_img!==undefined&&$scope.carInfo.carAttachId2_img!==null&&
+                      $scope.carInfo.carAttachId3_img!==undefined&&$scope.carInfo.carAttachId3_img!==null&&
+                      $scope.carInfo.carAttachId4_img!==undefined&&$scope.carInfo.carAttachId4_img!==null&&
+                      $scope.carInfo.carAttachId5_img!==undefined&&$scope.carInfo.carAttachId5_img!==null&&
+                      $scope.carInfo.carAttachId6_img!==undefined&&$scope.carInfo.carAttachId6_img!==null)
+
                     {
                       $scope.select_type();
                     }
                     else{
+
                       //TODO:上传验车照片
                       alert('go into carAttach-upload....');
                       $http({
@@ -1217,6 +1222,7 @@ angular.module('starter')
                         console.error('error=\r\n' + str);
                       });
 
+
                     }
                   }
                   else{
@@ -1261,6 +1267,7 @@ angular.module('starter')
     }
 
     $scope.select_type=function(){
+      alert('carId=' + $scope.carInfo.carId);
       $state.go('car_insurance',{carInfo:JSON.stringify($scope.carInfo)});
     }
 
@@ -1999,8 +2006,11 @@ $scope.carService=function(){
       $scope.maintain.subServiceTypes = [];
       $scope.dailys.map(function (daily, i) {
         if (daily.checked == true)
-          $scope.maintain.subServiceTypes.push(daily.subServiceTypes);
+          $scope.maintain.subServiceTypes.push(daily.subServiceId);
       });
+      if($scope.maintain.serviceType==''){
+        $scope.maintain.serviceType='11';
+      }
       if ($scope.maintain.estimateTime !== undefined && $scope.maintain.estimateTime !== null) {
 
         //如果为维修订单并且子项为事故维修
@@ -2026,6 +2036,8 @@ $scope.carService=function(){
             if (json.re == 1) {
               var servicePerson = json.data;
               $scope.maintain.servicePersonId = servicePerson.servicePersonId;
+              var maintain=$scope.maintain;
+              maintain.carId=$scope.carInfo.carId;
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -2035,7 +2047,7 @@ $scope.carService=function(){
                 data: {
                   request: 'generateCarServiceOrder',
                   info: {
-                    maintain: $scope.maintain
+                    maintain:maintain
                   }
                 }
               });
@@ -3713,7 +3725,6 @@ $scope.carService=function(){
         }else if(ionic.Platform.isAndroid()){
           $scope.media.play();
         }
-
       }catch(e)
       {
         alert('error=\r\n' + e.toString());

@@ -54,7 +54,7 @@
                style="text-align: center">
             <div style="width: 100%;">
               <span style="position:absolute;top: 30%;left:20%;right:20%;">
-                待评价
+                待支付
               </span>
             </div>
           </div>
@@ -64,7 +64,7 @@
     </div>
 
 
-    <div class="list list-inset padding" style="margin-bottom:40px;" >
+    <div class="list list-inset padding" style="" >
 
       <!-- 已下单 -->
       <div class="item"
@@ -72,7 +72,7 @@
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
 
       >
-        <div class="list list-inset">
+        <div class="list list-inset" style="margin-top:0px;">
 
           <div ng-repeat="order in orders1" style="">
             <ul class="list" style="margin-bottom:0px;">
@@ -85,7 +85,7 @@
             </ul>
             <ul class="list">
               <li class="item item-icon-right" ng-click="showOrderDetail(order)"
-                  style="padding-right:34px;padding-top:4px;padding-bottom:4px;position: relative;border-top:0px;border-left:0px;border-right: 0px;">
+                  style="padding-right:34px;padding-top:4px;padding-bottom:4px;position: relative;border:0px;">
                 <div style="display:inline-block;width:95%;">
                   <div style="margin-right:5%;">预计时间:{{order.orderDate}}</div>
                   <div style="margin-right:5%;">类型:{{order.serviceType}}</div>
@@ -134,14 +134,14 @@
       </div>
 
 
-      <!-- 待评价订单 -->
+      <!-- 待支付订单 -->
       <div class="item"
            ng-if="tabIndex==2"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
 
       >
 
-        <div class="list list-inset">
+        <div class="list list-inset" style="margin-top:0px;">
 
           <div ng-repeat="order in orders3" style="">
             <ul class="list" style="margin-bottom:0px;">
@@ -154,7 +154,7 @@
             </ul>
             <ul class="list">
               <li class="item item-icon-right" ng-click="showOrderDetail(order)"
-                  style="padding-right:34px;padding-top:4px;padding-bottom:4px;position: relative;border-top:0px;border-left:0px;border-right: 0px;">
+                  style="padding-right:34px;padding-top:4px;padding-bottom:4px;position: relative;border:0px;">
                 <div style="display:inline-block;width:95%;">
                   <div style="margin-right:5%;">预计时间:{{order.orderDate}}</div>
                   <div style="margin-right:5%;">类型:{{order.serviceType}}</div>
