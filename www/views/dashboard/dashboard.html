@@ -448,10 +448,10 @@
           </div>
 
           <div class="list" style="background-color: transparent;">
-            <div class="item" ng-repeat="item in dailys" style="background-color: transparent;">
+            <div class="item" ng-repeat="item in dailys" style="background-color: transparent;padding: 0;">
 
               <div class="row" ng-click="daily_check(item)">
-                <div class="col-80">
+                <div class="col-80" style="padding-top: 1%;">
                   <span>{{item.subServiceTypes}}</span>
                 </div>
                 <div class="col-20" style="position: relative;font-size: 2em;">
@@ -471,8 +471,9 @@
               </span>
               <input type="text" placeholder="请输入您的里程"
                      style="display: inline-block;background-color: transparent;width:35%"
+                     ng-model="miles"
                 />
-              <button class="button button-stable" style="display: inline-block;">
+              <button class="button button-stable" style="display: inline-block;" ng-click="getMaintainPlan(miles)">
                 查看保养计划
               </button>
             </div>
