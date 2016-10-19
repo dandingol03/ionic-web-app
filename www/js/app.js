@@ -14,7 +14,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
     .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
-                  $ionicPopup,Proxy,$http) {
+                  $ionicPopup,Proxy,$http,$ionicModal) {
 
 
 
@@ -118,6 +118,35 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         }
       };
 
+
+
+      $rootScope.waitConfirm[1]=[
+        {unitName:'汽修厂1',mobile:'18253161616',order:{orderNum:'S0000001'}},
+        {unitName:'汽修厂2',mobile:'18253161717',order:{orderNum:'S0000002'}},
+        {unitName:'汽修厂3',mobile:'18253161818',order:{orderNum:'S0000003'}}
+        ];
+
+      /***************************选择服务人员模态框*******************************/
+      $ionicModal.fromTemplateUrl('views/modal/select_service_person_modal.html',{
+        scope:  $rootScope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $rootScope.select_service_person_modal = modal;
+        $rootScope.open_selectServicePersonModal();
+
+      });
+
+        $rootScope.open_selectServicePersonModal= function(){
+        $rootScope.select_service_person_modal.show();
+      };
+
+
+      $rootScope.close_selectServicePersonModal= function() {
+        $rootScope.select_service_person_modal.hide();
+      };
+      /***************************选择服务人员模态框*******************************/
+
+
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {
         try{
@@ -160,11 +189,17 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                 }
 
 
+
+
+                $scope.open_selectServicePersonModal();
+                $scope.select = function(message){
+                  message.checked=true;
+                }
+
                 var confirmPopup = $ionicPopup.confirm({
                   title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
                   template: tem
                 });
-
 
 
                 confirmPopup.then(function(res) {
