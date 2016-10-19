@@ -277,13 +277,14 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
 
                 var confirmPopup = $ionicPopup.confirm({
-                  title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
+                  title: '您的订单'+message.order.orderNum,
                   template:'已经指派工作人员接单'+ tem
                 });
 
                 confirmPopup.then(function(res) {
                   if(res) {
                     console.log('You are sure');
+                    $state.go('service_orders');
                   } else {
                     console.log('You are not sure');
                   }
