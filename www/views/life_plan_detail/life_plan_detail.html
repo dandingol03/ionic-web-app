@@ -98,31 +98,48 @@
               <ion-item>
                 <div class="row">
                   <div class="col">
-                    <p><i class="ion-record"></i>每年缴费</p>
+                    <p><i class="ion-record"></i>每年缴费:</p>
                   </div>
                   <div class="col"><p>{{item.main.insuranceFeeYear}}</p></div>
                 </div>
               </ion-item>
 
-              <ion-item>
-                <div class="row">
-                  <div class="col">
-                    <p><i class="ion-record"></i>缴费年限</p>
-                  </div>
-                  <div class="col"><p>{{item.main.insuranceFeeYear}}</p></div>
-                </div>
-              </ion-item>
 
               <ion-item>
                 <div class="row">
                   <label class="item item-input" style="width: 50%;">
-                    <i class="ion-record"></i>保额
+                    <i class="ion-record"></i>缴费年限:
                   </label>
                   <label class="item item-input">
-                    <input type="text" value="{{item.main.insuranceQuota}}"
-                           style="font-size: 1em;background: #FF9696;color: #fff;"
-                           ng-model="item.main.insuranceQuota"/>
+                    <input type="text" value="{{item.feeYearType}}"
+                           style="font-size: 1em;background: #fafafa;color: #111;"
+                           ng-model="item.feeYearType"
+
+                          />
                   </label>
+                  <button style="background-color: #ccc;" ng-click="changeInsuranceFee()">
+                    更改
+                  </button>
+
+                </div>
+              </ion-item>
+
+
+              <ion-item>
+                <div class="row">
+                  <label class="item item-input" style="width: 50%;">
+                    <i class="ion-record"></i>保额:
+                  </label>
+                  <label class="item item-input">
+                    <input type="text" value="{{item.insuranceQuota}}"
+                           style="font-size: 1em;background: #fafafa;color: #111;"
+                           ng-model="item.insuranceQuota"
+
+                          />
+                  </label>
+                  <button style="background-color: #ccc;" ng-click="changeInsuranceFee()">
+                    更改
+                  </button>
 
                 </div>
               </ion-item>
@@ -130,9 +147,9 @@
               <ion-item>
                 <div class="row">
                   <div class="col">
-                    <p style="color:#f00"><i class="ion-record"></i>保费</p>
+                    <p style="color:#f00"><i class="ion-record"></i>主险保费总计:</p>
                   </div>
-                  <div class="col"><p>{{item.main.insuranceFee}}</p></div>
+                  <div class="col"><p>{{item.insuranceFeeTotal}}</p></div>
                 </div>
               </ion-item>
 

@@ -5,7 +5,7 @@ angular.module('starter')
     .controller('lifePlanDetailController',function($scope,$rootScope,$state,$http,
                                                     $location,$ionicModal,$ionicActionSheet,
                                                 $cordovaCamera,$cordovaImagePicker,$stateParams,
-                                                    $ionicSlideBoxDelegate,$ionicPopup){
+                                                    $ionicSlideBoxDelegate,$ionicPopup,Proxy){
 
     $scope.item=$stateParams.plan;
 
@@ -24,7 +24,42 @@ angular.module('starter')
       $ionicSlideBoxDelegate.slide(i);
     }
 
+    var insurancederId = null;
 
+      $rootScope.lifeInsurance.orders.map(function(order,i){
+        if(order.orderId==$scope.item.orderId)
+          insurancederId=order.insurancederId;
+      })
+
+    $scope.changeInsuranceFee=function(){
+     //1.把新保额填到数据库对应的方案中去;   2.按比例计算出相应的保费
+
+      $http({
+        method: "POST",
+        url: Proxy.local() + '/svr/request',
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data: {
+          request: 'getLifeInsuranceFee',
+          info:{
+            productId:$scope.item.main.product.productId,
+            feeYearType:$scope.item.feeYearType,
+            insurancederId:insurancederId
+          }
+
+        }
+      }).then(function(res) {
+        var json = res.data;
+        if(json.re==1){
+          var insuranceFee=json.data.insuranceFee;
+          var baseInsuranceQuota=json.data.insuranceQuota;
+          $scope.item.insuranceFeeTotal=
+            $scope.item.insuranceQuota/baseInsuranceQuota*insuranceFee*$scope.item.feeYearType
+        }
+      })
+
+    }
 
 
       $scope.cart=[

@@ -132,7 +132,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         animation: 'slide-in-up'
       }).then(function(modal) {
         $rootScope.select_service_person_modal = modal;
-        $rootScope.open_selectServicePersonModal();
+        //$rootScope.open_selectServicePersonModal();
 
       });
 
