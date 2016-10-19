@@ -409,6 +409,8 @@ angular.module('starter')
       //确认维修厂回调
       $scope.maintenance_confirm = function () {
 
+        if($rootScope.carManage==undefined||$rootScope.carManage==null)
+          $rootScope.carManage={};
         switch ($scope.locateType) {
           case 'maintain':
             if ($rootScope.maintain == undefined || $rootScope.maintain == null)
@@ -421,25 +423,49 @@ angular.module('starter')
             break;
           case '21':
             //审车
-            if ($rootScope.carManage == undefined || $rootScope.carManage == null)
-              $rootScope.carManage = {};
+
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
-              $rootScope.carManage.unit = $scope.unit;
-              var ob={
-                type:'carValidate',
-                unit:$scope.unit
-              }
-              $scope.$emit('unit-choose', JSON.stringify(ob));
+
+              var carValidate={
+                unit:$scope.unit,
+                servicePlace:$scope.unit.unitName
+              };
+              $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'getServicePersonByUnitId',
+                  info:{
+                    unitId:$scope.unit.unitId
+                  }
+                }
+              }).then(function(res) {
+                var json=res.data;
+                carValidate.servicePerson =json.data;
+                var ob = {type: 'carValidate',tabIndex:3, item: carValidate};
+                $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+              });
             }
             else
-              $rootScope.carManage.units = $scope.units;
+            {
+              var carValidate={
+                units:$scope.units
+              };
+              var ob = {type: 'carValidate',tabIndex:3, item: carValidate};
+              $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+
+            }
             break;
           default:
             break;
         }
 
-        $scope.go_back();
+
       }
 
       $scope.go_back = function () {

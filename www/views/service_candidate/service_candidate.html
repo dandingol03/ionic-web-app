@@ -1,0 +1,39 @@
+<ion-view view-title="订单详情">
+  <ion-nav-bar class="bar-assertive" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-content>
+    <div class="list">
+      <div
+        ng-repeat="confirm in confirms">
+        <div class="item item-divider">
+          <span>订单号</span>{{confirm.orderNum}}
+        </div>
+        <div class="item item-icon-right"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:14px;"
+             ng-repeat="candidate in confirm.candidates"
+             ng-click="select(candidate,confirm.candidates);popup(candidate)">
+              <span style="display: inline-block;font-size: 0.9em;">
+                {{candidate.unitName}}
+              </span>
+              <span style="display: inline-block;font-size: 0.9em;">
+                {{candidate.mobile}}
+              </span>
+          <i class="icon ion-android-checkbox-outline-blank" ng-if="candidate.checked!=true"></i>
+          <i class="icon ion-android-checkbox-outline" ng-if="candidate.checked==true"></i>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+
+</ion-view>
