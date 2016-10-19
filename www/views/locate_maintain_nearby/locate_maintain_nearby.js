@@ -409,6 +409,8 @@ angular.module('starter')
       //确认维修厂回调
       $scope.maintenance_confirm = function () {
 
+        if($rootScope.carManage==undefined||$rootScope.carManage==null)
+          $rootScope.carManage={};
         switch ($scope.locateType) {
           case 'maintain':
             if ($rootScope.maintain == undefined || $rootScope.maintain == null)
@@ -424,26 +426,46 @@ angular.module('starter')
 
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
-              var ob={
-                type:'carValidate',
-                unit:$scope.unit
-              }
-              $scope.$emit('unit-choose', JSON.stringify(ob));
+
+              var carValidate={
+                unit:$scope.unit,
+                servicePlace:$scope.unit.unitName
+              };
+              $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'getServicePersonByUnitId',
+                  info:{
+                    unitId:$scope.unit.unitId
+                  }
+                }
+              }).then(function(res) {
+                var json=res.data;
+                carValidate.servicePerson =json.data;
+                var ob = {type: 'carValidate',tabIndex:3, item: carValidate};
+                $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+              });
             }
             else
             {
-              var ob={
-                type:'carValidate',
+              var carValidate={
                 units:$scope.units
               };
-              $scope.$emit('unit-choose', JSON.stringify(ob));
+              var ob = {type: 'carValidate',tabIndex:3, item: carValidate};
+              $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+
             }
             break;
           default:
             break;
         }
 
-        $scope.go_back();
+
       }
 
       $scope.go_back = function () {
