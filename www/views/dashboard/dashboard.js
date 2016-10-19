@@ -837,8 +837,8 @@ angular.module('starter')
               });
             }
           }).then(function(res) {
-            alert('it is all done');
-            $scope.close_uploadLicenseCardModal();
+            alert('car attach upload completely');
+            $scope.close_uploadCarAttachModal();
             $scope.select_type();
           }).catch(function(err) {
             var str='';
