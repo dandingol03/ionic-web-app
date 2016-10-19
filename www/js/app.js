@@ -648,7 +648,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
     // if none of the above states are matched, use this as the fallback
 
-    $urlRouterProvider.otherwise('/service_candidate');
+    $urlRouterProvider.otherwise('/login');
 
   })
 

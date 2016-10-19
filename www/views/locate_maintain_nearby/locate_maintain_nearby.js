@@ -421,11 +421,9 @@ angular.module('starter')
             break;
           case '21':
             //审车
-            if ($rootScope.carManage == undefined || $rootScope.carManage == null)
-              $rootScope.carManage = {};
+
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
-              $rootScope.carManage.unit = $scope.unit;
               var ob={
                 type:'carValidate',
                 unit:$scope.unit
@@ -433,7 +431,13 @@ angular.module('starter')
               $scope.$emit('unit-choose', JSON.stringify(ob));
             }
             else
-              $rootScope.carManage.units = $scope.units;
+            {
+              var ob={
+                type:'carValidate',
+                units:$scope.units
+              };
+              $scope.$emit('unit-choose', JSON.stringify(ob));
+            }
             break;
           default:
             break;

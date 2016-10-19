@@ -3380,6 +3380,7 @@ $scope.carService=function(){
     $rootScope.$on('unit-choose',function(e,d) {
       var ob=JSON.parse(d);
       var unit=ob.unit;
+      var units=ob.units;
       var unitId=unit.unitId;
       $http({
         method: "POST",
@@ -3400,9 +3401,14 @@ $scope.carService=function(){
           var servicePerson=json.data;
           switch (ob.type) {
             case 'carValidate':
-              $scope.carManage.carValidate.unit=unit;
-              $scope.carManage.carValidate.servicePerson=servicePerson;
-              $scope.carManage.carValidate.servicePlace=unit.unitName;
+              if(ob.units!==undefined&&ob.units!==null)
+              {
+                $scope.carManage.carValidate.units=units;
+              }else{
+                $scope.carManage.carValidate.unit=unit;
+                $scope.carManage.carValidate.servicePerson=servicePerson;
+                $scope.carManage.carValidate.servicePlace=unit.unitName;
+              }
               break;
             case 'airport':
               $scope.carManage.airportTransfer.unit=unit;
