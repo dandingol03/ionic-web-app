@@ -14,7 +14,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
     .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
-                  $ionicPopup,Proxy,$http,$ionicModal) {
+                  $ionicPopup,Proxy,$http) {
 
 
 
@@ -120,31 +120,14 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
 
 
-      $rootScope.waitConfirm[1]=[
-        {unitName:'汽修厂1',mobile:'18253161616',order:{orderNum:'S0000001'}},
-        {unitName:'汽修厂2',mobile:'18253161717',order:{orderNum:'S0000002'}},
-        {unitName:'汽修厂3',mobile:'18253161818',order:{orderNum:'S0000003'}}
+      $rootScope.waitConfirms=[
+        {
+          orderNum:'S0001',candidates:[
+          {unitName:'汽修厂1',mobile:'18253161616'},
+          {unitName:'汽修厂2',mobile:'18253161717'},
+          {unitName:'汽修厂3',mobile:'18253161818'}
+        ]}
         ];
-
-      /***************************选择服务人员模态框*******************************/
-      $ionicModal.fromTemplateUrl('views/modal/select_service_person_modal.html',{
-        scope:  $rootScope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        $rootScope.select_service_person_modal = modal;
-        $rootScope.open_selectServicePersonModal();
-
-      });
-
-        $rootScope.open_selectServicePersonModal= function(){
-        $rootScope.select_service_person_modal.show();
-      };
-
-
-      $rootScope.close_selectServicePersonModal= function() {
-        $rootScope.select_service_person_modal.hide();
-      };
-      /***************************选择服务人员模态框*******************************/
 
 
       //获取自定义消息的回调
@@ -657,10 +640,15 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/car_order_prices/car_order_prices.html'
       })
 
+      .state('service_candidate',{
+        url:'/service_candidate',
+        controller:'serviceCandidateController',
+        templateUrl:'views/service_candidate/service_candidate.html'
+      })
 
     // if none of the above states are matched, use this as the fallback
 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/service_candidate');
 
   })
 
