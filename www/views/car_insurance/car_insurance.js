@@ -145,6 +145,24 @@ angular.module('starter')
     };
     /**************选择公司模态框*************************/
 
+    /**************选择车险相关人员模态框*************************/
+    $ionicModal.fromTemplateUrl('views/modal/append_carOrder_person.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.append_carOrderPerson_modal = modal;
+    });
+
+    $scope.open_appendCarOrderModal= function(){
+      $scope.append_carOrderPerson_modal.show();
+    };
+
+    $scope.close_appendCarOrderModal= function() {
+      $scope.append_carOrderPerson_modal.hide();
+    };
+    /**************选择车险相关人员模态框*************************/
+
 
 
     /**
@@ -230,12 +248,12 @@ angular.module('starter')
       console.log('error=\r\n'+str);
     });
 
-
-
-
+    $scope.carorder={
+      insuranceder:{}
+    }
 
     //提交车险意向
-    $scope.apply=function(){
+    $scope.confirm=function(){
       var products=[];
       var meal = $scope.tabs[$scope.tabIndex];
       for(var productName in meal.products) {
@@ -250,7 +268,7 @@ angular.module('starter')
         if(company.checked==true)
           companys.push(company);
       });
-      //TODO:apply selected product
+
       $http({
         method: "POST",
         url: Proxy.local()+"/svr/request",
@@ -264,7 +282,8 @@ angular.module('starter')
           {
             products:products,
             companys:companys,
-            carId:$scope.carInfo.carId
+            carId:$scope.carInfo.carId,
+            insurancederId:$scope.insuranceder.personId
           }
         }
       }).then(function(res) {
@@ -279,9 +298,94 @@ angular.module('starter')
         $scope.closeCompanyModal();
         var str='';
         for(var feild in err)
-        str+=err[field];
+          str+=err[field];
         console.error('error=\r\n' + str);
       });
+    }
+
+
+    $scope.Mutex=function(item,field,cluster) {
+      if(item[field])
+      {
+        item[field]=false;
+      }
+      else{
+        item[field]=true;
+        cluster.map(function(cell,i) {
+          if(cell.personId!=item.personId)
+            cell[field]=false;
+        })
+      }
+    };
+
+
+    /*** bind select_relative modal ***/
+    $ionicModal.fromTemplateUrl('views/modal/select_relative.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.select_relative={
+        modal:modal
+      }
+    });
+
+    $scope.open_selectRelativeModal= function(field){
+      $scope.select_relative.modal.show();
+      $scope.select_relative.field=field;
+    };
+
+    $scope.close_selectRelativeModal= function(cluster) {
+      if(cluster!==undefined&&cluster!==null)
+      {
+        cluster.map(function(singleton,i) {
+          if(singleton.checked==true)
+          {
+            $scope[$scope.select_relative.field]=singleton;
+          }
+        })
+      }
+      $scope.select_relative.modal.hide();
+    };
+    /*** bind select_relative modal ***/
+
+
+    //拉取相关人员信息
+    $scope.fetchRelative=function(field) {
+      $http({
+        method: "POST",
+        url: Proxy.local()+'/svr/request',
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'getRelativePersons'
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          if(json.data!=undefined&&json.data!=null){
+            $scope.relatives=json.data;
+
+            $scope.open_selectRelativeModal(field);
+          }
+        }else{
+          $scope.open_selectRelativeModal(field);
+        }
+
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
+    };
+
+    //选用险种检查车险相关人员
+    $scope.apply=function(){
+      //TODO:append insuranceder modal
+      $scope.open_appendCarOrderModal();
     }
 
 
