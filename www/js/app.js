@@ -132,11 +132,13 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           if(Object.prototype.toString.call(message)!='[object Object]')
           {
             message = JSON.parse(message);
+
           }else{}
           alert('unitName=' + message.unitName);
+
           if(message.type!=undefined&&message.type!=null){
             switch(message.type){
-              case 'to-customer':
+              case 'from-service':
                 var order=message.order;
                 var servicePersonId=message.servicePersonId;
                 alert('orderId='+order.orderId);
@@ -258,8 +260,43 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                     console.log('You are not sure');
                   }
                 });
+                break;
+
+              case 'from-background':
+                var order=message.order;
+                var servicePersonId=message.servicePersonId;
+                alert('orderId='+order.orderId);
+
+                var tem='';
+                var mobilePhone=null;
+                if(message.mobilePhone!==undefined&&message.mobilePhone!==null)
+                  mobilePhone=message.mobilePhone;
+                else
+                  mobilePhone='';
+                tem='<div>'+message.unitName+ mobilePhone+'</div>'
+
+
+                var confirmPopup = $ionicPopup.confirm({
+                  title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
+                  template:'已经指派工作人员接单'+ tem
+                });
+
+                confirmPopup.then(function(res) {
+                  if(res) {
+                    console.log('You are sure');
+                  } else {
+                    console.log('You are not sure');
+                  }
+
+                })
+
 
                 break;
+
+
+
+
+
             }
           }
 
@@ -411,6 +448,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
       .state('tabs.dashboard',{
+        cache:false,
         url:'/dashboard/:params',
         views:{
           'dashboard-tab':{
