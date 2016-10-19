@@ -137,13 +137,8 @@ angular.module('starter')
     };
     /*** bind apeend_carOrderPerson_modal ***/
 
-    //提交车险已选报价
-    $scope.apply=function(){
-      $scope.open_appendCarOrderModal();
-    }
-
-    //提交已选方案
-    $scope.confirm=function() {
+    //提交车险方案
+    $scope.apply=function() {
       var selected_price = null;
       var order = $scope.order;
       order.prices.map(function (price, i) {
@@ -197,8 +192,16 @@ angular.module('starter')
               info: {
                 orderId:$scope.order.orderId,
                 fields:{
-                  insurerId:$scope.ownerId,
-                  insurancederId:$scope.insuranceder.personId
+                  insurerId:31,
+                  companyId:selected_price.companyId,
+                  discount:selected_price.discount,
+                  benefit:selected_price.benefit,
+                  insuranceFeeTotal:selected_price.insuranceFeeTotal,
+                  contractFee:selected_price.contractFee,
+                  commission:selected_price.commission,
+                  score:selected_price.score,
+                  exchangeMoney:selected_price.exchangeMoney,
+                  orderDate:new Date()
                 }
               }
             }
@@ -208,7 +211,7 @@ angular.module('starter')
       }).then(function(res) {
         var json=res.data;
         if(json.re==1) {
-
+          $state.go('tabs.dashboard');
         }
       }).catch(function (err) {
         var str = '';

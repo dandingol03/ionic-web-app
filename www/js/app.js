@@ -448,6 +448,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
       .state('tabs.dashboard',{
+        cache:false,
         url:'/dashboard/:params',
         views:{
           'dashboard-tab':{

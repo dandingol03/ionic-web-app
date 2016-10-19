@@ -50,8 +50,8 @@ angular.module('starter')
       items:{},
       description:{},//故障文字描述,放在remark字段下
       tabIndex:'',
-      serviceType:''//服务项目
-
+      serviceType:'',
+      insuranceder:{}
     };
 
     $scope.tabIndex=0;
@@ -837,8 +837,8 @@ angular.module('starter')
               });
             }
           }).then(function(res) {
-            alert('it is all done');
-            $scope.close_uploadLicenseCardModal();
+            alert('car attach upload completely');
+            $scope.close_uploadCarAttachModal();
             $scope.select_type();
           }).catch(function(err) {
             var str='';
@@ -1267,7 +1267,6 @@ angular.module('starter')
     }
 
     $scope.select_type=function(){
-      alert('carId=' + $scope.carInfo.carId);
       $state.go('car_insurance',{carInfo:JSON.stringify($scope.carInfo)});
     }
 
@@ -1998,6 +1997,26 @@ $scope.carService=function(){
       }
       return deferred.promise;
     }
+
+
+    /*** bind append_maintainOrderPerson_modal***/
+    $ionicModal.fromTemplateUrl('views/modal/append_maintainOrder_person.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.append_maintainOrderPerson_modal = modal;
+    });
+
+    $scope.open_appendMaintainServiceOrderModal= function(){
+      $scope.append_maintainOrderPerson_modal.show();
+    };
+
+    $scope.close_appendMaintainServiceOrderModal= function() {
+      $scope.append_maintainOrderPerson_modal.hide();
+    };
+    /*** bind append_maintainOrderPerson_modal ***/
+
 
 
     //提交服务项目,生成服务订单
