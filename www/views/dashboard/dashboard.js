@@ -1987,6 +1987,7 @@ $scope.carService=function(){
               $scope.maintain.servicePersonId = servicePerson.servicePersonId;
               var maintain=$scope.maintain;
               maintain.carId=$scope.carInfo.carId;
+              alert("carid="+maintain.carId);
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -2065,6 +2066,8 @@ $scope.carService=function(){
           var order = null;
           var servicePersonIds = [];
           var personIds = [];
+          var maintain=$scope.maintain;
+          maintain.carId=$scope.carInfo.carId;
           $http({
             method: "POST",
             url: Proxy.local() + "/svr/request",
@@ -2074,7 +2077,7 @@ $scope.carService=function(){
             data: {
               request: 'generateCarServiceOrder',
               info: {
-                maintain: $scope.maintain
+                maintain: maintain
               }
             }
           }).then(function (res) {
