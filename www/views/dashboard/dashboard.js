@@ -383,6 +383,8 @@ angular.module('starter')
     };
     /*** bind append_insuranceder_modal ***/
 
+
+
     /*** bind append_benefiter_modal 选择受益人模态框***/
     $ionicModal.fromTemplateUrl('views/modal/append_benefiter_modal.html',{
       scope:  $scope,
@@ -1385,6 +1387,7 @@ angular.module('starter')
       $rootScope.life_insurance = $scope.life_insurance;
       $scope.close_lifeModal();
     }
+
 
 
     //车险险种选择
@@ -2814,6 +2817,7 @@ $scope.carService=function(){
 
 
 
+
     $scope.Setter=function(type,item,field,cmd){
       switch(type)
       {
@@ -3277,7 +3281,7 @@ $scope.carService=function(){
             $scope.open_selectRelativeModal(item,field,matched);
           }
         }else{
-          $scope.open_selectRelativeModal(item,field,matched);
+            $scope.open_selectRelativeModal(item,field,matched);
         }
 
       }).catch(function(err) {
@@ -3287,6 +3291,8 @@ $scope.carService=function(){
         console.error('error=\r\n' + str);
       });
     };
+
+
 
 
     $scope.ActionSheet= function (options,item,field,addon_field,url,fail) {

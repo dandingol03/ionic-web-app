@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('carInsuranceController',function($scope,$state,$http, $location,
                                                 $rootScope,$ionicActionSheet,
-                                                $ionicModal,Proxy,$stateParams){
+                                                $ionicModal,Proxy,$stateParams,$ionicPopup){
 
     if($stateParams.carInfo!==undefined&&$stateParams.carInfo!==null)
     {
@@ -252,6 +252,13 @@ angular.module('starter')
       insuranceder:{}
     }
 
+    $scope.car_insurance={
+      insuranceder:{perTypeCode:'I'},
+      order:{
+        insuranceder:{
+        },
+      }
+    }
     //提交车险意向
     $scope.confirm=function(){
       var products=[];
@@ -318,9 +325,25 @@ angular.module('starter')
       }
     };
 
+    /*** bind append_car_insuranceder_modal 选择被保险人模态框(车险)***/
+    $ionicModal.fromTemplateUrl('views/modal/append_car_insuranceder_modal.html',{
+      scope:  $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.append_car_insuranceder_modal = modal;
+    });
+
+    $scope.open_appendCarInsurancederModal= function(){
+      $scope.append_car_insuranceder_modal.show();
+    };
+
+    $scope.close_appendCarInsurancederModal= function() {
+      $scope.append_car_insuranceder_modal.hide();
+    };
+    /*** bind append_car_insuranceder_modal ***/
 
     /*** bind select_relative modal ***/
-    $ionicModal.fromTemplateUrl('views/modal/select_relative.html',{
+    $ionicModal.fromTemplateUrl('views/modal/select_car_relative.html',{
       scope:  $scope,
       animation: 'animated '+' bounceInUp',
       hideDelay:920
@@ -382,6 +405,74 @@ angular.module('starter')
       });
     };
 
+    $scope.ionicPopup=function(title,item,field,cb) {
+
+      var buttons = [];
+      if (Object.prototype.toString.call(cb) == '[object Array]') {
+        buttons.push({text: '<b>取消</b>', type: 'button-assertive'});
+        cb.map(function (item, i) {
+          buttons.push({text: item.text, type: 'button-positive', onTap: item.cb});
+        });
+      } else {
+        buttons = [
+          {
+            text: '<b>取消</b>',
+            type: 'button-assertive'
+          },
+          {
+            text: '<b>自己</b>',
+            type: 'button-positive',
+            onTap: function (e) {
+              item[field] = 'self';
+            }
+          },
+          {
+            text: '<b>添加</b>',
+            type: 'button-positive',
+            onTap: function (e) {
+              cb();
+              //$scope.open_appendPersonModal();
+              //$scope.life_insurance.person.perType=1;
+            }
+          }
+        ];
+      }
+      var myPopup = $ionicPopup.show({
+        template: '可选人员没有,是否进行添加',
+        title: '<strong>选择投保人?</strong>',
+        subTitle: '',
+        scope: $scope,
+        buttons: buttons
+      });
+
+      myPopup.then(function(res) {
+        console.log('...');
+      });
+    }
+    //添加被保险人(车险)
+    $scope.append_car_insuranceder=function(props){
+      $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendCarInsurancederModal);
+
+    }
+    $scope.ActionSheet= function (options,item,field,addon_field) {
+      var buttons = [];
+      options.map(function (item, i) {
+        buttons.push({text: item});
+      });
+      $ionicActionSheet.show({
+        buttons: buttons,
+        titleText: '',
+        cancelText: '取消',
+        buttonClicked: function (index) {
+          item[field] = buttons[index].text;
+          if (addon_field !== undefined && addon_field !== null)
+            item[addon_field] = (index + 1);
+          return true;
+        },
+        cssClass: 'motor_insurance_actionsheet'
+      });
+    }
+
     //选用险种检查车险相关人员
     $scope.apply=function(){
       //TODO:append insuranceder modal
@@ -427,6 +518,153 @@ angular.module('starter')
         }
       }
     }
+//提交统一函数
+    $scope.upload=function(cmd,item,field){
 
+      var personId=null;
+      $http({
+        method: "POST",
+        url: Proxy.local()+'/svr/request',
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token,
+        },
+        data:
+        {
+          request:cmd,
+          info:item
+        }
+      })
+        .then(function(res) {
+
+          if(res.data.re==1){
+            var json =res.data;
+            personId=json.data.personId;
+            alert('personid='+personId);
+            var suffix='';
+            var imageType='perIdCard';
+            alert('path='+$scope.life_insurance.insurer.perIdCard1_img);
+            if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.jpg')!=-1)
+              suffix='jpg';
+            else if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.png')!=-1)
+              suffix='png';
+            else{}
+            var server=Proxy.local()+'/svr/request?request=uploadPhoto' +
+              '&imageType='+imageType+'&suffix='+suffix+
+              '&filename='+'perIdCard1_img'+'&personId='+personId;
+            var options = {
+              fileKey:'file',
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              }
+            };
+
+            var perIdAttachId1=null;
+            var perIdAttachId2=null;
+
+            $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard1_img, options)
+              .then(function(res) {
+                alert('upload perIdCard1 success');
+                for(var field in res) {
+                  alert('field=' + field + '\r\n' + res[field]);
+                }
+                var su=null
+                if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.jpg')!=-1)
+                  su='jpg';
+                else if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.png')!=-1)
+                  su='png';
+                alert('suffix=' + su);
+                return $http({
+                  method: "POST",
+                  url: Proxy.local()+"/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token,
+                  },
+                  data:
+                  {
+                    request:'createPhotoAttachment',
+                    info:{
+                      imageType:'perIdCard',
+                      filename:'perIdAttachId1',
+                      suffix:su,
+                      docType:'I1' ,
+                      personId:personId
+                    }
+                  }
+                });
+              })
+              .then(function(res) {
+                var json=res.data;
+                if(json.re==1) {
+                  perIdAttachId1=json.data;
+                  alert('perIdAttachId1=' + perIdAttachId1);
+                  var su=null;
+                  if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.jpg')!=-1)
+                    su='jpg';
+                  else if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.png')!=-1)
+                    su='png';
+                  server=Proxy.local()+'/svr/request?request=uploadPhoto' +
+                    '&imageType='+imageType+'&suffix='+su+'&filename='+'perIdAttachId2'+'&personId='+personId;
+                  return  $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options)
+                    .then(function(res) {
+                      alert('upload perIdCard2 success');
+                      for(var field in res) {
+                        alert('field=' + field + '\r\n' + res[field]);
+                      }
+                      return $http({
+                        method: "POST",
+                        url: Proxy.local()+"/svr/request",
+                        headers: {
+                          'Authorization': "Bearer " + $rootScope.access_token,
+                        },
+                        data:
+                        {
+                          request:'createPhotoAttachment',
+                          info:{
+                            imageType:'perIdCard',
+                            filename:'perIdAttachId2',
+                            suffix:su,
+                            docType:'I1' ,
+                            personId:personId
+                          }
+                        }
+                      });
+                    }) .then(function(res) {
+                      var json=res.data;
+                      if(json.re==1){
+                        perIdAttachId2=json.data;
+                        return $http({
+                          method: "POST",
+                          url: Proxy.local()+"/svr/request",
+                          headers: {
+                            'Authorization': "Bearer " + $rootScope.access_token,
+                          },
+                          data:
+                          {
+                            request:'createInsuranceInfoPersonInfo',
+                            info:{
+                              perIdAttachId1:perIdAttachId1,
+                              perIdAttachId2:perIdAttachId2,
+                              personId:personId
+                            }
+                          }
+                        });
+                      }
+                    })
+                }
+              })
+          }else{}
+
+          alert('...it is back')
+        }).then(function(res) {
+
+        })
+        .catch(function(err) {
+          var str='';
+          for(var field in err)
+            str+=err[field];
+          alert('error=\r\n' + str);
+        });
+
+    }
   });
 
