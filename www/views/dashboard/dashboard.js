@@ -3438,13 +3438,6 @@ $scope.carService=function(){
       })
     });
 
-
-
-
-
-
-
-
     $scope.selfGeoLocation=function(item,field){
       var geolocation = new $scope.bMap.Geolocation();
         $ionicLoading.show({
@@ -3497,7 +3490,7 @@ $scope.carService=function(){
 
     $scope.pickMaintain=function(locateType){
       $state.go('locate_maintain_nearby',{locateType:locateType});
-    }
+    };
 
     $scope.pickAirportNearby=function(locateType) {
       $state.go('locate_airport_nearby', {locateType: locateType});
