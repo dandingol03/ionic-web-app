@@ -237,26 +237,6 @@ angular.module('starter')
       $scope.showDemoPicture3();
     };
 
-    $scope.showDemoPicture = function() {
-      if ($scope.isShowPicture == true) {
-        $scope.openDemoModal();
-      };
-    };
-    $scope.showDemoPicture1 = function() {
-      if ($scope.isShowPicture1 == true) {
-        $scope.openDemoModal1();
-      };
-    };
-    $scope.showDemoPicture2 = function() {
-      if ($scope.isShowPicture2 == true) {
-        $scope.openDemoModal2();
-      };
-    };
-    $scope.showDemoPicture3 = function() {
-      if ($scope.isShowPicture3 == true) {
-        $scope.openDemoModal3();
-      };
-    };
 
     /*** show demo modal ***/
     $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
@@ -1175,7 +1155,6 @@ angular.module('starter')
 
       if(window.cordova!==undefined&&window.cordova!==null)
       {
-
 
             $http({
               method: "POST",
@@ -2567,7 +2546,7 @@ $scope.carService=function(){
     }
 
     //查询已绑定车辆,并显示车牌信息
-    $scope.selectCarInfoByCarNum=function(item){
+    $scope.selectCarInfoByCarNum=function(item,modal){
       $http({
         method: "POST",
         url: Proxy.local()+"/svr/request",
@@ -2599,6 +2578,9 @@ $scope.carService=function(){
             buttonClicked: function(index) {
               if(index==0) {
                 //TODO:create new car info
+                if(modal!==undefined&&modal!==null)
+                  modal.hide();
+                $state.go('update_car_info');
               }else{
                 var car=cars[index-1];
                 if(item!==undefined&&item!==null)

@@ -141,27 +141,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         ]}
         ];
 
-      /***************************选择服务人员模态框*******************************/
-      $ionicModal.fromTemplateUrl('views/modal/select_service_person_modal.html',{
-        scope:  $rootScope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        $rootScope.select_service_person_modal = modal;
-        //$rootScope.open_selectServicePersonModal();
-
-      });
-
-        $rootScope.open_selectServicePersonModal= function(){
-        $rootScope.select_service_person_modal.show();
-      };
-
-
-      $rootScope.close_selectServicePersonModal= function() {
-        $rootScope.select_service_person_modal.hide();
-      };
-      /***************************选择服务人员模态框*******************************/
-
-
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {
         try{
@@ -676,6 +655,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         url:'/service_candidate',
         controller:'serviceCandidateController',
         templateUrl:'views/service_candidate/service_candidate.html'
+      })
+
+      .state('update_car_info',{
+        url:'/update_car_info',
+        controller:'updateCarInfoController',
+        templateUrl:'views/update_car_info/update_car_info.html'
       })
 
     // if none of the above states are matched, use this as the fallback
