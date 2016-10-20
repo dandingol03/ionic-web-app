@@ -21,7 +21,7 @@ angular.module('starter')
 
       $scope.bMap = res;
       var BMap = $scope.bMap;
-      var map = new BMap.Map("container");          // 创建地图实例
+      var map = new BMap.Map("locate_parkCar_nearby");          // 创建地图实例
       var point = new BMap.Point(117.219, 36.852);
       map.centerAndZoom(point, 9);  //初始化地图,设置城市和地图级别
 
@@ -137,11 +137,38 @@ angular.module('starter')
           $rootScope.carManage={};
         if($scope.unit!==undefined&&$scope.unit!==null)//选定维修厂
         {
-          var ob={unit:$scope.unit,type:'parkCar'};
-          $scope.$emit('unit-choose', JSON.stringify(ob));
+          var parkCar={
+            unit:$scope.unit,
+            servicePlace:$scope.unit.unitName
+          };
+          $http({
+            method: "POST",
+            url: Proxy.local()+"/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token,
+            },
+            data:
+            {
+              request:'getServicePersonByUnitId',
+              info:{
+                unitId:$scope.unit.unitId
+              }
+            }
+          }).then(function(res) {
+            var json=res.data;
+            parkCar.servicePerson =json.data;
+            $rootScope.carManage.parkCar=parkCar;
+            var ob = {tabIndex:3};
+            $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+          });
         }else//未选定维修厂
         {
-          $rootScope.carManage.airportTransfer.units=$scope.units;
+          var parkCar={
+            units:$scope.units
+          };
+          $rootScope.carManage.parkCar=parkCar;
+          $rootScope.dashboard= {tabIndex:3,subTabIndex:3};
+          $state.go('tabs.dashboard');
         }
         $scope.go_back();
       }
