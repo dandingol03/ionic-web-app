@@ -1924,6 +1924,7 @@ $scope.carService=function(){
     }
   }).then(function (res) {
     var json = res.data;
+    alert(json.re);
     if (json.re == 1) {
       order = json.data;
       return $http({
@@ -2292,6 +2293,7 @@ $scope.carService=function(){
       {
         var unit=null;
         var servicePerson=null;
+        $scope.carManage.carId=$scope.carInfo.carId;
         switch($scope.service)
         {
           case '代办车辆年审':
@@ -2317,6 +2319,7 @@ $scope.carService=function(){
 
 
               $scope.carManage.servicePersonId = servicePerson.servicePersonId;
+
                $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -2446,6 +2449,7 @@ $scope.carService=function(){
           });
         }else{}
       }
+
     }
 
 
