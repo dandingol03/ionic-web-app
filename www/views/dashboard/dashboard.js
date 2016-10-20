@@ -237,26 +237,6 @@ angular.module('starter')
       $scope.showDemoPicture3();
     };
 
-    $scope.showDemoPicture = function() {
-      if ($scope.isShowPicture == true) {
-        $scope.openDemoModal();
-      };
-    };
-    $scope.showDemoPicture1 = function() {
-      if ($scope.isShowPicture1 == true) {
-        $scope.openDemoModal1();
-      };
-    };
-    $scope.showDemoPicture2 = function() {
-      if ($scope.isShowPicture2 == true) {
-        $scope.openDemoModal2();
-      };
-    };
-    $scope.showDemoPicture3 = function() {
-      if ($scope.isShowPicture3 == true) {
-        $scope.openDemoModal3();
-      };
-    };
 
     /*** show demo modal ***/
     $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
@@ -1177,7 +1157,6 @@ angular.module('starter')
 
       if(window.cordova!==undefined&&window.cordova!==null)
       {
-
 
             $http({
               method: "POST",
@@ -2307,22 +2286,20 @@ $scope.carService=function(){
         if(unit!==undefined&&unit!==null)//已选维修厂
         {
 
-
-              $scope.carManage.servicePersonId = servicePerson.servicePersonId;
-
-               $http({
-                method: "POST",
-                url: Proxy.local() + "/svr/request",
-                headers: {
-                  'Authorization': "Bearer " + $rootScope.access_token
-                },
-                data: {
-                  request: 'generateCarServiceOrder',
-                  info: {
-                    carManage: $scope.carManage
-                  }
+          $scope.carManage.servicePersonId = servicePerson.servicePersonId;
+          $http({
+              method: "POST",
+              url: Proxy.local() + "/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'generateCarServiceOrder',
+                info: {
+                  carManage: $scope.carManage
                 }
-              }).then(function(res) {
+              }
+            }).then(function(res) {
             var json = res.data;
             if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
@@ -2580,7 +2557,7 @@ $scope.carService=function(){
     }
 
     //查询已绑定车辆,并显示车牌信息
-    $scope.selectCarInfoByCarNum=function(){
+    $scope.selectCarInfoByCarNum=function(item,modal){
       $http({
         method: "POST",
         url: Proxy.local()+"/svr/request",
@@ -2596,6 +2573,7 @@ $scope.carService=function(){
         if(json.re==1) {
           var cars=json.data;
           var buttons=[];
+          buttons.push({text: "<b>创建新车</b>"});
           cars.map(function(car,i) {
             var ele=car;
             ele.text='<b>'+car.carNum+'</b>';
@@ -2609,15 +2587,26 @@ $scope.carService=function(){
               // add cancel code..
             },
             buttonClicked: function(index) {
-              var car=cars[index];
-              //TODO:override default feild
-              $scope.carInfo.carNum=car.carNum;
-              $scope.carInfo.ownerName=car.ownerName;
-              $scope.carInfo.ownerIdCard=car.ownerIdCard;
-              $scope.carInfo.issueDate=car.issueDate;
-              $scope.carInfo.factoryNum=car.factoryNum;
-              $scope.carInfo.engineNum=car.engineNum;
-              $scope.carInfo.frameNum=car.frameNum;
+              if(index==0) {
+                //TODO:create new car info
+                if(modal!==undefined&&modal!==null)
+                  modal.hide();
+                $state.go('update_car_info');
+              }else{
+                var car=cars[index-1];
+                if(item!==undefined&&item!==null)
+                {
+                  item.carId=car.carId;
+                }else{
+                  $scope.carInfo.carNum=car.carNum;
+                  $scope.carInfo.ownerName=car.ownerName;
+                  $scope.carInfo.ownerIdCard=car.ownerIdCard;
+                  $scope.carInfo.issueDate=car.issueDate;
+                  $scope.carInfo.factoryNum=car.factoryNum;
+                  $scope.carInfo.engineNum=car.engineNum;
+                  $scope.carInfo.frameNum=car.frameNum;
+                }
+              }
               return true;
             },
             cssClass:'center'

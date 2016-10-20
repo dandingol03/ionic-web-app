@@ -28,33 +28,25 @@
       </div>
 
       <div class="item"
-           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-click="selfGeoLocation(carManage,'geolocation')"
-        >
-        <span class="input-label" style="display: inline-block;width: 35%;">
-          我的位置:
-        </span>
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
 
-        <span
-          style="display: inline-block;width: 49%;"
-          ng-if="carManage.geolocation==undefined||carManage.geolocation==null"
-          >
-          点击获取位置
-        </span>
-
-         <span
-           style="display: inline-block;width: 49%;"
-           ng-if="carManage.geolocation!==undefined&&carManage.geolocation!==null"
-           >
-          点击刷新地理位置
-        </span>
-
-        <span
-          style="display: inline-block;width: 16%;"
-          >
-          <i class="ion-ios-world-outline" style="font-size: 1.5em;"></i>
-        </span>
-
+            <span class="input-label" style="display: inline-block;width: 35%;text-align: left">
+              车牌:
+            </span>
+            <span style="width: 49%;display: inline-block;text-align: left;">
+              <input type="text" placeholder="请输入您的车牌"
+                     style="display:inline-block;background-color: transparent;"
+                     ng-value="carInfo.carNum"
+                     ng-model="carInfo.carNum"
+                />
+            </span>
+            <span
+              class="camera"
+              style="width:16%;font-size: 1.5em;"
+              ng-click="selectCarInfoByCarNum(carManage,carManage_t_a_modal)"
+              >
+            <i class="ion-chevron-down"></i>
+          </span>
       </div>
 
       <button class="button button-block button-calm" ng-click="commit_carManage_service()">

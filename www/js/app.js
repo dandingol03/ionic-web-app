@@ -141,9 +141,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         ]}
         ];
 
-
-
-
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {
         try{
@@ -658,6 +655,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         url:'/service_candidate',
         controller:'serviceCandidateController',
         templateUrl:'views/service_candidate/service_candidate.html'
+      })
+
+      .state('update_car_info',{
+        url:'/update_car_info',
+        controller:'updateCarInfoController',
+        templateUrl:'views/update_car_info/update_car_info.html'
       })
 
     // if none of the above states are matched, use this as the fallback
