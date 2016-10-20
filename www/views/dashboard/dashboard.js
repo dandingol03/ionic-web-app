@@ -1175,9 +1175,7 @@ angular.module('starter')
 
       if(window.cordova!==undefined&&window.cordova!==null)
       {
-        if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
-          &&$scope.carInfo.ownerIdCard2_img!==undefined&&$scope.carInfo.ownerIdCard2_img!==null)
-        {
+
 
             $http({
               method: "POST",
@@ -1283,22 +1281,7 @@ angular.module('starter')
                 }
                 });
 
-        }else{
-          //TODO:上传身份证照片
-          var confirmPopup = $ionicPopup.confirm({
-            title: '缺少身份证照片',
-            template: '请问是否选择上传身份证',
-            okText:'上传',
-            cancelText:'取消'
-          });
-          confirmPopup.then(function(res) {
-            if(res) {
-              $scope.uploadOwnerIdCardPhoto();
-            } else {
-              console.log('You are not sure');
-            }
-          });
-        }
+
       }else{
         $scope.select_type();
       }
