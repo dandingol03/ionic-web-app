@@ -56,17 +56,31 @@ angular.module('starter')
       insuranceder:{}
     };
 
-    $scope.tabIndex=0;
+    if($rootScope.dashboard.tabIndex!==undefined&&$rootScope.dashboard.tabIndex!==null)
+        $scope.tabIndex=$rootScope.dashboard.tabIndex;
+    else
+        $scope.tabIndex=0;
+
+    if($rootScope.dashboard.subTabIndex!==undefined&&$rootScope.dashboard.subTabIndex!==null)
+        $scope.subTabIndex=$rootScope.dashboard.subTabIndex;
+    else
+        $scope.subTabIndex=0;
 
 
     //车驾管信息
     $scope.carManage={
-      carValidate:{},
-      paperValidate:{},
-      airportTransfer:{},
-      parkCar:{},
+      carValidate:$rootScope.carManage.carValidate,
+      paperValidate:$rootScope.carManage.paperValidate,
+      airportTransfer:$rootScope.carManage.airportTransfer,
+      parkCar:$rootScope.carManage.parkCar,
       serviceType:11
     };
+
+    /**
+     * $rootScope数据同步
+     */
+
+
 
 
     /**
@@ -79,10 +93,12 @@ angular.module('starter')
         $scope.maintain.maintenance=params.maintenance;
       if(params.tabIndex!==undefined&&params.tabIndex!==null)
         $scope.tabIndex=params.tabIndex;
+      if(params.subTabIndex!==undefined&&params.subTabIndex!==null)
+        $scope.subTabIndex=params.subTabIndex;
       if(params.type=='carValidate')
       {
-        var item=params.item;
-        $scope.carManage.carValidate=item;
+        console.log('...');
+      }else if(params.type=='paperValidate') {
         console.log('...');
       }
       if(params.location!==undefined&&params.location!==null)
@@ -627,7 +643,8 @@ angular.module('starter')
                   imageType:'carPhoto',
                   filename:'carAttachId1',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -663,10 +680,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId2',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -701,10 +719,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId3',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -738,10 +757,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId4',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -775,10 +795,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId5',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -812,10 +833,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId6',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -960,7 +982,8 @@ angular.module('starter')
                   imageType:'licenseCard',
                   filename:'licenseAttachId1',
                   suffix:su,
-                  docType:'I3'
+                  docType:'I3',
+                  carId:carId
                 }
               }
             });
@@ -998,7 +1021,8 @@ angular.module('starter')
                   imageType:'licenseCard',
                   filename:'licenseAttachId2',
                   suffix:su,
-                  docType:'I3'
+                  docType:'I3',
+                  carId:carId
                 }
               }
             });
@@ -1036,7 +1060,8 @@ angular.module('starter')
                   imageType:'licenseCard',
                   filename:'licenseAttachId3',
                   suffix:su,
-                  docType:'I3'
+                  docType:'I3',
+                  carId:carId
                 }
               }
             });
@@ -1691,7 +1716,7 @@ $scope.openAirportTransfer=function(){
     $scope.tab_change=function(i){
       $scope.tabIndex=i;
     };
-    $scope.subTabIndex=0;
+
 
     $scope.subTab_change=function(i) {
       $scope.subTabIndex=i;

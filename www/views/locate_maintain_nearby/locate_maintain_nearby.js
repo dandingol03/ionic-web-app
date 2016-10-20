@@ -426,7 +426,6 @@ angular.module('starter')
 
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
-
               var carValidate={
                 unit:$scope.unit,
                 servicePlace:$scope.unit.unitName
@@ -447,7 +446,8 @@ angular.module('starter')
               }).then(function(res) {
                 var json=res.data;
                 carValidate.servicePerson =json.data;
-                var ob = {type: 'carValidate',tabIndex:3, item: carValidate};
+                $rootScope.carManage.carValidate=carValidate;
+                var ob = {tabIndex:3};
                 $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
               });
             }
@@ -456,7 +456,8 @@ angular.module('starter')
               var carValidate={
                 units:$scope.units
               };
-              var ob = {type: 'carValidate',tabIndex:3, item: carValidate};
+              $rootScope.carManage.carValidate=carValidate;
+              var ob = {tabIndex:3};
               $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
 
             }

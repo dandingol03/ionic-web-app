@@ -80,10 +80,18 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
       $rootScope.property=null;
 
-      $rootScope.$on('unit-choose',function(e,d) {
-        var data=JSON.parse(d);
-        $rootScope.$broadcast('to-child', 'child');
-      });
+      $rootScope.carManage={
+        carValidate:{},
+        paperValidate:{},
+        airportTransfer:{},
+        parkCar:{}
+      };
+
+      $rootScope.dashboard={
+      };
+
+
+
 
       var onTagsWithAlias = function(event) {
         try {
