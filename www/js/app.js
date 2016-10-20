@@ -141,6 +141,26 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         ]}
         ];
 
+      /***************************选择服务人员模态框*******************************/
+      $ionicModal.fromTemplateUrl('views/modal/select_service_person_modal.html',{
+        scope:  $rootScope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $rootScope.select_service_person_modal = modal;
+        //$rootScope.open_selectServicePersonModal();
+
+      });
+
+        $rootScope.open_selectServicePersonModal= function(){
+        $rootScope.select_service_person_modal.show();
+      };
+
+
+      $rootScope.close_selectServicePersonModal= function() {
+        $rootScope.select_service_person_modal.hide();
+      };
+      /***************************选择服务人员模态框*******************************/
+
 
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {

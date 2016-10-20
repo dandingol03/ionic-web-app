@@ -99,6 +99,7 @@ angular.module('starter')
         var json=res.data;
         if(json.re==1){
           $scope.orders=json.data;
+          $rootScope.lifeInsurance.orders=$scope.orders;
           $scope.orders.map(function(order,i) {
             if(order.orderState==3){
               $scope.pricingOrders.push(order);
@@ -158,9 +159,6 @@ angular.module('starter')
         console.error('error=\r\n'+str);
       });
     }
-
-
-
 
     //提交已选方案
     $scope.apply=function() {
