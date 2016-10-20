@@ -2286,23 +2286,28 @@ $scope.carService=function(){
       {
         var unit=null;
         var servicePerson=null;
+        var units=null;
         switch($scope.service)
         {
           case '代办车辆年审':
             servicePerson=$scope.carManage.carValidate.servicePerson;
             unit=$scope.carManage.carValidate.unit;
+            units=$scope.carManage.carValidate.units;
             break;
           case '代办行驶证年审':
             servicePerson=$scope.carManage.paperValidate.servicePerson;
             unit=$scope.carManage.paperValidate.unit;
+            units=$scope.carManage.paperValidate.units;
             break;
           case '接送机':
             servicePerson=$scope.carManage.airportTransfer.servicePerson;
             unit=$scope.carManage.airportTransfer.unit;
+            units=$scope.carManage.airportTransfer.units;
             break;
           case '取送车':
             servicePerson=$scope.carManage.parkCar.servicePerson;
             unit=$scope.carManage.parkCar.unit;
+            units=$scope.carManage.parkCar.units;
             break;
         }
 
@@ -2374,8 +2379,6 @@ $scope.carService=function(){
         }else if($scope.carManage.servicePerson!==undefined&&$scope.carManage.servicePerson!==null)//如果选择了服务人员却没选维修厂
         {
 
-
-
           var servicePerson = $scope.carManage.servicePerson;
           $scope.carManage.servicePersonId = servicePerson.servicePersonId;
 
@@ -2438,7 +2441,117 @@ $scope.carService=function(){
             for (var field in err)
               str += err[field];
           });
-        }else{}
+        }
+        else//未选定维修厂也未选定服务人员
+          {
+            var order = null;
+            var servicePersonIds = [];
+            var personIds = [];
+            $http({
+              method: "POST",
+              url: Proxy.local() + "/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'generateCarServiceOrder',
+                info: {
+                  carManage: $scope.carManage
+                }
+              }
+            }).then(function (res) {
+              var json = res.data;
+              if (json.re == 1) {
+                order=json.data;
+
+                return $http({
+                  method: "POST",
+                  url: Proxy.local() + "/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data: {
+                    request: 'getServicePersonsByUnits',
+                    info: {
+                      units: units
+                    }
+                  }
+                });
+              }
+            }).then(function(res) {
+              var json=res.data;
+              if(json.re==1) {
+                json.data.map(function(servicePerson,i) {
+                  servicePersonIds.push(servicePerson.servicePersonId);
+                  personIds.push(servicePerson.personId);
+                });
+                return $http({
+                  method: "POST",
+                  url: Proxy.local() + "/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data: {
+                    request: 'updateCandidateState',
+                    info: {
+                      orderId: order.orderId,
+                      servicePersonIds: servicePersonIds,
+                      candidate:1
+                    }
+                  }
+                });
+              }
+            }).then(function (res) {
+              var json = res.data;
+              if (json.re == 1) {
+                //TODO:append address and serviceType and serviceTime
+                var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
+                return $http({
+                  method: "POST",
+                  url: Proxy.local() + "/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data: {
+                    request: 'sendCustomMessage',
+                    info: {
+                      order: order,
+                      serviceItems: $scope.maintain.subServiceTypes,
+                      servicePersonIds: servicePersonIds,
+                      serviceName: serviceName,
+                      type: 'to-servicePerson'
+                    }
+                  }
+                });
+              } else {
+                return ({re: -1});
+              }
+            }).then(function (res) {
+              var json = res.data;
+              $scope.videoCheck(order.orderId).then(function (json) {
+                alert('result of videocheck=\r\n' + json);
+                if (json.re == 1) {
+                  alert('附件上传成功');
+                }
+                else
+                {}
+              });
+              $scope.audioCheck(order.orderId).then(function(json) {
+                alert('result of audioCheck=\r\n' + json);
+                if(json.re==1) {
+                  console.log('音频附件上传成功');
+                }else{}
+              });
+
+            }).catch(function (err) {
+              var str = '';
+              for (var field in err)
+                str += err[field];
+              console.error('error=\r\n' + str);
+            });
+
+          }
+
       }
     }
 
