@@ -686,6 +686,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
           return "http://211.87.225.195:3000";
 
+
         else
           return "/proxy/node_server";
       },
