@@ -80,6 +80,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
       $rootScope.property=null;
 
+      $rootScope.$on('unit-choose',function(e,d) {
+        var data=JSON.parse(d);
+        $rootScope.$broadcast('to-child', 'child');
+      });
 
       var onTagsWithAlias = function(event) {
         try {
@@ -117,6 +121,38 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           alert(e);
         }
       };
+
+
+
+      $rootScope.waitConfirms=[
+        {
+          orderNum:'S0001',candidates:[
+          {unitName:'汽修厂1',mobile:'18253161616'},
+          {unitName:'汽修厂2',mobile:'18253161717'},
+          {unitName:'汽修厂3',mobile:'18253161818'}
+        ]}
+        ];
+
+      /***************************选择服务人员模态框*******************************/
+      $ionicModal.fromTemplateUrl('views/modal/select_service_person_modal.html',{
+        scope:  $rootScope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $rootScope.select_service_person_modal = modal;
+        //$rootScope.open_selectServicePersonModal();
+
+      });
+
+        $rootScope.open_selectServicePersonModal= function(){
+        $rootScope.select_service_person_modal.show();
+      };
+
+
+      $rootScope.close_selectServicePersonModal= function() {
+        $rootScope.select_service_person_modal.hide();
+      };
+      /***************************选择服务人员模态框*******************************/
+
 
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {
@@ -160,11 +196,17 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
                 }
 
 
+
+
+                $scope.open_selectServicePersonModal();
+                $scope.select = function(message){
+                  message.checked=true;
+                }
+
                 var confirmPopup = $ionicPopup.confirm({
                   title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
                   template: tem
                 });
-
 
 
                 confirmPopup.then(function(res) {
@@ -277,13 +319,14 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
 
                 var confirmPopup = $ionicPopup.confirm({
-                  title: '您的订单'+$rootScope.waitConfirm[order.orderId][0].order.orderNum,
+                  title: '您的订单'+message.order.orderNum,
                   template:'已经指派工作人员接单'+ tem
                 });
 
                 confirmPopup.then(function(res) {
                   if(res) {
                     console.log('You are sure');
+                    $state.go('service_orders');
                   } else {
                     console.log('You are not sure');
                   }
@@ -621,6 +664,11 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/car_order_prices/car_order_prices.html'
       })
 
+      .state('service_candidate',{
+        url:'/service_candidate',
+        controller:'serviceCandidateController',
+        templateUrl:'views/service_candidate/service_candidate.html'
+      })
 
     // if none of the above states are matched, use this as the fallback
 

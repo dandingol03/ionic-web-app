@@ -9,6 +9,8 @@ angular.module('starter')
                                              $cordovaFileTransfer){
 
 
+
+
     $http({
       method: "post",
       url: Proxy.local() + "/svr/request",
@@ -56,6 +58,17 @@ angular.module('starter')
 
     $scope.tabIndex=0;
 
+
+    //车驾管信息
+    $scope.carManage={
+      carValidate:{},
+      paperValidate:{},
+      airportTransfer:{},
+      parkCar:{},
+      serviceType:11
+    };
+
+
     /**
      * 路由参数初始化
      */
@@ -66,11 +79,18 @@ angular.module('starter')
         $scope.maintain.maintenance=params.maintenance;
       if(params.tabIndex!==undefined&&params.tabIndex!==null)
         $scope.tabIndex=params.tabIndex;
+      if(params.type=='carValidate')
+      {
+        var item=params.item;
+        $scope.carManage.carValidate=item;
+        console.log('...');
+      }
       if(params.location!==undefined&&params.location!==null)
       {
         $location.hash(params.location);
         $anchorScroll();
       }
+    }else{
     }
 
     //生成验证码
@@ -90,21 +110,12 @@ angular.module('starter')
     //   console.log('...');
     // });
 
-    //车驾管信息
-    $scope.carManage={
-    };
+
 
     //车辆信息
     $scope.carInfo=
     {};
-    //车驾管信息
-    $scope.carManage={
-      carValidate:{},
-      paperValidate:{},
-      airportTransfer:{},
-      parkCar:{},
-      serviceType:11
-    };
+
 
 
     $scope.goto=function(url){
@@ -3380,12 +3391,17 @@ $scope.carService=function(){
     /*** bind carManage_t&a ***/
 
 
-
+    $rootScope.$on('to-child',function(event,data) {
+      console.log('...');
+    });
 
     //维修厂的绑定事件
-    $rootScope.$on('unit-choose',function(e,d) {
-      var ob=JSON.parse(d);
+    $rootScope.$on('unit-choose',function(event,da) {
+
+      console.log('...');
+      var ob=JSON.parse(da);
       var unit=ob.unit;
+      var units=ob.units;
       var unitId=unit.unitId;
       $http({
         method: "POST",
@@ -3406,9 +3422,14 @@ $scope.carService=function(){
           var servicePerson=json.data;
           switch (ob.type) {
             case 'carValidate':
-              $scope.carManage.carValidate.unit=unit;
-              $scope.carManage.carValidate.servicePerson=servicePerson;
-              $scope.carManage.carValidate.servicePlace=unit.unitName;
+              if(ob.units!==undefined&&ob.units!==null)
+              {
+                $scope.carManage.carValidate.units=units;
+              }else{
+                $scope.carManage.carValidate.unit=unit;
+                $scope.carManage.carValidate.servicePerson=servicePerson;
+                $scope.carManage.carValidate.servicePlace=unit.unitName;
+              }
               break;
             case 'airport':
               $scope.carManage.airportTransfer.unit=unit;
