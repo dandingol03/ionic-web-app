@@ -457,8 +457,9 @@ angular.module('starter')
                 units:$scope.units
               };
               $rootScope.carManage.carValidate=carValidate;
-              var ob = {tabIndex:3};
-              $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+              $rootScope.dashboard.tabIndex=3;
+              $rootScope.dashboard.service='代办车辆年审';
+              $state.go('tabs.dashboard');
 
             }
             break;

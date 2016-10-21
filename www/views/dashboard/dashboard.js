@@ -46,6 +46,10 @@ angular.module('starter')
       31:'鈑喷'};
 
 
+    //选择车驾管服务项目
+    $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
+
+
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
@@ -61,10 +65,6 @@ angular.module('starter')
     else
         $scope.tabIndex=0;
 
-    if($rootScope.dashboard.subTabIndex!==undefined&&$rootScope.dashboard.subTabIndex!==null)
-        $scope.subTabIndex=$rootScope.dashboard.subTabIndex;
-    else
-        $scope.subTabIndex=0;
 
 
     //车驾管信息
@@ -75,11 +75,6 @@ angular.module('starter')
       parkCar:$rootScope.carManage.parkCar,
       serviceType:11
     };
-
-    /**
-     * $rootScope数据同步
-     */
-
 
 
 
@@ -107,9 +102,28 @@ angular.module('starter')
         $anchorScroll();
       }
     }else{
+      $scope.subTabIndex=0;
     }
 
-    //生成验证码
+    /**
+     * $rootScope数据同步
+     */
+    if($rootScope.dashboard!==undefined&&$rootScope.dashboard!==null)
+    {
+      if($rootScope.dashboard.tabIndex!==undefined&&$rootScope.dashboard.tabIndex!==null)
+        $scope.tabIndex=$rootScope.dashboard.tabIndex;
+      if($rootScope.dashboard.subTabIndex!==undefined&&$rootScope.dashboard.subTabIndex!==null)
+        $scope.subTabIndex=$rootScope.dashboard.subTabIndex;
+      if($rootScope.dashboard.service!==undefined&&$rootScope.dashboard.service!==null)
+        $scope.service=$rootScope.dashboard.service;
+      else
+        $scope.service='代办车辆年审';
+    }else{
+      $scope.subTabIndex=0;
+    }
+
+
+      //生成验证码
     // $http({
     //   method: "post",
     //   url: "/proxy/node_server/svr/request",
@@ -1671,7 +1685,7 @@ $scope.openAirportTransfer=function(){
   $state.go('locate_airportTransfer_nearby');
 }
 
-    $scope.service='代办车辆年审';
+
     $scope.services=[
       '代办车辆年审',
       '代办驾驶证年审',
@@ -2527,12 +2541,6 @@ $scope.carService=function(){
 
     }
 
-
-
-
-    //选择车驾管服务项目
-    $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
-    $scope.service="代办车辆年审";
 
     $scope.service_select=function(services) {
       if (services !== undefined && services !== null &&services.length > 0)

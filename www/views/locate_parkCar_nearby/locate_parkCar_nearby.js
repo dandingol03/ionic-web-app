@@ -158,8 +158,9 @@ angular.module('starter')
             var json=res.data;
             parkCar.servicePerson =json.data;
             $rootScope.carManage.parkCar=parkCar;
-            var ob = {tabIndex:3};
-            $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+            $rootScope.dashboard.tabIndex=3;
+            $rootScope.dashboard.service='取送车'
+            $state.go('tabs.dashboard');
           });
         }else//未选定维修厂
         {
@@ -167,10 +168,10 @@ angular.module('starter')
             units:$scope.units
           };
           $rootScope.carManage.parkCar=parkCar;
-          $rootScope.dashboard= {tabIndex:3,subTabIndex:3};
+          $rootScope.dashboard.tabIndex=3;
+          $rootScope.dashboard.service='取送车';
           $state.go('tabs.dashboard');
         }
-        $scope.go_back();
       }
 
 

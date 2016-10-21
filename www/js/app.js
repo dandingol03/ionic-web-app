@@ -11,8 +11,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
   })
 
-
-    .run(function($ionicPlatform,$rootScope,$interval,
+  .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
                   $ionicPopup,Proxy,$http) {
 
@@ -421,7 +420,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       return false;
     }, 101);
 
-
   })
 
   .config(function (ionicDatePickerProvider) {
@@ -443,7 +441,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     };
     ionicDatePickerProvider.configDatePicker(datePickerObj);
   })
-
 
   .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 
@@ -759,30 +756,32 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       };
 
     return self;
-  }
+  })
 
-    .factory('ModalService', function ($ionicModal) {
-      var initModal = function (items) {
-        var modal = $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html',{
-          scope:items,
+/**
+ * 模态框工厂
+ */
+  .factory('ModalService', function ($ionicModal) {
+      var initModal = function (item) {
+        var modal = $ionicModal.fromTemplateUrl('views/modal/append_user_modal.html',{
+          scope:item,
           animation:'slide-in-up'
         }).then(function (modal) {
-          $scope.modal = modal;
-          return modal
+          item.modal = modal;
+
         });
         $scope.openModal = function () {
-          $scope.modal.show();
+          item.modal.show();
         };
         $scope.closeModal = function () {
-          $scope.modal.hide();
+          item.modal.hide();
         };
-        return modal;
       };
       return {
         initModal : initModal
       }
     })
-)
+
 
 
 
