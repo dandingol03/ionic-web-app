@@ -295,7 +295,7 @@ angular.module('starter')
         }
       }).then(function(res) {
         $scope.closeCompanyModal();
-        $scope.close_appendCarInsurancederModal();
+        $scope.close_appendCarOrderModal();
         var json=res.data;
         var orderId=json.data;
         if(orderId!==undefined&&orderId!==null)

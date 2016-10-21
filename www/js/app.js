@@ -663,6 +663,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/update_car_info/update_car_info.html'
       })
 
+
     // if none of the above states are matched, use this as the fallback
 
     $urlRouterProvider.otherwise('/login');
