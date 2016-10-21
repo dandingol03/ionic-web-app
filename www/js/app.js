@@ -759,7 +759,30 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       };
 
     return self;
-  })
+  }
+
+    .factory('ModalService', function ($ionicModal) {
+      var initModal = function (items) {
+        var modal = $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html',{
+          scope:items,
+          animation:'slide-in-up'
+        }).then(function (modal) {
+          $scope.modal = modal;
+          return modal
+        });
+        $scope.openModal = function () {
+          $scope.modal.show();
+        };
+        $scope.closeModal = function () {
+          $scope.modal.hide();
+        };
+        return modal;
+      };
+      return {
+        initModal : initModal
+      }
+    })
+)
 
 
 
