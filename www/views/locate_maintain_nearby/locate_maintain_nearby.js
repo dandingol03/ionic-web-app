@@ -472,6 +472,8 @@ angular.module('starter')
         window.history.back();
       }
 
+
+
       //var geolocation = new BMap.Geolocation();
       //geolocation.getCurrentPosition(function(r){
       //  if(this.getStatus() == BMAP_STATUS_SUCCESS){

@@ -99,6 +99,7 @@ angular.module('starter')
 
     $scope.goDetail=function(plan){
       $state.go('lifePlanDetail',{plan:JSON.stringify(plan)});
+      $rootScope.plan=plan;
     }
 
 
