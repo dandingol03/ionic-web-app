@@ -11,8 +11,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
   })
 
-
-    .run(function($ionicPlatform,$rootScope,$interval,
+  .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
                   $ionicPopup,Proxy,$http) {
 
@@ -80,10 +79,18 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
       $rootScope.property=null;
 
-      $rootScope.$on('unit-choose',function(e,d) {
-        var data=JSON.parse(d);
-        $rootScope.$broadcast('to-child', 'child');
-      });
+      $rootScope.carManage={
+        carValidate:{},
+        paperValidate:{},
+        airportTransfer:{},
+        parkCar:{}
+      };
+
+      $rootScope.dashboard={
+      };
+
+
+
 
       var onTagsWithAlias = function(event) {
         try {
@@ -132,27 +139,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           {unitName:'汽修厂3',mobile:'18253161818'}
         ]}
         ];
-
-      /***************************选择服务人员模态框*******************************/
-      $ionicModal.fromTemplateUrl('views/modal/select_service_person_modal.html',{
-        scope:  $rootScope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        $rootScope.select_service_person_modal = modal;
-        //$rootScope.open_selectServicePersonModal();
-
-      });
-
-        $rootScope.open_selectServicePersonModal= function(){
-        $rootScope.select_service_person_modal.show();
-      };
-
-
-      $rootScope.close_selectServicePersonModal= function() {
-        $rootScope.select_service_person_modal.hide();
-      };
-      /***************************选择服务人员模态框*******************************/
-
 
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {
@@ -434,7 +420,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       return false;
     }, 101);
 
-
   })
 
   .config(function (ionicDatePickerProvider) {
@@ -456,7 +441,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     };
     ionicDatePickerProvider.configDatePicker(datePickerObj);
   })
-
 
   .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 
@@ -670,6 +654,13 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/service_candidate/service_candidate.html'
       })
 
+      .state('update_car_info',{
+        url:'/update_car_info',
+        controller:'updateCarInfoController',
+        templateUrl:'views/update_car_info/update_car_info.html'
+      })
+
+
     // if none of the above states are matched, use this as the fallback
 
     $urlRouterProvider.otherwise('/login');
@@ -694,7 +685,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
 
-          return "http://192.168.1.105:3000";
+          return "http://211.87.225.195:3000";
+
 
         else
           return "/proxy/node_server";
@@ -765,6 +757,31 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
     return self;
   })
+
+/**
+ * 模态框工厂
+ */
+  .factory('ModalService', function ($ionicModal) {
+      var initModal = function (item) {
+        var modal = $ionicModal.fromTemplateUrl('views/modal/append_user_modal.html',{
+          scope:item,
+          animation:'slide-in-up'
+        }).then(function (modal) {
+          item.modal = modal;
+
+        });
+        $scope.openModal = function () {
+          item.modal.show();
+        };
+        $scope.closeModal = function () {
+          item.modal.hide();
+        };
+      };
+      return {
+        initModal : initModal
+      }
+    })
+
 
 
 

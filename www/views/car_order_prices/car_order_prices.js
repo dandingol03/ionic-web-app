@@ -147,24 +147,7 @@ angular.module('starter')
       });
 
       //TODO:绑定投保人
-      $http({
-        method: "POST",
-        url: Proxy.local() + "/svr/request",
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token
-        },
-        data: {
-          request: 'getCompanyOwnerIdByCompanyId',
-          info: {
-            companyId: selected_price.companyId
-          }
-        }
-      }).then(function (res) {
-        var json = res.data;
-        if (json.re == 1) {
-          var ownerId = json.data;
-          $scope.ownerId = ownerId;
-          return $http({
+           $http({
             method: "POST",
             url: Proxy.local() + "/svr/request",
             headers: {
@@ -176,11 +159,12 @@ angular.module('starter')
                 price: selected_price
               }
             }
-          });
-        }
+
+
       }).then(function (res) {
         var json = res.data;
         if (json.re == 1) {
+          alert("dicount="+selected_price.discount);
           return $http({
             method: "POST",
             url: Proxy.local() + "/svr/request",

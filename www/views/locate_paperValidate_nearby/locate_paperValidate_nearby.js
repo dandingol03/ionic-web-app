@@ -21,7 +21,7 @@ angular.module('starter')
     BaiduMapService.getBMap().then(function (res) {
       $scope.bMap = res;
       var BMap = $scope.bMap;
-      var map = new BMap.Map("container");          // 创建地图实例
+      var map = new BMap.Map("locate_paperValidate_nearby");          // 创建地图实例
       var point = new BMap.Point(117.144816, 36.672171);  // 创建点坐标
 
       map.centerAndZoom(point, 15);
@@ -409,12 +409,44 @@ angular.module('starter')
       //确认维修厂回调
       $scope.maintenance_confirm = function () {
 
-        var ob={
-          type:'paperValidate',
-          unit:$scope.unit
+        //选定维修厂
+        if($scope.unit!==undefined&&$scope.unit!==null)
+        {
+          var paperValidate={
+            unit:$scope.unit,
+            servicePlace:$scope.unit.unitName
+          };
+          $http({
+            method: "POST",
+            url: Proxy.local()+"/svr/request",
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token,
+            },
+            data:
+            {
+              request:'getServicePersonByUnitId',
+              info:{
+                unitId:$scope.unit.unitId
+              }
+            }
+          }).then(function(res) {
+            var json=res.data;
+            paperValidate.servicePerson =json.data;
+            $rootScope.carManage.paperValidate=paperValidate;
+            $rootScope.dashboard.tabIndex=3;
+            $rootScope.dashboard.service='代办行驶证年审';
+            $state.go('tabs.dashboard');
+          })
+        }else{
+          var paperValidate={
+            units:$scope.units
+          };
+          $rootScope.carManage.paperValidate=paperValidate;
+          $rootScope.dashboard.tabIndex=3;
+          $rootScope.dashboard.service='代办行驶证年审';
+          $state.go('tabs.dashboard');
         }
-        $scope.$emit('unit-choose', JSON.stringify(ob));
-        $scope.go_back();
+
       }
 
       $scope.go_back = function () {

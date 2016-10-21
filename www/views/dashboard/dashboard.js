@@ -46,6 +46,10 @@ angular.module('starter')
       31:'鈑喷'};
 
 
+    //选择车驾管服务项目
+    $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
+
+
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
@@ -56,17 +60,22 @@ angular.module('starter')
       insuranceder:{}
     };
 
-    $scope.tabIndex=0;
+    if($rootScope.dashboard.tabIndex!==undefined&&$rootScope.dashboard.tabIndex!==null)
+        $scope.tabIndex=$rootScope.dashboard.tabIndex;
+    else
+        $scope.tabIndex=0;
+
 
 
     //车驾管信息
     $scope.carManage={
-      carValidate:{},
-      paperValidate:{},
-      airportTransfer:{},
-      parkCar:{},
+      carValidate:$rootScope.carManage.carValidate,
+      paperValidate:$rootScope.carManage.paperValidate,
+      airportTransfer:$rootScope.carManage.airportTransfer,
+      parkCar:$rootScope.carManage.parkCar,
       serviceType:11
     };
+
 
 
     /**
@@ -79,10 +88,12 @@ angular.module('starter')
         $scope.maintain.maintenance=params.maintenance;
       if(params.tabIndex!==undefined&&params.tabIndex!==null)
         $scope.tabIndex=params.tabIndex;
+      if(params.subTabIndex!==undefined&&params.subTabIndex!==null)
+        $scope.subTabIndex=params.subTabIndex;
       if(params.type=='carValidate')
       {
-        var item=params.item;
-        $scope.carManage.carValidate=item;
+        console.log('...');
+      }else if(params.type=='paperValidate') {
         console.log('...');
       }
       if(params.location!==undefined&&params.location!==null)
@@ -91,9 +102,28 @@ angular.module('starter')
         $anchorScroll();
       }
     }else{
+      $scope.subTabIndex=0;
     }
 
-    //生成验证码
+    /**
+     * $rootScope数据同步
+     */
+    if($rootScope.dashboard!==undefined&&$rootScope.dashboard!==null)
+    {
+      if($rootScope.dashboard.tabIndex!==undefined&&$rootScope.dashboard.tabIndex!==null)
+        $scope.tabIndex=$rootScope.dashboard.tabIndex;
+      if($rootScope.dashboard.subTabIndex!==undefined&&$rootScope.dashboard.subTabIndex!==null)
+        $scope.subTabIndex=$rootScope.dashboard.subTabIndex;
+      if($rootScope.dashboard.service!==undefined&&$rootScope.dashboard.service!==null)
+        $scope.service=$rootScope.dashboard.service;
+      else
+        $scope.service='代办车辆年审';
+    }else{
+      $scope.subTabIndex=0;
+    }
+
+
+      //生成验证码
     // $http({
     //   method: "post",
     //   url: "/proxy/node_server/svr/request",
@@ -221,26 +251,6 @@ angular.module('starter')
       $scope.showDemoPicture3();
     };
 
-    $scope.showDemoPicture = function() {
-      if ($scope.isShowPicture == true) {
-        $scope.openDemoModal();
-      };
-    };
-    $scope.showDemoPicture1 = function() {
-      if ($scope.isShowPicture1 == true) {
-        $scope.openDemoModal1();
-      };
-    };
-    $scope.showDemoPicture2 = function() {
-      if ($scope.isShowPicture2 == true) {
-        $scope.openDemoModal2();
-      };
-    };
-    $scope.showDemoPicture3 = function() {
-      if ($scope.isShowPicture3 == true) {
-        $scope.openDemoModal3();
-      };
-    };
 
     /*** show demo modal ***/
     $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
@@ -366,6 +376,8 @@ angular.module('starter')
       $scope.append_insuranceder_modal.hide();
     };
     /*** bind append_insuranceder_modal ***/
+
+
 
     /*** bind append_benefiter_modal 选择受益人模态框***/
     $ionicModal.fromTemplateUrl('views/modal/append_benefiter_modal.html',{
@@ -627,7 +639,8 @@ angular.module('starter')
                   imageType:'carPhoto',
                   filename:'carAttachId1',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -663,10 +676,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId2',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -701,10 +715,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId3',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -738,10 +753,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId4',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -775,10 +791,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId5',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -812,10 +829,11 @@ angular.module('starter')
               {
                 request:'createPhotoAttachment',
                 info:{
-                  imageType:'licenseCard',
+                  imageType:'carPhoto',
                   filename:'carAttachId6',
                   suffix:su,
-                  docType:'I4'
+                  docType:'I4',
+                  carId:carId
                 }
               }
             });
@@ -960,7 +978,8 @@ angular.module('starter')
                   imageType:'licenseCard',
                   filename:'licenseAttachId1',
                   suffix:su,
-                  docType:'I3'
+                  docType:'I3',
+                  carId:carId
                 }
               }
             });
@@ -998,7 +1017,8 @@ angular.module('starter')
                   imageType:'licenseCard',
                   filename:'licenseAttachId2',
                   suffix:su,
-                  docType:'I3'
+                  docType:'I3',
+                  carId:carId
                 }
               }
             });
@@ -1036,7 +1056,8 @@ angular.module('starter')
                   imageType:'licenseCard',
                   filename:'licenseAttachId3',
                   suffix:su,
-                  docType:'I3'
+                  docType:'I3',
+                  carId:carId
                 }
               }
             });
@@ -1150,9 +1171,6 @@ angular.module('starter')
 
       if(window.cordova!==undefined&&window.cordova!==null)
       {
-        if($scope.carInfo.ownerIdCard1_img!==undefined&&$scope.carInfo.ownerIdCard1_img!==null
-          &&$scope.carInfo.ownerIdCard2_img!==undefined&&$scope.carInfo.ownerIdCard2_img!==null)
-        {
 
             $http({
               method: "POST",
@@ -1206,11 +1224,14 @@ angular.module('starter')
                       }).then(function(res) {
                         var json=res.data;
                         if(json.re==1) {
+                          alert('go2');
                           var carState=json.data;
-                          if(carState==1)//免传验车照片
+                          if(carState==1)//免传验车照
                           {
+                            alert('go');
                             $scope.select_type();
                           }else{
+                            alert('go1');
                             var confirmPopup = $ionicPopup.confirm({
                               title: '缺少验车照片',
                               template: '请问是否选择上传验车照片',
@@ -1255,22 +1276,7 @@ angular.module('starter')
                 }
                 });
 
-        }else{
-          //TODO:上传身份证照片
-          var confirmPopup = $ionicPopup.confirm({
-            title: '缺少身份证照片',
-            template: '请问是否选择上传身份证',
-            okText:'上传',
-            cancelText:'取消'
-          });
-          confirmPopup.then(function(res) {
-            if(res) {
-              $scope.uploadOwnerIdCardPhoto();
-            } else {
-              console.log('You are not sure');
-            }
-          });
-        }
+
       }else{
         $scope.select_type();
       }
@@ -1374,6 +1380,7 @@ angular.module('starter')
       $rootScope.life_insurance = $scope.life_insurance;
       $scope.close_lifeModal();
     }
+
 
 
     //车险险种选择
@@ -1678,7 +1685,7 @@ $scope.openAirportTransfer=function(){
   $state.go('locate_airportTransfer_nearby');
 }
 
-    $scope.service='代办车辆年审';
+
     $scope.services=[
       '代办车辆年审',
       '代办驾驶证年审',
@@ -1691,7 +1698,7 @@ $scope.openAirportTransfer=function(){
     $scope.tab_change=function(i){
       $scope.tabIndex=i;
     };
-    $scope.subTabIndex=0;
+
 
     $scope.subTab_change=function(i) {
       $scope.subTabIndex=i;
@@ -1896,6 +1903,7 @@ $scope.carService=function(){
     }
   }).then(function (res) {
     var json = res.data;
+    alert(json.re);
     if (json.re == 1) {
       order = json.data;
       return $http({
@@ -2068,6 +2076,7 @@ $scope.carService=function(){
               $scope.maintain.servicePersonId = servicePerson.servicePersonId;
               var maintain=$scope.maintain;
               maintain.carId=$scope.carInfo.carId;
+              alert("carid="+maintain.carId);
               return $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
@@ -2146,6 +2155,8 @@ $scope.carService=function(){
           var order = null;
           var servicePersonIds = [];
           var personIds = [];
+          var maintain=$scope.maintain;
+          maintain.carId=$scope.carInfo.carId;
           $http({
             method: "POST",
             url: Proxy.local() + "/svr/request",
@@ -2155,7 +2166,7 @@ $scope.carService=function(){
             data: {
               request: 'generateCarServiceOrder',
               info: {
-                maintain: $scope.maintain
+                maintain: maintain
               }
             }
           }).then(function (res) {
@@ -2261,44 +2272,48 @@ $scope.carService=function(){
       {
         var unit=null;
         var servicePerson=null;
+        $scope.carManage.carId=$scope.carInfo.carId;
         switch($scope.service)
         {
           case '代办车辆年审':
             servicePerson=$scope.carManage.carValidate.servicePerson;
             unit=$scope.carManage.carValidate.unit;
+            units=$scope.carManage.carValidate.units;
             break;
           case '代办行驶证年审':
             servicePerson=$scope.carManage.paperValidate.servicePerson;
             unit=$scope.carManage.paperValidate.unit;
+            units=$scope.carManage.paperValidate.units;
             break;
           case '接送机':
             servicePerson=$scope.carManage.airportTransfer.servicePerson;
             unit=$scope.carManage.airportTransfer.unit;
+            units=$scope.carManage.airportTransfer.units;
             break;
           case '取送车':
             servicePerson=$scope.carManage.parkCar.servicePerson;
             unit=$scope.carManage.parkCar.unit;
+            units=$scope.carManage.parkCar.units;
             break;
         }
 
         if(unit!==undefined&&unit!==null)//已选维修厂
         {
 
-
-              $scope.carManage.servicePersonId = servicePerson.servicePersonId;
-               $http({
-                method: "POST",
-                url: Proxy.local() + "/svr/request",
-                headers: {
-                  'Authorization': "Bearer " + $rootScope.access_token
-                },
-                data: {
-                  request: 'generateCarServiceOrder',
-                  info: {
-                    carManage: $scope.carManage
-                  }
+          $scope.carManage.servicePersonId = servicePerson.servicePersonId;
+          $http({
+              method: "POST",
+              url: Proxy.local() + "/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'generateCarServiceOrder',
+                info: {
+                  carManage: $scope.carManage
                 }
-              }).then(function(res) {
+              }
+            }).then(function(res) {
             var json = res.data;
             if (json.re == 1) {
               //TODO:append address and serviceType and serviceTime
@@ -2348,8 +2363,6 @@ $scope.carService=function(){
           });
         }else if($scope.carManage.servicePerson!==undefined&&$scope.carManage.servicePerson!==null)//如果选择了服务人员却没选维修厂
         {
-
-
 
           var servicePerson = $scope.carManage.servicePerson;
           $scope.carManage.servicePersonId = servicePerson.servicePersonId;
@@ -2413,16 +2426,121 @@ $scope.carService=function(){
             for (var field in err)
               str += err[field];
           });
-        }else{}
+        }
+        else//未选定维修厂也未选定服务人员
+          {
+            var order = null;
+            var servicePersonIds = [];
+            var personIds = [];
+            $http({
+              method: "POST",
+              url: Proxy.local() + "/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'generateCarServiceOrder',
+                info: {
+                  carManage: $scope.carManage
+                }
+              }
+            }).then(function (res) {
+              var json = res.data;
+              if (json.re == 1) {
+                order=json.data;
+
+                return $http({
+                  method: "POST",
+                  url: Proxy.local() + "/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data: {
+                    request: 'getServicePersonsByUnits',
+                    info: {
+                      units: units
+                    }
+                  }
+                });
+              }
+            }).then(function(res) {
+              var json=res.data;
+              if(json.re==1) {
+                json.data.map(function(servicePerson,i) {
+                  servicePersonIds.push(servicePerson.servicePersonId);
+                  personIds.push(servicePerson.personId);
+                });
+                return $http({
+                  method: "POST",
+                  url: Proxy.local() + "/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data: {
+                    request: 'updateCandidateState',
+                    info: {
+                      orderId: order.orderId,
+                      servicePersonIds: servicePersonIds,
+                      candidate:1
+                    }
+                  }
+                });
+              }
+            }).then(function (res) {
+              var json = res.data;
+              if (json.re == 1) {
+                //TODO:append address and serviceType and serviceTime
+                var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
+                return $http({
+                  method: "POST",
+                  url: Proxy.local() + "/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data: {
+                    request: 'sendCustomMessage',
+                    info: {
+                      order: order,
+                      serviceItems: $scope.maintain.subServiceTypes,
+                      servicePersonIds: servicePersonIds,
+                      serviceName: serviceName,
+                      type: 'to-servicePerson'
+                    }
+                  }
+                });
+              } else {
+                return ({re: -1});
+              }
+            }).then(function (res) {
+              var json = res.data;
+              $scope.videoCheck(order.orderId).then(function (json) {
+                alert('result of videocheck=\r\n' + json);
+                if (json.re == 1) {
+                  alert('附件上传成功');
+                }
+                else
+                {}
+              });
+              $scope.audioCheck(order.orderId).then(function(json) {
+                alert('result of audioCheck=\r\n' + json);
+                if(json.re==1) {
+                  console.log('音频附件上传成功');
+                }else{}
+              });
+
+            }).catch(function (err) {
+              var str = '';
+              for (var field in err)
+                str += err[field];
+              console.error('error=\r\n' + str);
+            });
+
+          }
+
       }
+
     }
 
-
-
-
-    //选择车驾管服务项目
-    $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
-    $scope.service="代办车辆年审";
 
     $scope.service_select=function(services) {
       if (services !== undefined && services !== null &&services.length > 0)
@@ -2447,7 +2565,7 @@ $scope.carService=function(){
     }
 
     //查询已绑定车辆,并显示车牌信息
-    $scope.selectCarInfoByCarNum=function(){
+    $scope.selectCarInfoByCarNum=function(item,modal){
       $http({
         method: "POST",
         url: Proxy.local()+"/svr/request",
@@ -2463,6 +2581,7 @@ $scope.carService=function(){
         if(json.re==1) {
           var cars=json.data;
           var buttons=[];
+          buttons.push({text: "<b>创建新车</b>"});
           cars.map(function(car,i) {
             var ele=car;
             ele.text='<b>'+car.carNum+'</b>';
@@ -2476,15 +2595,26 @@ $scope.carService=function(){
               // add cancel code..
             },
             buttonClicked: function(index) {
-              var car=cars[index];
-              //TODO:override default feild
-              $scope.carInfo.carNum=car.carNum;
-              $scope.carInfo.ownerName=car.ownerName;
-              $scope.carInfo.ownerIdCard=car.ownerIdCard;
-              $scope.carInfo.issueDate=car.issueDate;
-              $scope.carInfo.factoryNum=car.factoryNum;
-              $scope.carInfo.engineNum=car.engineNum;
-              $scope.carInfo.frameNum=car.frameNum;
+              if(index==0) {
+                //TODO:create new car info
+                if(modal!==undefined&&modal!==null)
+                  modal.hide();
+                $state.go('update_car_info');
+              }else{
+                var car=cars[index-1];
+                if(item!==undefined&&item!==null)
+                {
+                  item.carId=car.carId;
+                }else{
+                  $scope.carInfo.carNum=car.carNum;
+                  $scope.carInfo.ownerName=car.ownerName;
+                  $scope.carInfo.ownerIdCard=car.ownerIdCard;
+                  $scope.carInfo.issueDate=car.issueDate;
+                  $scope.carInfo.factoryNum=car.factoryNum;
+                  $scope.carInfo.engineNum=car.engineNum;
+                  $scope.carInfo.frameNum=car.frameNum;
+                }
+              }
               return true;
             },
             cssClass:'center'
@@ -2681,6 +2811,7 @@ $scope.carService=function(){
       $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendBenifiterModal);
 
     }
+
 
 
 
@@ -3147,7 +3278,7 @@ $scope.carService=function(){
             $scope.open_selectRelativeModal(item,field,matched);
           }
         }else{
-          $scope.open_selectRelativeModal(item,field,matched);
+            $scope.open_selectRelativeModal(item,field,matched);
         }
 
       }).catch(function(err) {
@@ -3157,6 +3288,8 @@ $scope.carService=function(){
         console.error('error=\r\n' + str);
       });
     };
+
+
 
 
     $scope.ActionSheet= function (options,item,field,addon_field,url,fail) {
@@ -3453,13 +3586,6 @@ $scope.carService=function(){
       })
     });
 
-
-
-
-
-
-
-
     $scope.selfGeoLocation=function(item,field){
       var geolocation = new $scope.bMap.Geolocation();
         $ionicLoading.show({
@@ -3512,7 +3638,7 @@ $scope.carService=function(){
 
     $scope.pickMaintain=function(locateType){
       $state.go('locate_maintain_nearby',{locateType:locateType});
-    }
+    };
 
     $scope.pickAirportNearby=function(locateType) {
       $state.go('locate_airport_nearby', {locateType: locateType});
