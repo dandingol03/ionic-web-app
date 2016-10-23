@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('loginController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
     ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera,Proxy
-      ,$WebSocket){
+      ,$WebSocket,ModalService){
 
 
 
@@ -57,6 +57,9 @@ angular.module('starter')
 //*******************测试百悟短信验证码*********************//
 
 
+
+
+
     $scope.securityCode_generate=function(){
 
       $http.get('/securityCode?cellphone='+$scope.user.username,{
@@ -74,6 +77,17 @@ angular.module('starter')
         alert('error=' + error);
       });
     };
+
+    $scope.insuranceder={};
+
+    $scope.initModal=function() {
+      ModalService.initModal($scope,$scope.insuranceder);
+    }
+
+    $scope.openModal=function(){
+      $scope.insuranceder.modal.show();
+    }
+
 
 
 

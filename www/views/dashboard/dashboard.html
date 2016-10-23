@@ -496,7 +496,7 @@
           <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
             <ion-slide>
               <div class="item"
-                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;position: relative;background-color:transparent;">
+                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:0px;padding:10px;position: relative;background-color:transparent;">
                 <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
                        故障文字描述:
                 </span>
@@ -506,7 +506,8 @@
                   <textarea
                     style="width:100%;height:80px;background-color: transparent;"
                     placeholder="请描述故障..."
-                    ng-model=" $scope.maintain.description.text"
+                    ng-model=" maintain.description.text"
+                    ng-value="maintain.description.text"
                     ></textarea>
                 </div>
               </div>
@@ -563,11 +564,20 @@
             </ion-slide>
           </ion-slide-box>
 
-          <div class="item" style="padding:0px;background-color:transparent;border:0px;">
-            <button class="button button-block button-positive" ng-click="pickMaintain('maintain')">
-              选择附近的维修厂
-            </button>
+
+          <div class="item"
+               style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background: transparent">
+            <span class="input-label" style="display: inline-block;">
+              选择维修厂:
+            </span>
+            <span>
+              {{maintain.unit!==undefined&&maintain.unit!==null?maintain.unit.unitName:''}}
+            </span>
+            <span ng-click="pickMaintain('maintain')" style="font-size: 150%;">
+                <i class="ion-ios-arrow-down" ></i>
+            </span>
           </div>
+
 
           <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="open_maintenanceTAModal()">
             <h1 class="title">确认故障维修</h1>
