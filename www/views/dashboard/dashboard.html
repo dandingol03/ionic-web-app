@@ -478,7 +478,7 @@
             </div>
 
 
-            <button class="button button-block button-positive" ng-click="pickMaintain('maintain')">
+            <button class="button button-block button-positive" ng-click="pickMaintainDaily('maintain',0)">
               选择附近的维修厂
             </button>
             <a id="maintenance_anchor"></a>
@@ -573,7 +573,7 @@
             <span>
               {{maintain.unit!==undefined&&maintain.unit!==null?maintain.unit.unitName:''}}
             </span>
-            <span ng-click="pickMaintain('maintain')" style="font-size: 150%;">
+            <span ng-click="pickMaintain('maintain',1)" style="font-size: 150%;">
                 <i class="ion-ios-arrow-down" ></i>
             </span>
           </div>

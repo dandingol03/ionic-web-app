@@ -5,7 +5,7 @@
  */
 angular.module('starter')
 
-  .controller('locateMaintainNearbyController',function($scope,$state,$http,$timeout,$rootScope,
+  .controller('locateMaintainDailyController',function($scope,$state,$http,$timeout,$rootScope,
                                                         BaiduMapService,$cordovaGeolocation,$ionicModal,
                                                         Proxy,$stateParams) {
 
@@ -24,7 +24,7 @@ angular.module('starter')
     BaiduMapService.getBMap().then(function (res) {
       $scope.bMap = res;
       var BMap = $scope.bMap;
-      var map = new BMap.Map("container");          // 创建地图实例
+      var map = new BMap.Map("locate_maintain_daily");          // 创建地图实例
       var point = new BMap.Point(117.144816, 36.672171);  // 创建点坐标
 
       map.centerAndZoom(point, 15);
@@ -412,8 +412,6 @@ angular.module('starter')
       //确认维修厂回调
       $scope.maintenance_confirm = function () {
 
-        if($rootScope.carManage==undefined||$rootScope.carManage==null)
-          $rootScope.carManage={};
         switch ($scope.locateType) {
           case 'maintain':
             $rootScope.dashboard.tabIndex=2;
@@ -451,48 +449,7 @@ angular.module('starter')
               $state.go('tabs.dashboard');
             }
             break;
-          case '21':
-            //审车
 
-            if ($scope.unit !== undefined && $scope.unit !== null)
-            {
-              var carValidate={
-                unit:$scope.unit,
-                servicePlace:$scope.unit.unitName
-              };
-              $http({
-                method: "POST",
-                url: Proxy.local()+"/svr/request",
-                headers: {
-                  'Authorization': "Bearer " + $rootScope.access_token,
-                },
-                data:
-                {
-                  request:'getServicePersonByUnitId',
-                  info:{
-                    unitId:$scope.unit.unitId
-                  }
-                }
-              }).then(function(res) {
-                var json=res.data;
-                carValidate.servicePerson =json.data;
-                $rootScope.carManage.carValidate=carValidate;
-                var ob = {tabIndex:3};
-                $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
-              });
-            }
-            else
-            {
-              var carValidate={
-                units:$scope.units
-              };
-              $rootScope.carManage.carValidate=carValidate;
-              $rootScope.dashboard.tabIndex=3;
-              $rootScope.dashboard.service='代办车辆年审';
-              $state.go('tabs.dashboard');
-
-            }
-            break;
           default:
             break;
         }
