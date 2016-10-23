@@ -689,7 +689,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         if(window.cordova!==undefined&&window.cordova!==null)
 
 
-          return "http://192.168.1.134:3000";
+          return "http://211.87.225.195:3000";
 
 
 
