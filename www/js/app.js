@@ -89,7 +89,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       $rootScope.dashboard={
       };
 
-
+      $rootScope.maintain={
+        description:{}
+      }
 
 
       var onTagsWithAlias = function(event) {
@@ -661,6 +663,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
 
+
     // if none of the above states are matched, use this as the fallback
 
     $urlRouterProvider.otherwise('/login');
@@ -684,10 +687,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-
-          return "http://211.87.225.195:3000";
-
-
+          return "http://192.168.3.2:3000";
         else
           return "/proxy/node_server";
       },
@@ -699,6 +699,21 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       }
     }
     return ob;
+  })
+
+
+  .factory('ModalService', function ($ionicModal) {
+    var initModal = function ($scope,item) {
+      $ionicModal.fromTemplateUrl('views/modal/append_benefiter_modal.html',{
+        scope:$scope,
+        animation:'slide-in-up'
+      }).then(function (modal) {
+        item.modal = modal;
+      });
+    }
+    return {
+      initModal : initModal
+    }
   })
 
   .factory('$WebSocket',function(){
@@ -758,29 +773,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     return self;
   })
 
-/**
- * 模态框工厂
- */
-  .factory('ModalService', function ($ionicModal) {
-      var initModal = function (item) {
-        var modal = $ionicModal.fromTemplateUrl('views/modal/append_user_modal.html',{
-          scope:item,
-          animation:'slide-in-up'
-        }).then(function (modal) {
-          item.modal = modal;
 
-        });
-        $scope.openModal = function () {
-          item.modal.show();
-        };
-        $scope.closeModal = function () {
-          item.modal.hide();
-        };
-      };
-      return {
-        initModal : initModal
-      }
-    })
 
 
 
