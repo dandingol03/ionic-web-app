@@ -46,11 +46,14 @@ angular.module('starter')
       31:'鈑喷'};
 
 
+    //选择车驾管服务项目
+    $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
+
+
     $scope.maintain={
       tabs:['日常保养','故障维修','事故维修'],
       tab:'日常保养',
       items:{},
-      description:{},//故障文字描述,放在remark字段下
       tabIndex:'',
       serviceType:'',
       insuranceder:{}
@@ -61,10 +64,6 @@ angular.module('starter')
     else
         $scope.tabIndex=0;
 
-    if($rootScope.dashboard.subTabIndex!==undefined&&$rootScope.dashboard.subTabIndex!==null)
-        $scope.subTabIndex=$rootScope.dashboard.subTabIndex;
-    else
-        $scope.subTabIndex=0;
 
 
     //车驾管信息
@@ -75,11 +74,6 @@ angular.module('starter')
       parkCar:$rootScope.carManage.parkCar,
       serviceType:11
     };
-
-    /**
-     * $rootScope数据同步
-     */
-
 
 
 
@@ -107,9 +101,31 @@ angular.module('starter')
         $anchorScroll();
       }
     }else{
+      $scope.subTabIndex=0;
     }
 
-    //生成验证码
+    /**
+     * $rootScope数据同步
+     */
+    if($rootScope.dashboard!==undefined&&$rootScope.dashboard!==null)
+    {
+      if($rootScope.dashboard.tabIndex!==undefined&&$rootScope.dashboard.tabIndex!==null)
+        $scope.tabIndex=$rootScope.dashboard.tabIndex;
+      if($rootScope.dashboard.subTabIndex!==undefined&&$rootScope.dashboard.subTabIndex!==null)
+        $scope.subTabIndex=$rootScope.dashboard.subTabIndex;
+      if($rootScope.dashboard.service!==undefined&&$rootScope.dashboard.service!==null)
+        $scope.service=$rootScope.dashboard.service;
+      else
+        $scope.service='代办车辆年审';
+      $scope.maintain.description=$rootScope.maintain.description;
+      if($rootScope.maintain.unit!==undefined&&$rootScope.maintain.unit!==null)
+        $scope.maintain.unit=$rootScope.maintain.unit;
+    }else{
+      $scope.subTabIndex=0;
+    }
+
+
+      //生成验证码
     // $http({
     //   method: "post",
     //   url: "/proxy/node_server/svr/request",
@@ -603,7 +619,7 @@ angular.module('starter')
 
         $cordovaFileTransfer.upload(server, $scope.carInfo.carAttachId1_img, options)
           .then(function(res) {
-            alert('upload first license success');
+            alert('upload first carAttach success');
             for(var field in res) {
               alert('field=' + field + '\r\n' + res[field]);
             }
@@ -647,7 +663,7 @@ angular.module('starter')
               return  $cordovaFileTransfer.upload(server, $scope.carInfo.carAttachId2_img, options);
             }
           }).then(function(res) {
-            alert('second image upload success');
+            alert('second carAttach upload success');
             var su=null;
             if($scope.carInfo.carAttachId2_img.indexOf('.jpg')!=-1)
               su='jpg';
@@ -1589,52 +1605,74 @@ angular.module('starter')
     $scope.saveLifeInsuranceIntend=function()
     {
 
-      $http({
-        method: "POST",
-        url: Proxy.local()+'/svr/request',
-        headers: {
-          'Authorization': "Bearer " + $rootScope.access_token,
-        },
-        data:
-        {
-          request:'generateLifeInsuranceOrder',
-          info:$scope.life_insurance.order
-        }
-      }).then(function(res) {
-
-        if(res.data!==undefined&&res.data!==null)
-        {
-          var orderId=res.data.data;
-          if(orderId!==undefined&&orderId!==null)
+      if($scope.life_insurance.order.insurancederId!==undefined&&$scope.life_insurance.order.insurancederId!==null
+        &&$scope.life_insurance.order.insurerId!==undefined&&$scope.life_insurance.order.insurerId!==null
+        &&$scope.life_insurance.order.benefiterId!==undefined&&$scope.life_insurance.order.benefiterId!==null
+        &&$scope.life_insurance.order.planInsuranceFee!==undefined&&$scope.life_insurance.order.planInsuranceFee!==null
+      )
+      {
+        $http({
+          method: "POST",
+          url: Proxy.local()+'/svr/request',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token,
+          },
+          data:
           {
-            if($rootScope.lifeInsurance==undefined||$rootScope.lifeInsurance==null)
-              $rootScope.lifeInsurance={};
-            $rootScope.lifeInsurance.orderId=orderId;
-
-
-            var confirmPopup = $ionicPopup.confirm({
-              title: '您的订单',
-              template: '您的寿险意向已提交,请等待工作人员配置方案后在"我的寿险订单"中进行查询'
-            });
-
-            confirmPopup.then(function(res) {
-              if(res){
-                console.log('You are sure');
-              }else {
-                console.log('You are not sure');
-              }
-            })
-
-           // $state.go('life_insurance_orders',{tabIndex:2});
+            request:'generateLifeInsuranceOrder',
+            info:$scope.life_insurance.order
           }
-        }
+        }).then(function(res) {
 
-      }).catch(function(err) {
-        var str='';
-        for(var field in err)
-          str += field + ':' + err[field];
-        alert('error=\r\n' + str);
-      });
+          if(res.data!==undefined&&res.data!==null)
+          {
+            var orderId=res.data.data;
+            if(orderId!==undefined&&orderId!==null)
+            {
+              if($rootScope.lifeInsurance==undefined||$rootScope.lifeInsurance==null)
+                $rootScope.lifeInsurance={};
+              $rootScope.lifeInsurance.orderId=orderId;
+
+
+              var confirmPopup = $ionicPopup.confirm({
+                title: '您的订单',
+                template: '您的寿险意向已提交,请等待工作人员配置方案后在"我的寿险订单"中进行查询'
+              });
+
+              confirmPopup.then(function(res) {
+                if(res){
+                  console.log('You are sure');
+                }else {
+                  console.log('You are not sure');
+                }
+              })
+
+              // $state.go('life_insurance_orders',{tabIndex:2});
+            }
+          }
+
+        }).catch(function(err) {
+          var str='';
+          for(var field in err)
+            str += field + ':' + err[field];
+          alert('error=\r\n' + str);
+        });
+      }else{
+        var confirmPopup = $ionicPopup.confirm({
+          title: '请填写完寿险意向后才选择提交',
+          template: ''
+        });
+
+        confirmPopup.then(function(res) {
+          if(res){
+            console.log('You are sure');
+          }else {
+            console.log('You are not sure');
+          }
+        })
+      }
+
+
     }
 
 
@@ -1672,7 +1710,7 @@ $scope.openAirportTransfer=function(){
   $state.go('locate_airportTransfer_nearby');
 }
 
-    $scope.service='代办车辆年审';
+
     $scope.services=[
       '代办车辆年审',
       '代办驾驶证年审',
@@ -1731,14 +1769,7 @@ $scope.openAirportTransfer=function(){
 
     $scope.candidates=[131,135];//五公里范围内的维修厂对应的服务人员
 
-    $scope.maintain= {
-      tabs: ['日常保养', '故障维修', '事故维修'],
-      tab: '日常保养',
-      items: {},
-      description: {},//故障文字描述,放在remark字段下
-      tabIndex: '',
-      serviceType: ''//服务项目
-    }
+
 
     $scope.miles=0;
     $scope.dailys = [
@@ -1818,6 +1849,7 @@ $scope.openAirportTransfer=function(){
     $scope.audioCheck = function (orderId) {
       var deferred = $q.defer();
       alert('audiochecking.....');
+      alert('resourceulr=' + $scope.maintain.description.audio);
       if($scope.maintain.description.audio!=null&&$scope.maintain.description.audio!=undefined)
       {
         var server=Proxy.local()+'/svr/request?' +
@@ -1828,8 +1860,17 @@ $scope.openAirportTransfer=function(){
             'Authorization': "Bearer " + $rootScope.access_token
           }
         };
-        alert('go into audio');
-        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(json) {
+        alert('go into upload audio');
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(res) {
+
+          for(var field in res) {
+            alert('field=' + field + '\r\n' + res[field]);
+            console.log('field=' + field + '\r\n' + res[field]);
+          }
+
+          var json=res.response;
+          json=JSON.parse(json);
+          alert('json.re=' + json.re);
           if(json.re==1){
             deferred.resolve({re:1});
           }else{
@@ -1977,32 +2018,7 @@ $scope.carService=function(){
 }
 
 
-    $scope.audioCheck = function (orderId) {
-      var deferred = $q.defer();
 
-      if($scope.maintain.description.audio!=null&&$scope.maintain.description.audio!=undefined)
-      {
-        var server=Proxy.local()+'/svr/request?' +
-          'request=uploadAudio&orderId=orderId&fileName='+$scope.maintain.description.audio+'&audioType=serviceAudio';
-        var options = {
-          fileKey:'file',
-          headers: {
-            'Authorization': "Bearer " + $rootScope.access_token
-          }
-        };
-        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(json) {
-          if(json.re==1){
-            deferred.resolve({re:1});
-          }else{
-            deferred.reject({re:-1});
-          }
-        })
-      }
-      else{
-        deferred.resolve({re:1});
-      }
-      return deferred.promise;
-    }
 
 
     /*** bind append_maintainOrderPerson_modal***/
@@ -2043,7 +2059,8 @@ $scope.carService=function(){
             $scope.maintain.subServiceTypes = $scope.accident.type;
 
 
-        if ($rootScope.maintain.maintenance !== undefined && $rootScope.maintain.maintenance !== null) {
+        if ($rootScope.maintain.unit !== undefined && $rootScope.maintain.unit !== null) {
+          var order=null;
           $http({
             method: "POST",
             url: Proxy.local() + "/svr/request",
@@ -2053,7 +2070,7 @@ $scope.carService=function(){
             data: {
               request: 'getServicePersonByMaintenance',
               info: {
-                maintenance: $rootScope.maintain.maintenance
+                maintenance: $rootScope.maintain.unit
               }
             }
           }).then(function (res) {
@@ -2084,7 +2101,7 @@ $scope.carService=function(){
             var json = res.data;
             if (json.re == 1) {
               var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
-              var order=json.data;
+              order=json.data;
               var servicePersonId = [];
               servicePersonId.push(order.servicePersonId);
               return $http({
@@ -2113,14 +2130,14 @@ $scope.carService=function(){
               $scope.close_maintenanceTAModal();
               console.log('service order has been generated');
               //检查是否需要上传附件信息
-              $scope.videoCheck(json.orderId).then(function (json) {
+              $scope.videoCheck(order.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
                   console.log('视频附件上传成功')
                 }
                 else
                 {}
-                $scope.audioCheck(json.orderId).then(function(json) {
+                $scope.audioCheck(order.orderId).then(function(json) {
                   alert('result of audiocheck=\r\n' + json);
                   if (json.re == 1) {
                     console.log('音频附件上传成功')
@@ -2236,7 +2253,7 @@ $scope.carService=function(){
               $scope.audioCheck(order.orderId).then(function(json) {
                 alert('result of audioCheck=\r\n' + json);
                 if(json.re==1) {
-                  console.log('音频附件上传成功');
+                  alert('音频附件上传成功');
                 }else{}
               });
 
@@ -2244,7 +2261,7 @@ $scope.carService=function(){
             var str = '';
             for (var field in err)
               str += err[field];
-            console.error('error=\r\n' + str);
+            alert('error=\r\n' + str);
           });
 
         }
@@ -2528,12 +2545,6 @@ $scope.carService=function(){
 
     }
 
-
-
-
-    //选择车驾管服务项目
-    $scope.services=["代办车辆年审","代办行驶证年审","接送机","取送车","违章查询"];
-    $scope.service="代办车辆年审";
 
     $scope.service_select=function(services) {
       if (services !== undefined && services !== null &&services.length > 0)
@@ -3630,6 +3641,10 @@ $scope.carService=function(){
     }
 
     $scope.pickMaintain=function(locateType){
+      if($scope.maintain.description.text!==undefined&&$scope.maintain.description.text!==null)
+        $rootScope.maintain.description.text=$scope.maintain.description.text;
+      if($scope.maintain.description.audio!==undefined&&$scope.maintain.description.audio!==null)
+        $rootScope.maintain.description.audio=$scope.maintain.description.audio;
       $state.go('locate_maintain_nearby',{locateType:locateType});
     };
 
@@ -3830,10 +3845,8 @@ $scope.carService=function(){
       try{
         if( ionic.Platform.isIOS()){
           CordovaAudio.stopRecordAudio(function(success) {
-            $scope.resourceUrl=success;
-
-
-            alert('url=\r\n' + $scope.resourceUrl);
+            $scope.maintain.description.audio=success;
+            alert('url=\r\n' + $scope.maintain.description.audio);
 
           })
         }else if(ionic.Platform.isAndroid()){
@@ -3842,8 +3855,8 @@ $scope.carService=function(){
           $scope.media.media.getAudioFullPath(function(path){
             if(path!==undefined&&path!==null)
             {
-              $scope.resourceUrl=path;
-              console.log('path='+$scope.resourceUrl);
+              $scope.maintain.description.audio=path;
+              console.log('path='+$scope.maintain.description.audio);
             }
           });
         }

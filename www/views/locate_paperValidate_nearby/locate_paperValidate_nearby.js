@@ -433,16 +433,18 @@ angular.module('starter')
             var json=res.data;
             paperValidate.servicePerson =json.data;
             $rootScope.carManage.paperValidate=paperValidate;
-            var ob = {tabIndex:3};
-            $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+            $rootScope.dashboard.tabIndex=3;
+            $rootScope.dashboard.service='代办行驶证年审';
+            $state.go('tabs.dashboard');
           })
         }else{
           var paperValidate={
             units:$scope.units
           };
           $rootScope.carManage.paperValidate=paperValidate;
-          var ob = {tabIndex:3};
-          $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+          $rootScope.dashboard.tabIndex=3;
+          $rootScope.dashboard.service='代办行驶证年审';
+          $state.go('tabs.dashboard');
         }
 
       }

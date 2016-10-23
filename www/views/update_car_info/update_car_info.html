@@ -37,22 +37,56 @@
           </span>
         </div>
 
+        <!-- 车主姓名 -->
         <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
-          >
-            <span class="input-label" style="display:inline-block;width: 25%;text-align: left">
+             style="margin:1px;border:0px;padding:10px;background-color:transparent;">
+          <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
               姓名:
-            </span>
-          <span style="width: 65%;display: inline-block;text-align: left;">
-                <input type="text"
-                       placeholder="输入车主姓名"
-                       style="display: inline-block;width: 65%;background-color:transparent;"
-                       ng-value="carInfo.ownerName"
-                       ng-model="carInfo.ownerName"/>
-            </span>
+          </span>
+
         </div>
 
+        <div class="item"
+             style="margin:1px;border-left:0px;border-right:0px;border-top:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
 
+          <span
+            ng-if="carInfo.perName==undefined||carInfo.perName==null"
+            style="width: 65%;display: inline-block;text-align: left;color:#aaa;font-size: 0.9em;"
+            >
+                请选择车主姓名
+          </span>
+          <span
+            ng-if="carInfo.perName!==undefined&&carInfo.perName!==null"
+            style="width: 65%;display: inline-block;text-align: left;font-size: 0.9em;"
+            >
+            {{carInfo.perName}}
+          </span>
+          <span
+            class="camera"
+            style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
+            ng-click="selectCarInfoWithPerName()"
+            >
+            <i class="ion-chevron-down"></i>
+          </span>
+        </div>
+
+        <div class="item"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
+
+          <span
+            style="width: 65%;display: inline-block;text-align: left;color:#aaa;font-size: 0.9em;"
+            >
+                创建车主身份
+          </span>
+
+          <span
+            class="camera"
+            style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
+            ng-click="selectCarInfoWithPerName()"
+            >
+            <i class="ion-plus-round"></i>
+          </span>
+        </div>
 
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;

@@ -158,8 +158,9 @@ angular.module('starter')
             var json=res.data;
             airportTransfer.servicePerson =json.data;
             $rootScope.carManage.airportTransfer=airportTransfer;
-            var ob = {tabIndex:3};
-            $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+            $rootScope.dashboard.tabIndex=3;
+            $rootScope.dashboard.service='接送机';
+            $state.go('tabs.dashboard');
           })
         }else//未选定维修厂
         {
@@ -167,8 +168,9 @@ angular.module('starter')
             units:$scope.units
           };
           $rootScope.carManage.airportTransfer=airportTransfer;
-          var ob = {tabIndex:3};
-          $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+          $rootScope.dashboard.tabIndex=3;
+          $rootScope.dashboard.service='接送机';
+          $state.go('tabs.dashboard');
         }
 
       }

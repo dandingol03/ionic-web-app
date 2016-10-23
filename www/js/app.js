@@ -11,8 +11,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     baiduMapApiProvider.version('2.0').accessKey('hxMVpPXqcpdNGMrLTGLxN3mBBKd6YiT6');
   })
 
-
-    .run(function($ionicPlatform,$rootScope,$interval,
+  .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
                   $ionicPopup,Proxy,$http) {
 
@@ -90,7 +89,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       $rootScope.dashboard={
       };
 
-
+      $rootScope.maintain={
+        description:{}
+      }
 
 
       var onTagsWithAlias = function(event) {
@@ -421,7 +422,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       return false;
     }, 101);
 
-
   })
 
   .config(function (ionicDatePickerProvider) {
@@ -443,7 +443,6 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     };
     ionicDatePickerProvider.configDatePicker(datePickerObj);
   })
-
 
   .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 
@@ -663,6 +662,8 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/update_car_info/update_car_info.html'
       })
 
+
+
     // if none of the above states are matched, use this as the fallback
 
     $urlRouterProvider.otherwise('/login');
@@ -687,7 +688,9 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
 
+
           return "http://192.168.1.134:3000";
+
 
 
         else
@@ -701,6 +704,21 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       }
     }
     return ob;
+  })
+
+
+  .factory('ModalService', function ($ionicModal) {
+    var initModal = function ($scope,item) {
+      $ionicModal.fromTemplateUrl('views/modal/append_benefiter_modal.html',{
+        scope:$scope,
+        animation:'slide-in-up'
+      }).then(function (modal) {
+        item.modal = modal;
+      });
+    }
+    return {
+      initModal : initModal
+    }
   })
 
   .factory('$WebSocket',function(){
@@ -758,10 +776,16 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       };
 
     return self;
+
   }
 
 
 )
+
+
+
+
+
 
 
 

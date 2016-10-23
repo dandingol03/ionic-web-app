@@ -14,6 +14,38 @@ angular.module('starter')
 
     $scope.carInfo={};
 
+    $scope.fetchRelative=function(item,field,matched) {
+      $http({
+        method: "POST",
+        url: Proxy.local()+'/svr/request',
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'getRelativePersons'
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          if(json.data!=undefined&&json.data!=null){
+            $scope.relatives=json.data;
+
+            $scope.open_selectRelativeModal(item,field,matched);
+          }
+        }else{
+          $scope.open_selectRelativeModal(item,field,matched);
+        }
+
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
+    };
+
+
     //查询已绑定车辆,并显示车牌信息
     $scope.selectCarInfoByCarNum=function(item){
       $http({
@@ -44,11 +76,8 @@ angular.module('starter')
               // add cancel code..
             },
             buttonClicked: function(index) {
-              if(index==0) {
-                //TODO:create new car info
-                $state.go('update_car_info');
-              }else{
-                var car=cars[index-1];
+
+                var car=cars[index];
                 if(item!==undefined&&item!==null)
                 {
                   item.carId=car.carId;
@@ -61,6 +90,70 @@ angular.module('starter')
                   $scope.carInfo.engineNum=car.engineNum;
                   $scope.carInfo.frameNum=car.frameNum;
                 }
+
+              return true;
+            },
+            cssClass:'center'
+          });
+        }
+      }).catch(function(err) {
+        var str='';
+        for(var field in err)
+          str+=err[field];
+        console.error('error=\r\n' + str);
+      });
+    }
+
+    $scope.selectCarInfoWithPerName=function(){
+      $http({
+        method: "POST",
+        url: Proxy.local()+"/svr/request",
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data:
+        {
+          request:'getRelativePersons'
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1) {
+          var persons=json.data;
+          var buttons=[];
+          persons.map(function(person,i) {
+            var ele=person;
+            ele.text='<b>'+person.perName+'</b>';
+            buttons.push(ele);
+          });
+          var personSheet = $ionicActionSheet.show({
+            buttons: buttons,
+            titleText: '<b>选择人员</b>',
+            cancelText: 'Cancel',
+            cancel: function() {
+              // add cancel code..
+            },
+            buttonClicked: function(index) {
+              var person=persons[index];
+              if(person!==undefined&&person!==null) {
+                $http({
+                  method: "POST",
+                  url: Proxy.local()+"/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token
+                  },
+                  data:
+                  {
+                    request:'getCarInfoByPersonId',
+                    info:{
+                      personId:person.personId
+                    }
+                  }
+                }).then(function(res) {
+                  var json=res.data;
+                  var cars=json.data;
+                  $scope.carInfo=cars[0];
+
+                });
               }
               return true;
             },

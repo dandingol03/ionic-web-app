@@ -143,7 +143,7 @@ angular.module('starter')
         .then(function (position) {
           var lat = position.coords.latitude;
           var lng = position.coords.longitude;
-          alert(lng + ',' + lat);
+          console.log(lng + ',' + lat);
           var ggPoint = new BMap.Point(lng, lat);
           var convertor = new BMap.Convertor();
           var pointArr = [];
@@ -413,12 +413,36 @@ angular.module('starter')
           $rootScope.carManage={};
         switch ($scope.locateType) {
           case 'maintain':
+            $rootScope.dashboard.tabIndex=2;
+            $rootScope.dashboard.subTabIndex=1;
             if ($rootScope.maintain == undefined || $rootScope.maintain == null)
               $rootScope.maintain = {};
-            if ($scope.unit !== undefined && $scope.unit !== null) {
-              $rootScope.maintain.maintenance = $scope.unit;
+            //维修厂已选
+            if ($scope.unit !== undefined && $scope.unit !== null)
+            {
+
+              $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'getServicePersonByUnitId',
+                  info:{
+                    unitId:$scope.unit.unitId
+                  }
+                }
+              }).then(function(res) {
+                var json=res.data;
+                $rootScope.maintain.unit=$scope.unit;
+                $rootScope.maintain.servicePerson =json.data;
+                $state.go('tabs.dashboard');
+              });
             } else {
               $rootScope.maintain.units = $scope.units;
+              $state.go('tabs.dashboard');
             }
             break;
           case '21':
@@ -457,8 +481,9 @@ angular.module('starter')
                 units:$scope.units
               };
               $rootScope.carManage.carValidate=carValidate;
-              var ob = {tabIndex:3};
-              $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+              $rootScope.dashboard.tabIndex=3;
+              $rootScope.dashboard.service='代办车辆年审';
+              $state.go('tabs.dashboard');
 
             }
             break;
