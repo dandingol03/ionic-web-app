@@ -687,7 +687,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
 
-          return "http://211.87.225.195:3000";
+          return "http://192.168.1.134:3000";
 
 
         else
@@ -760,27 +760,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     return self;
   }
 
-    .factory('ModalService', function ($ionicModal) {
-      var initModal = function (items) {
-        var modal = $ionicModal.fromTemplateUrl('views/modal/append_insurer_modal.html',{
-          scope:items,
-          animation:'slide-in-up'
-        }).then(function (modal) {
-          $scope.modal = modal;
-          return modal
-        });
-        $scope.openModal = function () {
-          $scope.modal.show();
-        };
-        $scope.closeModal = function () {
-          $scope.modal.hide();
-        };
-        return modal;
-      };
-      return {
-        initModal : initModal
-      }
-    })
+
 )
 
 
