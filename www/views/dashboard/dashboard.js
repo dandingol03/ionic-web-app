@@ -187,6 +187,7 @@ angular.module('starter')
         if(json.re==1) {
           var carInfo=json.data[0];
           $scope.carInfo=carInfo;
+          alert("carId="+carInfo.carId);
         }
         console.log('success');
       })

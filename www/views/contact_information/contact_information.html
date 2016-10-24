@@ -1,0 +1,56 @@
+<ion-view view-title="联系方式" >
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="goto('/#/tabs/dashboard')">
+        <i class="ion-ios-search-strong"></i>
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+
+  <ion-content class="padding cart_detail" >
+    <ul class="list">
+    <li class="item item-icon-right"
+        style="padding-top:0px;padding-left:0px;padding-bottom:0px;border: 0px;">
+           <div style="width: 30%;float:left;">
+           <span style="display: inline-block">
+             <img src="img/iverson.jpg" style="width:65px;"/>
+           </span>
+      </div>
+      <div style="width:70%;float:left;padding-top:2%;">
+        <h2 style="margin-bottom: 5%;">
+          <span>用户:</span>
+          <span>alon iverson</span>
+        </h2>
+      </div>
+
+    </li>
+  </ul>
+    <div>
+    <div class="content has-header ionic-pseudo"ng-repeat="item in contactions">
+      <div class="list">
+        <div class="item item-divider">
+          {{item.type}}
+        </div>
+        <div class="item  row">
+        <a class="item col-80" style="border: none">
+          {{item.name}}
+        </a>
+          <a class="button button-assertive col-20" ng-click="updateInfo(item.type)">修改</a>
+      </div>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+
+
+
+
+</ion-view>
