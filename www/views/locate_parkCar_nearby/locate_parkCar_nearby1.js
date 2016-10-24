@@ -46,29 +46,6 @@ angular.module('starter')
         map.panTo(e.point);
       });
 
-      //地图添加点击事件
-      map.addEventListener("click",function(e){
-        console.log('click point='+e.point.lng + "," + e.point.lat);
-        var mk = new BMap.Marker(e.point);  // 创建标注
-        map.addOverlay(mk);               // 将标注添加到地图中
-        var label = new BMap.Label("目的地", {offset: new BMap.Size(20, -10)});
-        label.setStyle({
-          color: '#222',
-          fontSize: "12px",
-          height: "20px",
-          lineHeight: "20px",
-          fontFamily: "微软雅黑",
-          border: '0px'
-        });
-        mk.setLabel(label);
-        if($scope.mk!=null&&$scope.mk!=undefined){
-          map.removeOverlay($scope.mk);
-
-        }
-        $scope.mk=mk;
-        map.panTo(e.point);
-      });
-
       //设置本地位置
       var mk = new BMap.Marker(point);  // 创建标注
       map.addOverlay(mk);               // 将标注添加到地图中
@@ -220,8 +197,6 @@ angular.module('starter')
 
 
       $scope.go_back = function () {
-        $rootScope.dashboard.tabIndex=3;
-        $rootScope.dashboard.service='取送车';
         window.history.back();
       }
 
