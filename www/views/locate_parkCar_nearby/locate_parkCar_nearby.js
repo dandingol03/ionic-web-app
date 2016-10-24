@@ -8,9 +8,8 @@ angular.module('starter')
   .controller('locateParkCarNearbyController',function($scope,$state,$http,$timeout,$rootScope,
                                                        BaiduMapService,$cordovaGeolocation,$ionicModal,
                                                        Proxy,$stateParams,$ionicLoading) {
-    $scope.airTransfer = {
-      airTransfers: {}
-    };
+
+
 
     if ($stateParams.locateType !== undefined && $stateParams.locateType !== null) {
       $scope.locateType = $stateParams.locateType;
