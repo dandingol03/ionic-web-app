@@ -24,10 +24,8 @@ angular.module('starter')
       var map = new BMap.Map("locate_parkCar_nearby");          // 创建地图实例
       var point = new BMap.Point(117.219, 36.852);
       map.centerAndZoom(point, 9);  //初始化地图,设置城市和地图级别
-
-      //地图添加点击事件
       map.addEventListener("click",function(e){
-        console.log('click point='+e.point.lng + "," + e.point.lat);
+        alert(e.point.lng + "," + e.point.lat);
         var mk = new BMap.Marker(e.point);  // 创建标注
         map.addOverlay(mk);               // 将标注添加到地图中
         var label = new BMap.Label("目的地", {offset: new BMap.Size(20, -10)});
@@ -41,7 +39,7 @@ angular.module('starter')
         });
         mk.setLabel(label);
         if($scope.mk!=null&&$scope.mk!=undefined){
-          map.removeOverlay($scope.mk);
+        map.removeOverlay($scope.mk);
 
         }
         $scope.mk=mk;
@@ -199,8 +197,6 @@ angular.module('starter')
 
 
       $scope.go_back = function () {
-        $rootScope.dashboard.tabIndex=3;
-        $rootScope.dashboard.service='取送车';
         window.history.back();
       }
 
