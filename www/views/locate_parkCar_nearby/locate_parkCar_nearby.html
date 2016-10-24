@@ -16,21 +16,56 @@ ionic serve<ion-view view-title="选择取送车">
   <ion-content>
     <div class="list list-inset padding" style="margin-bottom: 0px;">
 
-      <div class="item"
-           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;
-           padding:10px;background-color:transparent;position: relative">
-        <span class="input-label" style="display: inline-block;width: 35%;">
-          选择维修厂:
-        </span>
-        <span style="width:65%;display: inline-block;" ng-click="selectPTC()">
-          {{area.province+area.city+area.town}}
-          <span style="width: 30%;display: inline-block;text-align: center;font-size: 1.4em;padding-top:10px;">
-            <i class="ion-ios-arrow-down" ></i>
-          </span>
-        </span>
+      <!--<div class="item"-->
+           <!--style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;-->
+           <!--padding:10px;background-color:transparent;position: relative">-->
+        <!--<span class="input-label" style="display: inline-block;width: 35%;">-->
+          <!--选择维修厂:-->
+        <!--</span>-->
+        <!--<span style="width:65%;display: inline-block;" ng-click="selectPTC()">-->
+          <!--{{area.province+area.city+area.town}}-->
+          <!--<span style="width: 30%;display: inline-block;text-align: center;font-size: 1.4em;padding-top:10px;">-->
+            <!--<i class="ion-ios-arrow-down" ></i>-->
+          <!--</span>-->
+        <!--</span>-->
+      <!--</div>-->
+
+      <div
+        class="item item-toggle"
+        style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;
+        padding: 16px;background-color: transparent;position: relative;"
+        >
+        选择维修厂
+        <label class="toggle toggle-assertive" ng-click="Mutex('maintenance',filterType)">
+          <input type="checkbox" ng-checked="filterType.maintenance">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+
+      <div
+        class="item item-toggle"
+        style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;
+        padding: 16px;background-color: transparent;position: relative;"
+        >
+        选择目的地
+        <label class="toggle toggle-assertive" ng-click="Mutex('destiny',filterType)">
+          <input type="checkbox" ng-checked="filterType.destiny">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
       </div>
 
 
+
+
+
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;padding:10px;background-color:transparent;">
+        <div id="locate_parkCar_nearby" style="width:100%;height:300px;"></div>
+      </div>
 
       <div class="item"
            style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;
@@ -38,13 +73,8 @@ ionic serve<ion-view view-title="选择取送车">
            ng-click="maintenance_confirm()"
         >
         <button class="button button-positive" style="width: 80%;margin-left:10%;margin-right:10%;">
-          选定维修厂
+          提交选定信息
         </button>
-      </div>
-
-      <div class="item"
-           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #eee;padding:10px;background-color:transparent;">
-        <div id="locate_parkCar_nearby" style="width:100%;height:300px;"></div>
       </div>
 
     </div>

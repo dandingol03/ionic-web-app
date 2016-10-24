@@ -141,6 +141,7 @@ angular.module('starter')
 
 
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
+
       $cordovaGeolocation
         .getCurrentPosition(posOptions)
         .then(function (position) {

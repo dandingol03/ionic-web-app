@@ -454,6 +454,10 @@ angular.module('starter')
             break;
           case 21:
             //审车
+
+            $rootScope.dashboard.tabIndex=3;
+            if($scope.locate.locateIndex!==undefined&&$scope.locate.locateIndex!==null)
+              $rootScope.dashboard.subTabIndex=$scope.locate.locateIndex;
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
               var carValidate={
@@ -477,9 +481,11 @@ angular.module('starter')
                 var json=res.data;
                 carValidate.servicePerson =json.data;
                 $rootScope.carManage.carValidate=carValidate;
+
                 $rootScope.carManage.serviceType='21';
                 var ob = {tabIndex:3};
                 $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+
               });
             }
             else

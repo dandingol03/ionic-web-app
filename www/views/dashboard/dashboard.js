@@ -187,6 +187,7 @@ angular.module('starter')
         if(json.re==1) {
           var carInfo=json.data[0];
           $scope.carInfo=carInfo;
+          alert("carId="+carInfo.carId);
         }
         console.log('success');
       })
@@ -3691,6 +3692,7 @@ $scope.carService=function(){
     };
 
     $scope.pickMaintainDaily=function(locateType,index) {
+
       if($scope.dailys!==undefined&&$scope.dailys!==null)
       {
         $rootScope.maintain.dailys=$scope.dailys;
