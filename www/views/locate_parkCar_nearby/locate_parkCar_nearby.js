@@ -203,7 +203,8 @@ angular.module('starter')
             parkCar.servicePerson =json.data;
             $rootScope.carManage.parkCar=parkCar;
             $rootScope.dashboard.tabIndex=3;
-            $rootScope.dashboard.service='取送车'
+            $rootScope.dashboard.service='取送车';
+            $rootScope.carManage.serviceType='24';
             $state.go('tabs.dashboard');
           });
         }else//未选定维修厂
@@ -214,6 +215,7 @@ angular.module('starter')
           $rootScope.carManage.parkCar=parkCar;
           $rootScope.dashboard.tabIndex=3;
           $rootScope.dashboard.service='取送车';
+          $rootScope.carManage.serviceType='24';
           $state.go('tabs.dashboard');
         }
       }

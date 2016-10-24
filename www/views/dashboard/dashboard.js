@@ -72,7 +72,7 @@ angular.module('starter')
       paperValidate:$rootScope.carManage.paperValidate,
       airportTransfer:$rootScope.carManage.airportTransfer,
       parkCar:$rootScope.carManage.parkCar,
-      serviceType:11
+      serviceType:$rootScope.carManage.serviceType
     };
 
     $scope.dailys = [
@@ -1863,21 +1863,54 @@ $scope.openAirportTransfer=function(){
           }
         };
         alert('go into upload audio');
-        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options).then(function(res) {
-
-          for(var field in res) {
-            alert('field=' + field + '\r\n' + res[field]);
-            console.log('field=' + field + '\r\n' + res[field]);
-          }
-
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options)
+          // if(json.re==1){
+          //   deferred.resolve({re:1,data:json.data});
+          // }else{
+          //   deferred.reject({re:-1});
+          // }
+        .then(function(res) {
           var json=res.response;
           json=JSON.parse(json);
           alert('json.re=' + json.re);
+            if(json.re==1){
+
+              $http({
+                method: "POST",
+                url: Proxy.local() + "/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data: {
+                  request: 'createAudioAttachement',
+                  info: {
+                    orderId: orderId,
+                    docType:'I6',
+                    path:json.data
+                  }
+                }
+              });
+            }
+        }).then(function(res) {
+          var json=res.data;
+          var audioAttacheId=json.data;
           if(json.re==1){
-            deferred.resolve({re:1});
-          }else{
-            deferred.reject({re:-1});
+            $http({
+              method: "POST",
+              url: Proxy.local() + "/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'updateServiceAudioAttachment',
+                info: {
+                  orderId: orderId,
+                  audioAttachId:audioAttachId
+                }
+              }
+            });
           }
+
         })
       }
       else{
@@ -2045,7 +2078,7 @@ $scope.carService=function(){
 
     //提交服务项目,生成服务订单
     $scope.commit_daily=function() {
-
+      var orderId = null;
       $scope.maintain.subServiceTypes = [];
       $scope.dailys.map(function (daily, i) {
         if (daily.checked == true)
@@ -2059,7 +2092,6 @@ $scope.carService=function(){
         //如果为维修订单并且子项为事故维修
         if($scope.maintain.serviceType ==13)
             $scope.maintain.subServiceTypes = $scope.accident.type;
-
 
         if ($rootScope.maintain.unit !== undefined && $rootScope.maintain.unit !== null) {
           var order=null;
@@ -2102,6 +2134,7 @@ $scope.carService=function(){
           }).then(function(res) {
             var json = res.data;
             if (json.re == 1) {
+              orderId=json.data.orderId;
               var serviceName = $scope.serviceTypeMap[$scope.maintain.serviceType];
               order=json.data;
               var servicePersonId = [];
@@ -2277,6 +2310,7 @@ $scope.carService=function(){
       if($scope.carManage.estimateTime!==undefined&&$scope.carManage.estimateTime!==null)
       {
         var unit=null;
+        var units=null;
         var servicePerson=null;
         $scope.carManage.carId=$scope.carInfo.carId;
         switch($scope.service)
@@ -3657,6 +3691,10 @@ $scope.carService=function(){
     };
 
     $scope.pickMaintainDaily=function(locateType,index) {
+      if($scope.dailys!==undefined&&$scope.dailys!==null)
+      {
+        $rootScope.maintain.dailys=$scope.dailys;
+      }
       $state.go('locate_maintain_daily',{locate:JSON.stringify({locateType: locateType,locateIndex:index})});
     };
 

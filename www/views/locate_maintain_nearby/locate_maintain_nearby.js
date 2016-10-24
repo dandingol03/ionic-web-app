@@ -444,6 +444,7 @@ angular.module('starter')
                 var json=res.data;
                 $rootScope.maintain.unit=$scope.unit;
                 $rootScope.maintain.servicePerson =json.data;
+
                 $state.go('tabs.dashboard');
               });
             } else {
@@ -451,9 +452,8 @@ angular.module('starter')
               $state.go('tabs.dashboard');
             }
             break;
-          case '21':
+          case 21:
             //审车
-
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
               var carValidate={
@@ -477,6 +477,7 @@ angular.module('starter')
                 var json=res.data;
                 carValidate.servicePerson =json.data;
                 $rootScope.carManage.carValidate=carValidate;
+                $rootScope.carManage.serviceType='21';
                 var ob = {tabIndex:3};
                 $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
               });
@@ -489,6 +490,7 @@ angular.module('starter')
               $rootScope.carManage.carValidate=carValidate;
               $rootScope.dashboard.tabIndex=3;
               $rootScope.dashboard.service='代办车辆年审';
+              $rootScope.carManage.serviceType='21';
               $state.go('tabs.dashboard');
 
             }
