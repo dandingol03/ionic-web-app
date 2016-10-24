@@ -13,7 +13,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
   .run(function($ionicPlatform,$rootScope,$interval,
                   $cordovaToast,$ionicHistory,$location,
-                  $ionicPopup,Proxy,$http) {
+                  $ionicPopup,Proxy,$http,$state) {
 
 
 
@@ -616,7 +616,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
       .state('locate_maintain_nearby',{
-        url:'/locate_maintain_nearby/:locateType',
+        url:'/locate_maintain_nearby/:locate',
         controller:'locateMaintainNearbyController',
         templateUrl:'views/locate_maintain_nearby/locate_maintain_nearby.html'
       })
@@ -666,6 +666,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         url:'/update_car_info',
         controller:'updateCarInfoController',
         templateUrl:'views/update_car_info/update_car_info.html'
+      })
+
+      .state('locate_maintain_daily',{
+        url:'/locate_maintain_daily/:locate',
+        controller:'locateMaintainDailyController',
+        templateUrl:'views/locate_maintain_daily/locate_maintain_daily.html'
       })
 
 

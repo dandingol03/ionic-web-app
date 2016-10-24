@@ -281,8 +281,8 @@
             <i class="ion-android-camera"></i>
           </span>
 
-
         </div>
+
 
         <!--<div class="item"-->
         <!--style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;"-->
@@ -310,7 +310,7 @@
 
           <span style="display: inline-block;width: 65%;color:#888;font-size: .9em;text-align: left;">
               {{carInfo.issueDate!==undefined&&carInfo.issueDate!==null?carInfo.issueDate:'点击选择发证日期'}}
-            </span>
+          </span>
 
           <span
             style="position: absolute;right: 5%;top:30%;font-size: 1.5em;"
@@ -478,7 +478,7 @@
             </div>
 
 
-            <button class="button button-block button-positive" ng-click="pickMaintain('maintain')">
+            <button class="button button-block button-positive" ng-click="pickMaintainDaily('maintain',0)">
               选择附近的维修厂
             </button>
             <a id="maintenance_anchor"></a>
@@ -573,7 +573,7 @@
             <span>
               {{maintain.unit!==undefined&&maintain.unit!==null?maintain.unit.unitName:''}}
             </span>
-            <span ng-click="pickMaintain('maintain')" style="font-size: 150%;">
+            <span ng-click="pickMaintain('maintain',1)" style="font-size: 150%;">
                 <i class="ion-ios-arrow-down" ></i>
             </span>
           </div>
@@ -824,9 +824,9 @@
         </div>
 
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                 <span class="input-label" style="display: inline-block;">
-                  服务人员:
-                </span>
+          <span class="input-label" style="display: inline-block;">
+            服务人员:
+          </span>
           <span ng-click="service_person_select(service_persons)">
                   {{carManage.parkCar.servicePerson!==undefined&&carManage.parkCar.servicePerson!==null?carManage.parkCar.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
