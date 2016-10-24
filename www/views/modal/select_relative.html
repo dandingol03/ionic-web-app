@@ -2,12 +2,10 @@
   <div class="close_detmodal" ng-click="close_selectRelativeModal()">
     <img src="img/close.png"/>
   </div>
-  <ion-content scroll="true" class="carInfo_content" style="width: 75%;padding:10px;height:40%;">
-
-    <div scroll="true" style="height:100%">
-      <div style="height:85%">
-        <div class="list" scroll="true">
-          <div class="item"
+  <ion-content scroll="false" class="carInfo_content" style="width: 75%;padding:10px;height:60%;">
+    <div style="height:100%">
+      <div class="list" scroll="true">
+        <div class="item"
                style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:14px;"
                ng-repeat="relative in relatives"
                ng-click="Mutex(relative,'checked',relatives)"
@@ -15,15 +13,12 @@
             <span style="display: inline-block;font-size: 0.9em;">
               {{relative.perName}}
             </span>
-            <span
-              style="font-size: 2em;position: absolute;right: 0%;width: 20%;text-align: center"
-            >
+            <span style="font-size: 2em;position: absolute;right: 0%;width: 20%;text-align: center">
          <i ng-if="relative.checked!=true" class="ion-ios-checkmark-outline"></i>
          <i ng-if="relative.checked==true" class="ion-ios-checkmark"></i>
        </span>
           </div>
         </div>
-      </div>
 
       <div style="height:15%">
         <button ng-click="append_insurer({title:'添加投保人',item:life_insurance.order,field:'insurer'})"

@@ -590,6 +590,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl: 'views/integration/integration.html'
       })
 
+      .state('contact_information', {
+        url: '/contact_information',
+        controller: 'contact_informationController',
+        templateUrl: 'views/contact_information/contact_information.html'
+      })
+
       .state('uploadPhoto', {
         url: '/uploadPhoto',
         controller: 'uploadPhotoController',
@@ -688,10 +694,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
 
-
           return "http://211.87.225.195:3000";
-
-
 
         else
           return "/proxy/node_server";
