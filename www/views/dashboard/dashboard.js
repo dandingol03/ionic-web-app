@@ -3657,6 +3657,11 @@ $scope.carService=function(){
     };
 
     $scope.pickMaintainDaily=function(locateType,index) {
+      //TODO:syn dailys
+      if($scope.dailys!==undefined&&$scope.dailys!==null)
+      {
+        $rootScope.maintain.dailys=$scope.dailys;
+      }
       $state.go('locate_maintain_daily',{locate:JSON.stringify({locateType: locateType,locateIndex:index})});
     };
 

@@ -451,9 +451,11 @@ angular.module('starter')
               $state.go('tabs.dashboard');
             }
             break;
-          case '21':
+          case 21:
             //审车
-
+            $rootScope.dashboard.tabIndex=3;
+            if($scope.locate.locateIndex!==undefined&&$scope.locate.locateIndex!==null)
+              $rootScope.dashboard.subTabIndex=$scope.locate.locateIndex;
             if ($scope.unit !== undefined && $scope.unit !== null)
             {
               var carValidate={
@@ -477,8 +479,7 @@ angular.module('starter')
                 var json=res.data;
                 carValidate.servicePerson =json.data;
                 $rootScope.carManage.carValidate=carValidate;
-                var ob = {tabIndex:3};
-                $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+                $state.go('tabs.dashboard');
               });
             }
             else

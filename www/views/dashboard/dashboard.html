@@ -700,7 +700,7 @@
           <span>
             {{carManage.carValidate.servicePlace!==undefined&&carManage.carValidate.servicePlace!==null?carManage.carValidate.servicePlace:''}}
           </span>
-          <span ng-click="pickMaintain(21)" style="font-size: 150%;">
+          <span ng-click="pickMaintain(21,0)" style="font-size: 150%;">
               <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
@@ -747,15 +747,15 @@
         </div>
 
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
-                 <span class="input-label" style="display: inline-block;">
-                  服务人员:
-                </span>
+          <span class="input-label" style="display: inline-block;">
+            服务人员:
+          </span>
           <span ng-click="service_person_select(service_persons)">
                  {{carManage.paperValidate.servicePerson!==undefined&&carManage.paperValidate.servicePerson!==null?carManage.paperValidate.servicePerson.perName:''}}
             <span style="font-size: 1.6em;">
               <i class="ion-ios-arrow-down"></i>
             </span>
-                </span>
+          </span>
         </div>
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
                  <span class="input-label" style="display: inline-block;">
@@ -811,9 +811,36 @@
 
       <div class="list list-inset padding" style="margin-bottom:40px;background: transparent" ng-if="service=='取送车'">
 
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+        <div class="item"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;">
+
+          <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
+            目的地:
+          </span>
+          <span
+            style="width: 45%;display: inline-block;text-align: left;"
+            ng-if="carManage.parkCar.destiny!==undefined&&carManage.parkCar.destiny!==null"
+            >
+             {{carManage.parkCar.destiny.lat+','+carManage.parkCar.destiny.lng}}
+          </span>
+          <span
+            ng-if="carManage.parkCar.destiny==undefined||carManage.parkCar.destiny==null"
+            style="width: 45%;display: inline-block;text-align: left;"
+            >
+            请选择目的地
+          </span>
+          <span ng-click="pickParkCarNearby()"
+                style="font-size: 1.6em;width: 30%;display: inline-block;text-align: center;">
+            <i class="ion-ios-arrow-down" ></i>
+          </span>
+        </div>
+
+
+        <div class="item"
+             style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent"
+          >
           <span class="input-label" style="display: inline-block;">
-            选择地点:
+            选择维修厂:
           </span>
           <span>
             {{carManage.parkCar.servicePlace}}
