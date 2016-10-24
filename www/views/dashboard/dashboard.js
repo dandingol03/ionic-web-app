@@ -75,6 +75,18 @@ angular.module('starter')
       serviceType:11
     };
 
+    $scope.dailys = [
+      {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
+      {subServiceId:'2',subServiceTypes:'检查制动系统,更换刹车片',serviceType:'11'},
+      {subServiceId:'3',subServiceTypes:'雨刷片更换',serviceType:'11'},
+      {subServiceId:'4',subServiceTypes:'轮胎更换',serviceType:'11'},
+      {subServiceId:'5',subServiceTypes:'燃油添加剂',serviceType:'11'},
+      {subServiceId:'6',subServiceTypes:'空气滤清器',serviceType:'11'},
+      {subServiceId:'7',subServiceTypes:'检查火花塞',serviceType:'11'},
+      {subServiceId:'8',subServiceTypes:'检查驱动皮带',serviceType:'11'},
+      {subServiceId:'9',subServiceTypes:'更换空调滤芯',serviceType:'11'},
+      {subServiceId:'10',subServiceTypes:'更换蓄电池,防冻液',serviceType:'11'}
+    ];
 
 
     /**
@@ -120,6 +132,8 @@ angular.module('starter')
       $scope.maintain.description=$rootScope.maintain.description;
       if($rootScope.maintain.unit!==undefined&&$rootScope.maintain.unit!==null)
         $scope.maintain.unit=$rootScope.maintain.unit;
+      if($rootScope.maintain.dailys!==undefined&&$rootScope.maintain.dailys!==null)
+        $scope.dailys=$rootScope.maintain.dailys;
     }else{
       $scope.subTabIndex=0;
     }
@@ -1771,18 +1785,7 @@ $scope.openAirportTransfer=function(){
 
 
     $scope.miles=0;
-    $scope.dailys = [
-      {subServiceId:'1',subServiceTypes:'机油,机滤',serviceType:'11'},
-      {subServiceId:'2',subServiceTypes:'检查制动系统,更换刹车片',serviceType:'11'},
-      {subServiceId:'3',subServiceTypes:'雨刷片更换',serviceType:'11'},
-      {subServiceId:'4',subServiceTypes:'轮胎更换',serviceType:'11'},
-      {subServiceId:'5',subServiceTypes:'燃油添加剂',serviceType:'11'},
-      {subServiceId:'6',subServiceTypes:'空气滤清器',serviceType:'11'},
-      {subServiceId:'7',subServiceTypes:'检查火花塞',serviceType:'11'},
-      {subServiceId:'8',subServiceTypes:'检查驱动皮带',serviceType:'11'},
-      {subServiceId:'9',subServiceTypes:'更换空调滤芯',serviceType:'11'},
-      {subServiceId:'10',subServiceTypes:'更换蓄电池,防冻液',serviceType:'11'}
-    ];
+
 
 
     $scope.getMaintainPlan=function(miles){
@@ -3639,12 +3642,22 @@ $scope.carService=function(){
       },{enableHighAccuracy: true});
     }
 
-    $scope.pickMaintain=function(locateType){
+    $scope.pickMaintain=function(locateType,index){
       if($scope.maintain.description.text!==undefined&&$scope.maintain.description.text!==null)
         $rootScope.maintain.description.text=$scope.maintain.description.text;
       if($scope.maintain.description.audio!==undefined&&$scope.maintain.description.audio!==null)
         $rootScope.maintain.description.audio=$scope.maintain.description.audio;
-      $state.go('locate_maintain_nearby',{locateType:locateType});
+      //TODO:syn dailys
+      if($scope.dailys!==undefined&&$scope.dailys!==null)
+      {
+        $rootScope.maintain.dailys=$scope.dailys;
+      }
+
+      $state.go('locate_maintain_nearby',{locate:JSON.stringify({locateType:locateType,locateIndex:index})});
+    };
+
+    $scope.pickMaintainDaily=function(locateType,index) {
+      $state.go('locate_maintain_daily',{locate:JSON.stringify({locateType: locateType,locateIndex:index})});
     };
 
     $scope.pickAirportNearby=function(locateType) {
