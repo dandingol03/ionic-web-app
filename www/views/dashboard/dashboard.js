@@ -1967,14 +1967,14 @@ $scope.openAirportTransfer=function(){
           if(json.re==1) {
             var videoAttachId=json.data;
             if(json.re==1){
-              $http({
+          return  $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
                 headers: {
                   'Authorization': "Bearer " + $rootScope.access_token
                 },
                 data: {
-                  request: 'updateServiceAudioAttachment',
+                  request: 'updateServiceVideoAttachment',
                   info: {
                     orderId: orderId,
                     videoAttachId:videoAttachId
@@ -2216,27 +2216,29 @@ $scope.carService=function(){
             }
           }).then(function (res) {
             var json = res.data;
-            if (json.re == 1) {
-              $scope.close_maintenanceTAModal();
-              console.log('service order has been generated');
-              //检查是否需要上传附件信息
-              $scope.videoCheck(order.orderId).then(function (json) {
-                alert('result of videocheck=\r\n' + json);
+            if (json.re == 1) {}
+            else if(json.re==2) {
+              console.error(json.data);
+            }else{}
+            $scope.close_maintenanceTAModal();
+            console.log('service order has been generated');
+            //检查是否需要上传附件信息
+            $scope.videoCheck(order.orderId).then(function (json) {
+              alert('result of videocheck=\r\n' + json);
+              if (json.re == 1) {
+                console.log('视频附件上传成功')
+              }
+              else
+              {}
+              $scope.audioCheck(order.orderId).then(function(json) {
+                alert('result of audiocheck=\r\n' + json);
                 if (json.re == 1) {
-                  console.log('视频附件上传成功')
+                  console.log('音频附件上传成功')
                 }
                 else
                 {}
-                $scope.audioCheck(order.orderId).then(function(json) {
-                  alert('result of audiocheck=\r\n' + json);
-                  if (json.re == 1) {
-                    console.log('音频附件上传成功')
-                  }
-                  else
-                  {}
-                })
               })
-            }
+            })
           }).catch(function (err) {
             var str = '';
             for (var field in err)
@@ -2332,6 +2334,10 @@ $scope.carService=function(){
             }
           }).then(function (res) {
             var json = res.data;
+            console.log('**************************************************');
+            console.log('**************************************************');
+            console.log('**************************************************');
+            console.log('**************go into media check*****************');
               $scope.videoCheck(order.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {
