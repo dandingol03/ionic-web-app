@@ -700,7 +700,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
 
-          return "http://211.87.225.195:3000";
+          return "http://192.168.1.110:3000";
 
         else
           return "/proxy/node_server";

@@ -1865,11 +1865,6 @@ $scope.openAirportTransfer=function(){
         };
         alert('go into upload audio');
         $cordovaFileTransfer.upload(server, $scope.maintain.description.audio, options)
-          // if(json.re==1){
-          //   deferred.resolve({re:1,data:json.data});
-          // }else{
-          //   deferred.reject({re:-1});
-          // }
         .then(function(res) {
           var json=res.response;
           json=JSON.parse(json);
@@ -1883,7 +1878,7 @@ $scope.openAirportTransfer=function(){
                   'Authorization': "Bearer " + $rootScope.access_token
                 },
                 data: {
-                  request: 'createAudioAttachement',
+                  request: 'createAudioAttachment',
                   info: {
                     orderId: orderId,
                     docType:'I6',
@@ -1894,7 +1889,7 @@ $scope.openAirportTransfer=function(){
             }
         }).then(function(res) {
           var json=res.data;
-          var audioAttacheId=json.data;
+          var audioAttachId=json.data;
           if(json.re==1){
             $http({
               method: "POST",
