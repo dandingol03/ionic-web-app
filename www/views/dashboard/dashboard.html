@@ -458,6 +458,8 @@
                   <i ng-if="item.checked==true" class="ion-ios-checkmark"></i>
                 </div>
 
+
+
               </div>
             </div>
           </div>
@@ -695,7 +697,7 @@
 
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
-            选择地点:
+            选择车管所:
           </span>
           <span>
             {{carManage.carValidate.servicePlace!==undefined&&carManage.carValidate.servicePlace!==null?carManage.carValidate.servicePlace:''}}
@@ -736,7 +738,7 @@
 
         <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
-            选择地点:
+            选择审证所:
           </span>
           <span>
             {{carManage.paperValidate.servicePlace}}
@@ -796,6 +798,7 @@
             <i class="ion-ios-arrow-down" ></i>
           </span>
         </div>
+
 
 
         <div class="item"
@@ -863,7 +866,6 @@
 
 
       <div class="list list-inset padding" style="margin-bottom:40px;background: transparent" ng-if="service=='取送车'">
-
         <div class="item"
              style="margin:1px;border-bottom:1px solid #222;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent;">
 

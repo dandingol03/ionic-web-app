@@ -80,10 +80,11 @@ angular.module('starter')
 
 
     //获取寿险订单
-    if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null
-      &&$rootScope.lifeInsurance.orders!==undefined&&$rootScope.lifeInsurance.orders!==null)
+    if($rootScope.lifeInsurance!==undefined&&$rootScope.lifeInsurance!==null)
     {
-      $scope.orders=$rootScope.lifeInsurance.orders;
+      $scope.orders = $rootScope.lifeInsurance.orders;
+      $scope.pricingOrders = $rootScope.lifeInsurance.pricingOrders;
+      $scope.finishOrders = $rootScope.lifeInsurance.finishOrders;
     }else{
       $http({
         method: "POST",
@@ -108,6 +109,9 @@ angular.module('starter')
               $scope.finishOrders.push(order);
             }
           })
+          $rootScope.lifeInsurance.pricingOrders = $scope.pricingOrders;
+          $rootScope.lifeInsurance.finishOrders = $scope.finishOrders;
+
         }
       })
     }

@@ -7,7 +7,9 @@ angular.module('starter')
                                                 $cordovaCamera,$cordovaImagePicker,$stateParams,
                                                     $ionicSlideBoxDelegate,$ionicPopup,Proxy){
 
-    $scope.item=$stateParams.plan;
+    //$scope.item=$stateParams.plan;
+      $scope.item=$rootScope.plan;
+
 
     if(Object.prototype.toString.call($scope.item)=='[object String]')
         $scope.item=JSON.parse($scope.item);
@@ -18,7 +20,19 @@ angular.module('starter')
     $scope.title=$scope.item.main.name;
 
     $scope.tabs=['产品简介','保费测算'];
-    $scope.tab=$scope.tabs[0];
+    //$scope.tab=$scope.tabs[0];
+      if($rootScope.tab!=null&&$rootScope.tab!=undefined){
+        var index = 0;
+        $scope.tab=$rootScope.tab;
+        $scope.tabs.map(function(tab,i) {
+          if(tab==$scope.tab){
+            index=i;
+            $ionicSlideBoxDelegate.slide(index);
+            $scope.myActiveSlide = index;
+          }
+        })
+      }
+
     $scope.tab_change=function(i){
       $scope.tab=$scope.tabs[i];
       $ionicSlideBoxDelegate.slide(i);
@@ -33,7 +47,6 @@ angular.module('starter')
 
     $scope.changeInsuranceFee=function(){
      //1.把新保额填到数据库对应的方案中去;   2.按比例计算出相应的保费
-
       $http({
         method: "POST",
         url: Proxy.local() + '/svr/request',
@@ -57,6 +70,29 @@ angular.module('starter')
           $scope.item.insuranceFeeTotal=
             $scope.item.insuranceQuota/baseInsuranceQuota*insuranceFee*$scope.item.feeYearType
         }
+
+        $rootScope.plan=$scope.item;
+      }).then(function() {
+
+        $http({
+          method: "POST",
+          url: Proxy.local() + '/svr/request',
+          headers: {
+            'Authorization': "Bearer " + $rootScope.access_token
+          },
+          data: {
+            request: 'updateLifeOrderPlan',
+            info:{
+              planId:$scope.item.planId,
+              main:$scope.item.main,
+              additions:$scope.item.additions,
+              insuranceQuota:$scope.item.insuranceQuota,
+              feeYearType:$scope.item.feeYearType,
+              insuranceFeeTotal:$scope.item.insuranceFeeTotal,
+            }
+          }
+        })
+
       })
 
     }
@@ -213,6 +249,7 @@ angular.module('starter')
           type: 'button-positive',
           onTap: function(e) {
             //TODO:do contrast
+
             var planId=plan.planId;
             var plans=$rootScope.lifeInsuranceOrder.plans;
             plans.map(function(item,i) {
@@ -254,6 +291,7 @@ angular.module('starter')
 
       $scope.go_back=function(){
         window.history.back();
+        $rootScope.tab=$scope.tab;
       }
 
       $scope.$on('$destroy', function() {

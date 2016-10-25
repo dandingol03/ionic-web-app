@@ -36,6 +36,34 @@ angular.module('starter')
           $scope.map.addEventListener('click', $scope.clickFunc);
           $scope.appendSelfLocation($scope.BMap,$scope.map);
 
+
+      $scope.bMap = res;
+      var BMap = $scope.bMap;
+      var map = new BMap.Map("locate_parkCar_nearby");          // 创建地图实例
+      var point = new BMap.Point(117.219, 36.852);
+      map.centerAndZoom(point, 9);  //初始化地图,设置城市和地图级别
+      map.addEventListener("click",function(e){
+        alert(e.point.lng + "," + e.point.lat);
+        var mk = new BMap.Marker(e.point);  // 创建标注
+        map.addOverlay(mk);               // 将标注添加到地图中
+        var label = new BMap.Label("目的地", {offset: new BMap.Size(20, -10)});
+        label.setStyle({
+          color: '#222',
+          fontSize: "12px",
+          height: "20px",
+          lineHeight: "20px",
+          fontFamily: "微软雅黑",
+          border: '0px'
+        });
+        mk.setLabel(label);
+        if($scope.mk!=null&&$scope.mk!=undefined){
+        map.removeOverlay($scope.mk);
+
+        }
+        $scope.mk=mk;
+        map.panTo(e.point);
+      });
+
         }else//选择维修厂
         {
           $scope.appendAirportLocation($scope.BMap, $scope.map);
@@ -47,6 +75,7 @@ angular.module('starter')
       else
         cluster[item]=false;
     }
+
 
     $scope.appendSelfLocation=function(BMap,map) {
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -257,12 +286,12 @@ angular.module('starter')
           headers: {
             'Authorization': "Bearer " + $rootScope.access_token,
           },
-          data:
-          {
-            request:'getServicePersonByUnitId',
-            info:{
-              unitId:$scope.unit.unitId
+          data: {
+            request: 'getServicePersonByUnitId',
+            info: {
+              unitId: $scope.unit.unitId
             }
+
           }
         }).then(function(res) {
           var json=res.data;
@@ -270,6 +299,7 @@ angular.module('starter')
           $rootScope.carManage.parkCar=parkCar;
           $rootScope.dashboard.tabIndex=3;
           $rootScope.dashboard.service='取送车';
+          $rootScope.carManage.serviceType='24';
           $state.go('tabs.dashboard');
         });
       }else//未选定维修厂
@@ -281,6 +311,7 @@ angular.module('starter')
         $rootScope.carManage.parkCar=parkCar;
         $rootScope.dashboard.tabIndex=3;
         $rootScope.dashboard.service='取送车';
+        $rootScope.carManage.serviceType='24';
         $state.go('tabs.dashboard');
       }
     }

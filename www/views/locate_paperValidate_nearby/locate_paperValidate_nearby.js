@@ -435,6 +435,7 @@ angular.module('starter')
             $rootScope.carManage.paperValidate=paperValidate;
             $rootScope.dashboard.tabIndex=3;
             $rootScope.dashboard.service='代办行驶证年审';
+            $rootScope.carManage.serviceType='22';
             $state.go('tabs.dashboard');
           })
         }else{
@@ -444,6 +445,7 @@ angular.module('starter')
           $rootScope.carManage.paperValidate=paperValidate;
           $rootScope.dashboard.tabIndex=3;
           $rootScope.dashboard.service='代办行驶证年审';
+          $rootScope.carManage.serviceType='22';
           $state.go('tabs.dashboard');
         }
 

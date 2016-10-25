@@ -444,6 +444,7 @@ angular.module('starter')
                 var json=res.data;
                 $rootScope.maintain.unit=$scope.unit;
                 $rootScope.maintain.servicePerson =json.data;
+
                 $state.go('tabs.dashboard');
               });
             } else {
@@ -453,6 +454,7 @@ angular.module('starter')
             break;
           case 21:
             //审车
+
             $rootScope.dashboard.tabIndex=3;
             if($scope.locate.locateIndex!==undefined&&$scope.locate.locateIndex!==null)
               $rootScope.dashboard.subTabIndex=$scope.locate.locateIndex;
@@ -479,7 +481,11 @@ angular.module('starter')
                 var json=res.data;
                 carValidate.servicePerson =json.data;
                 $rootScope.carManage.carValidate=carValidate;
-                $state.go('tabs.dashboard');
+
+                $rootScope.carManage.serviceType='21';
+                var ob = {tabIndex:3};
+                $state.go('tabs.dashboard',{params:JSON.stringify(ob)});
+
               });
             }
             else
@@ -490,6 +496,7 @@ angular.module('starter')
               $rootScope.carManage.carValidate=carValidate;
               $rootScope.dashboard.tabIndex=3;
               $rootScope.dashboard.service='代办车辆年审';
+              $rootScope.carManage.serviceType='21';
               $state.go('tabs.dashboard');
 
             }
@@ -504,6 +511,8 @@ angular.module('starter')
       $scope.go_back = function () {
         window.history.back();
       }
+
+
 
       //var geolocation = new BMap.Geolocation();
       //geolocation.getCurrentPosition(function(r){

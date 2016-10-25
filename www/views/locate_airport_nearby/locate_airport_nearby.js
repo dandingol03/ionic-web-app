@@ -296,6 +296,7 @@ angular.module('starter')
             info:{
               unitId:$scope.unit.unitId
             }
+
           }
         }).then(function(res) {
           var json=res.data;
@@ -303,6 +304,7 @@ angular.module('starter')
           $rootScope.carManage.airportTransfer=airportTransfer;
           $rootScope.dashboard.tabIndex=3;
           $rootScope.dashboard.service='接送机';
+          $rootScope.carManage.serviceType='23';
           $state.go('tabs.dashboard');
         })
       }else//未选定维修厂
