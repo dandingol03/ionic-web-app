@@ -2230,15 +2230,15 @@ $scope.carService=function(){
               }
               else
               {}
-              $scope.audioCheck(order.orderId).then(function(json) {
-                alert('result of audiocheck=\r\n' + json);
-                if (json.re == 1) {
-                  console.log('音频附件上传成功')
-                }
-                else
-                {}
-              })
-            })
+            });
+            $scope.audioCheck(order.orderId).then(function(json) {
+              alert('result of audiocheck=\r\n' + json);
+              if (json.re == 1) {
+                console.log('音频附件上传成功')
+              }
+              else  
+              {}
+            });
           }).catch(function (err) {
             var str = '';
             for (var field in err)
@@ -2373,6 +2373,7 @@ $scope.carService=function(){
         var unit=null;
         var units=null;
         var servicePerson=null;
+        var servicePlace=null;
         $scope.carManage.carId=$scope.carInfo.carId;
         switch($scope.service)
         {
@@ -2380,21 +2381,25 @@ $scope.carService=function(){
             servicePerson=$scope.carManage.carValidate.servicePerson;
             unit=$scope.carManage.carValidate.unit;
             units=$scope.carManage.carValidate.units;
+            servicePlace=$scope.carManage.carValidate.unit.unitName;
             break;
           case '代办行驶证年审':
             servicePerson=$scope.carManage.paperValidate.servicePerson;
             unit=$scope.carManage.paperValidate.unit;
             units=$scope.carManage.paperValidate.units;
+            servicePlace=$scope.carManage.carValidate.unit.unitName;
             break;
           case '接送机':
             servicePerson=$scope.carManage.airportTransfer.servicePerson;
             unit=$scope.carManage.airportTransfer.unit;
             units=$scope.carManage.airportTransfer.units;
+            servicePlace=JSON.stringify($scope.carManage.airportTransfer.destiny)
             break;
           case '取送车':
             servicePerson=$scope.carManage.parkCar.servicePerson;
             unit=$scope.carManage.parkCar.unit;
             units=$scope.carManage.parkCar.units;
+            servicePlace=JSON.stringify($scope.carManage.parkCar.destiny);
             break;
         }
 
@@ -2411,7 +2416,8 @@ $scope.carService=function(){
               data: {
                 request: 'generateCarServiceOrder',
                 info: {
-                  carManage: $scope.carManage
+                  carManage: $scope.carManage,
+                  servicePlace:servicePlace
                 }
               }
             }).then(function(res) {
