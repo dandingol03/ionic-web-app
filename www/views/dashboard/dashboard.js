@@ -1424,8 +1424,7 @@ angular.module('starter')
     //获取寿险产品
     $http({
       method: "POST",
-      url: "http://192.168.0.196:3000/svr/request",
-     // url: "http://192.168.1.106:3000/svr/request",
+      url: Proxy.local()+"/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
