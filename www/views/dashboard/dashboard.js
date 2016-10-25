@@ -1424,8 +1424,7 @@ angular.module('starter')
     //获取寿险产品
     $http({
       method: "POST",
-      url: "http://192.168.0.196:3000/svr/request",
-     // url: "http://192.168.1.106:3000/svr/request",
+      url: Proxy.local()+"/svr/request",
       headers: {
         'Authorization': "Bearer " + $rootScope.access_token,
       },
@@ -1868,10 +1867,9 @@ $scope.openAirportTransfer=function(){
         .then(function(res) {
           var json=res.response;
           json=JSON.parse(json);
-          alert('json.re=' + json.re);
             if(json.re==1){
 
-              $http({
+           return   $http({
                 method: "POST",
                 url: Proxy.local() + "/svr/request",
                 headers: {
@@ -1906,8 +1904,17 @@ $scope.openAirportTransfer=function(){
               }
             });
           }
-
-        })
+          }).then(function(res) {
+            var json=res.data;
+            if(json.re==1) {
+              deferred.resolve({re: 1, data: ''});
+            }
+          }).catch(function(err) {
+            var str='';
+            for(var field in err)
+              str+=err[field];
+            console.error('error=' + str);
+          })
       }
       else{
         deferred.resolve({re:1});
@@ -1928,12 +1935,59 @@ $scope.openAirportTransfer=function(){
             'Authorization': "Bearer " + $rootScope.access_token
           }
         };
-        $cordovaFileTransfer.upload(server, $scope.maintain.description.video, options).then(function(json) {
+        $cordovaFileTransfer.upload(server, $scope.maintain.description.video, options).then(function(res) {
+          var json=res.response;
+          json=JSON.parse(json);
           if(json.re==1){
-            deferred.resolve({re:1});
+            return   $http({
+              method: "POST",
+              url: Proxy.local() + "/svr/request",
+              headers: {
+                'Authorization': "Bearer " + $rootScope.access_token
+              },
+              data: {
+                request: 'createVideoAttachment',
+                info: {
+                  orderId: orderId,
+                  docType:'I7',
+                  path:json.data
+                }
+              }
+            });
           }else{
             deferred.reject({re:-1});
           }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+            var videoAttachId=json.data;
+            if(json.re==1){
+          return  $http({
+                method: "POST",
+                url: Proxy.local() + "/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token
+                },
+                data: {
+                  request: 'updateServiceVideoAttachment',
+                  info: {
+                    orderId: orderId,
+                    videoAttachId:videoAttachId
+                  }
+                }
+              });
+            }
+          }
+        }).then(function(res) {
+          var json=res.data;
+          if(json.re==1) {
+            deferred.resolve({re: 1, data: ''});
+          }
+        }).catch(function(err) {
+          var str='';
+          for(var feild in err)
+            str+=err[field];
+          console.error('error=\r\n' + str);
         })
       }
       else{
@@ -2157,27 +2211,29 @@ $scope.carService=function(){
             }
           }).then(function (res) {
             var json = res.data;
-            if (json.re == 1) {
-              $scope.close_maintenanceTAModal();
-              console.log('service order has been generated');
-              //检查是否需要上传附件信息
-              $scope.videoCheck(order.orderId).then(function (json) {
-                alert('result of videocheck=\r\n' + json);
+            if (json.re == 1) {}
+            else if(json.re==2) {
+              console.error(json.data);
+            }else{}
+            $scope.close_maintenanceTAModal();
+            console.log('service order has been generated');
+            //检查是否需要上传附件信息
+            $scope.videoCheck(order.orderId).then(function (json) {
+              alert('result of videocheck=\r\n' + json);
+              if (json.re == 1) {
+                console.log('视频附件上传成功')
+              }
+              else
+              {}
+              $scope.audioCheck(order.orderId).then(function(json) {
+                alert('result of audiocheck=\r\n' + json);
                 if (json.re == 1) {
-                  console.log('视频附件上传成功')
+                  console.log('音频附件上传成功')
                 }
                 else
                 {}
-                $scope.audioCheck(order.orderId).then(function(json) {
-                  alert('result of audiocheck=\r\n' + json);
-                  if (json.re == 1) {
-                    console.log('音频附件上传成功')
-                  }
-                  else
-                  {}
-                })
               })
-            }
+            })
           }).catch(function (err) {
             var str = '';
             for (var field in err)
@@ -2273,6 +2329,10 @@ $scope.carService=function(){
             }
           }).then(function (res) {
             var json = res.data;
+            console.log('**************************************************');
+            console.log('**************************************************');
+            console.log('**************************************************');
+            console.log('**************go into media check*****************');
               $scope.videoCheck(order.orderId).then(function (json) {
                 alert('result of videocheck=\r\n' + json);
                 if (json.re == 1) {

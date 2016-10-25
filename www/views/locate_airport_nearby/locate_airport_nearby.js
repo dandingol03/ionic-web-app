@@ -7,7 +7,7 @@ angular.module('starter')
 
   .controller('locateAirportNearbyController',function($scope,$state,$http,$timeout,$rootScope,
                                                         BaiduMapService,$cordovaGeolocation,$ionicModal,
-                                                        Proxy,$stateParams) {
+                                                        Proxy,$stateParams,$ionicLoading) {
     $scope.airTransfer = {
       airTransfers: {}
     };
@@ -15,6 +15,24 @@ angular.module('starter')
     if ($stateParams.locateType !== undefined && $stateParams.locateType !== null) {
       $scope.locateType = $stateParams.locateType;
     }
+
+    $scope.filterType={
+
+    };
+
+    switch($scope.locateType)
+    {
+      case 'destiny':
+        $scope.filterType.destiny=true;
+        $scope.filterType.maintenance=false;
+        break;
+      case 'maintenance':
+        $scope.filterType.destiny=false;
+        $scope.filterType.maintenance=true;
+        break;
+    }
+
+
 
     //单选项
     $scope.Mutex=function(item,cluster){
