@@ -253,19 +253,19 @@ angular.module('starter')
     $scope.isShowPicture3= false;
     $scope.setIsShowPicture = function(){
       $scope.isShowPicture = true;
-      $scope.showDemoPicture();
+      $scope.openDemoModal();
     };
     $scope.setIsShowPicture1 = function(){
       $scope.isShowPicture1 = true;
-      $scope.showDemoPicture1();
+      $scope.openDemoModal1();
     };
     $scope.setIsShowPicture2 = function(){
       $scope.isShowPicture2 = true;
-      $scope.showDemoPicture2();
+      $scope.openDemoModal2();
     };
     $scope.setIsShowPicture3 = function(){
       $scope.isShowPicture3 = true;
-      $scope.showDemoPicture3();
+      $scope.openDemoModal3();
     };
 
 
@@ -2236,7 +2236,7 @@ $scope.carService=function(){
               if (json.re == 1) {
                 console.log('音频附件上传成功')
               }
-              else  
+              else
               {}
             });
           }).catch(function (err) {
