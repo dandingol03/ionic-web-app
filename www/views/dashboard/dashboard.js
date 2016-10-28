@@ -6,7 +6,7 @@ angular.module('starter')
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
                                               Proxy,$stateParams,$anchorScroll,
-                                             $cordovaFileTransfer){
+                                             $cordovaFileTransfer,$ionicPopover){
 
 
 
@@ -139,22 +139,44 @@ angular.module('starter')
     }
 
 
-      //生成验证码
-    // $http({
-    //   method: "post",
-    //   url: "/proxy/node_server/svr/request",
-    //   headers: {
-    //     'Authorization': "Bearer " + $rootScope.access_token,
-    //   },
-    //   data:
-    //   {
-    //     request:'generateCode'
-    //   }
-    // }).then(function(res) {
-    //   var json=res.data;
-    // }).catch(function(err) {
-    //   console.log('...');
-    // });
+
+    /***  悬浮窗  ***/
+    $ionicPopover.fromTemplateUrl('/views/popover/order_special_popover.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    /***  悬浮窗  ***/
+
+    $ionicPopover.fromTemplateUrl('btn-popover.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.btnPopover = popover;
+    });
+
+    $scope.openBtnPop=function($event){
+      $scope.btnPopover.show($event);
+    }
+
+    $scope.carNumChange=function(){
+      var event=window.event;
+      $scope.carHint=true;
+      if($scope.btnPopover.isShown()!=true)
+        $scope.btnPopover.show(event);
+      $timeout(function(){
+        $scope.carHint=false;
+        $scope.btnPopover.hide();
+      },100000);
+
+      console.log('carnum is changing');
+    }
 
 
 

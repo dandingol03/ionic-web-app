@@ -1,0 +1,14 @@
+{
+  "name": "angular-popover",
+  "homepage": "https://github.com/FauzanKhan/angular-popover",
+  "_release": "a25774accc",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a25774accccb8ceb5bad9cf0f6bf3c87b9ef08b4"
+  },
+  "_source": "https://github.com/FauzanKhan/angular-popover.git",
+  "_target": "*",
+  "_originalSource": "angular-popover",
+  "_direct": true
+}
