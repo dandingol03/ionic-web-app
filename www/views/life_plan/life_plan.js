@@ -13,6 +13,7 @@ angular.module('starter')
     $scope.order = $rootScope.lifeInsuranceOrder;
     $scope.modifiedFlag = $rootScope.modifiedFlag;
 
+
     //评价方案
     var plans=[];
     var data=$scope.order.plans;

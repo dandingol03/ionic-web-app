@@ -10,7 +10,6 @@ angular.module('starter')
     //$scope.item=$stateParams.plan;
       $scope.item=$rootScope.plan;
 
-
     if(Object.prototype.toString.call($scope.item)=='[object String]')
         $scope.item=JSON.parse($scope.item);
 
@@ -18,6 +17,45 @@ angular.module('starter')
     $scope.backup=$scope.item;
 
     $scope.title=$scope.item.main.name;
+
+      var insurancederId = null;
+
+      $rootScope.lifeInsurance.orders.map(function(order,i){
+        if(order.orderId==$scope.item.orderId)
+          insurancederId=order.insurancederId;
+      })
+
+      $scope.age=0;
+      $http({
+        method: "POST",
+        url: Proxy.local() + '/svr/request',
+        headers: {
+          'Authorization': "Bearer " + $rootScope.access_token
+        },
+        data: {
+          request: 'getPersonInfo',
+          info:{
+            personId:insurancederId
+          }
+        }
+      }).then(function(res) {
+        var json=res.data;
+        if(json.re==1){
+        var personInfo=json.data;
+          var perBirthday=new Date(personInfo.perBirthday);
+          var cur=new Date();
+          $scope.age=cur.getFullYear()-perBirthday.getFullYear();
+
+        }
+      })
+
+
+      $scope.feeYearMap={1:{text:'趸交',year:1},2:{text:'5年',year:5},3:{text:'10年',year:10},
+        4:{text:'15年',year:15},5:{text:'20年',year:10},6:{text:'缴至60岁',year:60-$scope.age}};
+
+      $scope.item.main.feeYearTypeName=$scope.feeYearMap[$scope.item.feeYearType].text;
+      $scope.item.main.feeYear=$scope.feeYearMap[$scope.item.feeYearType].year;
+
 
     $scope.tabs=['产品简介','保费测算'];
     //$scope.tab=$scope.tabs[0];
@@ -38,12 +76,33 @@ angular.module('starter')
       $ionicSlideBoxDelegate.slide(i);
     }
 
-    var insurancederId = null;
 
-      $rootScope.lifeInsurance.orders.map(function(order,i){
-        if(order.orderId==$scope.item.orderId)
-          insurancederId=order.insurancederId;
-      })
+
+      $scope.feeYearType_select=function()
+      {
+         var buttons=[{text:'趸交',year:1},{text:'5年',year:5},
+           {text:'10年',year:10},{text:'15年',year:15},{text:'20年',year:20},
+           {text:'缴至60岁'}];
+        $ionicActionSheet.show({
+          buttons:buttons,
+          titleText: '选择你需要的保障',
+          cancelText: 'Cancel',
+          buttonClicked: function(index) {
+            $scope.item.main.feeYearTypeName = buttons[index].text;
+            $scope.item.main.feeYearType = index+1;
+            if(index!=5){
+              $scope.item.main.feeYear=buttons[index].year;
+            }else{
+
+              $scope.item.main.feeYear = 60-$scope.age;
+            }
+            $scope.changeInsuranceFee();
+            return true;
+          },
+          cssClass:'motor_insurance_actionsheet'
+        });
+      }
+
 
     $scope.changeInsuranceFee=function(){
      //1.把新保额填到数据库对应的方案中去;   2.按比例计算出相应的保费
@@ -65,10 +124,11 @@ angular.module('starter')
       }).then(function(res) {
         var json = res.data;
         if(json.re==1){
-          var insuranceFee=json.data.insuranceFee;
-          var baseInsuranceQuota=json.data.insuranceQuota;
+          var insuranceFee=json.data.feeItem.insuranceFee;
+          var baseInsuranceQuota=json.data.feeItem.insuranceQuota;
           $scope.item.insuranceFeeTotal=
-            $scope.item.insuranceQuota/baseInsuranceQuota*insuranceFee*$scope.item.feeYearType
+            $scope.item.insuranceQuota/baseInsuranceQuota*insuranceFee*$scope.item.main.feeYear
+
         }
 
         $rootScope.plan=$scope.item;
@@ -266,13 +326,13 @@ angular.module('starter')
           }
         }
       ];
-      var myPopup = $ionicPopup.show({
-        template: '保存修改之后,需要等待后台工作人员进行审核',
-        title: '<strong>修改保修方案?</strong>',
-        subTitle: '',
-        scope: $scope,
-        buttons: buttons
-      });
+      // var myPopup = $ionicPopup.show({
+      //   template: '保存修改之后,需要等待后台工作人员进行审核',
+      //   title: '<strong>修改保修方案?</strong>',
+      //   subTitle: '',
+      //   scope: $scope,
+      //   buttons: buttons
+      // });
 
 
     };

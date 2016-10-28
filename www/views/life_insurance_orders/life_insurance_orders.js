@@ -100,14 +100,23 @@ angular.module('starter')
         var json=res.data;
         if(json.re==1){
           $scope.orders=json.data;
+          if($rootScope.lifeInsurance==undefined||$rootScope.lifeInsurance==null)
+            $rootScope.lifeInsurance={};
           $rootScope.lifeInsurance.orders=$scope.orders;
           $scope.orders.map(function(order,i) {
+
+            var date=new Date(order.applyTime);
+            order.applyTime=date.getFullYear().toString()+'-'
+              +date.getMonth().toString()+'-'+date.getDate().toString();
+
             if(order.orderState==3){
               $scope.pricingOrders.push(order);
             }
             if(order.orderState==5){
               $scope.finishOrders.push(order);
             }
+
+
           })
           $rootScope.lifeInsurance.pricingOrders = $scope.pricingOrders;
           $rootScope.lifeInsurance.finishOrders = $scope.finishOrders;
@@ -135,7 +144,6 @@ angular.module('starter')
         }
       }).then(function(res) {
         $scope.plans=res.data.data;
-
         var data=res.data.data;
         var plans=[];
         data.map(function(plan,i) {

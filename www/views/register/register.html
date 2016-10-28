@@ -1,0 +1,54 @@
+
+  <ion-view view-title="注册">
+    <ion-content class="background">
+
+
+      <div class="banner">
+        <img src="img/banner@2x.png"/>
+      </div>
+
+
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-person  placeholder-icon"></i>
+          <input type="text" placeholder="Username" ng-model="userInfo.username">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-locked placeholder-icon"></i>
+          <input type="password" placeholder="********" ng-model="userInfo.password">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-at  placeholder-icon"></i>
+          <input type="email" placeholder="Email">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-iphone placeholder-icon"></i>
+          <input type="number" placeholder="Mobile" ng-model="userInfo.mobile">
+        </label>
+        <div>
+          <label class="item item-input">
+            <i class="icon ion-iphone placeholder-icon"></i>
+            <input type="number" placeholder="验证码" ng-model="userInfo.code">
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <button class="button button-assertive"
+                ng-click="getCode()"
+                style="margin-right: 10%;margin-left: 5%;width: 35%;">
+          获取验证码
+        </button>
+
+        <button class="button button-assertive"
+                ng-click="register()"
+                style="margin-right: 10%;margin-left: 5%;width: 35%;">
+          注册
+        </button>
+
+
+      </div>
+
+  </ion-content>
+</ion-view>

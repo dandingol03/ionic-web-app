@@ -10,16 +10,21 @@
       <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
         <ion-slide>
           <div class="item"
-               ng-click="addAttachment(carInfo,'licenseCard1_img')"
+
                style="background-color:transparent;border: 0px;">
             <div
               style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
               >
-                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                  <span class="input-label" style="display: inline-block;width: 65%;background-color:transparent;">
                     行驶证1面:
                   </span>
-                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                  <span style="font-size: 2em;display: inline-block;width: 15%;background-color:transparent;"
+                        ng-click="addAttachment(carInfo,'licenseCard1_img')">
                     <i class="ion-camera"></i>
+                  </span>
+                  <span style="font-size: 2em;display: inline-block;width: 15%;background-color:transparent;"
+                        ng-click="setIsShowLicenseCard1()">
+                   <i class="ion-help-circled" ></i>
                   </span>
             </div>
           </div>
@@ -37,16 +42,21 @@
 
         <ion-slide>
           <div class="item"
-               ng-click="addAttachment(carInfo,'licenseCard2_img')"
+
                style="background-color:transparent;border: 0px;">
             <div
               style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
               >
-                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                  <span class="input-label" style="display: inline-block;width: 65%;background-color:transparent;">
                     行驶证2面:
                   </span>
-                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                  <span style="font-size: 2em;display: inline-block;width: 15%;background-color:transparent;"
+                        ng-click="addAttachment(carInfo,'licenseCard2_img')">
                     <i class="ion-camera"></i>
+                  </span>
+                  <span style="font-size: 2em;display: inline-block;width: 15%;background-color:transparent;"
+                        ng-click="setIsShowLicenseCard2()">
+                   <i class="ion-help-circled"  ></i>
                   </span>
             </div>
           </div>
@@ -64,16 +74,21 @@
 
         <ion-slide>
           <div class="item"
-               ng-click="addAttachment(carInfo,'licenseCard3_img')"
+
                style="background-color:transparent;border: 0px;">
             <div
               style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
               >
-                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                  <span class="input-label" style="display: inline-block;width: 65%;background-color:transparent;">
                     行驶证3面:
                   </span>
-                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                  <span style="font-size: 2em;display: inline-block;width: 15%;background-color:transparent;"
+                        ng-click="addAttachment(carInfo,'licenseCard3_img')">
                     <i class="ion-camera"></i>
+                  </span>
+                  <span style="font-size: 2em;display: inline-block;width: 15%;background-color:transparent;"
+                    ng-click="setIsShowLicenseCard3()">
+                   <i class="ion-help-circled"  ></i>
                   </span>
             </div>
           </div>

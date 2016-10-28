@@ -514,6 +514,13 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/login/login.html'
       })
 
+
+      .state('register',{
+        url:'/register',
+        controller: 'registerController',
+        templateUrl:'views/register/register.html'
+      })
+
       .state('car_insurance',{
         url:'/car_insurance/:carInfo',
         controller:'carInsuranceController',

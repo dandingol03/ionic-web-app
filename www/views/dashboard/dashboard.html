@@ -131,7 +131,7 @@
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;background-color:transparent">
           <span style="display: inline-block;width: 10%;"></span>
             <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
-               需要的保障::
+               需要的保障:
             </span>
           <div
             ng-if="life_insurance.order.insuranceType==undefined||life_insurance.order.insuranceType==null"
@@ -161,7 +161,7 @@
           <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
              有无社保:
           </span>
-          <div style="display: inline-block;width: 40%;font-size: 14px;text-align: left;">
+          <div style="display: inline-block;width: 40%;font-size: 14px;text-align: left;padding-left: 10%;">
             {{life_insurance.order.hasSocietyInsurance==true?'有':'无'}}
           </div>
 
@@ -179,7 +179,7 @@
           <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
             有无商业保险:
           </span>
-          <div style="display: inline-block;width: 40%;font-size: 14px;text-align: left;">
+          <div style="display: inline-block;width: 40%;font-size: 14px;text-align: left;padding-left: 10%;">
             {{life_insurance.order.hasCommerceInsurance==true?'有':'无'}}
           </div>
 
@@ -332,17 +332,17 @@
             <div class="item"
                  style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
 
-              <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
+              <span  style="display: inline-block;width: 25%;text-align: left">
                 厂牌型号:
               </span>
-              <span style="width: 65%;display: inline-block;text-align: left;">
+              <span style="width: 60%;display: inline-block;text-align: left;">
                 <input type="text" placeholder="输入厂牌型号"
                        style="display:inline-block;background-color: transparent;" ng-value="carInfo.factoryNum"
                        ng-model="carInfo.factoryNum"
                   />
               </span>
-              <span style="display: inline-block;position: absolute;right: 5%;">
-                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture()"></i>
+              <span style="display: inline-block;width:15%;" ng-click="setIsShowPicture()">
+                <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
               </span>
             </div>
 
@@ -352,14 +352,14 @@
               <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
                 发动机号:
               </span>
-              <span style="width: 65%;display: inline-block;text-align: left;">
+              <span style="width: 60%;display: inline-block;text-align: left;">
                 <input type="text" placeholder="输入发动机号"
                        style="display:inline-block;background-color: transparent;" ng-value="carInfo.engineNum"
                        ng-model="carInfo.engineNum"
                   />
               </span>
-              <span style="display: inline-block;position: absolute;right: 5%;">
-                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture1()"></i>
+              <span style="display: inline-block;width:15%;" ng-click="setIsShowPicture1()">
+                <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
               </span>
             </div>
 
@@ -369,19 +369,18 @@
               <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
                 车架号:
               </span>
-              <span style="width: 65%;display: inline-block;text-align: left;">
+              <span style="width: 60%;display: inline-block;text-align: left;">
                 <input type="text" placeholder="设置车架号"
                        style="display:inline-block;background-color: transparent;" ng-value="carInfo.frameNum"
                        ng-model="carInfo.engineNum"
                   />
               </span>
-              <span style="display: inline-block;position: absolute;right: 5%;">
-                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture2()"></i>
+              <span style="display: inline-block;width:15%;" ng-click="setIsShowPicture2()">
+                <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
               </span>
             </div>
 
       </div>
-
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="postCarInfo()">

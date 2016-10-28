@@ -134,6 +134,8 @@ angular.module('starter')
         $scope.maintain.unit=$rootScope.maintain.unit;
       if($rootScope.maintain.dailys!==undefined&&$rootScope.maintain.dailys!==null)
         $scope.dailys=$rootScope.maintain.dailys;
+      if($rootScope.maintain.serviceType!==undefined&&$rootScope.maintain.serviceType!==null)
+        $scope.maintain.serviceType=$rootScope.maintain.serviceType;
     }else{
       $scope.subTabIndex=0;
     }
@@ -250,35 +252,56 @@ angular.module('starter')
     $scope.isShowPicture = false;
     $scope.isShowPicture1 = false;
     $scope.isShowPicture2 = false;
-    $scope.isShowPicture3= false;
+    $scope.isShowPicture3 = false;
+    $scope.isShowLicenseCard1 = false;
+    $scope.isShowLicenseCard2 = false;
+    $scope.isShowLicenseCard3 = false;
+
     $scope.setIsShowPicture = function(){
       $scope.isShowPicture = true;
-      $scope.showDemoPicture();
+      $scope.openDemoModal();
     };
     $scope.setIsShowPicture1 = function(){
       $scope.isShowPicture1 = true;
-      $scope.showDemoPicture1();
+      $scope.openDemoModal1();
     };
     $scope.setIsShowPicture2 = function(){
       $scope.isShowPicture2 = true;
-      $scope.showDemoPicture2();
+      $scope.openDemoModal2();
     };
     $scope.setIsShowPicture3 = function(){
       $scope.isShowPicture3 = true;
-      $scope.showDemoPicture3();
+      $scope.openDemoModal3();
+    };
+    $scope.setIsShowLicenseCard1 = function(){
+      $scope.isShowLicenseCard1 = true;
+      $scope.openLicenseCard1();
+    };
+    $scope.setIsShowLicenseCard2 = function(){
+      $scope.isShowLicenseCard2 = true;
+      $scope.openLicenseCard2();
+    };
+    $scope.setIsShowLicenseCard3 = function(){
+      $scope.isShowLicenseCard3 = true;
+      $scope.openLicenseCard3();
     };
 
 
     /*** show demo modal ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal.html',{
       scope:  $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-bottom'
     }).then(function(modal) {
       $scope.show_demo_modal = modal;
     });
 
     $scope.openDemoModal= function(){
-      $scope.show_demo_modal.show();
+      try{
+        $scope.show_demo_modal.show();
+      }catch(e){
+        alert('error=\r\n'+ e.toString());
+      }
+
     };
 
     $scope.closeDemoModal= function() {
@@ -287,9 +310,9 @@ angular.module('starter')
     /*** show demo modal ***/
 
     /*** show demo modal1 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal1.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal1.html',{
       scope:  $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-bottom'
     }).then(function(modal) {
       $scope.show_demo_modal1 = modal;
     });
@@ -304,9 +327,9 @@ angular.module('starter')
     /*** show demo modal1 ***/
 
     /*** show demo modal2 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal2.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal2.html',{
       scope:  $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-bottom'
     }).then(function(modal) {
       $scope.show_demo_modal2 = modal;
     });
@@ -321,9 +344,9 @@ angular.module('starter')
     /*** show demo modal2 ***/
 
     /*** show demo modal3 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal3.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal3.html',{
       scope:  $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-bottom'
     }).then(function(modal) {
       $scope.show_demo_modal3 = modal;
     });
@@ -337,10 +360,60 @@ angular.module('starter')
     };
     /*** show demo modal3 ***/
 
+    /*** ShowLicenseCard1 ***/
+    $ionicModal.fromTemplateUrl('views/modal/show_license_card_modal1.html',{
+      scope:  $scope,
+      animation: 'slide-in-bottom'
+    }).then(function(modal) {
+      $scope.show_license_card_modal1 = modal;
+    });
+
+    $scope.openLicenseCard1= function(){
+      $scope.show_license_card_modal1.show();
+    };
+
+    $scope.closeLicenseCard1= function() {
+      $scope.show_license_card_modal1.hide();
+    };
+    /*** ShowLicenseCard1 ***/
+
+    /*** ShowLicenseCard2 ***/
+    $ionicModal.fromTemplateUrl('views/modal/show_license_card_modal2.html',{
+      scope:  $scope,
+      animation: 'slide-in-bottom'
+    }).then(function(modal) {
+      $scope.show_license_card_modal2 = modal;
+    });
+
+    $scope.openLicenseCard2= function(){
+      $scope.show_license_card_modal2.show();
+    };
+
+    $scope.closeLicenseCard2= function() {
+      $scope.show_license_card_modal2.hide();
+    };
+    /*** ShowLicenseCard2 ***/
+
+    /*** ShowLicenseCard3 ***/
+    $ionicModal.fromTemplateUrl('views/modal/show_license_card_modal3.html',{
+      scope:  $scope,
+      animation: 'slide-in-bottom'
+    }).then(function(modal) {
+      $scope.show_license_card_modal3 = modal;
+    });
+
+    $scope.openLicenseCard3= function(){
+      $scope.show_license_card_modal3.show();
+    };
+
+    $scope.closeLicenseCard3= function() {
+      $scope.show_license_card_modal3.hide();
+    };
+    /*** ShowLicenseCard3 ***/
 
 
     /*** bind car modal ***/
-    $ionicModal.fromTemplateUrl('/views/modal/bind_car.html',{
+    $ionicModal.fromTemplateUrl('views/modal/bind_car.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -1618,9 +1691,9 @@ angular.module('starter')
     $scope.saveLifeInsuranceIntend=function()
     {
 
-      if($scope.life_insurance.order.insurancederId!==undefined&&$scope.life_insurance.order.insurancederId!==null
-        &&$scope.life_insurance.order.insurerId!==undefined&&$scope.life_insurance.order.insurerId!==null
-        &&$scope.life_insurance.order.benefiterId!==undefined&&$scope.life_insurance.order.benefiterId!==null
+      if($scope.life_insurance.order.insuranceder.personId!==undefined&&$scope.life_insurance.order.insuranceder.personId!==null
+        &&$scope.life_insurance.order.insurer.personId!==undefined&&$scope.life_insurance.order.insurer.personId!==null
+        &&$scope.life_insurance.order.benefiter.personId!==undefined&&$scope.life_insurance.order.benefiter.personId!==null
         &&$scope.life_insurance.order.planInsuranceFee!==undefined&&$scope.life_insurance.order.planInsuranceFee!==null
       )
       {
@@ -1928,7 +2001,7 @@ $scope.openAirportTransfer=function(){
       if($scope.maintain.description.video!=null&&$scope.maintain.description.video!=undefined)
       {
         var server=Proxy.local()+'/svr/request?' +
-          'request=uploadVideo&orderId=orderId&fileName='+$scope.maintain.description.video+'&videoType=serviceVideo';
+          'request=uploadVideo&orderId='+orderId+'&fileName='+$scope.maintain.description.video+'&videoType=serviceVideo';
         var options = {
           fileKey:'file',
           headers: {
@@ -2218,6 +2291,14 @@ $scope.carService=function(){
             $scope.close_maintenanceTAModal();
             console.log('service order has been generated');
             //检查是否需要上传附件信息
+            $scope.audioCheck(order.orderId).then(function(json) {
+              alert('result of audiocheck=\r\n' + json);
+              if (json.re == 1) {
+                console.log('音频附件上传成功')
+              }
+              else
+              {}
+            });
             $scope.videoCheck(order.orderId).then(function (json) {
               alert('result of videocheck=\r\n' + json);
               if (json.re == 1) {
@@ -2225,15 +2306,9 @@ $scope.carService=function(){
               }
               else
               {}
-              $scope.audioCheck(order.orderId).then(function(json) {
-                alert('result of audiocheck=\r\n' + json);
-                if (json.re == 1) {
-                  console.log('音频附件上传成功')
-                }
-                else
-                {}
-              })
-            })
+
+            });
+
           }).catch(function (err) {
             var str = '';
             for (var field in err)
@@ -3731,6 +3806,7 @@ $scope.carService=function(){
         }
       },{enableHighAccuracy: true});
     }
+
 
     $scope.pickMaintain=function(locateType,index){
       if($scope.maintain.description.text!==undefined&&$scope.maintain.description.text!==null)
