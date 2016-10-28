@@ -226,7 +226,6 @@
             <span
               class="input-label"
               style="display: inline-block;width: 25%;text-align: left"
-              ng-click="openBtnPop($event)"
               >
               车牌:
             </span>
@@ -236,7 +235,6 @@
                      style="display:inline-block;background-color: transparent;"
                      ng-value="carInfo.carNum"
                      ng-model="carInfo.carNum"
-                     ng-change="carNumChange()"
                 />
             </span>
 
@@ -247,14 +245,6 @@
               >
             <i class="ion-chevron-down"></i>
           </span>
-
-          <script id="btn-popover.html" type="text/ng-template">
-            <ion-popover-view style="height: 10%;margin-top:16px;">
-              <ion-content>
-                Hello!
-              </ion-content>
-            </ion-popover-view>
-          </script>
 
         </div>
 

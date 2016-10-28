@@ -155,30 +155,6 @@ angular.module('starter')
     };
     /***  悬浮窗  ***/
 
-    $ionicPopover.fromTemplateUrl('btn-popover.html', {
-      scope: $scope
-    }).then(function(popover) {
-      $scope.btnPopover = popover;
-    });
-
-    $scope.openBtnPop=function($event){
-      $scope.btnPopover.show($event);
-    }
-
-    $scope.carNumChange=function(){
-      var event=window.event;
-      $scope.carHint=true;
-      if($scope.btnPopover.isShown()!=true)
-        $scope.btnPopover.show(event);
-      $timeout(function(){
-        $scope.carHint=false;
-        $scope.btnPopover.hide();
-      },100000);
-
-      console.log('carnum is changing');
-    }
-
-
 
     //车辆信息
     $scope.carInfo=
@@ -209,7 +185,6 @@ angular.module('starter')
         if(json.re==1) {
           var carInfo=json.data[0];
           $scope.carInfo=carInfo;
-          alert("carId="+carInfo.carId);
         }
         console.log('success');
       })
