@@ -6,7 +6,7 @@ angular.module('starter')
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
                                               Proxy,$stateParams,$anchorScroll,
-                                             $cordovaFileTransfer){
+                                             $cordovaFileTransfer,$ionicPopover){
 
 
 
@@ -141,22 +141,44 @@ angular.module('starter')
     }
 
 
-      //生成验证码
-    // $http({
-    //   method: "post",
-    //   url: "/proxy/node_server/svr/request",
-    //   headers: {
-    //     'Authorization': "Bearer " + $rootScope.access_token,
-    //   },
-    //   data:
-    //   {
-    //     request:'generateCode'
-    //   }
-    // }).then(function(res) {
-    //   var json=res.data;
-    // }).catch(function(err) {
-    //   console.log('...');
-    // });
+
+    /***  悬浮窗  ***/
+    $ionicPopover.fromTemplateUrl('/views/popover/order_special_popover.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    /***  悬浮窗  ***/
+
+    $ionicPopover.fromTemplateUrl('btn-popover.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.btnPopover = popover;
+    });
+
+    $scope.openBtnPop=function($event){
+      $scope.btnPopover.show($event);
+    }
+
+    $scope.carNumChange=function(){
+      var event=window.event;
+      $scope.carHint=true;
+      if($scope.btnPopover.isShown()!=true)
+        $scope.btnPopover.show(event);
+      $timeout(function(){
+        $scope.carHint=false;
+        $scope.btnPopover.hide();
+      },100000);
+
+      console.log('carnum is changing');
+    }
 
 
 
@@ -273,6 +295,7 @@ angular.module('starter')
       $scope.isShowPicture3 = true;
       $scope.openDemoModal3();
     };
+
     $scope.setIsShowLicenseCard1 = function(){
       $scope.isShowLicenseCard1 = true;
       $scope.openLicenseCard1();
@@ -2307,6 +2330,7 @@ $scope.carService=function(){
               else
               {}
 
+
             });
 
           }).catch(function (err) {
@@ -2443,6 +2467,7 @@ $scope.carService=function(){
         var unit=null;
         var units=null;
         var servicePerson=null;
+        var servicePlace=null;
         $scope.carManage.carId=$scope.carInfo.carId;
         switch($scope.service)
         {
@@ -2450,21 +2475,25 @@ $scope.carService=function(){
             servicePerson=$scope.carManage.carValidate.servicePerson;
             unit=$scope.carManage.carValidate.unit;
             units=$scope.carManage.carValidate.units;
+            servicePlace=$scope.carManage.carValidate.unit.unitName;
             break;
           case '代办行驶证年审':
             servicePerson=$scope.carManage.paperValidate.servicePerson;
             unit=$scope.carManage.paperValidate.unit;
             units=$scope.carManage.paperValidate.units;
+            servicePlace=$scope.carManage.carValidate.unit.unitName;
             break;
           case '接送机':
             servicePerson=$scope.carManage.airportTransfer.servicePerson;
             unit=$scope.carManage.airportTransfer.unit;
             units=$scope.carManage.airportTransfer.units;
+            servicePlace=JSON.stringify($scope.carManage.airportTransfer.destiny)
             break;
           case '取送车':
             servicePerson=$scope.carManage.parkCar.servicePerson;
             unit=$scope.carManage.parkCar.unit;
             units=$scope.carManage.parkCar.units;
+            servicePlace=JSON.stringify($scope.carManage.parkCar.destiny);
             break;
         }
 
@@ -2481,7 +2510,8 @@ $scope.carService=function(){
               data: {
                 request: 'generateCarServiceOrder',
                 info: {
-                  carManage: $scope.carManage
+                  carManage: $scope.carManage,
+                  servicePlace:servicePlace
                 }
               }
             }).then(function(res) {

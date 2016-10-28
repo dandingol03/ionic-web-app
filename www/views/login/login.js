@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('loginController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
     ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera,Proxy
-      ,$WebSocket,ModalService){
+      ,$WebSocket,ModalService,$ionicPopover){
 
 
 
@@ -325,6 +325,23 @@ angular.module('starter')
         });
 
     }
+
+
+    /***  悬浮窗  ***/
+    $ionicPopover.fromTemplateUrl('/views/popover/order_special_popover.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    /***  悬浮窗  ***/
+
 
 
     $scope.uploadCarAndOwnerInfo=function()

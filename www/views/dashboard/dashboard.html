@@ -223,16 +223,23 @@
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
 
-            <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
+            <span
+              class="input-label"
+              style="display: inline-block;width: 25%;text-align: left"
+              ng-click="openBtnPop($event)"
+              >
               车牌:
             </span>
+
             <span style="width: 65%;display: inline-block;text-align: left;">
               <input type="text" placeholder="请输入您的车牌"
                      style="display:inline-block;background-color: transparent;"
                      ng-value="carInfo.carNum"
                      ng-model="carInfo.carNum"
+                     ng-change="carNumChange()"
                 />
             </span>
+
             <span
               class="camera"
               style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
@@ -240,6 +247,15 @@
               >
             <i class="ion-chevron-down"></i>
           </span>
+
+          <script id="btn-popover.html" type="text/ng-template">
+            <ion-popover-view style="height: 10%;margin-top:16px;">
+              <ion-content>
+                Hello!
+              </ion-content>
+            </ion-popover-view>
+          </script>
+
         </div>
 
         <div class="item"
@@ -312,11 +328,6 @@
               {{carInfo.issueDate!==undefined&&carInfo.issueDate!==null?carInfo.issueDate:'点击选择发证日期'}}
           </span>
 
-          <span
-            style="position: absolute;right: 5%;top:30%;font-size: 1.5em;"
-            >
-              <i class="ion-calendar"></i>
-            </span>
         </div>
 
         <div
@@ -335,12 +346,15 @@
               <span  style="display: inline-block;width: 25%;text-align: left">
                 厂牌型号:
               </span>
+
               <span style="width: 60%;display: inline-block;text-align: left;">
+
                 <input type="text" placeholder="输入厂牌型号"
                        style="display:inline-block;background-color: transparent;" ng-value="carInfo.factoryNum"
                        ng-model="carInfo.factoryNum"
                   />
               </span>
+
               <span style="display: inline-block;width:15%;" ng-click="setIsShowPicture()">
                 <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
               </span>
@@ -497,7 +511,7 @@
           <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
             <ion-slide>
               <div class="item"
-                   style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:0px;padding:10px;position: relative;background-color:transparent;">
+                   style="margin:1px;border:0px;padding:10px;position: relative;background-color:transparent;">
                 <span class="input-label" style="display: inline-block;width: 35%;text-align: left;">
                        故障文字描述:
                 </span>
@@ -694,7 +708,7 @@
 
       <div class="list list-inset padding" style="margin-bottom:40px;background: transparent" ng-if="service=='代办车辆年审'">
 
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+        <div class="item" style="margin:1px;border-top:0px;border-bottom:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
             选择车管所:
           </span>
@@ -706,7 +720,7 @@
           </span>
         </div>
 
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+        <div class="item" style="margin:1px;border-top:0px;border-bottom:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
             服务人员:
           </span>
@@ -717,7 +731,8 @@
             </span>
           </span>
         </div>
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+
+        <div class="item" style="margin:1px;border-top:0px;border-bottom:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
             服务费:
           </span>
@@ -735,7 +750,7 @@
 
       <div class="list list-inset padding" style="margin-bottom:40px;background: transparent" ng-if="service=='代办行驶证年审'">
 
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+        <div class="item" style="margin:1px;border-top:0px;border-bottom:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
             选择审证所:
           </span>
@@ -747,7 +762,7 @@
           </span>
         </div>
 
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+        <div class="item" style="margin:1px;border-top:0px;border-bottom:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
           <span class="input-label" style="display: inline-block;">
             服务人员:
           </span>
@@ -758,7 +773,8 @@
             </span>
           </span>
         </div>
-        <div class="item" style="margin:1px;border-top:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
+
+        <div class="item" style="margin:1px;border-top:0px;border-bottom:1px solid #222;border-left:0px;border-right:0px;padding:10px;background: transparent">
                  <span class="input-label" style="display: inline-block;">
                   服务费:
                 </span>

@@ -2,13 +2,14 @@
  * Created by apple-1 on 2016/10/24.
  */
 angular.module('starter')
-  .controller('contact_informationController',function($scope,$state,$http,$rootScope,$ionicPopup){
+  .controller('contact_informationController',function($scope,$state,$http,
+                                                       $rootScope,$ionicPopup,Proxy){
 
 
   $scope.search=function() {
   $http({
     method: "POST",
-    url: "/proxy/node_server/svr/request",
+    url: Proxy.local()+"/svr/request",
     headers: {
       'Authorization': "Bearer " + $rootScope.access_token
     },
@@ -19,17 +20,16 @@ angular.module('starter')
       }
     }
   }).then(function (res) {
-    if (res.data !== undefined && res.data !== null) {
-      $scope.data = res.data;
+    var json=res.data;
+    if(json.re==1) {
+      $scope.data=json;
+      return true;
     }
-    else {
-    }
-    return true;
   }).then(function (res) {
 
-    $scope.contactions[0].name = $scope.data.data[0].mobilePhone;
-    $scope.contactions[1].name = $scope.data.data[0].EMAIL;
-    $scope.contactions[2].name = $scope.data.data[0].perAddress;
+    $scope.contactions[0].name = $scope.data.data.mobilePhone;
+    $scope.contactions[1].name = $scope.data.data.EMAIL;
+    $scope.contactions[2].name = $scope.data.data.perAddress;
   }).catch(function (err) {
     console.log('server fetch error');
   });
@@ -71,14 +71,13 @@ angular.module('starter')
 
                 $http({
                   method: "POST",
-                  url: "/proxy/node_server/svr/request",
+                  url: Proxy.local()+"/svr/request",
                   headers: {
                     'Authorization': "Bearer " + $rootScope.access_token
                   },
                   data: {
                     request: 'updatePersonInfo',
                     info:{
-                      personId:$scope.personId,
                       data:$scope.data
                     }
                   }
@@ -87,7 +86,6 @@ angular.module('starter')
                   return true;
                 }).catch(function (err) {
                   console.log('server fetch error');
-
                 });
 
               }
