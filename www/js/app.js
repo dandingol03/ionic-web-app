@@ -514,6 +514,13 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/login/login.html'
       })
 
+
+      .state('register',{
+        url:'/register',
+        controller: 'registerController',
+        templateUrl:'views/register/register.html'
+      })
+
       .state('car_insurance',{
         url:'/car_insurance/:carInfo',
         controller:'carInsuranceController',
@@ -700,7 +707,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
 
-          return "http://192.168.1.113:3000";
+          return "http://192.168.1.110:3000";
 
         else
           return "/proxy/node_server";

@@ -89,6 +89,13 @@ angular.module('starter')
     }
 
 
+    //注册
+    $scope.goRegister = function(){
+      $state.go('register');
+    }
+
+
+
 
 
 

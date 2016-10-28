@@ -110,16 +110,23 @@
                   <label class="item item-input" style="width: 50%;">
                     <i class="ion-record"></i>缴费年限:
                   </label>
-                  <label class="item item-input">
-                    <input type="text" value="{{item.feeYearType}}"
-                           style="font-size: 1em;background: #fafafa;color: #111;"
-                           ng-model="item.feeYearType"
+                  <div
+                    ng-if="item.main.feeYearType==undefined||item.main.feeYearType==null"
+                    style="display: inline-block;width: 40%;color: rgba(17, 17, 17, 0.42);font-size: 14px;text-align: left;"
+                  >
+                    <span>请选择缴费年限</span>
+                  </div>
+                  <div
+                    ng-if="item.main.feeYearTypeName!==undeifned&&item.main.feeYearTypeName!==null"
+                    style="display: inline-block;width: 40%;font-size: 14px;text-align: left;"
+                  >
+                    {{item.main.feeYearTypeName}}
+                  </div>
+                  <div style="display: inline-block;width: 15%;text-align: left;"
+                       ng-click="feeYearType_select()">
+                    <span style="font-size: 1.4em;"><i class="ion-chevron-down"></i></span>
+                  </div>
 
-                          />
-                  </label>
-                  <button style="background-color: #ccc;" ng-click="changeInsuranceFee()">
-                    更改
-                  </button>
 
                 </div>
               </ion-item>
@@ -147,7 +154,7 @@
               <ion-item>
                 <div class="row">
                   <div class="col">
-                    <p style="color:#f00"><i class="ion-record"></i>主险保费总计:</p>
+                    <p style="color:#f00"><i class="ion-record"></i>主险保费:</p>
                   </div>
                   <div class="col"><p>{{item.insuranceFeeTotal}}</p></div>
                 </div>
@@ -207,7 +214,7 @@
             <div class="col det_content">
 
               <h4 style="color:#f00">
-                合计&nbsp;&nbsp;:   <span>{{item.insuranceFeeTotal}}</span>
+                主险保费合计&nbsp;&nbsp;:   <span>{{item.insuranceFeeTotal}}</span>
               </h4>
             </div>
           </div>

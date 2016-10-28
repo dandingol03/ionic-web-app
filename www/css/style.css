@@ -546,6 +546,27 @@ table.table1{
   width:100%
 }
 
+
+/*register*/
+.register_page .logo{
+  position:static;
+  padding-top:50px;
+}
+.register_page {
+  background:#343434;
+}
+.register_page .log_form .item {
+  border-bottom: 1px solid #fff;
+}
+.register_page .log_form .button.button-positive.log_btn {
+  min-height: 47px;
+  line-height: 44px;
+}
+.register_page .logo img {
+  margin-bottom: 45px;
+}
+
+
 /* Table 1 Style */
 table.table1{
   font-family: "Trebuchet MS", sans-serif;
