@@ -6,7 +6,7 @@ angular.module('starter')
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
                                               Proxy,$stateParams,$anchorScroll,
-                                             $cordovaFileTransfer,$ionicPopover){
+                                             $cordovaFileTransfer,$ionicPopover,$ionicSlideBoxDelegate){
 
 
 
@@ -136,11 +136,24 @@ angular.module('starter')
         $scope.dailys=$rootScope.maintain.dailys;
       if($rootScope.maintain.serviceType!==undefined&&$rootScope.maintain.serviceType!==null)
         $scope.maintain.serviceType=$rootScope.maintain.serviceType;
+      //车险行驶证框下标
+      if($rootScope.dashboard.licenseIndex!==undefined&&$rootScope.dashboard.licenseIndex!==null)
+        $scope.licenseIndex=$rootScope.dashboard.licenseIndex;
+      else
+        $scope.licenseIndex=0;
     }else{
       $scope.subTabIndex=0;
     }
 
+    $scope.licenseIndexChange=function(i) {
+      $scope.licenseIndex=i;
+      $ionicSlideBoxDelegate.$getByHandle('carInfo-slide').slide(i);
+    };
 
+    $scope.licenseSlideChanged=function(i){
+      $scope.licenseIndex=i;
+
+    }
 
     /***  悬浮窗  ***/
     $scope.carNumHint='hidden list';
