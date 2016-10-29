@@ -221,7 +221,8 @@
     <div ng-if="tabIndex==0" class='home-tab' style="background-color: transparent;">
       <div class="list list-inset padding" style="margin-bottom:40px;background-color: transparent;">
         <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+             padding:10px;background-color:transparent;overflow:initial">
 
             <span
               class="input-label"
@@ -235,15 +236,30 @@
                      style="display:inline-block;background-color: transparent;"
                      ng-value="carInfo.carNum"
                      ng-model="carInfo.carNum"
+                     ng-focus="focusInCarNum()"
+                     ng-blur="blurCarNum()"
                 />
             </span>
 
             <span
               class="camera"
-              style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
+              style="display:inline-block;width: 10%;font-size: 1.5em;vertical-align: middle;position: relative"
               ng-click="selectCarInfoByCarNum()"
               >
             <i class="ion-chevron-down"></i>
+               <div ng-class="carNumHint"
+                    style="position: absolute;top:100%;right: 1px ">
+                 <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                   <span style="position: absolute;right: 8px;font-size: 1.1em;top:0px;color:#fff;">
+                     <i class="ion-arrow-up-b"></i>
+                   </span>
+                 </div>
+                 <div class="item"
+                      style="padding: 2px;font-size: 0.3em;"
+                      ng-click="tab_change(0);closePopover();">
+                   点击此按钮也可以选择车牌
+                 </div>
+               </div>
           </span>
 
         </div>
@@ -254,7 +270,7 @@
             <span class="input-label" style="display:inline-block;width: 25%;text-align: left">
               姓名:
             </span>
-          <span style="width: 65%;display: inline-block;text-align: left;">
+          <span style="width: 75%;display: inline-block;text-align: left;">
                 <input type="text"
                        placeholder="输入车主姓名"
                        style="display: inline-block;width: 65%;background-color:transparent;"
@@ -281,7 +297,7 @@
           </span>
           <span
             class="camera"
-            style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
+            style="width: 10%;display: inline-block;font-size: 1.5em;"
             ng-click="addAttachment(carInfo,'ownerIdCard_img')"
             >
             <i class="ion-android-camera"></i>
@@ -307,14 +323,15 @@
 
 
         <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+             padding:10px;background-color:transparent;"
              ng-click="datepick(carInfo,'issueDate')"
           >
             <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
                 发证日期:
             </span>
 
-          <span style="display: inline-block;width: 65%;color:#888;font-size: .9em;text-align: left;">
+          <span style="display: inline-block;width: 75%;color:#888;font-size: .9em;text-align: left;">
               {{carInfo.issueDate!==undefined&&carInfo.issueDate!==null?carInfo.issueDate:'点击选择发证日期'}}
           </span>
 

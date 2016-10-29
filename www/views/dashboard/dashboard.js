@@ -143,19 +143,15 @@ angular.module('starter')
 
 
     /***  悬浮窗  ***/
-    $ionicPopover.fromTemplateUrl('/views/popover/order_special_popover.html', {
-      scope: $scope
-    }).then(function(popover) {
-      $scope.popover = popover;
-    });
-
-    $scope.openPopover = function($event) {
-      $scope.popover.show($event);
-    };
-    $scope.closePopover = function() {
-      $scope.popover.hide();
-    };
+    $scope.carNumHint='hidden list';
+    $scope.focusInCarNum=function(){
+      $scope.carNumHint='list';
+    }
+    $scope.blurCarNum= function () {
+      $scope.carNumHint = 'hidden list';
+    }
     /***  悬浮窗  ***/
+
 
 
     //车辆信息
