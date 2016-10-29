@@ -186,12 +186,13 @@ angular.module('starter')
           var json=res.data;
           if(json.re==1) {
             console.log('update carInfo completely');
+            $state.go('tabs.dashboard')
           }
         });
     }
 
     /*** show demo modal ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -208,7 +209,7 @@ angular.module('starter')
     /*** show demo modal ***/
 
     /*** show demo modal1 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal1.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal1.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -225,7 +226,7 @@ angular.module('starter')
     /*** show demo modal1 ***/
 
     /*** show demo modal2 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal2.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal2.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -242,7 +243,7 @@ angular.module('starter')
     /*** show demo modal2 ***/
 
     /*** show demo modal3 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal3.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal3.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {

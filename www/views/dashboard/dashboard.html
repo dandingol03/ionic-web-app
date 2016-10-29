@@ -220,6 +220,15 @@
     <!-- 车险 -->
     <div ng-if="tabIndex==0" class='home-tab' style="background-color: transparent;">
       <div class="list list-inset padding" style="margin-bottom:40px;background-color: transparent;">
+
+
+        <div
+          class="item item-divider"
+          style="margin:1px;border:0px;padding:10px;position: relative;background-color:transparent;"
+        >
+          <span>选择车辆</span>
+        </div>
+
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
 
@@ -273,31 +282,29 @@
             </span>
         </div>
 
+        <!--<div class="item"-->
+             <!--style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;-->
+             <!--padding:10px;position: relative;background-color:transparent;">-->
+          <!--<span class="input-label" style="display: block;width: 50%;text-align: left;padding: 0;padding-left: 3%;">-->
+                <!--被保险人身份证:-->
+          <!--</span>-->
+          <!--<span style="width:85%;display: inline-block;text-align: left">-->
+            <!--<input type="text" placeholder="请输入被保险人身份证"-->
+                   <!--style="display: inline-block;background-color:transparent;"-->
+                   <!--ng-value="carInfo.ownerIdCard"-->
+                   <!--ng-model="carInfo.ownerIdCard"-->
+                   <!--ng-change="filterInfoByPerIdCard(carInfo.ownerIdCard)"-->
+              <!--/>-->
+          <!--</span>-->
+          <!--<span-->
+            <!--class="camera"-->
+            <!--style="top:30%;font-size: 1.5em;"-->
+            <!--ng-click="addAttachment(carInfo,'ownerIdCard_img')"-->
+            <!--&gt;-->
+            <!--<i class="ion-android-camera"></i>-->
+          <!--</span>-->
 
-
-        <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
-             padding:10px;position: relative;background-color:transparent;">
-          <span class="input-label" style="display: inline-block;width: 25%;text-align: left;">
-                身份证:
-          </span>
-          <span style="width: 65%;display: inline-block;text-align: left">
-            <input type="text" placeholder="请输入被保险人身份证"
-                   style="display: inline-block;background-color:transparent;"
-                   ng-value="carInfo.ownerIdCard"
-                   ng-model="carInfo.ownerIdCard"
-                   ng-change="filterInfoByPerIdCard(carInfo.ownerIdCard)"
-              />
-          </span>
-          <span
-            class="camera"
-            style="position: absolute;right:5%;top:30%;font-size: 1.5em;"
-            ng-click="addAttachment(carInfo,'ownerIdCard_img')"
-            >
-            <i class="ion-android-camera"></i>
-          </span>
-
-        </div>
+        <!--</div>-->
 
 
         <!--<div class="item"-->
@@ -329,16 +336,6 @@
           </span>
 
         </div>
-
-        <div
-          class="item item-divider"
-          style="margin:1px;border:0px;padding:10px;position: relative;background-color:transparent;"
-          >
-          <span>绑定车辆信息</span>
-        </div>
-
-
-
 
             <div class="item"
                  style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
@@ -397,8 +394,14 @@
       </div>
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
+        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="goto('/update_car_info')">
+          <h1 class="title">创建新车</h1>
+        </div>
+      </div>
+
+      <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="postCarInfo()">
-          <h1 class="title">保存车辆信息</h1>
+          <h1 class="title">下一步</h1>
         </div>
       </div>
     </div>
