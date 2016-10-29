@@ -984,3 +984,7 @@ table.table1{
   text-align: center;
   color:#00f;
 }
+
+.hidden{
+  display: none;
+}

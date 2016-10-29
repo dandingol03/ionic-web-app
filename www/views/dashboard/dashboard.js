@@ -6,7 +6,7 @@ angular.module('starter')
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
                                               Proxy,$stateParams,$anchorScroll,
-                                             $cordovaFileTransfer,$ionicPopover){
+                                             $cordovaFileTransfer,$ionicPopover,$ionicSlideBoxDelegate){
 
 
 
@@ -136,49 +136,60 @@ angular.module('starter')
         $scope.dailys=$rootScope.maintain.dailys;
       if($rootScope.maintain.serviceType!==undefined&&$rootScope.maintain.serviceType!==null)
         $scope.maintain.serviceType=$rootScope.maintain.serviceType;
+      //车险行驶证框下标
+      if($rootScope.dashboard.licenseIndex!==undefined&&$rootScope.dashboard.licenseIndex!==null)
+        $scope.licenseIndex=$rootScope.dashboard.licenseIndex;
+      else
+        $scope.licenseIndex=0;
     }else{
       $scope.subTabIndex=0;
     }
 
-
-
-    /***  悬浮窗  ***/
-    $ionicPopover.fromTemplateUrl('/views/popover/order_special_popover.html', {
-      scope: $scope
-    }).then(function(popover) {
-      $scope.popover = popover;
-    });
-
-    $scope.openPopover = function($event) {
-      $scope.popover.show($event);
+    $scope.licenseIndexChange=function(i) {
+      $scope.licenseIndex=i;
+      $ionicSlideBoxDelegate.$getByHandle('carInfo-slide').slide(i);
     };
-    $scope.closePopover = function() {
-      $scope.popover.hide();
-    };
-    /***  悬浮窗  ***/
 
-    $ionicPopover.fromTemplateUrl('btn-popover.html', {
-      scope: $scope
-    }).then(function(popover) {
-      $scope.btnPopover = popover;
-    });
+    $scope.licenseSlideChanged=function(i){
+      $scope.licenseIndex=i;
 
-    $scope.openBtnPop=function($event){
-      $scope.btnPopover.show($event);
     }
 
-    $scope.carNumChange=function(){
-      var event=window.event;
-      $scope.carHint=true;
-      if($scope.btnPopover.isShown()!=true)
-        $scope.btnPopover.show(event);
-      $timeout(function(){
-        $scope.carHint=false;
-        $scope.btnPopover.hide();
-      },100000);
-
-      console.log('carnum is changing');
+    /***  悬浮窗  ***/
+    $scope.carNumHint='hidden list';
+    $scope.focusInCarNum=function(){
+      $scope.carNumHint='list';
     }
+    $scope.blurCarNum= function () {
+      $scope.carNumHint = 'hidden list';
+    }
+
+    $scope.factoryNumHint='hidden list';
+    $scope.focusInFactoryNum=function(){
+      $scope.factoryNumHint='list';
+    }
+    $scope.blurFactoryNum=function(){
+      $scope.factoryNumHint='hidden list';
+    }
+
+    $scope.engineNumHint='hidden list';
+    $scope.focusInEngineNum=function(){
+      $scope.engineNumHint='list';
+    }
+    $scope.blurEngineNum=function(){
+      $scope.engineNumHint='hidden list';
+    }
+
+    $scope.frameNumHint='hidden list';
+    $scope.focusInFrameNum=function(){
+      $scope.frameNumHint='list';
+    }
+    $scope.blurFrameNum=function(){
+      $scope.frameNumHint='hidden list';
+    }
+
+    $scope.slideDescriptionHint='list';
+    /***  悬浮窗  ***/
 
 
 
@@ -211,7 +222,6 @@ angular.module('starter')
         if(json.re==1) {
           var carInfo=json.data[0];
           $scope.carInfo=carInfo;
-          alert("carId="+carInfo.carId);
         }
         console.log('success');
       })
