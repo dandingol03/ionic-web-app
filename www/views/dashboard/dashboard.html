@@ -288,32 +288,6 @@
             </span>
         </div>
 
-<<<<<<< HEAD
-        <!--<div class="item"-->
-             <!--style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;-->
-             <!--padding:10px;position: relative;background-color:transparent;">-->
-          <!--<span class="input-label" style="display: block;width: 50%;text-align: left;padding: 0;padding-left: 3%;">-->
-                <!--被保险人身份证:-->
-          <!--</span>-->
-          <!--<span style="width:85%;display: inline-block;text-align: left">-->
-            <!--<input type="text" placeholder="请输入被保险人身份证"-->
-                   <!--style="display: inline-block;background-color:transparent;"-->
-                   <!--ng-value="carInfo.ownerIdCard"-->
-                   <!--ng-model="carInfo.ownerIdCard"-->
-                   <!--ng-change="filterInfoByPerIdCard(carInfo.ownerIdCard)"-->
-              <!--/>-->
-          <!--</span>-->
-          <!--<span-->
-            <!--class="camera"-->
-            <!--style="top:30%;font-size: 1.5em;"-->
-            <!--ng-click="addAttachment(carInfo,'ownerIdCard_img')"-->
-            <!--&gt;-->
-            <!--<i class="ion-android-camera"></i>-->
-          <!--</span>-->
-
-        <!--</div>-->
-
-
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
              padding:10px;position: relative;background-color:transparent;">
@@ -339,21 +313,6 @@
         </div>
 
 
-        <!--<div class="item"-->
-        <!--style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;"-->
-        <!--ng-if="carInfo.ownerIdCard_img!==undefined&&carInfo.ownerIdCard_img!==null"-->
-        <!-->
-
-
-        <div class="item"
-             style="position: relative;margin-bottom: 0px;background-color:transparent;border:none;"
-             ng-if="carInfo.ownerIdCard_img!==undefined&&carInfo.ownerIdCard_img!==null"
-          >
-          <div style="width:  60%;height:160px;border:1px dashed #9e9e9e">
-            <img ng-src="{{carInfo.ownerIdCard_img}}" alt="" style="max-width: 70%;margin-top:5%;"/>
-          </div>
-        </div>
-
 
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
@@ -378,42 +337,6 @@
         </div>
 
         <!-- 车辆信息tab -->
-        <div class="list" style="margin-bottom: 20px;">
-          <ul class="ul-tabs transparent"
-              style="background: rgb(203,203,203);background-color: transparent;border-bottom: 0px;">
-
-            <li style="width:50%;">
-              <div class="cell"
-                   ng-class="{true: 'selected', false: ''}[licenseIndex==0]"
-                   ng-click="licenseIndexChange(0)"
-                   style="background-color: transparent;"
-                >
-                <span style="position:absolute;left: 20%;top:40%;color: black;">
-                  填写信息
-                </span>
-              </div>
-            </li>
-
-            <li style="width:50%;">
-              <div class="cell"
-                   ng-class="{true: 'selected', false: ''}[licenseIndex==1]"
-                   ng-click="licenseIndexChange(1)"
-                   style="background-color: transparent;position: relative"
-                >
-                <span style="position:absolute;left: 20%;top:40%;color: black;">
-                  上传行驶证照片
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <ion-slide-box
-          on-slide-changed="licenseSlideChanged($index)"
-          style="background-color: transparent;"
-          delegate-handle="carInfo-slide"
-          >
-          <ion-slide>
 
             <div class="item"
                  style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
@@ -525,38 +448,6 @@
                 </span>
             </div>
 
-          </ion-slide>
-
-          <ion-slide>
-            <div class="item"
-                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
-             padding:10px;position: relative;background-color:transparent;">
-              <span class="input-label" style="display: inline-block;width: 25%;text-align: left;">
-
-              </span>
-              <span
-                style="width: 65%;display: inline-block;text-align: left"
-                ng-click="addAttachment(carInfo,'ownerIdCard_img')"
-                >
-                 <button class="button button-calm">
-                   上传行驶证照片
-                 </button>
-              </span>
-              <span
-                style="width: 10%;display: inline-block;font-size: 1.5em;"
-                >
-              </span>
-
-            </div>
-
-
-
-          </ion-slide>
-
-        </ion-slide-box>
-
-
-
       </div>
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
@@ -566,7 +457,7 @@
       </div>
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
-        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="postCarInfo()">
+        <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="select_type()">
           <h1 class="title">下一步</h1>
         </div>
       </div>

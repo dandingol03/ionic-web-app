@@ -91,59 +91,190 @@
         </div>
 
 
-        <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
-
-              <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
-                厂牌型号:
-              </span>
-              <span style="width: 65%;display: inline-block;text-align: left;">
-                <input type="text" placeholder="输入厂牌型号"
-                       style="display:inline-block;background-color: transparent;" ng-value="carInfo.factoryNum"
-                       ng-model="carInfo.factoryNum"
-                  />
-              </span>
-              <span style="display: inline-block;position: absolute;right: 5%;">
-                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture()"></i>
-              </span>
+        <div
+          class="item item-divider"
+          style="margin:1px;border:0px;padding:10px;position: relative;background-color:transparent;"
+        >
+          <span>绑定车辆信息</span>
         </div>
 
-        <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
+        <!-- 车辆信息tab -->
+        <div class="list" style="margin-bottom: 20px;">
+          <ul class="ul-tabs transparent"
+              style="background: rgb(203,203,203);background-color: transparent;border-bottom: 0px;">
 
-              <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
-                发动机号:
-              </span>
-              <span style="width: 65%;display: inline-block;text-align: left;">
-                <input type="text" placeholder="输入发动机号"
-                       style="display:inline-block;background-color: transparent;" ng-value="carInfo.engineNum"
-                       ng-model="carInfo.engineNum"
-                  />
-              </span>
-              <span style="display: inline-block;position: absolute;right: 5%;">
-                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture1()"></i>
-              </span>
+            <li style="width:50%;">
+              <div class="cell"
+                   ng-class="{true: 'selected', false: ''}[licenseIndex==0]"
+                   ng-click="licenseIndexChange(0)"
+                   style="background-color: transparent;"
+              >
+                <span style="position:absolute;left: 20%;top:40%;color: black;">
+                  填写信息
+                </span>
+              </div>
+            </li>
+
+            <li style="width:50%;">
+              <div class="cell"
+                   ng-class="{true: 'selected', false: ''}[licenseIndex==1]"
+                   ng-click="licenseIndexChange(1)"
+                   style="background-color: transparent;position: relative"
+              >
+                <span style="position:absolute;left: 20%;top:40%;color: black;" ng-click="">
+                  上传行驶证
+                </span>
+              </div>
+            </li>
+          </ul>
         </div>
 
-        <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;">
+        <ion-slide-box
+          on-slide-changed="licenseSlideChanged($index)"
+          style="background-color: transparent;"
+          delegate-handle="carInfo-slide"
+        >
+          <ion-slide>
 
-              <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
-                车架号:
-              </span>
-              <span style="width: 65%;display: inline-block;text-align: left;">
-                <input type="text" placeholder="设置车架号"
-                       style="display:inline-block;background-color: transparent;" ng-value="carInfo.frameNum"
-                       ng-model="carInfo.frameNum"
+            <div class="item"
+                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+               padding:10px;background-color:transparent;overflow: initial">
+                <span  style="display: inline-block;width: 25%;text-align: left">
+                    厂牌型号:
+                </span>
+
+              <span style="width: 60%;display: inline-block;text-align: left;">
+
+                  <input type="text" placeholder="输入厂牌型号"
+                         style="display:inline-block;background-color: transparent;" ng-value="carInfo.factoryNum"
+                         ng-model="carInfo.factoryNum"
+                         ng-focus="focusInFactoryNum()"
+                         ng-blur="blurFactoryNum()"
                   />
-              </span>
-              <span style="display: inline-block;position: absolute;right: 5%;">
-                <i class="ion-help-circled" style="font-size: 1.5em;" ng-click="setIsShowPicture2()"></i>
-              </span>
-        </div>
+                </span>
 
-      </div>
+              <span style="display: inline-block;width:15%;position: relative"
+                    ng-click="setIsShowPicture()"
+              >
+                  <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
 
+                   <div ng-class="factoryNumHint"
+                        style="position: absolute;top:-120%;right: 1px ">
+                     <div class="item"
+                          style="padding: 2px;font-size: 0.3em;"
+                          ng-click="tab_change(0);closePopover();">
+                       点击此按钮可以查看厂牌型号示例
+                     </div>
+                     <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                       <span style="position: absolute;right: 12px;font-size: 1.1em;top:0px;color:#fff;">
+                         <i class="ion-arrow-down-b"></i>
+                       </span>
+                     </div>
+                   </div>
+                </span>
+            </div>
+
+            <div class="item"
+                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+               padding:10px;background-color:transparent;overflow: initial">
+
+                <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
+                  发动机号:
+                </span>
+              <span style="width: 60%;display: inline-block;text-align: left;">
+                  <input type="text" placeholder="输入发动机号"
+                         style="display:inline-block;background-color: transparent;" ng-value="carInfo.engineNum"
+                         ng-model="carInfo.engineNum"
+                         ng-focus="focusInEngineNum()"
+                         ng-blur="blurEngineNum()"
+                  />
+                </span>
+              <span style="display: inline-block;width:15%;position: relative"
+                    ng-click="setIsShowPicture1()">
+                  <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+
+                  <div ng-class="engineNumHint"
+                       style="position: absolute;top:-120%;right: 1px ">
+                    <div class="item"
+                         style="padding: 2px;font-size: 0.3em;"
+                    >
+                      点击此按钮可以查看发动机号示例
+                    </div>
+                    <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                       <span style="position: absolute;right: 12px;font-size: 1.1em;top:0px;color:#fff;">
+                         <i class="ion-arrow-down-b"></i>
+                       </span>
+                    </div>
+                  </div>
+                </span>
+            </div>
+
+            <div class="item"
+                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+               padding:10px;background-color:transparent;overflow: initial">
+
+                <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
+                  车架号:
+                </span>
+              <span style="width: 60%;display: inline-block;text-align: left;">
+                  <input type="text" placeholder="设置车架号"
+                         style="display:inline-block;background-color: transparent;"
+                         ng-value="carInfo.frameNum"
+                         ng-model="carInfo.frameNum"
+                         ng-focus='focusInFrameNum()'
+                         ng-blur="blurFrameNum()"
+                  />
+                </span>
+              <span
+                style="display: inline-block;width:15%;position: relative"
+                ng-click="setIsShowPicture2()">
+                  <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+
+                  <div ng-class="frameNumHint"
+                       style="position: absolute;top:-120%;right: 1px ">
+                    <div class="item"
+                         style="padding: 2px;font-size: 0.3em;"
+                    >
+                      点击此按钮可以查看车架号示例
+                    </div>
+                    <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                       <span style="position: absolute;right: 12px;font-size: 1.1em;top:0px;color:#fff;">
+                         <i class="ion-arrow-down-b"></i>
+                       </span>
+                    </div>
+                  </div>
+                </span>
+            </div>
+
+          </ion-slide>
+
+          <ion-slide>
+            <div class="item"
+                 style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+             padding:10px;position: relative;background-color:transparent;">
+              <span class="input-label" style="display: inline-block;width: 25%;text-align: left;">
+
+              </span>
+              <span
+                style="width: 65%;display: inline-block;text-align: left"
+                ng-click="open_uploadLicenseCardModal()"
+              >
+                 <button class="button button-calm">
+                   上传行驶证
+                 </button>
+              </span>
+              <span
+                style="width: 10%;display: inline-block;font-size: 1.5em;"
+              >
+              </span>
+
+            </div>
+
+
+
+          </ion-slide>
+
+        </ion-slide-box>
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
         <div class="bar bar-footer  bar-assertive" style="position: static" ng-click="postCarInfo()">
