@@ -1289,8 +1289,8 @@ angular.module('starter')
 
 
 
-    $scope.postCarInfo=function(){
 
+    $scope.postCarInfo=function(){
 
       if(window.cordova!==undefined&&window.cordova!==null)
       {
@@ -1376,7 +1376,6 @@ angular.module('starter')
                           str+=err[field];
                         console.error('error=\r\n' + str);
                       });
-
 
                     }
                   }

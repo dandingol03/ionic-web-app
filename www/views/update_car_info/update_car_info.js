@@ -5,8 +5,18 @@ angular.module('starter')
   .controller('updateCarInfoController',function($scope,$state,$http,$rootScope,$ionicActionSheet,
                                                $cordovaFileTransfer,$cordovaFile,
                                                  $cordovaCamera,$cordovaImagePicker,Proxy,
-                                                 $ionicModal,ionicDatePicker){
+                                                 $ionicModal,ionicDatePicker,$ionicSlideBoxDelegate){
 
+
+    $scope.licenseIndexChange=function(i) {
+      $scope.licenseIndex=i;
+      $ionicSlideBoxDelegate.$getByHandle('carInfo-slide').slide(i);
+    };
+
+    $scope.licenseSlideChanged=function(i){
+      $scope.licenseIndex=i;
+
+    }
 
     $scope.go_back=function(){
       window.history.back();
@@ -169,6 +179,50 @@ angular.module('starter')
     }
 
 
+    /***  悬浮窗  ***/
+    $scope.carNumHint='hidden list';
+    $scope.focusInCarNum=function(){
+      $scope.carNumHint='list';
+    }
+    $scope.blurCarNum= function () {
+      $scope.carNumHint = 'hidden list';
+    }
+
+    $scope.factoryNumHint='hidden list';
+    $scope.focusInFactoryNum=function(){
+      $scope.factoryNumHint='list';
+    }
+    $scope.blurFactoryNum=function(){
+      $scope.factoryNumHint='hidden list';
+    }
+
+    $scope.engineNumHint='hidden list';
+    $scope.focusInEngineNum=function(){
+      $scope.engineNumHint='list';
+    }
+    $scope.blurEngineNum=function(){
+      $scope.engineNumHint='hidden list';
+    }
+
+    $scope.frameNumHint='hidden list';
+    $scope.focusInFrameNum=function(){
+      $scope.frameNumHint='list';
+    }
+    $scope.blurFrameNum=function(){
+      $scope.frameNumHint='hidden list';
+    }
+
+    $scope.slideDescriptionHint='list';
+    /***  悬浮窗  ***/
+
+
+    //车险行驶证框下标
+    if($rootScope.dashboard.licenseIndex!==undefined&&$rootScope.dashboard.licenseIndex!==null)
+      $scope.licenseIndex=$rootScope.dashboard.licenseIndex;
+    else
+      $scope.licenseIndex=0;
+
+
     $scope.postCarInfo=function(){
       $http({
         method: "POST",
@@ -181,17 +235,33 @@ angular.module('starter')
           request:'uploadCarAndOwnerInfo',
           info:$scope.carInfo
         }
-      }).
-        then(function (res) {
+      }).then(function (res) {
           var json=res.data;
           if(json.re==1) {
-            console.log('update carInfo completely');
+
+            var confirmPopup = $ionicPopup.confirm({
+              title: '缺少行驶证照片',
+              template: '请问是否选择上传行驶证',
+              okText:'上传',
+              cancelText:'取消'
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+                $scope.open_uploadLicenseCardModal();
+              } else {
+                console.log('You are not sure');
+              }
+            });
           }
+
+            console.log('update carInfo completely');
+            $state.go('tabs.dashboard')
+
         });
     }
 
     /*** show demo modal ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -208,7 +278,7 @@ angular.module('starter')
     /*** show demo modal ***/
 
     /*** show demo modal1 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal1.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal1.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -225,7 +295,7 @@ angular.module('starter')
     /*** show demo modal1 ***/
 
     /*** show demo modal2 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal2.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal2.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -242,7 +312,7 @@ angular.module('starter')
     /*** show demo modal2 ***/
 
     /*** show demo modal3 ***/
-    $ionicModal.fromTemplateUrl('/views/modal/show_demo_modal3.html',{
+    $ionicModal.fromTemplateUrl('views/modal/show_demo_modal3.html',{
       scope:  $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -257,6 +327,26 @@ angular.module('starter')
       $scope.show_demo_modal3.hide();
     };
     /*** show demo modal3 ***/
+
+    /*** bind upload_licenseCard_modal***/
+    $ionicModal.fromTemplateUrl('views/modal/upload_licenseCard_modal.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.upload_licenseCard_modal = modal;
+    });
+
+    $scope.open_uploadLicenseCardModal= function(){
+      $scope.upload_licenseCard_modal.show();
+    };
+
+    $scope.close_uploadLicenseCardModal= function() {
+      $scope.upload_licenseCard_modal.hide();
+    };
+    /*** bind upload_licenseCard_modal ***/
+
+
     $scope.showDemoPicture = function() {
       if ($scope.isShowPicture == true) {
         $scope.openDemoModal();
