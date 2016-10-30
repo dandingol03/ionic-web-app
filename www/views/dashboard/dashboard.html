@@ -278,54 +278,56 @@
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;padding:10px;background-color:transparent;"
           >
             <span class="input-label" style="display:inline-block;width: 25%;text-align: left">
-              姓名:
+              车主姓名:
             </span>
           <span style="width: 75%;display: inline-block;text-align: left;">
-                <input type="text"
-                       placeholder="输入车主姓名"
-                       style="display: inline-block;width: 65%;background-color:transparent;"
-                       ng-value="carInfo.ownerName"
-                       ng-model="carInfo.ownerName"/>
+                <!--<input type="text"-->
+                       <!--placeholder="输入车主姓名"-->
+                       <!--style="display: inline-block;width: 65%;background-color:transparent;"-->
+                       <!--ng-value="carInfo.ownerName"-->
+                       <!--ng-model="carInfo.ownerName"/>-->
+            {{carInfo.ownerName}}
             </span>
         </div>
 
+        <!--<div class="item"-->
+             <!--style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;-->
+             <!--padding:10px;position: relative;background-color:transparent;">-->
+          <!--<span class="input-label" style="display: inline-block;width: 25%;text-align: left;">-->
+                <!--身份证:-->
+          <!--</span>-->
+          <!--<span style="width: 65%;display: inline-block;text-align: left">-->
+            <!--<input type="text" placeholder="请输入被保险人身份证"-->
+                   <!--style="display: inline-block;background-color:transparent;"-->
+                   <!--ng-value="carInfo.ownerIdCard"-->
+                   <!--ng-model="carInfo.ownerIdCard"-->
+                   <!--ng-change="filterInfoByPerIdCard(carInfo.ownerIdCard)"-->
+              <!--/>-->
+          <!--</span>-->
+          <!--<span-->
+            <!--class="camera"-->
+            <!--style="width: 10%;display: inline-block;font-size: 1.5em;"-->
+            <!--ng-click="addAttachment(carInfo,'ownerIdCard_img')"-->
+            <!--&gt;-->
+            <!--<i class="ion-android-camera"></i>-->
+          <!--</span>-->
+
+        <!--</div>-->
+
+
+
         <div class="item"
              style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
-             padding:10px;position: relative;background-color:transparent;">
-          <span class="input-label" style="display: inline-block;width: 25%;text-align: left;">
-                身份证:
-          </span>
-          <span style="width: 65%;display: inline-block;text-align: left">
-            <input type="text" placeholder="请输入被保险人身份证"
-                   style="display: inline-block;background-color:transparent;"
-                   ng-value="carInfo.ownerIdCard"
-                   ng-model="carInfo.ownerIdCard"
-                   ng-change="filterInfoByPerIdCard(carInfo.ownerIdCard)"
-              />
-          </span>
-          <span
-            class="camera"
-            style="width: 10%;display: inline-block;font-size: 1.5em;"
-            ng-click="addAttachment(carInfo,'ownerIdCard_img')"
-            >
-            <i class="ion-android-camera"></i>
-          </span>
+             padding:10px;background-color:transparent;">
+             <!--ng-click="datepick(carInfo,'issueDate')"-->
 
-        </div>
-
-
-
-        <div class="item"
-             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
-             padding:10px;background-color:transparent;"
-             ng-click="datepick(carInfo,'issueDate')"
-          >
             <span class="input-label" style="display: inline-block;width: 25%;text-align: left">
                 发证日期:
             </span>
 
           <span style="display: inline-block;width: 75%;color:#888;font-size: .9em;text-align: left;">
               {{carInfo.issueDate!==undefined&&carInfo.issueDate!==null?carInfo.issueDate:'点击选择发证日期'}}
+
           </span>
 
         </div>
@@ -347,12 +349,13 @@
 
             <span style="width: 60%;display: inline-block;text-align: left;">
 
-              <input type="text" placeholder="输入厂牌型号"
-                     style="display:inline-block;background-color: transparent;" ng-value="carInfo.factoryNum"
-                     ng-model="carInfo.factoryNum"
-                     ng-focus="focusInFactoryNum()"
-                     ng-blur="blurFactoryNum()"
-                />
+              <!--<input type="text" placeholder="输入厂牌型号"-->
+                     <!--style="display:inline-block;background-color: transparent;" ng-value="carInfo.factoryNum"-->
+                     <!--ng-model="carInfo.factoryNum"-->
+                     <!--ng-focus="focusInFactoryNum()"-->
+                     <!--ng-blur="blurFactoryNum()"-->
+                <!--/>-->
+              {{carInfo.factoryNum}}
             </span>
 
             <span style="display: inline-block;width:15%;position: relative"
@@ -384,12 +387,13 @@
               发动机号:
             </span>
             <span style="width: 60%;display: inline-block;text-align: left;">
-              <input type="text" placeholder="输入发动机号"
-                     style="display:inline-block;background-color: transparent;" ng-value="carInfo.engineNum"
-                     ng-model="carInfo.engineNum"
-                     ng-focus="focusInEngineNum()"
-                     ng-blur="blurEngineNum()"
-                />
+              <!--<input type="text" placeholder="输入发动机号"-->
+                     <!--style="display:inline-block;background-color: transparent;" ng-value="carInfo.engineNum"-->
+                     <!--ng-model="carInfo.engineNum"-->
+                     <!--ng-focus="focusInEngineNum()"-->
+                     <!--ng-blur="blurEngineNum()"-->
+                <!--/>-->
+              {{carInfo.engineNum}}
             </span>
             <span style="display: inline-block;width:15%;position: relative"
                   ng-click="setIsShowPicture1()">
@@ -419,13 +423,14 @@
               车架号:
             </span>
             <span style="width: 60%;display: inline-block;text-align: left;">
-              <input type="text" placeholder="设置车架号"
-                     style="display:inline-block;background-color: transparent;"
-                     ng-value="carInfo.frameNum"
-                     ng-model="carInfo.frameNum"
-                     ng-focus='focusInFrameNum()'
-                     ng-blur="blurFrameNum()"
-                />
+              <!--<input type="text" placeholder="设置车架号"-->
+                     <!--style="display:inline-block;background-color: transparent;"-->
+                     <!--ng-value="carInfo.frameNum"-->
+                     <!--ng-model="carInfo.frameNum"-->
+                     <!--ng-focus='focusInFrameNum()'-->
+                     <!--ng-blur="blurFrameNum()"-->
+                <!--/>-->
+              {{carInfo.frameNum}}
             </span>
             <span
               style="display: inline-block;width:15%;position: relative"

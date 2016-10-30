@@ -236,26 +236,29 @@ angular.module('starter')
           info:$scope.carInfo
         }
       }).then(function (res) {
-          var json=res.data;
-          if(json.re==1) {
+           var json=res.data;
+           if(json.re==1) {
+          //
+          //   var confirmPopup = $ionicPopup.confirm({
+          //     title: '缺少行驶证照片',
+          //     template: '请问是否选择上传行驶证',
+          //     okText:'上传',
+          //     cancelText:'取消'
+          //   });
+          //   confirmPopup.then(function(res) {
+          //     if(res) {
+          //       $scope.open_uploadLicenseCardModal();
+          //     } else {
+          //       console.log('You are not sure');
+          //     }
+          //   });
 
-            var confirmPopup = $ionicPopup.confirm({
-              title: '缺少行驶证照片',
-              template: '请问是否选择上传行驶证',
-              okText:'上传',
-              cancelText:'取消'
-            });
-            confirmPopup.then(function(res) {
-              if(res) {
-                $scope.open_uploadLicenseCardModal();
-              } else {
-                console.log('You are not sure');
-              }
-            });
-          }
+             $state.go('tabs.dashboard');
 
-            console.log('update carInfo completely');
-            $state.go('tabs.dashboard')
+           }
+          //
+          //   console.log('update carInfo completely');
+
 
         });
     }
@@ -419,9 +422,8 @@ angular.module('starter')
 
 
 
-
     //1.附件,通过图库
-    $scope.pickImage=function(img_type){
+    $scope.pickImage=function(item,field){
       var options = {
         maximumImagesCount: 1,
         width: 800,
@@ -431,7 +433,7 @@ angular.module('starter')
 
       $cordovaImagePicker.getPictures(options)
         .then(function (results) {
-          $scope.image[img_type]=results[0];
+          item[field]=results[0];
           alert('img url=' + results[0]);
         }, function (error) {
           alert("error="+error);
@@ -440,7 +442,7 @@ angular.module('starter')
     };
 
     //2.附件,通过照片
-    $scope.takePhoto=function(img_type){
+    $scope.takePhoto=function(item,field){
       var options = {
         quality: 100,
         destinationType: Camera.DestinationType.FILE_URI,
@@ -455,18 +457,15 @@ angular.module('starter')
       };
 
       $cordovaCamera.getPicture(options).then(function(imageURI) {
-        $scope.image[img_type] = imageURI;
-        alert('image url=' + $scope.image[img_type]);
+        item[field] = imageURI;
+        alert('image url=' + item[field]);
       }, function(err) {
         // error
       });
     };
 
-
-
-
     //添加附件
-    $scope.addAttachment=function(img_type)
+    $scope.addAttachment=function(item,field)
     {
       $ionicActionSheet.show({
         buttons: [
@@ -481,10 +480,10 @@ angular.module('starter')
 
           switch (index){
             case 0:
-              $scope.pickImage(img_type);
+              $scope.pickImage(item,field);
               break;
             case 1:
-              $scope.takePhoto(img_type);
+              $scope.takePhoto(item,field);
               break;
             default:
               break;
@@ -493,6 +492,9 @@ angular.module('starter')
         }
       });
     }
+
+
+
 
 
 

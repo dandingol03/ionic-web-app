@@ -46,11 +46,12 @@
               姓名:
           </span>
           <span style="width: 65%;display: inline-block;text-align: left;">
-              <input type="text" placeholder="请输入车主姓名"
-                     style="display:inline-block;background-color: transparent;"
-                     ng-value="carInfo.ownerName"
-                     ng-model="carInfo.ownerName"
-              />
+             <input type="text" placeholder="请输入车主姓名"
+                    style="display:inline-block;background-color: transparent;"
+                    ng-value="carInfo.ownerName"
+                    ng-model="carInfo.ownerName"
+             />
+
             </span>
 
         </div>
@@ -155,23 +156,26 @@
                   />
                 </span>
 
-              <span style="display: inline-block;width:15%;position: relative"
-                    ng-click="setIsShowPicture()"
-              >
+              <span style="display: inline-block;width:15%;position: relative">
+                <div style="width: 100%;" ng-click="setIsShowPicture()">
                   <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+                </div>
 
                    <div ng-class="factoryNumHint"
-                        style="position: absolute;top:-120%;right: 1px ">
+                        style="position: absolute;bottom:-120%;right: 1px ">
+
+                    <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                       <span style="position: absolute;right: 15%;color: #e61d1d;font-size: 1.1em;top:0px;">
+                         <i class="ion-arrow-up-b"></i>
+                       </span>
+                     </div>
+
                      <div class="item"
                           style="padding: 2px;font-size: 0.3em;"
                           ng-click="tab_change(0);closePopover();">
                        点击此按钮可以查看厂牌型号示例
                      </div>
-                     <div style="color:#f9f9f9;position: relative;height: 18px;" >
-                       <span style="position: absolute;right: 12px;font-size: 1.1em;top:0px;color:#fff;">
-                         <i class="ion-arrow-down-b"></i>
-                       </span>
-                     </div>
+
                    </div>
                 </span>
             </div>
@@ -191,22 +195,27 @@
                          ng-blur="blurEngineNum()"
                   />
                 </span>
-              <span style="display: inline-block;width:15%;position: relative"
-                    ng-click="setIsShowPicture1()">
-                  <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+              <span style="display: inline-block;width:15%;position: relative">
+
+                  <div style="width: 100%;" ng-click="setIsShowPicture1()">
+                    <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+                  </div>
 
                   <div ng-class="engineNumHint"
-                       style="position: absolute;top:-120%;right: 1px ">
+                       style="position: absolute;bottom:-120%;right: 1px ">
+
+                     <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                       <span style="position: absolute;right:15%;font-size: 1.1em;top:0px;color:#e61d1d;">
+                         <i class="ion-arrow-up-b"></i>
+                       </span>
+                    </div>
+
                     <div class="item"
                          style="padding: 2px;font-size: 0.3em;"
                     >
                       点击此按钮可以查看发动机号示例
                     </div>
-                    <div style="color:#f9f9f9;position: relative;height: 18px;" >
-                       <span style="position: absolute;right: 12px;font-size: 1.1em;top:0px;color:#fff;">
-                         <i class="ion-arrow-down-b"></i>
-                       </span>
-                    </div>
+
                   </div>
                 </span>
             </div>
@@ -228,22 +237,28 @@
                   />
                 </span>
               <span
-                style="display: inline-block;width:15%;position: relative"
-                ng-click="setIsShowPicture2()">
-                  <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+                style="display: inline-block;width:15%;position: relative">
+
+
+                 <div style="width: 100%;" ng-click="setIsShowPicture2()">
+                    <i class="ion-help-circled" style="font-size: 1.5em;" ></i>
+                  </div>
 
                   <div ng-class="frameNumHint"
-                       style="position: absolute;top:-120%;right: 1px ">
+                       style="position: absolute;bottom:-120%;right: 1px ">
+
+                    <div style="color:#f9f9f9;position: relative;height: 18px;" >
+                       <span style="position: absolute;right: 15%;font-size: 1.1em;top:0px;color:#e61d1d;">
+                         <i class="ion-arrow-up-b"></i>
+                       </span>
+                    </div>
+
                     <div class="item"
                          style="padding: 2px;font-size: 0.3em;"
                     >
                       点击此按钮可以查看车架号示例
                     </div>
-                    <div style="color:#f9f9f9;position: relative;height: 18px;" >
-                       <span style="position: absolute;right: 12px;font-size: 1.1em;top:0px;color:#fff;">
-                         <i class="ion-arrow-down-b"></i>
-                       </span>
-                    </div>
+
                   </div>
                 </span>
             </div>

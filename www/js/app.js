@@ -357,6 +357,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
       try{
         window.plugins.jPushPlugin.init();
+        window.plugins.jPushPlugin.setDebugMode(true);
         window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
         document.addEventListener("jpush.receiveMessage",$rootScope.onReceiveMessage, false);
         document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
@@ -706,9 +707,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-
-          return "http://192.168.0.198:3000";
-
+          return "http://192.168.1.110:3000";
         else
           return "/proxy/node_server";
       },
