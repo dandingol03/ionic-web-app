@@ -327,6 +327,26 @@ angular.module('starter')
       $scope.show_demo_modal3.hide();
     };
     /*** show demo modal3 ***/
+
+    /*** bind upload_licenseCard_modal***/
+    $ionicModal.fromTemplateUrl('views/modal/upload_licenseCard_modal.html',{
+      scope:  $scope,
+      animation: 'animated '+' bounceInUp',
+      hideDelay:920
+    }).then(function(modal) {
+      $scope.upload_licenseCard_modal = modal;
+    });
+
+    $scope.open_uploadLicenseCardModal= function(){
+      $scope.upload_licenseCard_modal.show();
+    };
+
+    $scope.close_uploadLicenseCardModal= function() {
+      $scope.upload_licenseCard_modal.hide();
+    };
+    /*** bind upload_licenseCard_modal ***/
+
+
     $scope.showDemoPicture = function() {
       if ($scope.isShowPicture == true) {
         $scope.openDemoModal();
