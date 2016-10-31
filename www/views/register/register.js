@@ -29,7 +29,7 @@ angular.module('starter')
         var json=res.data;
         if(json.re==1){
           $scope.code=json.data;
-          alert('验证码='+code);
+          alert('验证码='+$scope.code);
         }
         else{
           alert('验证码发送失败');
