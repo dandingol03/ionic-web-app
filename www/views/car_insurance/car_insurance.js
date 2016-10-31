@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('carInsuranceController',function($scope,$state,$http, $location,
                                                 $rootScope,$ionicActionSheet,
-                                                $ionicModal,Proxy,$stateParams,$ionicPopup,ModalService){
+                                                $ionicModal,Proxy,$stateParams,$ionicPopup){
     if($stateParams.carInfo!==undefined&&$stateParams.carInfo!==null)
     {
       var carInfo=$stateParams.carInfo;

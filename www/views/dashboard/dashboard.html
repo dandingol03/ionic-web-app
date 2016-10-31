@@ -140,7 +140,7 @@
             <span>请选择保障</span>
           </div>
           <div
-            ng-if="life_insurance.order.insuranceType!==undeifned&&life_insurance.order.insuranceType!==null"
+            ng-if="life_insurance.order.insuranceType!==undefined&&life_insurance.order.insuranceType!==null"
             style="display: inline-block;width: 40%;font-size: 14px;text-align: left;"
             >
             {{life_insurance.order.insuranceType}}
@@ -458,7 +458,7 @@
 
       <div class="list list-inset padding" style="margin-bottom:40px;background-color:transparent;">
         <div
-          class="bar bar-header bar-balanced"
+          class="bar bar-footer bar-balanced"
           style="position: static;width: 40%;display: inline-block"
           ng-click="goto('/update_car_info')"
           >
