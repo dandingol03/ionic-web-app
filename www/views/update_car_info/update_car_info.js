@@ -350,6 +350,60 @@ angular.module('starter')
     /*** bind upload_licenseCard_modal ***/
 
 
+    /*** ShowLicenseCard1 ***/
+    $ionicModal.fromTemplateUrl('views/modal/show_license_card_modal1.html',{
+      scope:  $scope,
+      animation: 'slide-in-bottom'
+    }).then(function(modal) {
+      $scope.show_license_card_modal1 = modal;
+    });
+
+    $scope.openLicenseCard1= function(){
+      $scope.show_license_card_modal1.show();
+    };
+
+    $scope.closeLicenseCard1= function() {
+      $scope.show_license_card_modal1.hide();
+    };
+    /*** ShowLicenseCard1 ***/
+
+    /*** ShowLicenseCard2 ***/
+    $ionicModal.fromTemplateUrl('views/modal/show_license_card_modal2.html',{
+      scope:  $scope,
+      animation: 'slide-in-bottom'
+    }).then(function(modal) {
+      $scope.show_license_card_modal2 = modal;
+    });
+
+    $scope.openLicenseCard2= function(){
+      $scope.show_license_card_modal2.show();
+    };
+
+    $scope.closeLicenseCard2= function() {
+      $scope.show_license_card_modal2.hide();
+    };
+    /*** ShowLicenseCard2 ***/
+
+    /*** ShowLicenseCard3 ***/
+    $ionicModal.fromTemplateUrl('views/modal/show_license_card_modal3.html',{
+      scope:  $scope,
+      animation: 'slide-in-bottom'
+    }).then(function(modal) {
+      $scope.show_license_card_modal3 = modal;
+    });
+
+    $scope.openLicenseCard3= function(){
+      $scope.show_license_card_modal3.show();
+    };
+
+    $scope.closeLicenseCard3= function() {
+      $scope.show_license_card_modal3.hide();
+    };
+    /*** ShowLicenseCard3 ***/
+
+
+
+
     $scope.showDemoPicture = function() {
       if ($scope.isShowPicture == true) {
         $scope.openDemoModal();
@@ -374,6 +428,11 @@ angular.module('starter')
     $scope.isShowPicture1 = false;
     $scope.isShowPicture2 = false;
     $scope.isShowPicture3= false;
+
+    $scope.isShowLicenseCard1 = false;
+    $scope.isShowLicenseCard2 = false;
+    $scope.isShowLicenseCard3 = false;
+
     $scope.setIsShowPicture = function(){
       $scope.isShowPicture = true;
       $scope.showDemoPicture();
@@ -390,6 +449,20 @@ angular.module('starter')
       $scope.isShowPicture3 = true;
       $scope.showDemoPicture3();
     };
+
+    $scope.setIsShowLicenseCard1 = function(){
+      $scope.isShowLicenseCard1 = true;
+      $scope.openLicenseCard1();
+    };
+    $scope.setIsShowLicenseCard2 = function(){
+      $scope.isShowLicenseCard2 = true;
+      $scope.openLicenseCard2();
+    };
+    $scope.setIsShowLicenseCard3 = function(){
+      $scope.isShowLicenseCard3 = true;
+      $scope.openLicenseCard3();
+    };
+
 
 
     $scope.datepick = function(item,field){
