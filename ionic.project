@@ -1,0 +1,27 @@
+{
+  "name": "ionic-web-app",
+  "app_id": "",
+   "proxies": [
+            {
+              "path":"/login",
+              "proxyUrl":"http://202.194.14.106:3000/login"
+            },
+            {
+              "path":"/securityCode",
+              "proxyUrl":"http://localhost:3000/securityCode"
+            },
+            {
+              "path":"/proxy/node_server",
+              "proxyUrl":"http://localhost:3000"
+            },
+            {
+               "path":"/proxy/remote",
+               "proxyUrl":"http://202.194.14.106:3007"
+            },
+            {
+               "path":"/proxy/send",
+               "proxyUrl":"http://sms.cloud.hbsmservice.com:8080/sms_send2.do"
+            }
+
+          ]
+}

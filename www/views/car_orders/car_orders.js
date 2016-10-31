@@ -107,9 +107,14 @@ angular.module('starter')
       }
     };
 
+    //订单详情
     $scope.goDetail=function(order)
     {
-      $state.go('car_order_prices',{order:JSON.stringify(order)});
+      $state.go('car_order_detail',{order:JSON.stringify(order)});
+    }
+
+    $scope.goOrderPrices=function(order){
+      $state.go('car_order_prices', {order: JSON.stringify(order)});
     }
 
     //提交已选方案
