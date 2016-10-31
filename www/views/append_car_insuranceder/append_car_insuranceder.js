@@ -276,11 +276,7 @@ angular.module('starter')
 
 
         }else{}
-
-        }).then(function(res) {
-
-      })
-        .catch(function(err) {
+        }).catch(function(err) {
           var str='';
           for(var field in err)
             str+=err[field];
