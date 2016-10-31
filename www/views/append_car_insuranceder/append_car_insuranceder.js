@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('appendCarInsurancederController',function($scope,$state,$http, $location,
                                                 $rootScope,$ionicActionSheet,
-                                                $ionicModal,Proxy,$stateParams,$ionicPopup,ModalService){
+                                                $ionicModal,Proxy,$stateParams,$cordovaFileTransfer){
 
     $scope.go_back=function(){
       window.history.back();
@@ -131,46 +131,87 @@ angular.module('starter')
           request:cmd,
           info:item
         }
-      })
-        .then(function(res) {
+      }).then(function(res) {
 
-          if(res.data.re==1){
-            var json =res.data;
-            personId=json.data.personId;
-            alert('personid='+personId);
-            var suffix='';
-            var imageType='perIdCard';
-            alert('path='+$scope.life_insurance.insurer.perIdCard1_img);
-            if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.jpg')!=-1)
-              suffix='jpg';
-            else if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.png')!=-1)
-              suffix='png';
-            else{}
-            var server=Proxy.local()+'/svr/request?request=uploadPhoto' +
-              '&imageType='+imageType+'&suffix='+suffix+
-              '&filename='+'perIdCard1_img'+'&personId='+personId;
-            var options = {
-              fileKey:'file',
-              headers: {
-                'Authorization': "Bearer " + $rootScope.access_token
+        if(res.data.re==1){
+
+          var json =res.data;
+          personId=json.data.personId;
+          alert('personid='+personId);
+          var suffix='';
+          var imageType='perIdCard';
+          alert('path='+$scope.life_insurance.insurer.perIdCard1_img);
+          if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.jpg')!=-1)
+            suffix='jpg';
+          else if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.png')!=-1)
+            suffix='png';
+          else{}
+          var server=Proxy.local()+'/svr/request?request=uploadPhoto' +
+            '&imageType='+imageType+'&suffix='+suffix+
+            '&filename='+'perIdCard1_img'+'&personId='+personId;
+          var options = {
+            fileKey:'file',
+            headers: {
+              'Authorization': "Bearer " + $rootScope.access_token
+            }
+          };
+
+          var perIdAttachId1=null;
+          var perIdAttachId2=null;
+
+          $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard1_img, options)
+            .then(function(res) {
+              alert('upload perIdCard1 success');
+              for(var field in res) {
+                alert('field=' + field + '\r\n' + res[field]);
               }
-            };
-
-            var perIdAttachId1=null;
-            var perIdAttachId2=null;
-
-            $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard1_img, options)
-              .then(function(res) {
-                alert('upload perIdCard1 success');
-                for(var field in res) {
-                  alert('field=' + field + '\r\n' + res[field]);
+              var su=null
+              if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.jpg')!=-1)
+                su='jpg';
+              else if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.png')!=-1)
+                su='png';
+              alert('suffix=' + su);
+              return $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'createPhotoAttachment',
+                  info:{
+                    imageType:'perIdCard',
+                    filename:'perIdAttachId1',
+                    suffix:su,
+                    docType:'I1' ,
+                    personId:personId
+                  }
                 }
-                var su=null
-                if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.jpg')!=-1)
+              });
+            })
+            .then(function(res) {
+              var json=res.data;
+              if(json.re==1) {
+                perIdAttachId1=json.data;
+                alert('perIdAttachId1=' + perIdAttachId1);
+                var su=null;
+                if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.jpg')!=-1)
                   su='jpg';
-                else if($scope.life_insurance.insurer.perIdCard1_img.indexOf('.png')!=-1)
+                else if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.png')!=-1)
                   su='png';
-                alert('suffix=' + su);
+                server=Proxy.local()+'/svr/request?request=uploadPhoto' +
+                  '&imageType='+imageType+'&suffix='+su+'&filename='+'perIdAttachId2'+'&personId='+personId;
+                return  $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options);
+              }
+            }).then(function(res) {
+                alert('upload perIdCard2 success');
+
+              var su=null;
+              if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.jpg')!=-1)
+                su='jpg';
+              else if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.png')!=-1)
+                su='png';
                 return $http({
                   method: "POST",
                   url: Proxy.local()+"/svr/request",
@@ -182,98 +223,60 @@ angular.module('starter')
                     request:'createPhotoAttachment',
                     info:{
                       imageType:'perIdCard',
-                      filename:'perIdAttachId1',
+                      filename:'perIdAttachId2',
                       suffix:su,
                       docType:'I1' ,
                       personId:personId
                     }
                   }
                 });
-              })
-              .then(function(res) {
-                var json=res.data;
-                if(json.re==1) {
-                  perIdAttachId1=json.data;
-                  alert('perIdAttachId1=' + perIdAttachId1);
-                  var su=null;
-                  if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.jpg')!=-1)
-                    su='jpg';
-                  else if($scope.life_insurance.insurer.perIdCard2_img.indexOf('.png')!=-1)
-                    su='png';
-                  server=Proxy.local()+'/svr/request?request=uploadPhoto' +
-                    '&imageType='+imageType+'&suffix='+su+'&filename='+'perIdAttachId2'+'&personId='+personId;
-                  return  $.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options)
-                    .then(function(res) {
-                      alert('upload perIdCard2 success');
-                      for(var field in res) {
-                        alert('field=' + field + '\r\n' + res[field]);
-                      }
-                      return $http({
-                        method: "POST",
-                        url: Proxy.local()+"/svr/request",
-                        headers: {
-                          'Authorization': "Bearer " + $rootScope.access_token,
-                        },
-                        data:
-                        {
-                          request:'createPhotoAttachment',
-                          info:{
-                            imageType:'perIdCard',
-                            filename:'perIdAttachId2',
-                            suffix:su,
-                            docType:'I1' ,
-                            personId:personId
-                          }
-                        }
-                      });
-                    }) .then(function(res) {
-                      var json=res.data;
-                      if(json.re==1){
-                        perIdAttachId2=json.data;
-                        return $http({
-                          method: "POST",
-                          url: Proxy.local()+"/svr/request",
-                          headers: {
-                            'Authorization': "Bearer " + $rootScope.access_token,
-                          },
-                          data:
-                          {
-                            request:'createInsuranceInfoPersonInfo',
-                            info:{
-                              perIdAttachId1:perIdAttachId1,
-                              perIdAttachId2:perIdAttachId2,
-                              personId:personId
-                            }
-                          }
-                        });
-                      }
-                    }).then(function(res) {
-                      var json=res.data;
-                      return $http({
-                        method: "POST",
-                        url: Proxy.local()+"/svr/request",
-                        headers: {
-                          'Authorization': "Bearer " + $rootScope.access_token,
-                        },
-                        data:
-                        {
-                          request:'getInfoPersonInfoByPersonId',
-                          info:{
-                            personId:personId
-                          }
-                        }
-                      });
-                    }).then(function(res) {
-                      var json=res.data;
-                      if(json.re==1) {
-                        $scope.insuranceder=json.data;
-                      }
-                    })
+              }).then(function(res) {
+              var json=res.data;
+              if(json.re==1){
+                perIdAttachId2=json.data;
+                return $http({
+                  method: "POST",
+                  url: Proxy.local()+"/svr/request",
+                  headers: {
+                    'Authorization': "Bearer " + $rootScope.access_token,
+                  },
+                  data:
+                  {
+                    request:'createInsuranceInfoPersonInfo',
+                    info:{
+                      perIdAttachId1:perIdAttachId1,
+                      perIdAttachId2:perIdAttachId2,
+                      personId:personId
+                    }
+                  }
+                });
+              }
+            }) .then(function(res) {
+              var json=res.data;
+              return $http({
+                method: "POST",
+                url: Proxy.local()+"/svr/request",
+                headers: {
+                  'Authorization': "Bearer " + $rootScope.access_token,
+                },
+                data:
+                {
+                  request:'getInfoPersonInfoByPersonId',
+                  info:{
+                    personId:personId
+                  }
                 }
-              })
-          }else{}
+              });
+            }).then(function(res) {
+              var json=res.data;
+              if(json.re==1) {
+                $scope.insuranceder=json.data;
+              }
+            })
 
-          alert('...it is back')
+
+        }else{}
+
         }).then(function(res) {
 
       })
