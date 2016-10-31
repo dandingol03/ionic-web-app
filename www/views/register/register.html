@@ -8,30 +8,44 @@
       </div>
 
 
-      <div class="list list-inset">
-        <label class="item item-input">
-          <i class="icon ion-person  placeholder-icon"></i>
-          <input type="text" placeholder="Username" ng-model="userInfo.username">
-        </label>
-        <label class="item item-input">
-          <i class="icon ion-locked placeholder-icon"></i>
-          <input type="password" placeholder="********" ng-model="userInfo.password">
-        </label>
-        <label class="item item-input">
-          <i class="icon ion-at  placeholder-icon"></i>
-          <input type="email" placeholder="Email">
-        </label>
-        <label class="item item-input">
-          <i class="icon ion-iphone placeholder-icon"></i>
-          <input type="number" placeholder="Mobile" ng-model="userInfo.mobile">
-        </label>
-        <div>
-          <label class="item item-input">
-            <i class="icon ion-iphone placeholder-icon"></i>
-            <input type="number" placeholder="验证码" ng-model="userInfo.code">
-          </label>
+        <div class="list list-inset">
+          <ng-form name="registerForm">
+            <label class="item item-input">
+              <i class="icon ion-person  placeholder-icon"></i>
+              <input type="text" name="username" placeholder="Username" ng-model="userInfo.username">
+            </label>
+            <label class="item item-input">
+              <i class="icon ion-locked placeholder-icon"></i>
+              <div style="width: 50%;">
+                <input name="password" type="password"
+                       placeholder="********"
+                       ng-model="userInfo.password"
+                       ng-change="validate(userInfo,'password','/^\\w{6,8}$/')"
+                  />
+              </div>
+              <div class="assertive" style="width: 30%;display: inline-block" ng-if="userInfo.password_error==true">
+                  必须为6-8个字母
+              </div>
+
+            </label>
+            <label class="item item-input">
+              <i class="icon ion-at  placeholder-icon"></i>
+              <input type="email" placeholder="Email">
+            </label>
+            <label class="item item-input">
+              <i class="icon ion-iphone placeholder-icon"></i>
+              <input type="number" placeholder="Mobile" ng-model="userInfo.mobile">
+            </label>
+          </ng-form>
+
+          <div>
+            <label class="item item-input">
+              <i class="icon ion-iphone placeholder-icon"></i>
+              <input type="number" placeholder="验证码" ng-model="userInfo.code">
+            </label>
+          </div>
         </div>
-      </div>
+
 
       <div class="row">
 
