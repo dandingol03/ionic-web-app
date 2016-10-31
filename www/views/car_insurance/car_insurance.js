@@ -184,6 +184,7 @@ angular.module('starter')
         var products={};
         meal.products.map(function(product,j) {
           product.irrespective=true;
+          product.checked=true;
           if(products[product.productName]==undefined||products[product.productName]==null)
           {
             products[product.productName]=product;
@@ -258,6 +259,8 @@ angular.module('starter')
         },
       }
     }
+
+
     //提交车险意向
     $scope.confirm=function(){
       var products=[];
@@ -477,6 +480,8 @@ angular.module('starter')
     $scope.apply=function(){
       //TODO:append insuranceder modal
       $scope.open_appendCarOrderModal();
+      $scope.closeCompanyModal();
+
     }
 
 

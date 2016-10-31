@@ -76,13 +76,16 @@
 
               </label>
               <label class="item" style="border:0px;display: inline-block;width: 100%;"
-                     ng-if="product.insuranceTypes==undefined||product.insuranceTypes==null"
+                     ng-if="(product.insuranceTypes==undefined||product.insuranceTypes==null)&&
+                     (product.insuranceType!=null||product.insuranceType!=undefined)"
                 >
                 保额:
               <span style="position: absolute;right:50%;">
                   {{product.insuranceType}}
                 </span>
               </label>
+
+
 
 
               <label class="item"
