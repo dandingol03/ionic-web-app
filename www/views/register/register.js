@@ -8,11 +8,26 @@ angular.module('starter')
 
   .controller('registerController',function($scope,$state,$ionicLoading,$http,$ionicPopup,$timeout,$rootScope
     ,$cordovaFile,$cordovaFileTransfer,$ionicActionSheet,$cordovaCamera,Proxy
-    ,$WebSocket,ModalService){
+    ){
 
 
     $scope.userInfo={};
     $scope.code=0;
+
+    $scope.validate=function(item,field,pattern) {
+      if(pattern!==undefined&&pattern!==null)
+      {
+        var reg=eval(pattern);
+        var re=reg.exec(item[field]);
+        if(re!==undefined&&re!==null)
+        {
+          item[field+'_error']=false;
+        }
+        else{
+          item[field+'_error']=true;
+        }
+      }
+    };
 
 
 
@@ -67,20 +82,6 @@ angular.module('starter')
 
 
 
-
-    $scope.baidu=function(){
-      $http({
-        method:'GET',
-        url:"/proxy/send",
-        headers:{
-          'Access-Control-Allow-Origin':'*'
-        }}).
-      success(function (response) {
-        console.log('success');
-      }).error(function(err) {
-        console.log('...');
-      });
-    }
 
 
   });
