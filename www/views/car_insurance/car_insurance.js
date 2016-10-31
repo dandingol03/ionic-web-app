@@ -634,7 +634,7 @@ angular.module('starter')
                     su='png';
                   server=Proxy.local()+'/svr/request?request=uploadPhoto' +
                     '&imageType='+imageType+'&suffix='+su+'&filename='+'perIdAttachId2'+'&personId='+personId;
-                  return  $.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options)
+                  return  $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options)
                     .then(function(res) {
                       alert('upload perIdCard2 success');
                       for(var field in res) {
@@ -704,7 +704,6 @@ angular.module('starter')
                 }
               })
           }else{}
-
           alert('...it is back')
         }).then(function(res) {
 

@@ -31,6 +31,7 @@ angular.module('starter')
       }
       else{
         item.checked=true;
+        $scope.insuranceder=item;
         cluster.map(function(cell,i) {
           if(cell.personId!=item.personId)
             cell.checked=false;
@@ -72,10 +73,10 @@ angular.module('starter')
 
     }
 
+
     //提交车险意向
     $scope.confirm=function(){
 
-      var products=[];
 
 
 
@@ -90,8 +91,8 @@ angular.module('starter')
           request:'generateCarInsuranceOrder',
           info:
           {
-            products:products,
-            companys:companys,
+            products:$scope.info.products,
+            companys:$scope.info.companys,
             carId:$scope.carInfo.carId,
             insurancederId:$scope.insuranceder.personId
           }
@@ -137,6 +138,7 @@ angular.module('starter')
           if(res.data.re==1){
             var json =res.data;
             personId=json.data.personId;
+            $scope.insuranceder.personId=personId;
             alert('personid='+personId);
             var suffix='';
             var imageType='perIdCard';
@@ -202,7 +204,7 @@ angular.module('starter')
                     su='png';
                   server=Proxy.local()+'/svr/request?request=uploadPhoto' +
                     '&imageType='+imageType+'&suffix='+su+'&filename='+'perIdAttachId2'+'&personId='+personId;
-                  return  $.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options)
+                  return  $cordovaFileTransfer.upload(server, $scope.life_insurance.insurer.perIdCard2_img, options)
                     .then(function(res) {
                       alert('upload perIdCard2 success');
                       for(var field in res) {
