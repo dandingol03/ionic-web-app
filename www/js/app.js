@@ -610,6 +610,12 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl: 'views/uploadPhoto/uploadPhoto.html'
       })
 
+      .state('advise_gift',{
+        url:'/advise_gift',
+        controller:'adviseGiftController',
+        templateUrl:'views/advise_gift/advise_gift.html'
+      })
+
       .state('car_order_detail',{
         url:'/car_order_detail/:order',
         controller:'carOrderDetailController',

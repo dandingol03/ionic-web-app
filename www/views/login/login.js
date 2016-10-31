@@ -56,10 +56,6 @@ angular.module('starter')
 
 //*******************测试百悟短信验证码*********************//
 
-
-
-
-
     $scope.securityCode_generate=function(){
 
       $http.get('/securityCode?cellphone='+$scope.user.username,{
@@ -132,8 +128,6 @@ angular.module('starter')
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
         }
-
-
       }).then(function(res){
 
         var json=res.data;
