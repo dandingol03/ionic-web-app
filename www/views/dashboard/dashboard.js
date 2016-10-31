@@ -2990,7 +2990,7 @@ $scope.carService=function(){
 
 
     $scope.lifeInsuranceder_relation_select=function(){
-      var buttons=[{text:'自己'},{text:'老人'},{text:'子女'},{text:'配偶'}];
+      var buttons=[{text:'自己'},{text:'父母'},{text:'子女'},{text:'配偶'}];
 
       $ionicActionSheet.show({
         buttons:buttons,

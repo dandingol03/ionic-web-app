@@ -5,7 +5,7 @@ angular.module('starter')
 
   .controller('carInsuranceController',function($scope,$state,$http, $location,
                                                 $rootScope,$ionicActionSheet,
-                                                $ionicModal,Proxy,$stateParams,$ionicPopup,ModalService){
+                                                $ionicModal,Proxy,$stateParams,$ionicPopup){
     if($stateParams.carInfo!==undefined&&$stateParams.carInfo!==null)
     {
       var carInfo=$stateParams.carInfo;
@@ -37,6 +37,10 @@ angular.module('starter')
       $scope.closeCompanyModal();
 
     }
+
+    $scope.goto=function(url){
+      $location.path(url);
+    };
 
 
     //选择车辆人员责任险模态框
@@ -75,6 +79,7 @@ angular.module('starter')
     $scope.go_back=function(){
       window.history.back();
     }
+
 
     $scope.actionSheet=function(item,sourceField,acts)
     {
@@ -423,13 +428,6 @@ angular.module('starter')
             type: 'button-assertive'
           },
           {
-            text: '<b>自己</b>',
-            type: 'button-positive',
-            onTap: function (e) {
-              item[field] = 'self';
-            }
-          },
-          {
             text: '<b>添加</b>',
             type: 'button-positive',
             onTap: function (e) {
@@ -452,6 +450,8 @@ angular.module('starter')
         console.log('...');
       });
     }
+
+
     //添加被保险人(车险)
     $scope.append_car_insuranceder=function(props){
       $scope.ionicPopup(props.title,props.item,props.field,$scope.open_appendCarInsurancederModal);
@@ -479,7 +479,29 @@ angular.module('starter')
     //选用险种检查车险相关人员
     $scope.apply=function(){
       //TODO:append insuranceder modal
-      $scope.open_appendCarOrderModal();
+      //$scope.open_appendCarOrderModal();
+      var products=[];
+      var meal = $scope.tabs[$scope.tabIndex];
+      for(var productName in meal.products) {
+        var product=meal.products[productName];
+        if(product.checked==true)
+        {
+          products.push(product);
+        }
+      }
+      var companys=[];
+      $scope.companys.map(function(company,i) {
+        if(company.checked==true)
+          companys.push(company);
+      });
+
+      var info={
+        products:products,
+        companys:companys,
+        carId:$scope.carInfo.carId
+      };
+
+      $state.go('append_car_insuranceder',{info:JSON.stringify(info)});
       $scope.closeCompanyModal();
 
     }
@@ -523,6 +545,9 @@ angular.module('starter')
         }
       }
     }
+
+
+
 //提交统一函数
     $scope.upload=function(cmd,item,field){
 

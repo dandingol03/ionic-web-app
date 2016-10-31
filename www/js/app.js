@@ -683,7 +683,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
       })
 
       .state('append_car_insuranceder',{
-        url:'/append_car_insuranceder',
+        url:'/append_car_insuranceder/:info',
         controller:'appendCarInsurancederController',
         templateUrl:'views/append_car_insuranceder/append_car_insuranceder.html'
       })
@@ -713,7 +713,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-          return "http://192.168.1.110";
+          return "http://192.168.1.110:3000";
         else
           return "/proxy/node_server";
       },
