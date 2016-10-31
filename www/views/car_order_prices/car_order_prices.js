@@ -23,7 +23,6 @@ angular.module('starter')
       window.history.back();
     }
 
-
     $scope.tab_change=function(i){
       $scope.tabIndex=i;
     }
@@ -244,13 +243,12 @@ angular.module('starter')
             }
           }).then(function(res) {
             if(res.data.re==1){
-              var carInfo = res.data;
+              var json = res.data;
+              var carInfo=json.data;
               $state.go('car_insurance',{carInfo:JSON.stringify(carInfo)});
-
             }
           })
         }
-
       })
 
     }

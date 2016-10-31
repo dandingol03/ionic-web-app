@@ -19,7 +19,7 @@ angular.module('starter')
     $scope.getCode=function () {
       $http({
         method:"GET",
-        url:Proxy.local()+'/securityCode?'+"phoneNum=" + $scope.userInfo.mobile,
+        url:Proxy.remote()+'/securityCode?'+"phoneNum=" + $scope.userInfo.mobile,
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,9 +32,8 @@ angular.module('starter')
           alert('验证码='+$scope.code);
         }
         else{
-          alert('验证码发送失败');
+          alert('error=\r\n'+json.data);
         }
-
       })
     }
 
