@@ -853,11 +853,11 @@ table.table1{
 {
 
   border:1px solid;
-  width: 95%;
-  padding: 10px;
-  margin: 0 auto;
-  height: 80%;
-  top: 10%;
+  width: 100%;
+  padding: 0;
+
+  height: 100%;
+
   background: #fff;
 }
 
