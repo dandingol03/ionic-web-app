@@ -654,6 +654,27 @@ angular.module('starter')
                           }
                         });
                       }
+                    }).then(function(res) {
+                      var json=res.data;
+                      return $http({
+                        method: "POST",
+                        url: Proxy.local()+"/svr/request",
+                        headers: {
+                          'Authorization': "Bearer " + $rootScope.access_token,
+                        },
+                        data:
+                        {
+                          request:'getInfoPersonInfoByPersonId',
+                          info:{
+                            personId:personId
+                          }
+                        }
+                      });
+                    }).then(function(res) {
+                      var json=res.data;
+                      if(json.re==1) {
+                        $scope.insuranceder=json.data;
+                      }
                     })
                 }
               })
