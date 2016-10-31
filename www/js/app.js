@@ -707,7 +707,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
     var ob={
       local:function(){
         if(window.cordova!==undefined&&window.cordova!==null)
-          return "http://192.168.1.110:3000";
+          return "http://202.194.14.106:3000";
         else
           return "/proxy/node_server";
       },
@@ -715,7 +715,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         if(window.cordova!==undefined&&window.cordova!==null)
           return 'http://202.194.14.106:3000';
         else
-          return '/proxy/node_remote';
+          return '/proxy/remote';
       }
     }
     return ob;

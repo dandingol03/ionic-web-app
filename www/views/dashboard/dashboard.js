@@ -6,7 +6,8 @@ angular.module('starter')
                                              $ionicActionSheet,$ionicPopup,$q,$cordovaFile,
                                              BaiduMapService,$ionicLoading,$cordovaMedia,$cordovaCapture,
                                               Proxy,$stateParams,$anchorScroll,
-                                             $cordovaFileTransfer,$ionicPopover,$ionicSlideBoxDelegate){
+                                             $cordovaFileTransfer,$ionicPopover,$ionicSlideBoxDelegate,
+                                             $cordovaImagePicker){
 
 
 
