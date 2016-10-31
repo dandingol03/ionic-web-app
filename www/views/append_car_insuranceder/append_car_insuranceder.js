@@ -349,6 +349,7 @@ angular.module('starter')
                       }
                     })
                 }
+
               })
           }else{}
 
@@ -356,7 +357,7 @@ angular.module('starter')
         }).then(function(res) {
 
       })
-        .catch(function(err) {
+      .catch(function(err) {
           var str='';
           for(var field in err)
             str+=err[field];
