@@ -17,6 +17,13 @@
    margin:0
  }
 
+.login_background{
+  background:url(../img/login_background@2x.png)no-repeat;
+  background-size:100% 100%;
+  text-align:center;
+  margin:0
+}
+
 .grid img {
   width: 62px;
   height: 62px;
