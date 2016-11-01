@@ -228,6 +228,7 @@ angular.module('starter')
         }
       })
         .then(function(res) {
+
           var json =res.data;
           alert(json.re);
           if(json.re==1){
