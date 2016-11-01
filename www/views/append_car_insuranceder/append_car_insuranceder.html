@@ -64,19 +64,30 @@
         <span>选取已有联系人</span>
       </div>
 
-      <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;"
-           ng-click="select_relative()">
-             <span class="input-label" style="display: inline-block;width: 15%;">
-              姓名:
-            </span>
+      <div class="item"
+           style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+             padding:10px;background-color:transparent;overflow:initial">
 
-        <span style="position:relative">
-          <input type="text" placeholder="输入亲属姓名"
-                 style="display: inline-block;width: 55%;margin-right: 10%;"
-                 ng-value="car_insurance.insuranceder.perName"
-                 ng-model="car_insurance.insuranceder.perName"/>
+        <span
+          class="input-label"
+          style="display: inline-block;width: 25%;text-align: left"
+          >
+          姓名:
+        </span>
 
-          <button style="position:absolute; top:5%;" ng-click="selectCarInsuranceder()">
+        <span
+          style="width: 55%;display: inline-block;text-align: left;"
+          >
+         <input type="text" placeholder="输入亲属姓名"
+                ng-value="car_insurance.insuranceder.perName"
+                ng-model="car_insurance.insuranceder.perName"/>
+        </span>
+
+        <span
+          style="display:inline-block;width: 20%;text-align: center;vertical-align: middle;"
+          ng-click="selectCarInfoByCarNum()"
+          >
+          <button class="button button-small button-assertive">
             搜索
           </button>
         </span>
@@ -95,9 +106,15 @@
         <i ng-if="person.checked==true" class="ion-ios-checkmark" ></i>
       </div>
 
-      <button class="button button-block button-calm" ng-click="confirm()">
+
+      <button
+        class="button button-block button-calm"
+        ng-click="confirm()"
+        style="width: 60%;margin-left:20%;margin-top:20%;"
+        >
         提交车险意向
       </button>
+
 
     </div>
 

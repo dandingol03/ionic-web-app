@@ -134,7 +134,6 @@ angular.module('starter')
       }).then(function(res) {
 
         if(res.data.re==1){
-
           var json =res.data;
           personId=json.data.personId;
           alert('personid='+personId);
