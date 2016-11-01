@@ -76,6 +76,10 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         ]
       };
 
+      $rootScope.life_insurance={
+
+      };
+
 
       $rootScope.waitConfirm={};
 
@@ -696,6 +700,23 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/append_car_insuranceder/append_car_insuranceder.html'
       })
 
+      .state('append_life_insurer',{
+        url:'/append_life_insurer/:info',
+        controller:'appendLifeInsurerController',
+        templateUrl:'views/append_life_insurer/append_life_insurer.html'
+      })
+
+      .state('append_life_insuranceder',{
+        url:'/append_life_insuranceder/:info',
+        controller:'appendLifeInsurancederController',
+        templateUrl:'views/append_life_insuranceder/append_life_insuranceder.html'
+      })
+
+      .state('append_life_benefiter',{
+        url:'/append_life_benefiter/:info',
+        controller:'appendLifeBenefiterController',
+        templateUrl:'views/append_life_benefiter/append_life_benefiter.html'
+      })
 
 
     // if none of the above states are matched, use this as the fallback
