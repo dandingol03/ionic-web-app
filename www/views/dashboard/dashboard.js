@@ -165,30 +165,6 @@ angular.module('starter')
       $scope.carNumHint = 'hidden list';
     }
 
-    $scope.factoryNumHint='hidden list';
-    $scope.focusInFactoryNum=function(){
-      $scope.factoryNumHint='list';
-    }
-    $scope.blurFactoryNum=function(){
-      $scope.factoryNumHint='hidden list';
-    }
-
-    $scope.engineNumHint='hidden list';
-    $scope.focusInEngineNum=function(){
-      $scope.engineNumHint='list';
-    }
-    $scope.blurEngineNum=function(){
-      $scope.engineNumHint='hidden list';
-    }
-
-    $scope.frameNumHint='hidden list';
-    $scope.focusInFrameNum=function(){
-      $scope.frameNumHint='list';
-    }
-    $scope.blurFrameNum=function(){
-      $scope.frameNumHint='hidden list';
-    }
-
     $scope.slideDescriptionHint='list';
     /***  悬浮窗  ***/
 
