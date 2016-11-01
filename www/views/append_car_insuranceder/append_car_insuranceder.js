@@ -192,8 +192,6 @@ angular.module('starter')
           }
         }
       }).then(function(res) {
-        $scope.closeCompanyModal();
-        $scope.close_appendCarOrderModal();
         var json=res.data;
         var orderId=json.data;
         if(orderId!==undefined&&orderId!==null)
@@ -201,7 +199,6 @@ angular.module('starter')
           $state.go('car_orders');
         }
       }).catch(function(err) {
-        $scope.closeCompanyModal();
         var str='';
         for(var field in err)
           str+='field'+field+'\r\n'
