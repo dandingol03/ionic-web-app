@@ -24,6 +24,12 @@ angular.module('starter')
       if(Object.prototype.toString.call(info)=='[object String]')
         info = JSON.parse(info);
       $scope.info=info;
+
+      $scope.info.products.map(function(product,i){
+        if(product.productId==null||product.productId==undefined){
+          product.productId=product.productIds[0];
+        }
+      })
     }
 
     $scope.mutex=function(item,cluster){
