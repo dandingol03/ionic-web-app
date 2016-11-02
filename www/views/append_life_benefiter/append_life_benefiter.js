@@ -30,6 +30,15 @@ angular.module('starter')
 
 
     $scope.benefiter={};
+    $scope.legal={perName:'法定',checked:false};
+    $scope.checkLegal=function(){
+      if($scope.legal.checked==false){
+        $scope.legal.checked=true;
+      }else{
+        $scope.legal.checked=false;
+      }
+    }
+
 
     if($stateParams.info!==undefined&&$stateParams.info!==null)
     {
@@ -40,17 +49,27 @@ angular.module('starter')
     }
 
     $scope.mutex=function(item,cluster){
-      if(item.checked==true)
-      {
-        item.checked=false;
-      }
-      else{
-        item.checked=true;
+      if($scope.legal.checked==true){
         cluster.map(function(cell,i) {
           if(cell.personId!=item.personId)
             cell.checked=false;
         })
       }
+      else{
+        if(item.checked==true)
+        {
+          item.checked=false;
+        }
+        else{
+          item.checked=true;
+          cluster.map(function(cell,i) {
+            if(cell.personId!=item.personId)
+              cell.checked=false;
+          })
+        }
+
+      }
+
     }
 
 
@@ -69,7 +88,7 @@ angular.module('starter')
           request:'getRelativePersonsWithinPerName',
           info:
           {
-            perName:$scope.order.insuranceder.perName
+            perName:$scope.order.benefiter.perName
           }
         }
       }).then(function(res) {
@@ -175,17 +194,27 @@ angular.module('starter')
     }
 
 
-    //确认寿险投保人
+    //确认寿险受益人
     $scope.confirm=function(){
-      $scope.relativePersons.map(function(relative,i) {
-        if(relative.checked==true)
-        {
-          $scope.order.benefiter=relative;
-          $rootScope.dashboard.tabIndex=1;
-          $rootScope.life_insurance.benefiter=relative;
-          $state.go('tabs.dashboard');
-        }
-      });
+
+      if($scope.legal.checked==true){
+        $scope.order.benefiter=null;
+        $rootScope.dashboard.tabIndex=1;
+        $rootScope.life_insurance.benefiter=null;
+        $rootScope.life_insurance.isLegalBenefiter=1;
+        $state.go('tabs.dashboard');
+      }
+      else{
+        $scope.relativePersons.map(function(relative,i) {
+          if(relative.checked==true)
+          {
+            $scope.order.benefiter=relative;
+            $rootScope.dashboard.tabIndex=1;
+            $rootScope.life_insurance.benefiter=relative;
+            $state.go('tabs.dashboard');
+          }
+        });
+      }
 
     }
 

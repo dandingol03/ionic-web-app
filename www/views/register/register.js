@@ -34,7 +34,7 @@ angular.module('starter')
     $scope.getCode=function () {
       $http({
         method:"GET",
-        url:Proxy.remote()+'/securityCode?'+"phoneNum=" + $scope.userInfo.mobile,
+        url:Proxy.local()+'/securityCode?'+"phoneNum=" + $scope.userInfo.mobile,
         headers: {
           'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
           'Content-Type': 'application/x-www-form-urlencoded'

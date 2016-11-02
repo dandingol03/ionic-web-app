@@ -2,8 +2,8 @@
   <ion-content class="background">
 
     <div class="banner">
-      <img src="img/banner@2x.png"/>
-    </div>
+    <img src="img/banner@2x.png"/>
+  </div>
     <div class="row">
       <div class="col tabs_col car_insurance" ng-click="tab_change(0)">
         <div style="text-align: center">
@@ -140,7 +140,8 @@
 
           <span
             style="width: 55%;display: inline-block;text-align: left;font-size: 0.8em;color:#aaa;"
-            ng-if='life_insurance.order.benefiter.perName==undefined||life_insurance.order.benefiter.perName==null'
+            ng-if='(life_insurance.order.benefiter.perName==undefined||life_insurance.order.benefiter.perName==null)
+            &&(life_insurance.order.isLegalBenefiter==undefined||life_insurance.order.isLegalBenefiter==null)'s
             >
             请选择受益人
           </span>
@@ -150,6 +151,14 @@
              ng-if='life_insurance.order.benefiter.perName!=undefined&&life_insurance.order.benefiter.perName!=null'
              >
             {{life_insurance.order.benefiter.perName}}
+          </span>
+
+          <span
+            style="width: 55%;display: inline-block;text-align: left;"
+            ng-if='life_insurance.order.benefiter.perName==undefined&&life_insurance.order.benefiter.perName==null
+            &&life_insurance.order.isLegalBenefiter!=undefined&&life_insurance.order.isLegalBenefiter!=null'
+          >
+            法定
           </span>
 
           <span

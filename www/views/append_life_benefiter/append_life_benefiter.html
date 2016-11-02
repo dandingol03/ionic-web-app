@@ -90,6 +90,21 @@
 
         <ion-scroll style="height: 85%;">
 
+
+          <div class="item"  ng-click="checkLegal()">
+
+            <div style="display:inline-block;width:70%">
+               <span>
+                {{legal.perName}}
+               </span>
+            </div>
+
+            <i ng-if="legal.checked!=true" class="ion-ios-checkmark-outline" ></i>
+            <i ng-if="legal.checked==true" class="ion-ios-checkmark" ></i>
+
+          </div>
+
+
           <div class="item" ng-repeat="person in relativePersons" ng-click="mutex(person,relativePersons)">
 
             <div style="display:inline-block;width:70%">
