@@ -17,46 +17,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
 
 
-    $rootScope.car_orders=[
-      [
-        {feeDate:"2016-02-01",carNum:"鲁A00003",insuranceFeeTotal:2000},
-        {feeDate:"2016-03-17",carNum:"鲁A00003",insuranceFeeTotal:2000},
-        {feeDate:"2016-05-20",carNum:"鲁A00003",insuranceFeeTotal:2000}
-      ],
-      {},
-      [
-        {companyName:'',products:[]},
-        {companyName:'',products:[]}
-      ]
-    ];
 
-    $rootScope.car_insurance={
-      prices:[
-        {
-          companyName:'永安财产保险',
-          products: [
-            {
-              productId:1,productName:'车辆损失险',insuranceType:null
-            },
-            {
-              productId:null,insuranceType:null,productName:'第三者责任险',
-              insuranceTypes:['5万','10万','20万']
-            }
-          ]
-        },
-        {
-          companyName:'泰山财产保险',
-          products:[
-            {
-              productId:1,productName:'车辆损失险',insuranceType:null
-            },
-            {
-              productId:2,insuranceType:'5万',productName:'第三者责任险'
-            }
-          ]
-        }
-      ]
-    };
 
 
 
@@ -74,7 +35,50 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         StatusBar.styleDefault();
       }
 
+      $rootScope.car_orders=[
+        [
+          {feeDate:"2016-02-01",carNum:"鲁A00003",insuranceFeeTotal:2000},
+          {feeDate:"2016-03-17",carNum:"鲁A00003",insuranceFeeTotal:2000},
+          {feeDate:"2016-05-20",carNum:"鲁A00003",insuranceFeeTotal:2000}
+        ],
+        {},
+        [
+          {companyName:'',products:[]},
+          {companyName:'',products:[]}
+        ]
+      ];
 
+      $rootScope.car_insurance={
+        prices:[
+          {
+            companyName:'永安财产保险',
+            products: [
+              {
+                productId:1,productName:'车辆损失险',insuranceType:null
+              },
+              {
+                productId:null,insuranceType:null,productName:'第三者责任险',
+                insuranceTypes:['5万','10万','20万']
+              }
+            ]
+          },
+          {
+            companyName:'泰山财产保险',
+            products:[
+              {
+                productId:1,productName:'车辆损失险',insuranceType:null
+              },
+              {
+                productId:2,insuranceType:'5万',productName:'第三者责任险'
+              }
+            ]
+          }
+        ]
+      };
+
+      $rootScope.life_insurance={
+
+      };
 
 
       $rootScope.waitConfirm={};
@@ -142,7 +146,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
           {unitName:'汽修厂2',mobile:'18253161717'},
           {unitName:'汽修厂3',mobile:'18253161818'}
         ]}
-        ];
+      ];
 
       //获取自定义消息的回调
       $rootScope.onReceiveMessage = function(event) {
@@ -188,7 +192,7 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
 
 
 
-                $scope.open_selectServicePersonModal();
+
                 $scope.select = function(message){
                   message.checked=true;
                 }
@@ -696,6 +700,23 @@ angular.module('starter', ['ionic', 'ngCordova','ngBaiduMap','ionic-datepicker',
         templateUrl:'views/append_car_insuranceder/append_car_insuranceder.html'
       })
 
+      .state('append_life_insurer',{
+        url:'/append_life_insurer/:info',
+        controller:'appendLifeInsurerController',
+        templateUrl:'views/append_life_insurer/append_life_insurer.html'
+      })
+
+      .state('append_life_insuranceder',{
+        url:'/append_life_insuranceder/:info',
+        controller:'appendLifeInsurancederController',
+        templateUrl:'views/append_life_insuranceder/append_life_insuranceder.html'
+      })
+
+      .state('append_life_benefiter',{
+        url:'/append_life_benefiter/:info',
+        controller:'appendLifeBenefiterController',
+        templateUrl:'views/append_life_benefiter/append_life_benefiter.html'
+      })
 
 
     // if none of the above states are matched, use this as the fallback

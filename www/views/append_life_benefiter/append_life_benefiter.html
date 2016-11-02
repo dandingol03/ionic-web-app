@@ -1,0 +1,249 @@
+<ion-view >
+
+
+  <ion-nav-bar class="bar-stable" align-title="center" >
+
+
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear bar_arr" ng-click="go_back()">
+        <i class="ion-chevron-left"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+
+    </ion-nav-title>
+
+
+    <ion-nav-buttons side="right">
+
+      <button class="button button-icon button-clear" >
+        <i class="ion-plus"></i>
+      </button>
+    </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content scroll="false">
+
+    <div class="list" style="margin-bottom: 0px;">
+      <ul class="ul-tabs dark-theme" style="background: rgb(203,203,203)">
+        <li style="width:50%;font-size: medium;" >
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tabIndex==0]"
+               ng-click="tab_change(0)">
+            <span style="position:absolute;left:15%;top:40%;">
+              已有关联人
+            </span>
+          </div>
+        </li>
+        <li style="width:50%; font-size: medium;" >
+          <div class="cell"
+               ng-class="{true: 'selected', false: ''}[tabIndex==1]"
+               ng-click="tab_change(1)">
+            <span style="position:absolute;left: 20%;top:40%;">
+              新建关联人
+            </span>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+
+    <div ng-if="tabIndex==0" style="height: 100%;">
+
+      <div
+        class="list list-inset padding"
+        style="height: 65%;"
+        >
+
+        <div class="item"
+             style="margin:1px;border-top:0px;border-left:0px;border-right:0px;border-bottom:1px solid #222;
+                 padding:10px;background-color:transparent;overflow:initial">
+
+            <span
+              class="input-label"
+              style="display: inline-block;width: 25%;text-align: left"
+              >
+              姓名:
+            </span>
+
+            <span
+              style="width: 55%;display: inline-block;text-align: left;"
+              >
+             <input type="text" placeholder="输入亲属姓名"
+                    ng-value="order.benefiter.perName"
+                    ng-model="order.benefiter.perName"/>
+            </span>
+
+            <span
+              style="display:inline-block;width: 20%;text-align: center;vertical-align: middle;"
+              ng-click="selectLifeBenefiter()"
+              >
+              <button class="button button-small button-assertive">
+                查询
+              </button>
+            </span>
+
+        </div>
+
+        <ion-scroll style="height: 85%;">
+
+          <div class="item" ng-repeat="person in relativePersons" ng-click="mutex(person,relativePersons)">
+
+            <div style="display:inline-block;width:70%">
+               <span>
+                {{person.perName}}
+               </span>
+            </div>
+
+            <i ng-if="person.checked!=true" class="ion-ios-checkmark-outline" ></i>
+            <i ng-if="person.checked==true" class="ion-ios-checkmark" ></i>
+
+          </div>
+          <div style="height: 20px;">
+          </div>
+        </ion-scroll>
+
+      </div>
+
+      <div
+        class="list list-inset padding"
+        style="margin:0px 10px;padding:0px 10px;"
+        >
+        <div
+          class="item"
+          style="margin:1px;border:0px;padding:0px 10px;background-color:transparent;"
+          >
+          <button
+            class="button button-block button-calm"
+            ng-click="confirm()"
+            style="width: 60%;margin-left:20%;margin-top:0px;"
+            >
+            确认寿险受益人
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <div ng-if="tabIndex==1" style="height: 100%;">
+
+      <ion-scroll style="height: 90%;">
+        <div class="list list-inset padding">
+
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+             <span class="input-label" style="display: inline-block;">
+              姓名:
+            </span>
+            <input type="text" placeholder="输入亲属姓名"
+                   style="display: inline-block"
+                   ng-value="benefiter.perName"
+                   ng-model="benefiter.perName"/>
+          </div>
+
+          <div class="item" style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;">
+            <span class="input-label" style="display: inline-block;width:55%;">
+              选择亲属关系:
+            </span>
+            <span class="input-label" style="display: inline-block;">
+                  {{benefiter.relation}}
+            </span>
+            <div style="position: absolute;right: 15%;top:30%;bottom: 30%;">
+                <span ng-click="ActionSheet(['父母','子女','配偶'],benefiter,'relation','relType')">
+                  <i class="ion-chevron-down"></i>
+                </span>
+            </div>
+          </div>
+
+          <div class="item"
+               style="margin:1px;border-top:0px;border-left:0px;border-right:0px;padding:10px;position: relative">
+
+            <ion-slide-box on-slide-changed="slideChanged($index)" style="background-color:transparent;">
+              <ion-slide>
+                <div class="item"
+                     ng-click="addAttachment(benefiter,'perIdCard1_img')"
+                     style="background-color:transparent;border: 0px;">
+                  <div
+                    style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+                    >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    身份证正面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+                  </div>
+                </div>
+                <div class="item"
+                     style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+                  <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+                    <img
+                      style="max-width: 100%;"
+                      ng-if="benefiter.perIdCard1_img!==undefined&&benefiter.perIdCard1_img!==null"
+                      ng-src="{{benefiter.perIdCard1_img}}"/>
+
+                  </div>
+                </div>
+              </ion-slide>
+
+              <ion-slide>
+                <div class="item"
+                     ng-click="addAttachment(benefiter,'perIdCard2_img')"
+                     style="background-color:transparent;border: 0px;">
+                  <div
+                    style="padding-left:10px;padding-right: 10px; position: relative;background-color:transparent;"
+                    >
+                  <span class="input-label" style="display: inline-block;width: 80%;background-color:transparent;">
+                    身份证反面:
+                  </span>
+                <span style="font-size: 2em;position: absolute;right: 15%;background-color:transparent;">
+                    <i class="ion-camera"></i>
+                  </span>
+                  </div>
+                </div>
+
+                <div class="item"
+                     style="position: relative;margin-bottom: 20px;background-color:transparent;border:1px solid #222;">
+                  <div style="width:  100%;margin-left:0%;height:160px;border:1px dashed #9e9e9e">
+                    <img
+                      style="max-width: 100%;"
+                      ng-if="benefiter.perIdCard2_img!==undefined&&benefiter.perIdCard2_img!==null"
+                      ng-src="{{benefiter.perIdCard2_img}}"/>
+                  </div>
+                </div>
+              </ion-slide>
+
+            </ion-slide-box>
+          </div>
+
+
+
+          <button class="button button-block button-calm" ng-click="upload('createRelativePerson',benefiter)">
+            关联亲属信息
+          </button>
+
+        </div>
+
+      </ion-scroll>
+
+    </div>
+
+
+
+
+
+  </ion-content>
+
+
+
+
+</ion-view>
