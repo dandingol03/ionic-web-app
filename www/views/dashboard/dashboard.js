@@ -1728,9 +1728,8 @@ angular.module('starter')
       if($scope.life_insurance.order.insuranceder.personId!=undefined&&$scope.life_insurance.order.insuranceder.personId!=null
         &&$scope.life_insurance.order.insurer.personId!=undefined&&$scope.life_insurance.order.insurer.personId!=null
         &&(($scope.life_insurance.order.benefiter.personId!=undefined&&$scope.life_insurance.order.benefiter.personId!=null)
-        ||($scope.life_insurance.order.isLegalBenefiter!=undefined&&$scope.life_insurance.order.isLegalBenefiter!=null))
+          ||($scope.life_insurance.order.isLegalBenefiter!=undefined&&$scope.life_insurance.order.isLegalBenefiter!=null))
         &&$scope.life_insurance.order.planInsuranceFee!=undefined&&$scope.life_insurance.order.planInsuranceFee!=null
-
       )
       {
         $http({
